@@ -1,0 +1,2527 @@
+[
+  {
+    "personaldetails": {
+      "name": "ABHANGRAO PRANALI RAJENDRA",
+      "address": "at post sangola",
+      "pincode": 413307,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9958531334,
+      "parentno": 9520956212,
+      "sscpercentage": 78.72,
+      "hscpercentage": 68.58
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3301,
+      "idno": "1233",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "AIWALE DHIRAJ DADASAHEB",
+      "address": "at post sangola",
+      "pincode": 413308,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9364735095,
+      "parentno": 9570829141,
+      "sscpercentage": 67.85,
+      "hscpercentage": 77.03
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3302,
+      "idno": "1234",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "AIWALE ROHIT BALU",
+      "address": "at post sangola",
+      "pincode": 413309,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9730900916,
+      "parentno": 9311456800,
+      "sscpercentage": 69.51,
+      "hscpercentage": 66.63
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3303,
+      "idno": "1235",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "AIWALE SUNITA CHANDAR",
+      "address": "at post sangola",
+      "pincode": 413310,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9740731316,
+      "parentno": 9704757890,
+      "sscpercentage": 69.84,
+      "hscpercentage": 77.54
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3304,
+      "idno": "1236",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "AIWALE VAISHNAVI ASHOK",
+      "address": "at post sangola",
+      "pincode": 413311,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9752970903,
+      "parentno": 9549973891,
+      "sscpercentage": 78.18,
+      "hscpercentage": 91.83
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3305,
+      "idno": "1237",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "ANUSE SANIKA BALASO",
+      "address": "at post sangola",
+      "pincode": 413312,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9026307814,
+      "parentno": 9352057322,
+      "sscpercentage": 76.73,
+      "hscpercentage": 90.8
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3306,
+      "idno": "1238",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "ANUSE SUHANI SHRIMANT",
+      "address": "at post sangola",
+      "pincode": 413313,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9629156262,
+      "parentno": 9891078992,
+      "sscpercentage": 81.76,
+      "hscpercentage": 71.58
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3307,
+      "idno": "1239",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "AYARE SANSKAR NANASO",
+      "address": "at post sangola",
+      "pincode": 413314,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9291533901,
+      "parentno": 9360056743,
+      "sscpercentage": 72.62,
+      "hscpercentage": 83.61
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3308,
+      "idno": "1240",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BABAR BHAKTI TUKARAM",
+      "address": "at post sangola",
+      "pincode": 413315,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9920681749,
+      "parentno": 9302680294,
+      "sscpercentage": 64.78,
+      "hscpercentage": 71.71
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3309,
+      "idno": "1241",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BABAR HARSHAD TANAJI",
+      "address": "at post sangola",
+      "pincode": 413316,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9363738255,
+      "parentno": 9660854016,
+      "sscpercentage": 63.92,
+      "hscpercentage": 93.49
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3310,
+      "idno": "1242",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BABAR SAHIL CHANDRAKANT",
+      "address": "at post sangola",
+      "pincode": 413317,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9921446743,
+      "parentno": 9529347494,
+      "sscpercentage": 67.8,
+      "hscpercentage": 80.92
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3311,
+      "idno": "1243",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BABAR SOHAM UDHDAV",
+      "address": "at post sangola",
+      "pincode": 413318,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9196201390,
+      "parentno": 9717163818,
+      "sscpercentage": 80.99,
+      "hscpercentage": 67.58
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3312,
+      "idno": "1244",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BAGAL DINOJ KRUSHANDEV",
+      "address": "at post sangola",
+      "pincode": 413319,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9833979864,
+      "parentno": 9798717958,
+      "sscpercentage": 62.27,
+      "hscpercentage": 62.94
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3313,
+      "idno": "1245",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BANGAR RUTURAJ ANANDA",
+      "address": "at post sangola",
+      "pincode": 413320,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9290909541,
+      "parentno": 9410941538,
+      "sscpercentage": 81.09,
+      "hscpercentage": 77.91
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3314,
+      "idno": "1246",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BANKAR SHIVAM VILAS",
+      "address": "at post sangola",
+      "pincode": 413321,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9550147678,
+      "parentno": 9315040347,
+      "sscpercentage": 67.39,
+      "hscpercentage": 81.19
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3315,
+      "idno": "1247",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BANSODE PRAJYOT POPAT",
+      "address": "at post sangola",
+      "pincode": 413322,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9708265131,
+      "parentno": 9017147522,
+      "sscpercentage": 60.54,
+      "hscpercentage": 88.34
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3316,
+      "idno": "1248",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BANSODE SUMIT ARJUN",
+      "address": "at post sangola",
+      "pincode": 413323,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9974989945,
+      "parentno": 9864447079,
+      "sscpercentage": 74.86,
+      "hscpercentage": 85.4
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3317,
+      "idno": "1249",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BHOSALE APURAV DATTATRAY",
+      "address": "at post sangola",
+      "pincode": 413324,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9801011906,
+      "parentno": 9207436045,
+      "sscpercentage": 78.09,
+      "hscpercentage": 63.83
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3318,
+      "idno": "1250",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BHOSALE DHIRAJ ASHOK",
+      "address": "at post sangola",
+      "pincode": 413325,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9138219478,
+      "parentno": 9943841833,
+      "sscpercentage": 68.67,
+      "hscpercentage": 82.99
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3319,
+      "idno": "1251",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BHOSALE DIKSHA TANAJI",
+      "address": "at post sangola",
+      "pincode": 413326,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9485569798,
+      "parentno": 9920041534,
+      "sscpercentage": 74.15,
+      "hscpercentage": 74.5
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3320,
+      "idno": "1252",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BHOSALE DINESH SUBHASH",
+      "address": "at post sangola",
+      "pincode": 413327,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9232563951,
+      "parentno": 9210495147,
+      "sscpercentage": 62.11,
+      "hscpercentage": 86.73
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3321,
+      "idno": "1253",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BHOSALE SAKSHI PANDURANG",
+      "address": "at post sangola",
+      "pincode": 413328,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9363003009,
+      "parentno": 9975187399,
+      "sscpercentage": 84.3,
+      "hscpercentage": 84.11
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3322,
+      "idno": "1254",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BHOSALE SANDIP SHANKAR",
+      "address": "at post sangola",
+      "pincode": 413329,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9964195351,
+      "parentno": 9998522952,
+      "sscpercentage": 62.99,
+      "hscpercentage": 93.26
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3323,
+      "idno": "1255",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BHOSALE SANSKAR BAJRANG",
+      "address": "at post sangola",
+      "pincode": 413330,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9589194866,
+      "parentno": 9935614096,
+      "sscpercentage": 67.69,
+      "hscpercentage": 86.13
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3324,
+      "idno": "1256",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BHOSALE SAYALI SAMADHAN",
+      "address": "at post sangola",
+      "pincode": 413331,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9010680902,
+      "parentno": 9311380182,
+      "sscpercentage": 65.54,
+      "hscpercentage": 66.53
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3325,
+      "idno": "1257",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BORAGE SHIVAM DNYANESHWAR",
+      "address": "at post sangola",
+      "pincode": 413332,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9512196126,
+      "parentno": 9966505635,
+      "sscpercentage": 64.32,
+      "hscpercentage": 75.47
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3326,
+      "idno": "1258",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "BUVA ROHAN APPASAHEB",
+      "address": "at post sangola",
+      "pincode": 413333,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9154390180,
+      "parentno": 9710505419,
+      "sscpercentage": 94.83,
+      "hscpercentage": 76.39
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3327,
+      "idno": "1259",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "CHANDANSHIVE ADARSH MAHENDRA",
+      "address": "at post sangola",
+      "pincode": 413334,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9678144054,
+      "parentno": 9005967018,
+      "sscpercentage": 69.9,
+      "hscpercentage": 89.68
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3328,
+      "idno": "1260",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "CHAUGULE BASAWESHWAR SURESH",
+      "address": "at post sangola",
+      "pincode": 413335,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9221976544,
+      "parentno": 9798007730,
+      "sscpercentage": 81.9,
+      "hscpercentage": 78.43
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3329,
+      "idno": "1261",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "CHAUGULE OM HANAMANT",
+      "address": "at post sangola",
+      "pincode": 413336,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9148697859,
+      "parentno": 9609787797,
+      "sscpercentage": 75.19,
+      "hscpercentage": 85.34
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3330,
+      "idno": "1262",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "CHAVAN HARSHAVARDHAN HANMANT",
+      "address": "at post sangola",
+      "pincode": 413337,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9303039601,
+      "parentno": 9830988727,
+      "sscpercentage": 88.18,
+      "hscpercentage": 83.76
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3331,
+      "idno": "1263",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "DESHMUKH KEDAR KAILAS",
+      "address": "at post sangola",
+      "pincode": 413338,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9347136767,
+      "parentno": 9536088372,
+      "sscpercentage": 75.65,
+      "hscpercentage": 91.97
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3332,
+      "idno": "1264",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "DHAWARE YASHVANT RAMCHANDRA",
+      "address": "at post sangola",
+      "pincode": 413339,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9979612216,
+      "parentno": 9023608866,
+      "sscpercentage": 70.13,
+      "hscpercentage": 75.48
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3333,
+      "idno": "1265",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "DHOLE PRASHANT VILAS",
+      "address": "at post sangola",
+      "pincode": 413340,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9225490202,
+      "parentno": 9513446883,
+      "sscpercentage": 82.88,
+      "hscpercentage": 86.75
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3334,
+      "idno": "1266",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "DHOTRE AKANKSHA ANIL",
+      "address": "at post sangola",
+      "pincode": 413341,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9531184259,
+      "parentno": 9431794565,
+      "sscpercentage": 88.42,
+      "hscpercentage": 79.17
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3335,
+      "idno": "1267",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "GAIKWAD OMKAR SAMBHAJI",
+      "address": "at post sangola",
+      "pincode": 413342,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9436230832,
+      "parentno": 9251782067,
+      "sscpercentage": 76.44,
+      "hscpercentage": 85.24
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3336,
+      "idno": "1268",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "GAIKWAD SURAJ SUBHASH",
+      "address": "at post sangola",
+      "pincode": 413343,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9943337948,
+      "parentno": 9173899093,
+      "sscpercentage": 70.42,
+      "hscpercentage": 66.3
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3337,
+      "idno": "1269",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "GAIKWAD YASH SANDIP",
+      "address": "at post sangola",
+      "pincode": 413344,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9557465555,
+      "parentno": 9450697357,
+      "sscpercentage": 62.16,
+      "hscpercentage": 64.42
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3338,
+      "idno": "1270",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "GEJAGE SHRAVANI SURYAKANT",
+      "address": "at post sangola",
+      "pincode": 413345,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9105321634,
+      "parentno": 9840092259,
+      "sscpercentage": 77.91,
+      "hscpercentage": 82.02
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3339,
+      "idno": "1271",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "GHARAGE PRAGATI SIDDHANATH",
+      "address": "at post sangola",
+      "pincode": 413346,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9504913114,
+      "parentno": 9857605020,
+      "sscpercentage": 89.2,
+      "hscpercentage": 84.23
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3340,
+      "idno": "1272",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "GORE ANIKET SHIVAJI",
+      "address": "at post sangola",
+      "pincode": 413347,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9045621432,
+      "parentno": 9967226509,
+      "sscpercentage": 94.98,
+      "hscpercentage": 84.24
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3341,
+      "idno": "1273",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "GORE ROHAN NAGESH",
+      "address": "at post sangola",
+      "pincode": 413348,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9309574754,
+      "parentno": 9103387333,
+      "sscpercentage": 91.3,
+      "hscpercentage": 77.28
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3342,
+      "idno": "1274",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "GORE ROHAN PARAMESHWAR",
+      "address": "at post sangola",
+      "pincode": 413349,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9973310366,
+      "parentno": 9412010908,
+      "sscpercentage": 77.32,
+      "hscpercentage": 73.59
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3343,
+      "idno": "1275",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "HONMANE KANHAIYA LALASO",
+      "address": "at post sangola",
+      "pincode": 413350,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9334843614,
+      "parentno": 9070940558,
+      "sscpercentage": 79.83,
+      "hscpercentage": 85.17
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3344,
+      "idno": "1276",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "INGOLE PRATAP ANIL",
+      "address": "at post sangola",
+      "pincode": 413351,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9753896780,
+      "parentno": 9536820935,
+      "sscpercentage": 73.95,
+      "hscpercentage": 62.22
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3345,
+      "idno": "1277",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "JADHAV ADITYA ANANDA",
+      "address": "at post sangola",
+      "pincode": 413352,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9414408686,
+      "parentno": 9908528074,
+      "sscpercentage": 88.42,
+      "hscpercentage": 92.1
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3346,
+      "idno": "1278",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "JADHAV DATTATRAY DADASO",
+      "address": "at post sangola",
+      "pincode": 413353,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9497342417,
+      "parentno": 9698038689,
+      "sscpercentage": 85.72,
+      "hscpercentage": 87.67
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3347,
+      "idno": "1279",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "JADHAV ONKAR AJAY",
+      "address": "at post sangola",
+      "pincode": 413354,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9023394461,
+      "parentno": 9541885515,
+      "sscpercentage": 78.44,
+      "hscpercentage": 65.17
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3348,
+      "idno": "1280",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "JADHAV SAMARTH SANJAY",
+      "address": "at post sangola",
+      "pincode": 413355,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9931214106,
+      "parentno": 9760931302,
+      "sscpercentage": 74.65,
+      "hscpercentage": 62.95
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3349,
+      "idno": "1281",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "JADHAV SUYOG TANAJI",
+      "address": "at post sangola",
+      "pincode": 413356,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9551189392,
+      "parentno": 9950819323,
+      "sscpercentage": 79.73,
+      "hscpercentage": 79.51
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3350,
+      "idno": "1282",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "KADLASKAR BALAJI DHANANJAY",
+      "address": "at post sangola",
+      "pincode": 413357,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9495787861,
+      "parentno": 9926436306,
+      "sscpercentage": 77,
+      "hscpercentage": 73.25
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3351,
+      "idno": "1283",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "KALE ANIKET VIKAS",
+      "address": "at post sangola",
+      "pincode": 413358,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9592362786,
+      "parentno": 9494721796,
+      "sscpercentage": 83.23,
+      "hscpercentage": 88.26
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3352,
+      "idno": "1284",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "KASHID MAYURI JITENDRA",
+      "address": "at post sangola",
+      "pincode": 413359,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9916927018,
+      "parentno": 9914448734,
+      "sscpercentage": 65.12,
+      "hscpercentage": 74.58
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3353,
+      "idno": "1285",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "KATKAR SANIKA BABAN",
+      "address": "at post sangola",
+      "pincode": 413360,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9959423836,
+      "parentno": 9281510617,
+      "sscpercentage": 78.09,
+      "hscpercentage": 72.37
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3354,
+      "idno": "1286",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "KATKAR SHRUTI TANAJI",
+      "address": "at post sangola",
+      "pincode": 413361,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9875379256,
+      "parentno": 9858344400,
+      "sscpercentage": 83.25,
+      "hscpercentage": 84.02
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3355,
+      "idno": "1287",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "KAZI REHAN MUSAALLI",
+      "address": "at post sangola",
+      "pincode": 413362,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9556755874,
+      "parentno": 9326666575,
+      "sscpercentage": 89.79,
+      "hscpercentage": 64.43
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3356,
+      "idno": "1288",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "KEDAR BHAGYASHRI BHAGWAN",
+      "address": "at post sangola",
+      "pincode": 413363,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9973798734,
+      "parentno": 9195374256,
+      "sscpercentage": 87.86,
+      "hscpercentage": 93.12
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3357,
+      "idno": "1289",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "KHANDAGALE SUDAM VISHWANATH",
+      "address": "at post sangola",
+      "pincode": 413364,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9536923779,
+      "parentno": 9214861302,
+      "sscpercentage": 75.45,
+      "hscpercentage": 61.87
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3358,
+      "idno": "1290",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "KHATKALE SHUBHAM SUBHASH",
+      "address": "at post sangola",
+      "pincode": 413365,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9472864124,
+      "parentno": 9030187274,
+      "sscpercentage": 83.58,
+      "hscpercentage": 81.97
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3359,
+      "idno": "1291",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "KOLASE GAYATRI DADASO",
+      "address": "at post sangola",
+      "pincode": 413366,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9419311278,
+      "parentno": 9496612748,
+      "sscpercentage": 82.96,
+      "hscpercentage": 84.94
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3360,
+      "idno": "1292",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "KOLEKAR SAURABH LAXMAN",
+      "address": "at post sangola",
+      "pincode": 413367,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9429606205,
+      "parentno": 9884816618,
+      "sscpercentage": 67.14,
+      "hscpercentage": 93.55
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3361,
+      "idno": "1293",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "KOLI SRUSHTI NAMDEV",
+      "address": "at post sangola",
+      "pincode": 413368,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9084213734,
+      "parentno": 9328973147,
+      "sscpercentage": 75.84,
+      "hscpercentage": 68.7
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3362,
+      "idno": "1294",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "LANDAGE SUMIT SHRIKANT",
+      "address": "at post sangola",
+      "pincode": 413369,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9994538713,
+      "parentno": 9990046173,
+      "sscpercentage": 79.97,
+      "hscpercentage": 81.91
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3363,
+      "idno": "1295",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "LENDAVE ANJALI BHAUSAHEB",
+      "address": "at post sangola",
+      "pincode": 413370,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9085607539,
+      "parentno": 9288382501,
+      "sscpercentage": 61.91,
+      "hscpercentage": 81.57
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3364,
+      "idno": "1296",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "LONDHE GANESH HARIDAS",
+      "address": "at post sangola",
+      "pincode": 413371,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9149490233,
+      "parentno": 9422057291,
+      "sscpercentage": 79.84,
+      "hscpercentage": 73.18
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3365,
+      "idno": "1297",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "MANE SHIVAM SANTOSH",
+      "address": "at post sangola",
+      "pincode": 413372,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9464834304,
+      "parentno": 9769401765,
+      "sscpercentage": 77.84,
+      "hscpercentage": 84.12
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3366,
+      "idno": "1298",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "MISAL ANIKET PANDURANG",
+      "address": "at post sangola",
+      "pincode": 413373,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9529607165,
+      "parentno": 9279537584,
+      "sscpercentage": 68.4,
+      "hscpercentage": 83.26
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3367,
+      "idno": "1299",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "MORE ATHRAV CHANDRAKANT",
+      "address": "at post sangola",
+      "pincode": 413374,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9096509476,
+      "parentno": 9149561988,
+      "sscpercentage": 83.47,
+      "hscpercentage": 70.68
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3368,
+      "idno": "1300",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "MORE DINESHSINH DATTATRAY",
+      "address": "at post sangola",
+      "pincode": 413375,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9875125730,
+      "parentno": 9569614138,
+      "sscpercentage": 88.46,
+      "hscpercentage": 61.59
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3369,
+      "idno": "1301",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "MORE GAURI HANMANT",
+      "address": "at post sangola",
+      "pincode": 413376,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9598457792,
+      "parentno": 9047133666,
+      "sscpercentage": 94.8,
+      "hscpercentage": 76.48
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3370,
+      "idno": "1302",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "MORE SAHIL GAIBI",
+      "address": "at post sangola",
+      "pincode": 413377,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9569554693,
+      "parentno": 9673204407,
+      "sscpercentage": 71.4,
+      "hscpercentage": 60.57
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3371,
+      "idno": "1303",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "MULANI JISHAN RASHID",
+      "address": "at post sangola",
+      "pincode": 413378,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9093894029,
+      "parentno": 9712589123,
+      "sscpercentage": 67.14,
+      "hscpercentage": 79.85
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3372,
+      "idno": "1304",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "NADAF SAMIR MIRASAB",
+      "address": "at post sangola",
+      "pincode": 413379,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9928275531,
+      "parentno": 9476366920,
+      "sscpercentage": 87.97,
+      "hscpercentage": 75.95
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3373,
+      "idno": "1305",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "NAGANE YASH VIJAY",
+      "address": "at post sangola",
+      "pincode": 413380,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9984644268,
+      "parentno": 9209443066,
+      "sscpercentage": 94.68,
+      "hscpercentage": 87.95
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3374,
+      "idno": "1306",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "NAHAR MANPREETKAUR SATNAMSINGH",
+      "address": "at post sangola",
+      "pincode": 413381,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9748854591,
+      "parentno": 9044045034,
+      "sscpercentage": 69.21,
+      "hscpercentage": 65.33
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3375,
+      "idno": "1307",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "NIMBALKAR PRAVIN SANTOSH",
+      "address": "at post sangola",
+      "pincode": 413382,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9798493615,
+      "parentno": 9623340020,
+      "sscpercentage": 64.85,
+      "hscpercentage": 69.17
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3376,
+      "idno": "1308",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "PATIL ATHARV SAHADEV",
+      "address": "at post sangola",
+      "pincode": 413383,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9204052889,
+      "parentno": 9635526194,
+      "sscpercentage": 74.8,
+      "hscpercentage": 74.58
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3377,
+      "idno": "1309",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "PATIL SAMARTH SANTOSH",
+      "address": "at post sangola",
+      "pincode": 413384,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9736397032,
+      "parentno": 9871682450,
+      "sscpercentage": 77.78,
+      "hscpercentage": 82.2
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3378,
+      "idno": "1310",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "PATIL YASH KIRAN",
+      "address": "at post sangola",
+      "pincode": 413385,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9898249485,
+      "parentno": 9732301623,
+      "sscpercentage": 90.61,
+      "hscpercentage": 81.37
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3379,
+      "idno": "1311",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "PAWAR PRASHANT DHANAJI",
+      "address": "at post sangola",
+      "pincode": 413386,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9180500886,
+      "parentno": 9810568042,
+      "sscpercentage": 63.53,
+      "hscpercentage": 65.15
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3380,
+      "idno": "1312",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "PAWAR SATYAJIT SHASHIKANT",
+      "address": "at post sangola",
+      "pincode": 413387,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9530773558,
+      "parentno": 9013291396,
+      "sscpercentage": 70.36,
+      "hscpercentage": 77.35
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3381,
+      "idno": "1313",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "PAWAR SHIVAJI MADHUKAR",
+      "address": "at post sangola",
+      "pincode": 413388,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9965905714,
+      "parentno": 9809642206,
+      "sscpercentage": 90.91,
+      "hscpercentage": 73.31
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3382,
+      "idno": "1314",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "RADDI RAJKIRAN SANJAY",
+      "address": "at post sangola",
+      "pincode": 413389,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9001649747,
+      "parentno": 9115803064,
+      "sscpercentage": 94.15,
+      "hscpercentage": 86.16
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3383,
+      "idno": "1315",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "RAUT AVISHKAR HANMANT",
+      "address": "at post sangola",
+      "pincode": 413390,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9986598799,
+      "parentno": 9339004001,
+      "sscpercentage": 67.98,
+      "hscpercentage": 73.83
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3384,
+      "idno": "1316",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "RAUT ROHIT RAJENDRA",
+      "address": "at post sangola",
+      "pincode": 413391,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9495931607,
+      "parentno": 9360209554,
+      "sscpercentage": 71.5,
+      "hscpercentage": 85.97
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3385,
+      "idno": "1317",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "ROKADE SUJIT SHIVAJI",
+      "address": "at post sangola",
+      "pincode": 413392,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9224254960,
+      "parentno": 9217793979,
+      "sscpercentage": 89.44,
+      "hscpercentage": 65.53
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3386,
+      "idno": "1318",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "SALUNKHE ADARSH NITIN",
+      "address": "at post sangola",
+      "pincode": 413393,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9183708407,
+      "parentno": 9632727759,
+      "sscpercentage": 83.62,
+      "hscpercentage": 86.76
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3387,
+      "idno": "1319",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "SALUNKHE SHUBHAM SANJAY",
+      "address": "at post sangola",
+      "pincode": 413394,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9122084570,
+      "parentno": 9471613108,
+      "sscpercentage": 63.42,
+      "hscpercentage": 90.82
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3388,
+      "idno": "1320",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "SAWANT DIKSHA SACHIN",
+      "address": "at post sangola",
+      "pincode": 413395,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9788186085,
+      "parentno": 9057423606,
+      "sscpercentage": 93.13,
+      "hscpercentage": 74.07
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3389,
+      "idno": "1321",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "SAWANT SANIKA UTTARESHWAR",
+      "address": "at post sangola",
+      "pincode": 413396,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9640722963,
+      "parentno": 9500970065,
+      "sscpercentage": 71.26,
+      "hscpercentage": 82.88
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3390,
+      "idno": "1322",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "SHAIKH MISBA ARIF",
+      "address": "at post sangola",
+      "pincode": 413397,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9091178892,
+      "parentno": 9306499881,
+      "sscpercentage": 85.75,
+      "hscpercentage": 74.64
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3391,
+      "idno": "1323",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "SHINDE HARSHAVARDHAN MAHADEV",
+      "address": "at post sangola",
+      "pincode": 413398,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9151401164,
+      "parentno": 9677650184,
+      "sscpercentage": 93.38,
+      "hscpercentage": 74.34
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3392,
+      "idno": "1324",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "SHINDE RUSHIKESH VIKAS",
+      "address": "at post sangola",
+      "pincode": 413399,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9608213838,
+      "parentno": 9636396891,
+      "sscpercentage": 69.49,
+      "hscpercentage": 93.72
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3393,
+      "idno": "1325",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "SHINDE SAKSHI DHANAJI",
+      "address": "at post sangola",
+      "pincode": 413400,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9617969603,
+      "parentno": 9261225807,
+      "sscpercentage": 90.17,
+      "hscpercentage": 66.38
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3394,
+      "idno": "1326",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "SHINDE SANKET CHANDRASEN",
+      "address": "at post sangola",
+      "pincode": 413401,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9697539319,
+      "parentno": 9236474363,
+      "sscpercentage": 67.92,
+      "hscpercentage": 83.79
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3395,
+      "idno": "1327",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "SHIRTODE AKSHAY BALU",
+      "address": "at post sangola",
+      "pincode": 413402,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "female",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9464567499,
+      "parentno": 9233461831,
+      "sscpercentage": 90.94,
+      "hscpercentage": 70.34
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3396,
+      "idno": "1328",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "UBALE RIYA PRASHANT",
+      "address": "at post sangola",
+      "pincode": 413403,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9871683405,
+      "parentno": 9533349092,
+      "sscpercentage": 71.87,
+      "hscpercentage": 61.49
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3397,
+      "idno": "1329",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "YADAV SAURABH DNYANESHWAR",
+      "address": "at post sangola",
+      "pincode": 413404,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9938417437,
+      "parentno": 9180987789,
+      "sscpercentage": 61.19,
+      "hscpercentage": 82.39
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3398,
+      "idno": "1330",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "YADAV VIRAJ DADASAHEB",
+      "address": "at post sangola",
+      "pincode": 413405,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 78500000000,
+      "fathername": "Demo",
+      "mothername": "Demo",
+      "mobileno": 9893310964,
+      "parentno": 9396473750,
+      "sscpercentage": 90.37,
+      "hscpercentage": 86.68
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC [ECS]",
+      "year": "second",
+      "division": "C",
+      "rollno": 3399,
+      "idno": "1331",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "UNKNOWN",
+      "address": "NA",
+      "pincode": 413000,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 900000000100,
+      "fathername": "NA",
+      "mothername": "NA",
+      "mobileno": 9000000100,
+      "parentno": 8000000100,
+      "sscpercentage": 60,
+      "hscpercentage": 60
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC",
+      "year": "Second",
+      "division": "A",
+      "rollno": 1100,
+      "idno": "BT1100",
+      "mentor": null
+    }
+  },
+  {
+    "personaldetails": {
+      "name": "UNKNOWN",
+      "address": "NA",
+      "pincode": 413000,
+      "dob": "2000-01-01T00:00:00.000Z",
+      "gender": "male",
+      "aadharno": 900000000101,
+      "fathername": "NA",
+      "mothername": "NA",
+      "mobileno": 9000000101,
+      "parentno": 8000000101,
+      "sscpercentage": 60,
+      "hscpercentage": 60
+    },
+    "collagedetails": {
+      "department": "Science",
+      "course": "BSC",
+      "year": "Second",
+      "division": "A",
+      "rollno": 1101,
+      "idno": "BT1101",
+      "mentor": null
+    }
+  }
+]

@@ -1,0 +1,121 @@
+.mentor-navbar {
+    background-color:#090909; 
+    padding: 15px 0;
+}
+
+.mentor-navbar .navbar-brand {  
+    color: gold;
+    font-size: 24px;
+}
+
+.mentor-navbar .nav-link {
+    color:goldenrod;
+    margin-right: 15px;
+    font-weight: 500;
+}
+
+.mentor-navbar .nav-link:hover {
+    color: white;
+    font-size: 20px;
+}
+
+.mentor-navbar .btn-success {
+    font-weight: 500;
+}
+
+.profile-hover {
+  position:static;
+}
+.text-muted{
+  color:#06f129;
+}
+
+.profile-trigger {
+  color: white;
+  border-radius: 20px red;
+  cursor: pointer;
+}
+
+.profile-icon {
+  font-size: 22px;
+  color: #9dbdec;
+  margin-right: 5px;
+}
+
+.profile-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 320px;
+  background: #e8abab;
+  border-radius: 10px;
+  box-shadow: 0 8px 50px rgba(165, 239, 5, 0.15);
+  display: none;
+}
+
+
+.profile-hover:hover .profile-menu {
+  display:block;
+}
+
+
+.profile-header {
+  text-align: center;
+  padding: 3px;
+}
+
+.big-icon {
+  font-size: 40px;
+  color: #0460ea;
+}
+
+.profile-menu .dropdown-item {
+  padding: 10px 15px;
+  font-size: 14px;
+}
+
+.profile-menu .dropdown-item:hover {
+  background-color: #f46262;
+}
+
+
+.logout {
+  color: red;
+}
+.logout{
+  width:100px;
+  margin-left: 100px;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: #e8abab;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  border-radius: 8px;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.logout i {
+  font-size: 16px;
+}
+
+.logout:hover {
+  background: linear-gradient(135deg, #e60000, #cc0000);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(255, 0, 0, 0.3);
+}
+
+.logout:active {
+  transform: scale(0.96);
+}

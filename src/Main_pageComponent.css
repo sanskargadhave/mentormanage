@@ -1,0 +1,183 @@
+.TotalStudent{
+    margin-top: 10px;
+    width: calc(30% - 10px);
+    position: relative;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-align: center;
+    background-color: black;
+    color:gold;
+    box-shadow: 0 0 60px rgba(212, 249, 6, 0.947);
+}
+
+body{
+  background: #1355d9d7;
+}
+.StudentManagment:hover {
+  box-shadow: 0 0 60px rgba(99, 6, 206, 0.6);
+}
+
+.icon-text {
+  display:inline-flex;
+  align-items: center;
+  gap: 8px;   /* space between icon and text */
+  font-size: 30px;
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 70px;  /* space between divs */
+}
+
+.noticeClass{
+  background: rosybrown;
+  color: black;
+  padding: 15px;
+  font-size: 1rem;
+  border-radius: 10px;
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+.AdminloginPageDiv{
+  margin-top: 100px;
+  margin-left: 400px;
+  background-image: url("F:\mentormanage\public\logo-college.png");
+  background-size: 100%;
+  height: 400px;
+  width: 400px;
+  background-repeat: no-repeat;
+  backface-visibility: 50%;
+}
+.login-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  margin-top: 20px;
+}
+
+.login-card {
+  background: #fff;
+  padding: 45px;
+  width: 320px;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  text-align: center;
+  width: 500px;
+  margin-top:80px;
+}
+
+.war{
+  color:red;
+}
+.title {
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: #777;
+  margin-bottom: 25px;
+}
+
+.role-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.role-btn i {
+  font-size: 22px;
+}
+
+.role-btn.admin {
+  background: #4f46e5;
+  color: white;
+}
+
+.role-btn.mentor {
+  background: #059669;
+  color: white;
+}
+.role-btn.guest{
+  background: #d0dc5f;
+  color: white;
+}
+.role-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+.form-control{
+  width: 300px;
+}
+
+/* INPUT DESIGN */
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f3f4f6;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.input-group i {
+    font-size: 18px;
+    color: #555;
+}
+
+.input-group input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    font-size: 16px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.retry-btn {
+  background: #ffc107;
+  color: #000;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.retry-btn:hover {
+  background: #e0a800;
+}
+
+.exit-btn {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.exit-btn:hover {
+  background: #bb2d3b;
+}
