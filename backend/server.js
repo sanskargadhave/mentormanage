@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 const GetDataRoute = require("./Routes/GetDataRoute");
 const StoreDataRoute =require("./Routes/StoreDataRoute");
+const UpdateDataRoute =require("./Routes/UpdateDataRoute");
 
 const app = express();
 
@@ -23,7 +24,7 @@ app.get("/", (req, res) => {
 
 app.use("/",GetDataRoute);
 app.use("/",StoreDataRoute);
-
+app.use("/",UpdateDataRoute);
 
 
 const PORT = process.env.PORT || 5000;

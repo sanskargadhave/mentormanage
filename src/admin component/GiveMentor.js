@@ -2,6 +2,7 @@ import "./admin.css";
 import axios from "axios";
 import { useEffect,useState } from "react";
 import Select from 'react-select';
+import { GiveError } from "../WarningOrSucess";
 
 function AssignMentor()
 {
@@ -17,6 +18,8 @@ function AssignMentor()
     const [selectedCourse, setSelectedCourse] = useState("");
     const [mentor,setmentor]=useState([]);
     const [studentdata,setstudentdata]=useState([]);
+    const [showerror,setshowerror]=useState(false);
+    const [message,setmessage]=useState("");
     const [event,setevent]=useState("showselect");
     const [from,setfrom]=useState("");
     const [to,setto]=useState("");
@@ -49,13 +52,40 @@ function AssignMentor()
             exprience:fulldetails.professionaldetails.exprience
         });
     }
-    function assignmentor()
-    {
-        
+    const assignmentor = async () => {
+        if(!from.length>0 || to.length>0)
+        {
+            setmessage("Please Provide Appropriate Range")
+            return (setshowerror(true));
+        }
+        else if(Number(to)<Number(from))
+        {
+            setmessage("Please Select Appropriate Roll NO Range...")
+            return (setshowerror(true));
+        }
+        try {
+            const resp = await axios.put("http://localhost:5000/api/assign-mentors",
+                {
+                    from: from,
+                    to: to,
+                    mentorid: data.mentorid
+                }
+            );
+            setmessage(resp.data.message);
+            setshowerror(true);
+        }
+        catch (err) {
+            setmessage(err.response?.data?.message);
+            setshowerror(true);
+        }
     }
     function getstudentdata()
     {
-        
+        if(!selectedCourse && !selectedClass && !selectedDivision)
+        {
+            setmessage("Please Provide All Details");
+            return(setshowerror(true));
+        }
         axios.get("http://localhost:5000/api/get-students", {
             params: {
                 course: selectedCourse,
@@ -74,13 +104,16 @@ function AssignMentor()
     return (
         <div className="admin-content">
             {event==="showselect"&&(
+                
             <div className="animate__animated animate__slow animate__fadeInDown ">
+            {showerror && (<GiveError show={showerror} message={message} duration={10000} onClose={()=>setshowerror(false)}/>)}
                 
                 <div className="row">
                     <div className="col-md-6">
                         <label className="form-label"><i className="bi bi-person-vcard"></i>Select  Mentor For Assign    </label>
                         <Select options={option} placeholder="Search And Select" maxMenuHeight={200} value={selected} onChange={setmentordetails}/>
                     </div>
+                    
                     { data.mentorid && (
                     <div className="col-md-6">
                         <div className="cards animate__animated animate__backInUp">
@@ -147,13 +180,14 @@ function AssignMentor()
                         </div>
                         <div className="col-md-6">
                             <div className="cards animate__animated animate__backInUp">
+                                {showerror && (<GiveError show={showerror} message={message} duration={10000} onClose={()=>setshowerror(false)}/>)}
                             </div>
                         </div>
                     </div>
                     <br/>
                     <div className="row">
                         <div className="col-md-12">
-                            <h5 className="form-label"><i className="bi bi-arrow-bar-right"></i>  Please Select First Your Range Of Roll No </h5><label className="total-absent">* Make Sure This Roll No Are Original </label>
+                            <h5 className="form-label"><i className="bi bi-arrow-bar-right set-icon"></i>  Please Select First Your Range Of Roll No </h5><label className="total-absent">* Make Sure This Roll No Are Original </label>
                         </div>
                     </div><br/>
                     <div className="row">

@@ -69,14 +69,41 @@ const GetMentors= async (req,resp)=>{
   }
 }
 
-const AssignMentor= async (req,resp)=>{
-  try{
-    const 
-  }
-  catch(err)
-  {
+const AssignMentor = async (req, resp) => {
+  try {
+    const { from, to, mentorid } = req.body;
+    const fromNo = Number(from);
+    const toNo = Number(to);
+    const id = await StoreMentor.findOne(
+      { mentorId: mentorid },
+      "_id"
+    );
 
+    if (!id) {
+      return resp.status(404).json({ message: "Mentor not found" });
+    }
+
+    const alreadyAssigned = await StoreStudent.findOne({
+      "collagedetails.rollno": { $gte: fromNo, $lte: toNo },
+      "collagedetails.mentor": { $ne: null }
+    });
+
+    if (alreadyAssigned) {
+      return resp.status(400).json({
+        message: `Roll No ${from} - ${to} Mentor Already Assigned`
+      });
+    }
+
+    await StoreStudent.updateMany(
+      { "collagedetails.rollno": { $gte: fromNo, $lte: toNo } },
+      { $set: { "collagedetails.mentor": id._id } }
+    );
+
+    resp.status(200).json({ message: "Mentor Assigned Successfully" });
+
+  } catch (err) {
+    resp.status(500).json({ message: err.message });
   }
-}
-module.exports={MentorCount,AddMentor,MentorLogin,GetMentors};
+};
+module.exports={MentorCount,AddMentor,MentorLogin,GetMentors,AssignMentor};
 
