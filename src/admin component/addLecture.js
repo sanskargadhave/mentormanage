@@ -9,7 +9,6 @@ function AddLecture(){
     const [selected,setselected]=useState(null);
     const [lectureid,stlectureid]=useState("");
     const [showerror,setshowerror]=useState(false);
-    const [Class,setClass]=useState("");
     const [message,setmessage]=useState("");
     
     const [FormData,setFormData]=useState({
@@ -98,7 +97,7 @@ function AddLecture(){
     return (
         <div className="admin-content">
             {showerror && (<GiveError show={showerror} message={message} duration={10000} onClose={()=>setshowerror(false)}/>)}
-            <div className="add-student-form animate__animated animate__slow animate__flip ">
+            <div className="add-student-form animate__animated animate__slow animate__fadeInDown">
                 <div className="row">
                     <div className="col-md-5">
                         <label className="form-label"><i className="bi bi-person-vcard"></i>  Subject </label>  

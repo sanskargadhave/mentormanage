@@ -18,6 +18,7 @@ function AssignMentor()
     const [selectedCourse, setSelectedCourse] = useState("");
     const [mentor,setmentor]=useState([]);
     const [studentdata,setstudentdata]=useState([]);
+    const [assigndata,setassigndata]=useState([]);
     const [showerror,setshowerror]=useState(false);
     const [message,setmessage]=useState("");
     const [event,setevent]=useState("showselect");
@@ -53,12 +54,12 @@ function AssignMentor()
         });
     }
     const assignmentor = async () => {
-        if(!from.length>0 || to.length>0)
+        if(!from.length>0 || !to.length>0)
         {
             setmessage("Please Provide Appropriate Range")
             return (setshowerror(true));
         }
-        else if(Number(to)<Number(from))
+        else if(Number(to)<=Number(from))
         {
             setmessage("Please Select Appropriate Roll NO Range...")
             return (setshowerror(true));
@@ -73,6 +74,7 @@ function AssignMentor()
             );
             setmessage(resp.data.message);
             setshowerror(true);
+            setevent("showselect")
         }
         catch (err) {
             setmessage(err.response?.data?.message);
@@ -95,7 +97,9 @@ function AssignMentor()
             }
         })
         .then((resp) => {
-            setstudentdata(resp.data);  
+            setstudentdata(resp.data.students);  
+            setassigndata(resp.data.assigndata);
+            console.log(resp.data.assigndata);
             setevent("showassign");
         })
         .catch((err) => alert(err.message));
@@ -171,26 +175,68 @@ function AssignMentor()
             event ==="showassign" && (
                 <div className="animate__animated animate__slow animate__fadeInDown">
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-5">
                             <div className="cards animate__animated animate__backInUp">
+                                <h5 className="total">
+                                    <i className="bi bi-tag-fill set-icon"></i>
+                                    {selectedCourse}--{selectedClass}--{selectedDivision}
+                                </h5>
+                                
                                 <h5 className="total"> Total Students : {studentdata.length}</h5>
                                 <h5 className="total-present"> Assigned Students : {studentdata.filter((data)=>data.collagedetails.mentor!==null).length}</h5>
                                 <h5 className="total-absent"> Not Assigned Students  : {studentdata.length-studentdata.filter((data)=>data.collagedetails.mentor!==null).length}</h5>
                             </div>
                         </div>
-                        <div className="col-md-6">
-                            <div className="cards animate__animated animate__backInUp">
-                                {showerror && (<GiveError show={showerror} message={message} duration={10000} onClose={()=>setshowerror(false)}/>)}
+                        <div className="col-md-7">
+                            
+                            <div className="data-card animate__animated animate__backInUp">
+                                <h5 className="total">
+                                    <i className="bi bi-tag-fill set-icon"></i>
+                                    List Of Assigned Roll No And Thier Mentors
+                                </h5>
+                                
+                                <div className="row">
+                                    <div className="col-md-3">
+                                        <h5>Division</h5>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <h5>From -- TO</h5>
+                                    </div>
+                                    <div className="col-md-5">
+                                        <h5>Mentor Name</h5>
+                                    </div>
+                                </div>
+                                <hr/>
+                                { 
+                                    assigndata.map((data,index)=>(
+                                        <div key={index} className="row">
+                                            <div className="col-md-3">
+                                                <span className="badge text-bg-primary">{data.division}</span>
+                                            </div>
+                                            <div className="col-md-4">
+                                                <span className="badge text-bg-success">{data.from}</span>------
+                                                <span className="badge text-bg-success">{data.to}</span>
+                                            </div>
+                                            <div className="col-md-5">
+                                                <span className="badge text-bg-dark">Prof. {data.mentorname} </span>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
                             </div>
                         </div>
                     </div>
                     <br/>
                     <div className="row">
                         <div className="col-md-12">
-                            <h5 className="form-label"><i className="bi bi-arrow-bar-right set-icon"></i>  Please Select First Your Range Of Roll No </h5><label className="total-absent">* Make Sure This Roll No Are Original </label>
+                            <h5 className="form-label"><i className="bi bi-arrow-bar-right set-icon"></i>  Please Select First Your Range Of Roll No </h5>
+                            <label className="total-absent">* Make Sure Above List Of Roll No Assigned Mentor Already </label>
                         </div>
                     </div><br/>
+                    {showerror && (<GiveError show={showerror} message={message} duration={10000} onClose={()=>setshowerror(false)}/>)}
+
                     <div className="row">
+                        
                         <div className="col-md-4">
                             <label className="form-label"><i className="bi bi-person-vcard"></i>  From : </label>  
                             <input type="text" className="form-control" name="Subject" placeholder="Enter From This Roll No." onChange={(e)=>setfrom(e.target.value)}/>
@@ -205,6 +251,7 @@ function AssignMentor()
                         </form>
                         </div>
                     </div>
+                    
                 </div>
             )}         
         </div>

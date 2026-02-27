@@ -202,8 +202,7 @@ function AddAttendance() {
         const totalabsent = Object.values(attendance).filter(status => status === "Absent").length;
 
         const totalpresent = Object.values(attendance).filter(status => status === "Present").length;
-        const attendanceArray = Object.entries(attendance).map(
-        ([rollno, status]) => 
+        const attendanceArray = Object.entries(attendance).map(([rollno, status]) => 
         ({
             rollno,
             status

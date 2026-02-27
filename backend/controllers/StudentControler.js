@@ -49,7 +49,7 @@ const StudentCounts= async (req, resp) => {
 const SearchStudent= async (req,resp)=>{
   try{
     const datas=await StoreLecture.findOne({lectureid:req.params.lectureid});
-    const students=await StoreStudent.find({$and:[{"collagedetails.year":datas.Class},{"collagedetails.division":datas.division}]},"personaldetails.name collagedetails.rollno");
+    const students=await StoreStudent.find({$and:[{"collagedetails.year":datas.Class},{"collagedetails.division":datas.division}]},"_id personaldetails.name collagedetails.rollno").sort({"collagedetails.rollno":1});
 
     resp.status(200).json(students);
   }
@@ -168,7 +168,36 @@ const GetStudent= async (req,resp)=>{
   try{
     const {Class,division,department,course}=req.query;
     const students=await StoreStudent.find({"collagedetails.year":Class,"collagedetails.division":division,"collagedetails.department":department,"collagedetails.course":course});
-    resp.status(200).json(students);
+    const assigndata=await StoreStudent.aggregate([
+      {$match:{"collagedetails.department":department,"collagedetails.course":course,"collagedetails.year":Class}},
+      {$lookup:{
+          from:"MentorDetails",
+          localField:"collagedetails.mentor",
+          foreignField:"_id",
+          as:"MentorDetails"
+        }
+      },
+      {$unwind:"$MentorDetails"},
+      {$group:{
+        _id:{
+          mentor:"$collagedetails.mentor",
+          division:"$collagedetails.division"
+        },
+        from:{$min:"$collagedetails.rollno"},
+        to:{$max:"$collagedetails.rollno"},
+        mentorname:{$first:"$MentorDetails.personaldetails.name"}
+        }
+      },
+      {$project:{
+        _id:0,
+        division:"$_id.division",
+        from:1,
+        to:1,
+        mentorname:1
+      }},
+      {$sort:{"division":1}}
+    ])
+    resp.status(200).json({students:students,assigndata:assigndata});
   }
   catch(err)
   {

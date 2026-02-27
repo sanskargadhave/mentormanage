@@ -21,6 +21,7 @@ import {AddLecture} from "./admin component/addLecture.js";
 import { AddAttendance } from "./mentor component/addAttendance.js";
 import { ViewStudent } from "./mentor component/viewstudent.js"; 
 import { AssignMentor } from "./admin component/GiveMentor.js";
+import {AddTestResult} from "./mentor component/addTestResult.js";
 function App() {
   return (
     <Routes>
@@ -51,12 +52,13 @@ function App() {
         <Route path="/mentor" element={<MentorLayout />}>
           <Route index element={<MentorDashboardContent />} />
           <Route path="dashboard" element={<MentorDashboardContent />} />
+          
           <Route path="add-student" element={<Addstudent />} />
           <Route path="view-users" element={<ViewUser />} />
           <Route path="delete-user" element={<DeleteUser />} />
           <Route path="add-attendance" element={<AddAttendance/>}/>
           <Route path="view-student" element={<ViewStudent/>}/>
-          
+          <Route path="add-test-result" element={<AddTestResult/>}/>
         </Route>
 
       </Route>

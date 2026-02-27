@@ -1,14 +1,13 @@
 const express =require("express");
 const router=express.Router();
 
-
 const {StoreStudentDetails}=require("../controllers/StudentControler");
 const {StoreAttendances}=require("../controllers/AttendanceControler");
 const {AddMentor,MentorLogin}=require("../controllers/MentorControler");
-const {StoreLectures} =require("../controllers/LectureControler")
+const {StoreLectures} =require("../controllers/LectureControler");
 const {AdminLogin}=require("../controllers/AdminControler");
-const {AddTeacher}=require("../controllers/TeacherControler")
-
+const {AddTeacher}=require("../controllers/TeacherControler");
+const {StoreTest}=require("../controllers/TestControler");
 
 router.post("/add-student",StoreStudentDetails);
 
@@ -20,5 +19,6 @@ router.post("/api/store-lecture",StoreLectures);
 
 router.post("/api/admin-login",AdminLogin);
 router.post("/api/add-teacher",AddTeacher);
+router.post("/api/store-test-result",StoreTest);
 
 module.exports = router;

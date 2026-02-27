@@ -64,6 +64,14 @@ function MentorNavbar() {
               View Attendance
             </button>
           </li>
+
+          <li className="nav-item mb-2">
+            <button className="btn btn-dark w-100 text-start sidebar-btn" onClick={()=>{nevigate("/mentor/add-test-result")}}>
+              <i className="bi bi-clipboard-data me-2 set-icon"></i>
+              Add Test Result
+            </button>
+          </li>
+
           <button className="confirm-btn" onClick={()=>{nevigate("/admin/warning-logout")}}>
               <i className="bi bi-box-arrow-right"></i>
               Logout

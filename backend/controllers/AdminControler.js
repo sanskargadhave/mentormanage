@@ -1,4 +1,5 @@
 const readadmin = require("../model/adminSchema");
+const {StoreStudent, StoreMentor, StoreTeacher}= require("../model/studentSchema");
 const bcrypt = require("bcryptjs");
 //  /api/admin-login  URL POST 
 const AdminLogin=async (req, resp) => {
@@ -23,4 +24,16 @@ const AdminLogin=async (req, resp) => {
   }
 };
 
-module.exports={AdminLogin};
+const UserCounts=async (req,resp)=>{
+  try{
+    const totalStudents = await StoreStudent.countDocuments();
+    const totalMentors= await StoreMentor.countDocuments();
+    const totalteachers= await StoreTeacher.countDocuments();
+    resp.status(200).json({totalStudents:totalStudents,totalMentors:totalMentors,totalteachers:totalteachers});
+  }
+  catch(err)
+  {
+    resp.status(500).json({message:err.message});
+  }
+}
+module.exports={AdminLogin,UserCounts};
