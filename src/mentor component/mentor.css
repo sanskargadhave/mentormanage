@@ -24,6 +24,11 @@
   transform: translateY(-5px);
 }
 
+.input-reduce{
+  width: 120px;
+ 
+
+}
 .stat-card-body {
   display: flex;
   justify-content: space-between;
@@ -70,7 +75,7 @@ border-color: #e80303;
 
 .mentor-content {
   margin-left: 80px;
-  margin-top: 40px;
+  margin-top: 10px;
   padding: 50px;
 }
 .sidebar-btn:hover {
@@ -110,6 +115,7 @@ border-color: #e80303;
 
 .attendance-table th {
   background: #f1f1f1;
+  
 }
 
 
@@ -142,13 +148,84 @@ border-color: #e80303;
     color: #000000; 
     padding: 30px;
     border-radius: 12px;
-    width: 300px;
-    margin: 0px auto;
+   
     box-shadow: 0 8px 20px rgba(16, 15, 15, 0.1);
    
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+.summery-div{
+  margin-left: 0px;
+}
+.report-actions{
+display:flex;
+gap:12px;
+justify-content:flex-end;
+margin-bottom:15px;
+}
 
+.action-btn{
+display:flex;
+align-items:center;
+gap:8px;
+padding:5px 5px;
+border:none;
+border-radius:8px;
+font-weight:500;
+cursor:pointer;
+transition:all 0.25s ease;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+.send{
+background:#22c55e;
+color:white;
+}
+
+.send:hover{
+background:#16a34a;
+transform:translateY(-1px);
+}
+/* View */
+.view{
+background:#2563eb;
+color:white;
+}
+
+.view:hover{
+background:#1e40af;
+transform:translateY(-2px);
+}
+
+/* Export */
+.export{
+background:#16a34a;
+color:white;
+}
+
+.export:hover{
+background:#15803d;
+transform:translateY(-2px);
+}
+
+/* Print */
+.print{
+background:#374151;
+color:white;
+}
+
+.print:hover{
+background:#1f2937;
+transform:translateY(-2px);
+}
+.space{
+  margin-right: 10px;
+}
+.cards-container{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 body {
     background: linear-gradient(to right, #e3f2fd, #f8f9fa);
 }

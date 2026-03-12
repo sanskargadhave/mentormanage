@@ -49,7 +49,7 @@ const StudentCounts= async (req, resp) => {
 const SearchStudent= async (req,resp)=>{
   try{
     const datas=await StoreLecture.findOne({lectureid:req.params.lectureid});
-    const students=await StoreStudent.find({$and:[{"collagedetails.year":datas.Class},{"collagedetails.division":datas.division}]},"_id personaldetails.name collagedetails.rollno").sort({"collagedetails.rollno":1});
+    const students=await StoreStudent.find({$and:[{"collagedetails.year":datas.Class},{"collagedetails.division":datas.division}]}).sort({"collagedetails.rollno":1});
 
     resp.status(200).json(students);
   }

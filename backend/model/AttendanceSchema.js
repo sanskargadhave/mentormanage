@@ -31,7 +31,8 @@ const addlecture=new mongoose.Schema({
     teacherid:{type:mongoose.Schema.Types.ObjectId,ref:"teacher",required:true},
     division:{type:String,required:true},
     Class:{type:String,required:true},
-    department:{type:String,required:true}
+    department:{type:String,required:true},
+    course:{type:String,required:true}
 });
 
 addlecture.pre("save", function () {

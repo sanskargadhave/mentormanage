@@ -7,6 +7,7 @@ import { GiveError } from "../WarningOrSucess";
 import "./mentor.css";
 import { useContext } from "react";
 import { AuthContext } from "../Authintication";
+import collagelogo from "../collageassets/logo-college.png";
 export default function ShowAttendance({totalstudent,totalabsent,totalpresent,lectureid})
 {
     const today = new Date().toISOString().split("T")[0];
@@ -244,7 +245,7 @@ function AddAttendance() {
             setstep("attendance")    
         }
     }
-
+    
     return (
         <div className="admin-content">
             {step==="search" && (
@@ -284,8 +285,34 @@ function AddAttendance() {
             </div>)}
             {step==="attendance" && (
             <div className="animate__animated animate__jackInTheBox ">
-                <h5 className="absent-row">Lecture id :  {selected.value}</h5>
-                <h5 className="absent-row">Date :  {date}</h5>
+                <div className="row">
+                    <div className="col-12 col-md-12">
+                            <center><h4><img src={collagelogo} alt="College Logo" width="40" /> SANGOLA MAHAVIDYLAYA SANGOLA</h4></center>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12 col-md-4">
+                        <label>Lecture Id : {selected.value}</label>
+                    </div>
+                    <div className="col-12 col-md-4">
+                            <label>   {selected.value.split("-")[2]}   {selected.value.split("-")[3]}</label>
+                    </div>
+                    <div className="col-12 col-md-4">
+                        <label> Subject :- {selected.value.split("-")[1]}</label>
+                    </div>
+                </div><br/>
+                <div className="row">
+                    <div className="col-md-2">
+                        <label>Total :   </label>
+                    </div>
+                    <div className="col-md-4">
+                        <label>Date :  {date} </label>
+                    </div>
+                    <div className="col-md-4">
+                        <h5>Attendance Sheet </h5>
+                    </div>
+                </div><br/>
+                
                 <table className="attendance-table">
                     <thead>
                         <tr>

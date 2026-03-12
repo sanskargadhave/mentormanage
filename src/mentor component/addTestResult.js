@@ -1,37 +1,457 @@
 import axios from "axios";
 import { useEffect,useState} from "react";
 import Select from "react-select";
-export default function AssignMarks({date,studentdata,lectureid,totalmarks,testname})
+import { useRef } from "react";
+import collagelogo from "../collageassets/logo-college.png";
+import { GiveError } from "../WarningOrSucess";
+import {ResultChart} from "../Visulaisation Charts/passvsfailchart";
+
+export function DataSummery({testid,message})
+{
+    const [counts,setcounts]=useState({});
+    const [topStudents,setTopStudents]=useState([]);
+    const [showerror,setshowerror]=useState(true);
+    const [showpreview,setshowpreview]=useState(false);
+    const [loding,setloding]=useState(false);
+    const previewRef = useRef(null);
+    const [action,setaction]=useState("");
+    useEffect(()=>{
+        const getData = async ()=>{
+            const response=await axios.get(`http://localhost:5000/api/get-test-summery/${testid}`);
+            setcounts(response.data.testcounts[0]);
+            setTopStudents(response.data.topstudents)
+        }
+        getData();
+    },[testid])
+   
+    const sendParentMessage = async () => {
+        try{
+            const response = await axios.post("http://localhost:5000/api/sendMessage",{
+                name: "Sanskar Shantinath Gadhave",
+                marks: 100,
+                totalMarks: 100,
+                phone:7276699105
+            });
+
+            console.log(response.data);
+            
+        }
+        catch(err)
+        {
+            console.log(err);
+            alert("Failed to send message");
+        }
+    }
+    function handleviewreport(e)
+    {
+        if(e.currentTarget.name==="view")
+        {
+            setloding(true);
+            setTimeout(()=>{
+                setloding(false);
+                setshowpreview(true);
+                previewRef.current.scrollIntoView({ behavior: "smooth" });
+            },2000)
+        }
+        else 
+        {
+            setloding(true);
+            setTimeout(()=>{
+                setloding(false);
+                setshowpreview(true);   
+            },2000) 
+        }
+    }
+
+    return (
+        <div className=" animate__animated animate__rotateInDownLeft">
+            {showerror && (<GiveError show={showerror} message={message} duration={10000} onClose={()=>setshowerror(false)}/>)}
+            
+            <div className="row ">
+                <div className="col-md-8">
+                    <div className="professional-card">
+                        <h5>
+                            <i className="bi bi-airplane-engines set-icon"></i>
+                            Meet the Top 3 Stars of the Class! ⭐⭐⭐
+                        </h5><hr/>
+                        <table className="count-table">
+                            <thead className="bor">
+                                <tr>
+                                    <th></th>
+                                    <th>RollNo</th>
+                                    <th>Name</th>
+                                    <th>Marks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {topStudents.map((data,index)=>(
+                                    <tr key={index}>
+                                        <td><i className="bi bi-award-fill set-icon"></i></td>
+                                        <td>{data.rollno}</td>
+                                        <td>{data.name}</td>
+                                        <td>{data.marks}</td>
+                                    </tr>
+                                ))
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div className="col-md-4">
+                   <div className="professional-card"> 
+                        <h5>
+                            <i className="bi bi-tag-fill set-icon"></i>
+                             Report
+                        </h5><hr/>
+                        <h6 className="total"> 
+                            <i className="bi bi-people-fill set-icon"></i> 
+                            Total Student : {counts?.countpresent+counts?.countabsent} 
+                        </h6> 
+                        <h6 className="total-present"> 
+                            <i className="bi bi-check-circle-fill set-icon"></i>
+                             Total Present :{counts?.countpresent} 
+                        </h6> 
+                        <h6 className="total-absent"> 
+                            <i className="bi bi-person-dash-fill set-icon"></i> 
+                            Total Absent :{counts?.countabsent} 
+                        </h6> 
+                        <h6 className="total-present"> 
+                            <i className="bi bi-trophy-fill set-icon"></i>
+                            Total Pass :{counts?.countpass} 
+                        </h6> 
+                        <h6 className="total-absent"> 
+                            <i className="bi bi-x-circle-fill set-icon"></i>            
+                            Total Fail :{counts?.countfail} 
+                        </h6>
+                    </div> 
+                   
+                </div>
+            </div><br/>
+            <div className="row">
+                <div className="col-md-6">
+                    <div className="professional-card">
+                        <h5>
+                            <i className="bi bi-pie-chart-fill"></i> Result Chart
+                        </h5>
+                        <ResultChart pass={counts?.countpass} fail={counts?.countfail} present={counts?.countpresent} absent={counts?.countabsent}/>
+                    </div>
+                </div>
+                <div className="col-md-6">
+                    <div className="report-actions">
+                        {!showpreview && (
+                        <button className="btn btn-outline-primary btn-sm d-flex align-items-center gap-2 set-icon" name="view" onClick={(e)=>{setaction("inline");handleviewreport(e);}} disabled={loding}>
+                            {loding   
+                                ?(<span className="spinner-border spinner-border-sm me-2"></span>)
+                                :(<i className="bi bi-eye"></i> )
+                            }
+                        </button>)}
+
+                        {showpreview && (
+                        <button className="btn btn-outline-primary btn-sm d-flex align-items-center gap-2 set-icon" onClick={()=>setshowpreview(false)}>
+                            <i className="bi bi-eye-slash-fill"></i> 
+                        </button>)}
+                        
+                        <button className="btn btn-outline-primary btn-sm d-flex align-items-center gap-2 set-icon" name="download" onClick={(e)=>{setaction("attachment");handleviewreport(e);}} disabled={loding}>
+                            {loding
+                            ?(<span className="spinner-border spinner-border-sm me-2"></span>)
+                            :(<i className="bi bi-download"></i>)} 
+                        </button>   
+
+                     
+                        
+                        <button className="btn btn-outline-primary btn-sm d-flex align-items-center gap-2 set-icon" onClick={()=>sendParentMessage()}>
+                          <i className="bi bi-send-arrow-up-fill"></i>
+                        </button>
+                        
+                    </div>
+                </div>
+            </div><br/><br/>
+            <div className="row" ref={previewRef}>
+                <div className="col-md-12">
+                    {showpreview && (
+                        <iframe src={`http://localhost:5000/api/make-test-report/${testid}?action=${action}`} width="100%" height="600px" title="PDF Review"/>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+
+
+export  function AssignMarks({date,studentdata,lectureid,totalmarks,testname,passingmarks,subject,teacherid})
 {
     
+    let firstob=studentdata[0];
+    const inputRefs = useRef({});
+    const [result,setresult]=useState({});
+    const [errors,seterror]=useState({});
+    const [step,setstep] = useState("getresult");
+    const [message,setmessage]=useState("")
+    
+    const [testid,settestid]=useState("");
+
+    const isEmpty= (v) => v.trim() === "";
+    const hasChar= (v) => /[A-Za-z]/.test(v);
+
+    function calculateGrade(marks) 
+    {
+
+        const total = Number(totalmarks);
+        const obtained = Number(marks);
+
+        if (!obtained || obtained < 0) return "";
+
+        const percentage = (obtained / total) * 100;
+
+        if (percentage >= 90) return "A+";
+        if (percentage >= 80) return "A";
+        if (percentage >= 70) return "B+";
+        if (percentage >= 60) return "B";
+        if (percentage >= 50) return "C";
+        if (percentage >= 10) return "D";
+        return "";
+    }
+
+    useEffect(() => {
+        if (studentdata.length > 0) {
+            const initialResult = {};
+            studentdata.forEach((student) => {
+                initialResult[student._id] = null;
+            });
+            setresult(initialResult);
+        }
+    }, [studentdata]);
+
+    function setstudentresult(studentid,marks)
+    {
+        setresult(data=>({
+            ...data,
+            [studentid]:marks 
+        }));
+        let error="";
+        if(Number(marks)>Number(totalmarks)) error=`Marks Less Than ${totalmarks}`;
+        else if(isEmpty(marks)) error="Marks Required";
+        else if(Number(marks)<=0) error=`Marks greater Than 0`;
+        else if(hasChar(marks)) error="Char Not Allowed ";
+        else error="";
+        seterror(prev=>({
+            ...prev,
+            [studentid]:error
+        }));
+    }
+    function storeresult(){
+        const resultarray=Object.entries(result).map(([studentid,marks])=>({
+            studentid,
+            marks: marks===null ? 0 : Number(marks),
+            status:marks===null ? "Absent":"Present"
+        }))
+        
+        const isFormValid = Object.values(errors).every((msg) => msg === "");
+        if(!isFormValid)
+        {
+            alert("please Check Validations");
+            return;
+        }
+        fetch("http://localhost:5000/api/store-test-result",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                    teacherid:teacherid,
+                    subject:subject,
+                    testName:testname,
+                    totalmarks:totalmarks,
+                    date:date,
+                    passingmarks:passingmarks,
+                    course:firstob.collagedetails.course,
+                    department:firstob.collagedetails.department,
+                    year:firstob.collagedetails.year,
+                    division:firstob.collagedetails.division, 
+                    students:resultarray
+            })
+        }).then((resp)=>resp.json())
+        .then((data)=>{setmessage(data.message); settestid(data.testid); setstep("summery")})
+        .catch((err)=>alert(err.message))
+    }
+    function handleKey(e, index) {
+        if (e.key === "Enter" || e.key === "ArrowDown") {
+            e.preventDefault();
+            const nextStudent = studentdata[index + 1];
+            if (nextStudent) {
+                inputRefs.current[nextStudent._id]?.focus();
+            }
+        }
+
+        if (e.key === "ArrowUp") {
+            e.preventDefault();
+            const prevStudent = studentdata[index - 1];
+            if (prevStudent) {
+                inputRefs.current[prevStudent._id]?.focus();
+            }
+        }
+    }
     return(
-        <div className="mentor-content">
+        <div className="mentor-content animate__animated animate__rotateInDownLeft">
+            {step==="getresult" && (
             <div>
-                <tabel className="attendance-table">
+                <div className="row">
+                    <div className="col-12 col-md-12">
+                        <center><h4><img src={collagelogo} alt="College Logo" width="40" /> SANGOLA MAHAVIDYLAYA SANGOLA</h4></center>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12 col-md-4">
+                        <label>{firstob.collagedetails.department}</label>
+                    </div>
+                    <div className="col-12 col-md-4">
+                        <label>{firstob.collagedetails.course}   {lectureid.split("-")[2]}   {lectureid.split("-")[3]}</label>
+                    </div>
+                    <div className="col-12 col-md-4">
+                        <label> Subject :- {lectureid.split("-")[1]}</label>
+                    </div>
+                </div><br/>
+                <div className="row">
+                    <div className="col-md-2">
+                        <label>Total : {totalmarks}  </label>
+                    </div>
+                    <div className="col-md-4">
+                        <label>Date : {date}</label>
+                    </div>
+                    <div className="col-md-4">
+                        <label>Test Name : {testname}</label>
+                    </div>
+                </div><br/>
+                <table className="attendance-table">
                     <thead>
                         <tr>
                             <th>Rollno</th>
                             <th>Student Name</th>
                             <th>Marks</th>
-                            <th>Click P/A</th>
-                            <th></th>
+                            <th>Status</th>
+                            <th>Grade</th>
                         </tr>
                     </thead>
-                </tabel>
-            </div>
+                    <tbody>
+                       {studentdata.map((studentinfo,index)=>(
+                        <tr key={studentinfo._id} >
+                        <td>{studentinfo.collagedetails.rollno}</td>
+                        <td>{studentinfo.personaldetails.name}</td>
+                        <td>
+                            <input type="text" 
+                                className="form-control input-reduce" 
+                                max={totalmarks} 
+                                placeholder={`Enter Marks / ${totalmarks}`} 
+                                onChange={(e)=>setstudentresult(studentinfo._id,e.target.value)}
+                                ref={(el)=>(inputRefs.current[studentinfo._id]=el)} onKeyDown={(e) => handleKey(e, index)}
+                            />
+                                
+                            {(errors[studentinfo._id])!=="" && (
+                            <label className="total-absent">{errors[studentinfo._id]}</label>
+                            )}
+                        </td>
+                        <td>
+                            {
+                                result[studentinfo._id] === null ? (<span className="badge text-bg-primary">Absent</span>)
+                                : Number(result[studentinfo._id]) >= Number(passingmarks)
+                                ? (<span className="badge text-bg-success">Pass</span>)
+                                : (<span className="badge text-bg-danger">Fail</span>)
+                            }
+                        </td>
+                        <td>
+                            {
+                                result[studentinfo._id] === null
+                                ? ""
+                                : calculateGrade(result[studentinfo._id])
+                            }
+                        </td>
+                        </tr>
+                        ))}
+                    </tbody>
+                </table>
+                <br/><br/>  
+                <div className="row">
+                    <div className="col-md-6">
+                        <button className="search-btn" onClick={storeresult}>
+                            <i className="bi bi-folder-plus"></i>
+                            <span>Add result</span>
+                        </button>
+                    </div>
+                </div>
+            </div>)}
+            {step==="summery" && (
+                <div>
+                    <DataSummery testid={testid} message={message}/>
+                </div>
+            )}
         </div>
+    
     );
 }
+
+
+
 function AddTestResult()
 {
     const today = new Date().toISOString().split("T")[0];
     const [studentdata,setstudentdata]=useState([]);
     const [subjects,setsubjects]=useState([]);
-    const [selected,setselected]=useState(null);
-    const [testname,settestname]=useState("");
-    const [totalmarks,settotalmarks]=useState("");
-    const [date,setdate]=useState(today);
     const [step,setstep] = useState("getdetails");
+    const [formdata,setformdata]=useState({
+        selected:"",
+        testname:"",
+        totalmarks:"",
+        date:today,
+        passingmarks:""
+    });
+    const [errors,seterror]=useState({
+        selected:"",
+        testname:"",
+        totalmarks:"",
+        date:"",
+        passingmarks:""
+    });
+    const isEmpty= (v) => v.trim() === "";
+    const hasChar= (v) => /[A-Za-z]/.test(v);
+    function handlechange(e)
+    {
+        const {name,value}=e.target;
+        setformdata((prev)=>({...prev,[name]:value}));
+        let error="";
+        switch(name)
+        {
+            case "selected":
+                if(isEmpty(value)) error="Subject required";
+                else error="";
+                break;
+            case "testname":
+                if(isEmpty(value)) error="Test Name required";
+                else error="";
+                break;
+            case "totalmarks":
+                if(isEmpty(value)) error="Total Marks required";
+                else if(hasChar(value)) error="Char Not Allowed";
+                else error="";
+                break;
+            case "date":
+                if(isEmpty(value)) error="Date required";
+                else error="";
+                break;
+            case "passingmarks":
+                if(isEmpty(value)) error="passing Marks required";
+                else if(hasChar(value)) error="Char Not Allowed";
+                else if (Number(value)>=Number(formdata.totalmarks)) error="Marks Less than "+formdata.totalmarks;
+                else error="";
+                break;  
+            default:
+                break;
+        }
+        seterror((prev)=>({...prev,[name]:error})); 
+    }
+
     useEffect(()=>{
         const getsubjectdetails= async ()=>{
             const resp=await axios.get("http://localhost:5000/api/getlecture");
@@ -39,21 +459,34 @@ function AddTestResult()
         }
         getsubjectdetails();
     },[]);
-
+    
+    function isAllvalid(){
+        const isFormValid=Object.values(errors).every((msg) => msg === "")
+        const isFillAll=Object.values(formdata).some((data)=>data==="")
+         if (isFillAll||!isFormValid) {
+            alert("Please fill all fields or check Validaton");
+            return;
+        }
+        else{
+            setstep("summery");
+        }
+    }
     useEffect(()=>{
         const getstudentdetails = async ()=>{
-            if(!selected) return;
-            const response=await axios.get(`http://localhost:5000/api/serach-student/${selected.value}`); 
+            if(!formdata.selected) return;
+            const response=await axios.get(`http://localhost:5000/api/serach-student/${formdata.selected}`); 
             setstudentdata(response.data);
         }
         getstudentdetails();
-    },[selected]);
+    },[formdata.selected]);
 
      const options = subjects.map((s) =>({
         value: s.lectureid,
         label: `${s.lectureid} | Subject: ${s.subject}`
     }));
-
+    const selectedSubject = subjects.find(
+  (s) => s.lectureid === formdata.selected
+);
     return (
         <div className="mentor-content animate__animated animate__zoomIn animate__slow">
             {step==="getdetails" && (
@@ -63,47 +496,82 @@ function AddTestResult()
                         <label className="form-label">
                             <i className="bi bi-person-vcard"></i> Select Appropriate Subject *
                         </label>
-                        <Select options={options} placeholder="Select Subject With Appropriate Class Division" maxMenuHeight={300} value={selected} onChange={setselected} isClearable/>
+                        <Select
+                            className="form-label"
+                            options={options}
+                            placeholder="Select Subject With Appropriate Class Division"
+                            maxMenuHeight={300}
+                            value={options.find(opt => opt.value === formdata.selected) || null}
+                            onChange={(e) =>
+                            setformdata(prev => ({
+                                ...prev,
+                                selected: e ? e.value : ""
+                            }))}isClearable
+                        />    
                     </div>
                     <div className="col-md-4">
                         <label className="form-label"><i className="bi bi-calendar-heart"></i> Give Name for This Test </label>
-                        <input type="text" className="form-control" placeholder="Give Name For This Test" onChange={(e)=>{settestname(e.target.value)}}/>
+                        <input type="text" className="form-control" name="testname" placeholder="Give Name For This Test" onChange={handlechange}/>
                     </div>
                 </div>
+                
+                {/* Warning Label */}
                 <div className="row">
-                    <div className="col-md-10">
-                        {selected && 
-                        (
-                            <div className="mt-3 text-success">
-                                Selected Subject: <b>{selected.value}</b>
-                            </div>
-                        )}
+                    <div className="col-12 col-md-6">
+                        <label className="showError">{errors.selected}</label>
+                    </div>
+                    <div className="col-12 col-md-4">
+                        <label className="showError">{errors.testname}</label>
                     </div>
                 </div>
-                <br/>
+                <br></br>
                 <div className="row">
                     <div className="col-md-4">
                         <label className="form-label"><i className="bi bi-calendar-heart"></i> Select Date *  </label>
-                        <input type="date" className="form-control" value={date} max={today} placeholder="Select Date " onChange={(e)=>{setdate(e.target.value)}}/>
+                        <input type="date" name="date" className="form-control" value={formdata.date} max={today} placeholder="Select Date " onChange={handlechange}/>
                     </div>
                     <div className="col-md-4">
                         <label className="form-label"><i className="bi bi-bar-chart me-2"></i> Enter Total Marks *  </label>
-                        <input type="text" className="form-control" placeholder="Enter Total Marks" onChange={(e)=>{settotalmarks(e.target.value)}}/>
+                        <input type="text" name="totalmarks" className="form-control" placeholder="Enter Total Marks" onChange={handlechange}/>
                     </div>
                     <div className="col-md-4">
-                        <button className="search-btn" onClick={() => { 
-                                if (!selected || !testname || !totalmarks) { alert("Please fill all required fields!"); return;}
-                                setstep("summery");
-                            }}>
+                        <label className="form-label"><i className="bi bi-bar-chart me-2"></i>Set Passing Marks</label>
+                        <input type="text" name="passingmarks"className="form-control" placeholder="Set Passing Marks" onChange={handlechange}/>
+                    </div>
+                </div>
+                {/* Warning Label */}
+            <div className="row">
+                <div className="col-12 col-md-4">
+                    <label className="showError">{errors.date}</label>
+                </div>
+                <div className="col-12 col-md-4">
+                    <label className="showError">{errors.totalmarks}</label>
+                </div>
+                <div className="col-12 col-md-4">
+                    <label className="showError">{errors.passingmarks}</label>
+                </div>
+            </div>
+            <br></br>
+
+                <div className="row">
+                    <div className="col-md-5">
+                        <button className="search-btn" onClick={isAllvalid}>
                             <i className="bi bi-clipboard-plus"></i>
                             <span>Add Result</span>
                         </button>
                     </div>
                 </div>
-               
             </div>)}
-             {step === "summery" && selected && (
-                    <AssignMarks date={date} studentdata={studentdata} lectureid={selected.value} totalmarks={totalmarks} testname={testname}/>
+            {step === "summery" && formdata.selected && (
+                    <AssignMarks date={formdata.date} 
+                        studentdata={studentdata} 
+                        lectureid={formdata.selected} 
+                        totalmarks={formdata.totalmarks} 
+                        testname={formdata.testname} 
+                        passingmarks={formdata.passingmarks}
+                        subject={selectedSubject?.subject}
+                        teacherid={selectedSubject?.teacherid}
+                    />
                 )}
         </div>
     );

@@ -8,6 +8,8 @@ const {StoreLectures} =require("../controllers/LectureControler");
 const {AdminLogin}=require("../controllers/AdminControler");
 const {AddTeacher}=require("../controllers/TeacherControler");
 const {StoreTest}=require("../controllers/TestControler");
+const CreateTestId=require("../middleware/testMiddleware");
+const {sendMessage}=require("../controllers/messagecontroler");
 
 router.post("/add-student",StoreStudentDetails);
 
@@ -19,6 +21,7 @@ router.post("/api/store-lecture",StoreLectures);
 
 router.post("/api/admin-login",AdminLogin);
 router.post("/api/add-teacher",AddTeacher);
-router.post("/api/store-test-result",StoreTest);
+router.post("/api/store-test-result",CreateTestId,StoreTest);
+router.post("/api/sendMessage", sendMessage);
 
 module.exports = router;
