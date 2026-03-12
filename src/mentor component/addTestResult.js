@@ -17,7 +17,7 @@ export function DataSummery({testid,message})
     const [action,setaction]=useState("");
     useEffect(()=>{
         const getData = async ()=>{
-            const response=await axios.get(`http://localhost:5000/api/get-test-summery/${testid}`);
+            const response=await axios.get(`https://sangolacollage.onrender.com/api/get-test-summery/${testid}`);
             setcounts(response.data.testcounts[0]);
             setTopStudents(response.data.topstudents)
         }
@@ -26,7 +26,7 @@ export function DataSummery({testid,message})
    
     const sendParentMessage = async () => {
         try{
-            const response = await axios.post("http://localhost:5000/api/sendMessage",{
+            const response = await axios.post("https://sangolacollage.onrender.com/api/sendMessage",{
                 name: "Sanskar Shantinath Gadhave",
                 marks: 100,
                 totalMarks: 100,
@@ -171,7 +171,7 @@ export function DataSummery({testid,message})
             <div className="row" ref={previewRef}>
                 <div className="col-md-12">
                     {showpreview && (
-                        <iframe src={`http://localhost:5000/api/make-test-report/${testid}?action=${action}`} width="100%" height="600px" title="PDF Review"/>
+                        <iframe src={`https://sangolacollage.onrender.com/api/make-test-report/${testid}?action=${action}`} width="100%" height="600px" title="PDF Review"/>
                     )}
                 </div>
             </div>
@@ -255,7 +255,7 @@ export  function AssignMarks({date,studentdata,lectureid,totalmarks,testname,pas
             alert("please Check Validations");
             return;
         }
-        fetch("http://localhost:5000/api/store-test-result",{
+        fetch("https://sangolacollage.onrender.com/api/store-test-result",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -454,7 +454,7 @@ function AddTestResult()
 
     useEffect(()=>{
         const getsubjectdetails= async ()=>{
-            const resp=await axios.get("http://localhost:5000/api/getlecture");
+            const resp=await axios.get("https://sangolacollage.onrender.com/api/getlecture");
             setsubjects(resp.data);
         }
         getsubjectdetails();
@@ -474,7 +474,7 @@ function AddTestResult()
     useEffect(()=>{
         const getstudentdetails = async ()=>{
             if(!formdata.selected) return;
-            const response=await axios.get(`http://localhost:5000/api/serach-student/${formdata.selected}`); 
+            const response=await axios.get(`https://sangolacollage.onrender.com/api/serach-student/${formdata.selected}`); 
             setstudentdata(response.data);
         }
         getstudentdetails();

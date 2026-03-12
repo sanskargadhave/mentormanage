@@ -31,7 +31,7 @@ function AssignMentor()
         exprience:""
     });
     useEffect(()=>{
-        axios.get("http://localhost:5000/api/getmentor")
+        axios.get("https://sangolacollage.onrender.com/api/getmentor")
         .then((resp)=>setmentor(resp.data))
         .catch((err)=>console.log(err.message))
     },[])
@@ -65,7 +65,7 @@ function AssignMentor()
             return (setshowerror(true));
         }
         try {
-            const resp = await axios.put("http://localhost:5000/api/assign-mentors",
+            const resp = await axios.put("https://sangolacollage.onrender.com/api/assign-mentors",
                 {
                     from: from,
                     to: to,
@@ -88,7 +88,7 @@ function AssignMentor()
             setmessage("Please Provide All Details");
             return(setshowerror(true));
         }
-        axios.get("http://localhost:5000/api/get-students", {
+        axios.get("https://sangolacollage.onrender.com/api/get-students", {
             params: {
                 course: selectedCourse,
                 department: data.department,

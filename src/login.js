@@ -28,7 +28,7 @@ function AdminLogin()
     {
         try 
         {
-            const resp = await fetch("http://localhost:5000/api/admin-login",{
+            const resp = await fetch("https://sangolacollage.onrender.com/api/admin-login",{
                 method:"POST",
                 headers:{
                 "Content-Type":"application/json"},
@@ -169,7 +169,7 @@ function MentorLogin()
     {
         try 
         {
-            const resp = await fetch("http://localhost:5000/api/mentor-login",{
+            const resp = await fetch("https://sangolacollage.onrender.com/api/mentor-login",{
                 method:"POST",
                 headers:{
                 "Content-Type":"application/json"},

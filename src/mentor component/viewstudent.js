@@ -20,7 +20,7 @@ function ViewStudent() {
             setshowerror(true);
             return;
         }
-        let url = `http://localhost:5000/api/get-studentdetails/${rollno}`;
+        let url = `https://sangolacollage.onrender.com/api/get-studentdetails/${rollno}`;
 
         if (event === "bydate" && date) {
             url=url+`?date=${date}`;

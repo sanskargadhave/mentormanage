@@ -11,7 +11,7 @@ function ViewUser() {
     useEffect(() => {
         const fetchCounts = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/api/get-usercounts");
+                const response = await axios.get("https://sangolacollage.onrender.com/api/get-usercounts");
                 setcounts(response.data);
             } catch (err) {
                 alert("Error fetching counts", err);

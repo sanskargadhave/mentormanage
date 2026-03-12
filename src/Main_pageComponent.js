@@ -4,14 +4,14 @@ function StudentDashboardContent()
 {
   const[totalStudent,setTotalStudent]=useState(0);
   useEffect(()=>{
-    fetch("http://localhost:5000/api/students/count")
+    fetch("https://sangolacollage.onrender.com/api/students/count")
     .then(res=>res.json())
     .then(data=>setTotalStudent(data.count))
   },[]);
 
   const[totalMentor,setTotalMentor]=useState(0);
   useEffect(()=>{
-    fetch("http://localhost:5000/api/Mentor/count")
+    fetch("https://sangolacollage.onrender.com/api/Mentor/count")
     .then(res=>res.json())
     .then(data=>setTotalMentor(data.count))
   },[]);

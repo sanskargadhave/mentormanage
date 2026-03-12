@@ -31,7 +31,7 @@ function AddLecture(){
         course:""
     });
     useEffect(()=>{
-        axios.get("http://localhost:5000/api/getteacher")
+        axios.get("https://sangolacollage.onrender.com/api/getteacher")
         .then((resp)=>setteachers(resp.data))
         .catch((err)=>alert(err));
     },[]);
@@ -82,7 +82,7 @@ function AddLecture(){
         }
         else
         {
-            fetch("http://localhost:5000/api/store-lecture",{
+            fetch("https://sangolacollage.onrender.com/api/store-lecture",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"

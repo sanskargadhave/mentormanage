@@ -126,7 +126,7 @@ function AddTeacher()
             return;
         }
         else{
-            fetch("http://localhost:5000/api/add-teacher",{
+            fetch("https://sangolacollage.onrender.com/api/add-teacher",{
             method:"POST",
             headers:{
                     "Content-Type":"application/json"

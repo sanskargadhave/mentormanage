@@ -17,7 +17,7 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
     {
         try 
         {
-            const response = await axios.get(`http://localhost:5000/api/get-attendance/${lectureid}`);
+            const response = await axios.get(`https://sangolacollage.onrender.com/api/get-attendance/${lectureid}`);
             setData(response.data.result);
             setcounts(response.data.counts);
         } 
@@ -178,7 +178,7 @@ function AddAttendance() {
 
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/getlecture")
+        axios.get("https://sangolacollage.onrender.com/api/getlecture")
             .then((resp) => {
                 setlecture(resp.data);
             })  
@@ -208,7 +208,7 @@ function AddAttendance() {
             rollno,
             status
         }))
-        fetch("http://localhost:5000/api/store-attendance",{
+        fetch("https://sangolacollage.onrender.com/api/store-attendance",{
              method:"POST", 
                 headers:{
                     "Content-Type":"application/json"
@@ -237,7 +237,7 @@ function AddAttendance() {
             setshowerror("true");
         }
         else{
-            axios.get(`http://localhost:5000/api/serach-student/${selected.value}`)
+            axios.get(`https://sangolacollage.onrender.com/api/serach-student/${selected.value}`)
             .then((resp) => {
             setstudentdata(resp.data);
             })

@@ -152,7 +152,7 @@ function AddStudent()
         }
         else
         {
-            fetch("http://localhost:5000/add-student",{
+            fetch("https://sangolacollage.onrender.com/add-student",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"

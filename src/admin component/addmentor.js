@@ -128,7 +128,7 @@ function AddMentor()
             return;
         }
         else{
-            fetch("http://localhost:5000/api/add-mentor",{
+            fetch("https://sangolacollage.onrender.com/api/add-mentor",{
             method:"POST",
             headers:{
                     "Content-Type":"application/json"
