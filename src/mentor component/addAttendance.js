@@ -7,6 +7,7 @@ import { GiveError } from "../WarningOrSucess";
 import "./mentor.css";
 import { useContext } from "react";
 import { AuthContext } from "../Authintication";
+import logo from "../collageassets/logo-college.png";
 
 export default function ShowAttendance({totalstudent,totalabsent,totalpresent,lectureid})
 {
@@ -287,7 +288,7 @@ function AddAttendance() {
             <div className="animate__animated animate__jackInTheBox ">
                 <div className="row">
                     <div className="col-12 col-md-12">
-                            <center><h4><img src="/logo-college.png" alt="College Logo" width="40" /> SANGOLA MAHAVIDYLAYA SANGOLA</h4></center>
+                            <center><h4><img src={logo} alt="College Logo" width="40" /> SANGOLA MAHAVIDYLAYA SANGOLA</h4></center>
                     </div>
                 </div>
                 <div className="row">

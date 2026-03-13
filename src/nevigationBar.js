@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./Authintication";
+import logo from "./collageassets/logo-college.png";
 
 import "./Nevigation_Bar.css";
 
@@ -14,7 +15,7 @@ function NevigationBar() {
 
         {/* Brand */}
         <a className="navbar-brand d-flex align-items-center" href="/dashboard">
-          <img src="/logo-college.png" alt="Logo" style={{ height: '40px', width: '40px' }}/>
+          <img src={logo} alt="Logo" style={{ height: '40px', width: '40px' }}/>
           <span className="ms-2">EduMentor @Sangola Collage</span>
         </a>
 
