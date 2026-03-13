@@ -26,10 +26,10 @@ export function DataSummery({testid,message})
     const sendParentMessage = async () => {
         try{
             const response = await axios.post("https://sangolacollage.onrender.com/api/sendMessage",{
-                name: "Sanskar Shantinath Gadhave",
-                marks: 100,
+                name: "Vikram pawar",
+                marks: 10,
                 totalMarks: 100,
-                phone:7276699105
+                phone:6361782144
             });
 
             console.log(response.data);

@@ -42,7 +42,7 @@ body{
 .AdminloginPageDiv{
   margin-top: 100px;
   margin-left: 400px;
-  background-image: url("F:\mentormanage\public\logo-college.png");
+  background-image: url("/logo-college.png");
   background-size: 100%;
   height: 400px;
   width: 400px;
