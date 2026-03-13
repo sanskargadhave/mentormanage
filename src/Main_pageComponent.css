@@ -39,16 +39,7 @@ body{
   margin-top: 20px;
 }
 
-.AdminloginPageDiv{
-  margin-top: 100px;
-  margin-left: 400px;
-  background-image: url("/logo-college.png");
-  background-size: 100%;
-  height: 400px;
-  width: 400px;
-  background-repeat: no-repeat;
-  backface-visibility: 50%;
-}
+
 .login-wrapper {
   height: 100vh;
   display: flex;
