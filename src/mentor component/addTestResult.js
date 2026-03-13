@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect,useState} from "react";
 import Select from "react-select";
 import { useRef } from "react";
-import collagelogo from "../collageassets/logo-college.png";
 import { GiveError } from "../WarningOrSucess";
 import {ResultChart} from "../Visulaisation Charts/passvsfailchart";
 
@@ -300,7 +299,7 @@ export  function AssignMarks({date,studentdata,lectureid,totalmarks,testname,pas
             <div>
                 <div className="row">
                     <div className="col-12 col-md-12">
-                        <center><h4><img src={collagelogo} alt="College Logo" width="40" /> SANGOLA MAHAVIDYLAYA SANGOLA</h4></center>
+                        <center><h4><img src="/logo-college.png" alt="College Logo" width="40" /> SANGOLA MAHAVIDYLAYA SANGOLA</h4></center>
                     </div>
                 </div>
                 <div className="row">
