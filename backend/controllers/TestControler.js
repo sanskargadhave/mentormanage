@@ -179,7 +179,7 @@ const MakeTestReport = async (req, resp) => {
             <body>
 
                 <div class="header">  
-                    <img src="https://sangolacollage.onrender.com/logo-college.png" class="logo"/>
+                    <img src="/logo-college.png" class="logo"/>
                     <div class="title">
                         <h2>Sangola Mahavidyalaya Sangola</h2>
                         <h3>Department of ${testdetails.department}</h3>
