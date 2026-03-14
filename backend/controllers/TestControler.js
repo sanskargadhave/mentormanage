@@ -278,7 +278,7 @@ const MakeTestReport = async (req, resp) => {
       stream.end(pdf);
     });
     console.log(uploadResult.secure_url)
-    const update=await StoreTestResult.updateOne({testid:testid },{ $set: { pdfUrl: uploadResult.secure_url } });
+    const update=await StoreTestResult.updateOne({testid:testid},{$set: { pdfurl: uploadResult.secure_url } });
     console.log(update);
    resp.json({message: "Report generated and stored successfully"});
 
