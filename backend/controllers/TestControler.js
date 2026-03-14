@@ -267,6 +267,7 @@ const MakeTestReport = async (req, resp) => {
         {
           resource_type: "raw",
           folder: "test_reports",
+          format: "pdf",
           public_id: `report_${testid}`
         },
         (error, result) => {
