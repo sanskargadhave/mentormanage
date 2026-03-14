@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer-core");
 const chromium = require("@sparticuz/chromium");
+const cloudinary=require("../config/cloudinary");
 const {StoreTestResult} = require("../model/testSchema");
 
 const MakeTestReport = async (req, resp) => {
@@ -240,10 +241,11 @@ const MakeTestReport = async (req, resp) => {
     `;
 
     const browser = await puppeteer.launch({
-  args: [...chromium.args, "--no-sandbox", "--disable-setuid-sandbox"],
-  executablePath: await chromium.executablePath(),
-  headless: true
-});
+        args: [...chromium.args, "--no-sandbox", "--disable-setuid-sandbox"],
+        executablePath: await chromium.executablePath(),
+        headless: true
+    });
+
     const page = await browser.newPage();
     await page.setContent(html, {
       waitUntil: "networkidle0",
@@ -263,7 +265,24 @@ const MakeTestReport = async (req, resp) => {
       "Content-Disposition",
       `${action}; filename=test-report.pdf`
     );
+    const uploadResult = await new Promise((resolve, reject) => {
 
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          resource_type: "raw",
+          folder: "test_reports",
+          public_id: `report_${testid}`
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+
+      stream.end(pdf);
+
+    });
+    await StoreTestResult.updateOne({testid: testid },{ $set: { pdfUrl: uploadResult.secure_url } })
     resp.send(pdf);
 
   } catch (err) {
@@ -382,5 +401,6 @@ const GetTestSummery=async (req,resp)=>{
         resp.status(500).json({message:err.message});
     }
 }
+
 
 module.exports={StoreTest,GetTestSummery,MakeTestReport};
