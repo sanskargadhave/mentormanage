@@ -260,11 +260,7 @@ const MakeTestReport = async (req, resp) => {
     await browser.close();
 
     
-    resp.setHeader("Content-Type", "application/pdf");
-    resp.setHeader(
-      "Content-Disposition",
-      `${action}; filename=test-report.pdf`
-    );
+    
     const uploadResult = await new Promise((resolve, reject) => {
 
       const stream = cloudinary.uploader.upload_stream(
@@ -283,7 +279,7 @@ const MakeTestReport = async (req, resp) => {
 
     });
     await StoreTestResult.updateOne({testid: testid },{ $set: { pdfUrl: uploadResult.secure_url } })
-    resp.send(pdf);
+   resp.json({message: "Report generated and stored successfully"});
 
   } catch (err) {
     resp.status(500).json({ message: err.message });
