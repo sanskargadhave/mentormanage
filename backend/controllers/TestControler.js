@@ -259,7 +259,7 @@ const MakeTestReport = async (req, resp) => {
 
     await browser.close();
 
-    
+   
     
     const uploadResult = await new Promise((resolve, reject) => {
 
@@ -277,11 +277,17 @@ const MakeTestReport = async (req, resp) => {
 
       stream.end(pdf);
     });
-    console.log(uploadResult.secure_url)
-    const update=await StoreTestResult.updateOne({testid:testid},{$set: { pdfurl: uploadResult.secure_url } });
-    console.log(update);
-   resp.json({message: "Report generated and stored successfully"});
-
+    
+    const AlreadyUploded=await StoreTestResult.findOne({pdfurl:uploadResult.secure_url});
+    if(AlreadyUploded)
+    {
+        resp.json({message: "Report Already Uplode Test May Be Already Exist"});
+    }
+    else
+    {
+        const update=await StoreTestResult.updateOne({testid:testid},{$set: { pdfurl: uploadResult.secure_url } }); 
+        resp.json({message: "Report generated and Uplode successfully",url:uploadResult.secure_url});
+    }
   } catch (err) {
     resp.status(500).json({ message: err.message });
   }
