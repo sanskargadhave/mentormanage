@@ -10,10 +10,7 @@ export function DataSummery({testid,message})
     const [counts,setcounts]=useState({});
     const [topStudents,setTopStudents]=useState([]);
     const [showerror,setshowerror]=useState(true);
-    const [showpreview,setshowpreview]=useState(false);
-    const [loding,setloding]=useState(false);
-    const previewRef = useRef(null);
-    const [action,setaction]=useState("");
+    const [url,seturl]=useState("");
     useEffect(()=>{
         const getData = async ()=>{
             const response=await axios.get(`https://sangolacollage.onrender.com/api/get-test-summery/${testid}`);
@@ -21,8 +18,23 @@ export function DataSummery({testid,message})
             setTopStudents(response.data.topstudents)
         }
         getData();
-    },[testid])
-   
+    },[testid]);
+    useEffect(()=>{
+        async function uploadReport() {
+            try{    
+                const response = await axios.get(
+                    `https://sangolacollage.onrender.com/api/make-test-report/${testid}`
+                );
+                seturl(response.data.url);
+               
+            }
+            catch(err){
+                console.log(err);
+                alert("Failed to generate report");
+            }
+        }
+        uploadReport();
+    },[testid]);
     const sendParentMessage = async () => {
         try{
             const response = await axios.post("https://sangolacollage.onrender.com/api/sendMessage",{
@@ -41,27 +53,7 @@ export function DataSummery({testid,message})
             alert("Failed to send message");
         }
     }
-    function handleviewreport(e)
-    {
-        if(e.currentTarget.name==="view")
-        {
-            setloding(true);
-            setTimeout(()=>{
-                setloding(false);
-                setshowpreview(true);
-                previewRef.current.scrollIntoView({ behavior: "smooth" });
-            },2000)
-        }
-        else 
-        {
-            setloding(true);
-            setTimeout(()=>{
-                setloding(false);
-                setshowpreview(true);   
-            },2000) 
-        }
-    }
-
+    
     return (
         <div className=" animate__animated animate__rotateInDownLeft">
             {showerror && (<GiveError show={showerror} message={message} duration={10000} onClose={()=>setshowerror(false)}/>)}
@@ -139,41 +131,15 @@ export function DataSummery({testid,message})
                 </div>
                 <div className="col-md-6">
                     <div className="report-actions">
-                        {!showpreview && (
-                        <button className="btn btn-outline-primary btn-sm d-flex align-items-center gap-2 set-icon" name="view" onClick={(e)=>{setaction("inline");handleviewreport(e);}} disabled={loding}>
-                            {loding   
-                                ?(<span className="spinner-border spinner-border-sm me-2"></span>)
-                                :(<i className="bi bi-eye"></i> )
-                            }
-                        </button>)}
 
-                        {showpreview && (
-                        <button className="btn btn-outline-primary btn-sm d-flex align-items-center gap-2 set-icon" onClick={()=>setshowpreview(false)}>
-                            <i className="bi bi-eye-slash-fill"></i> 
-                        </button>)}
-                        
-                        <button className="btn btn-outline-primary btn-sm d-flex align-items-center gap-2 set-icon" name="download" onClick={(e)=>{setaction("attachment");handleviewreport(e);}} disabled={loding}>
-                            {loding
-                            ?(<span className="spinner-border spinner-border-sm me-2"></span>)
-                            :(<i className="bi bi-download"></i>)} 
-                        </button>   
-
-                     
-                        
                         <button className="btn btn-outline-primary btn-sm d-flex align-items-center gap-2 set-icon" onClick={()=>sendParentMessage()}>
-                          <i className="bi bi-send-arrow-up-fill"></i>
+                          <i className="bi bi-send-arrow-up-fill"></i> Send Message TO Parent
                         </button>
                         
                     </div>
                 </div>
             </div><br/><br/>
-            <div className="row" ref={previewRef}>
-                <div className="col-md-12">
-                    {showpreview && (
-                        <iframe src={`https://sangolacollage.onrender.com/api/make-test-report/${testid}?action=${action}`} width="100%" height="600px" title="PDF Review"/>
-                    )}
-                </div>
-            </div>
+            
         </div>
     );
 }
