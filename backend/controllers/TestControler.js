@@ -7,7 +7,7 @@ const MakeTestReport = async (req, resp) => {
   try {
     const today = new Date().toLocaleDateString();
     const testid = req.params.testid;
-    const action=req.query.action;
+    
     const teacher=await StoreTestResult.findOne({testid:testid},{students:0}).populate("teacherid","personaldetails.name");
     
     const testdetails = await StoreTestResult.findOne({ testid: testid },{ students: 0 });
@@ -278,7 +278,8 @@ const MakeTestReport = async (req, resp) => {
       stream.end(pdf);
 
     });
-    await StoreTestResult.updateOne({testid: testid },{ $set: { pdfUrl: uploadResult.secure_url } })
+    console.log(uploadResult.secure_url)
+    await StoreTestResult.updateOne({_id:testdetails._id },{ $set: { pdfUrl: uploadResult.secure_url } })
    resp.json({message: "Report generated and stored successfully"});
 
   } catch (err) {
