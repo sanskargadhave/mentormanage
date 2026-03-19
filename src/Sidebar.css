@@ -1,0 +1,217 @@
+/* ===== MAIN LAYOUT ===== */
+
+.mentor-layout-wrapper{
+  display:flex;
+  min-height:100vh;
+}
+
+/* ===== SIDEBAR ===== */
+
+.mentor-sidebar{
+  width:240px;
+  background:#1f2937;
+  color:white;
+
+  position:fixed;
+  top:70px;                  /* below navbar */
+  left:0;
+  height:calc(100vh - 70px);
+
+  transition:width 0.3s ease;
+  z-index:1000;
+}
+
+/* Collapse (Desktop) */
+.mentor-sidebar.collapsed{
+  width:70px;
+}
+/* Hover effect */
+.collapse-btn:hover{
+  background:#374151;
+  transform:scale(1.05);
+}
+
+/* Click effect */
+.collapse-btn:active{
+  transform:scale(0.95);
+}
+
+/* When sidebar is open */
+.collapse-btn.active{
+  background:#2563eb;
+}
+
+/* Icon animation */
+.collapse-btn i{
+  transition:transform 0.3s ease;
+}
+
+.collapse-btn.active i{
+  transform:rotate(180deg);
+}
+/* ===== LOGO ===== */
+
+.mentor-logo{
+  padding:20px; 
+  font-size:18px;
+  font-weight:bold;
+  border-bottom:1px solid #fb0202;
+  margin-top:20px;
+}
+
+/* ===== SIDEBAR LIST ===== */
+
+.mentor-sidebar ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.mentor-sidebar ul li{
+  padding:14px 20px;
+  cursor:pointer;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  transition:0.3s;
+}
+
+.mentor-sidebar ul li:hover{
+  background:#374151;
+  transform:translateX(5px);
+}
+
+.mentor-sidebar ul li.active{
+  background:#2563eb;
+  color:white;
+}
+
+/* Center icons when collapsed */
+.mentor-sidebar.collapsed ul li{
+  justify-content:center;
+}
+
+/* ===== PAGE CONTENT ===== */
+
+.mentor-page-content{ 
+  margin-left:240px;
+  margin-top:70px;
+  padding:25px;
+  flex:1;
+  background:#f5f7fb;
+  min-height:calc(100vh - 70px);
+}
+
+/* Adjust when collapsed */
+.mentor-sidebar.collapsed + .mentor-page-content{
+  margin-left:70px;
+}
+
+/* ===== COLLAPSE BUTTON ===== */
+
+.collapse-btn{
+ position:fixed;
+  top:100px;
+  left:15px;
+  z-index:1300;
+
+  width:45px;
+  height:45px;
+
+  border:none;
+  border-radius:12px;
+
+  background:#1f2937;
+  color:white;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:22px;
+  cursor:pointer;
+
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  transition:all 0.3s ease;
+}
+
+/* ===== OVERLAY (USED IN MOBILE) ===== */
+
+.sidebar-overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4);
+  z-index:1100;
+}
+
+/* ===== TEXT HIDE (OPTIONAL NICE UI) ===== */
+
+.menu-text{
+  white-space:nowrap;
+  transition:opacity 0.2s ease, width 0.2s ease;
+  
+}
+
+.mentor-sidebar.collapsed .menu-text{
+  opacity:0;
+  width:0;
+  overflow:hidden;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+
+@media (max-width:768px){
+
+  .mentor-sidebar{
+   
+    top:85px;                     /* KEEP SAME */
+    height:calc(100vh - 70px); 
+    transform:translateX(-100%);
+    transition:transform 0.3s ease;
+
+    z-index:1200;
+  }
+
+  /* OPEN SIDEBAR */
+  .mentor-sidebar.collapsed{
+    transform:translateX(0);
+  }
+
+  /* CONTENT FULL WIDTH */
+  .mentor-page-content{
+    margin-left:0;
+    margin-top:70px;
+  }
+
+  .logouts {
+        width: 100%;  
+        align-items: center; /* full width tap */
+    }
+}
+
+.mentor-sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* pushes logout to bottom */
+.sidebar-top {
+    flex: 1;
+}
+
+.sidebar-bottom {
+    padding: 10px;
+}
+
+.logouts {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #dc3545;
+    color: white;
+    border-radius: 6px;
+}

@@ -4,16 +4,50 @@
   }
 
   .form-label {
-    font-size: 14px;
+    font-size: 16px;
+  }
+  .admin-content {
+    padding: 10px;
+  }
+  input,
+    select {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .showError {
+        font-size: 12px;
+    }
+
+    /* Button full width */
+    .btn,
+    .btn-mentor {
+        width: 100%;
+    }
+
+    /* Reduce heading size */
+    h3 {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+
+   .row {
+    row-gap: 12px;
   }
 }
 
 .add-student-form {
-  max-width: 1200px;
+  max-width: 900px;   
   width: 100%;
   margin: auto;
-  padding: 10px;
+  padding: 20px;
 }
+
 .add-student-form h4 {
   background: #0d6efd;
   color: white;
@@ -22,9 +56,76 @@
   font-size: 18px;
 }
 .admin-content {
-  margin-left: 80px;
-  margin-top: 40px;
-  padding: 50px;
+  margin-left: 70px;
+  margin-top: 80px;
+  padding: 30px;
+}
+.notice-box {
+    background: #fff3cd;
+    color: #856404;
+    border-left: 5px solid #ffc107;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 110px; 
+    z-index: 1000;
+}
+
+
+.notice-box i {
+    font-size: 18px;
+}
+
+.close-btn {
+    background: rgba(0,0,0,0.05);
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+.close-btn:hover {
+    background: #dc3545;
+    color: white;
+    transform: scale(1.1) rotate(90deg);
+}
+
+
+.close-btn:active {
+    transform: scale(0.9);
+}
+
+@media (max-width: 768px) {
+  .admin-content {
+    margin-left: 0;   /* 🔥 important */
+    padding: 15px;
+  }
+  .notice-box {
+        font-size: 13px;
+        padding: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        position: sticky;
+        top: 190px;
+        z-index: 1000;
+    }
+
+    .notice-box i {
+        font-size: 16px;
+    }
+    .close-btn {
+        align-self: flex-end;
+    }
 }
 
 .error-toast {
@@ -52,17 +153,38 @@
 }
 
 
-.form-select{
-  width: 300px;
-  border-color: red;
+.form-control,
+.form-select {
+  width: 100%;
 }
 .total{
   color:#148805;
 }
 .showError{
-  color:rgb(243, 6, 6);
-  font-size: 15px;
-  margin-left: 50px;  
+  color: rgb(243, 6, 6);
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+ 
+}
+.row {
+  margin-bottom: 10px;
+}
+.password-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.set-password-card {
+  width: 100%;
+  max-width: 400px;  
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 .total-present{
   color:#3b01f7
@@ -83,7 +205,20 @@
 .btn-student{
 background-color: blueviolet;
 }
+.success-card {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
 
+.success-info {
+  margin: 15px 0;
+  font-size: 15px;
+}
 .btn-mentor
 {
   background-color: rgb(180, 130, 49);

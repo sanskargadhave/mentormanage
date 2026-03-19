@@ -1,44 +1,93 @@
-.TotalStudent{
-    margin-top: 10px;
-    width: calc(30% - 10px);
-    position: relative;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    text-align: center;
-    background-color: black;
-    color:gold;
-    box-shadow: 0 0 60px rgba(212, 249, 6, 0.947);
-}
-
+/* BODY */
 body{
   background: #1355d9d7;
 }
-.StudentManagment:hover {
-  box-shadow: 0 0 60px rgba(99, 6, 206, 0.6);
+
+/* ✅ FIX CONTAINER (do NOT break bootstrap) */
+.container {
+  margin-top: 100px;
 }
 
-.icon-text {
-  display:inline-flex;
-  align-items: center;
-  gap: 8px;   /* space between icon and text */
-  font-size: 30px;
-}
-.container {
+/* ✅ USE THIS FOR LAYOUT (you already used this class) */
+.dashboard-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 70px;  /* space between divs */
+  justify-content: center;
+  gap: 20px;
 }
 
-.noticeClass{
+/* ✅ CARD (FINAL RESPONSIVE VERSION) */
+.TotalStudent {
+    flex: 1 1 300px;   /* 🔥 main responsive logic */
+    max-width: 350px;
+    width: 100%;
+
+    margin-top: 10px;
+    border-radius: 12px;
+    text-align: center;
+    background-color: black;
+    color: gold;
+
+    box-shadow: 0 0 20px rgba(212, 249, 6, 0.5);
+    transition: all 0.3s ease;
+    padding: 20px;
+}
+
+.TotalStudent:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px rgba(212, 249, 6, 0.8);
+}
+
+/* ICON + TEXT */
+.icon-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.icon-text i {
+  font-size: 26px;
+}
+
+.icon-text h5 {
+  margin: 0;
+}
+
+/* NOTICE */
+.noticeClass {
+  width: 100%;
+  overflow: hidden;
   background: rosybrown;
   color: black;
-  padding: 15px;
-  font-size: 1rem;
   border-radius: 10px;
-  font-weight: 500;
   margin-top: 20px;
 }
 
+/* SCROLL TEXT */
+.notice-scroll {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 12px;
+  animation: scrollText 18s linear infinite;
+  font-weight: 500;
+}
+
+/* ANIMATION */
+@keyframes scrollText {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* OTHER EXISTING STYLES (UNCHANGED) */
+
+.StudentManagment:hover {
+  box-shadow: 0 0 60px rgba(99, 6, 206, 0.6);
+}
 
 .login-wrapper {
   height: 100vh;
@@ -52,17 +101,17 @@ body{
 .login-card {
   background: #fff;
   padding: 45px;
-  width: 320px;
+  width: 500px;
   border-radius: 15px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.2);
   text-align: center;
-  width: 500px;
   margin-top:80px;
 }
 
 .war{
   color:red;
 }
+
 .title {
   font-weight: 700;
   margin-bottom: 5px;
@@ -102,14 +151,17 @@ body{
   background: #059669;
   color: white;
 }
+
 .role-btn.guest{
   background: #d0dc5f;
   color: white;
 }
+
 .role-btn:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
+
 .form-control{
   width: 300px;
 }
@@ -171,4 +223,20 @@ body{
 
 .exit-btn:hover {
   background: #bb2d3b;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+  .TotalStudent {
+    padding: 15px;
+  }
+
+  .icon-text i {
+    font-size: 22px;
+  }
+
+  .notice-scroll {
+    font-size: 14px;
+  }
 }

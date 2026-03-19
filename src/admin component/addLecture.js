@@ -108,26 +108,19 @@ function AddLecture(){
             {showerror && (<GiveError show={showerror} message={message} duration={10000} onClose={()=>setshowerror(false)}/>)}
             <div className="add-student-form animate__animated animate__slow animate__fadeInDown">
                 <div className="row">
-                    <div className="col-md-5">
+                    <div className="col-12 col-md-5 mb-3">
                         <label className="form-label"><i className="bi bi-person-vcard"></i>  Subject </label>  
-                        <input type="text" className="form-control" name="Subject" placeholder="Enter Lecture Subject" onChange={handleChange}/>
+                        <input type="text" className={`form-control ${errors.Subject ? "is-invalid" : ""}`} name="Subject" placeholder="Enter Lecture Subject" onChange={handleChange}/>
+                        {errors.Subject && ( <label className="showError">{errors.Subject}</label>)}
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-12 col-md-6 mb-3">
                         <label className="form-label"><i className="bi bi-person-vcard"></i> Teacher ID And Name  </label>
                         <Select options={option} placeholder="Search And select" maxMenuHeight={200} value={selected} onChange={setselected}/>
                     </div>
                 </div>
+                 
                 <div className="row">
-                    <div className="col-md-5">
-                        <label className="showError">{errors.Subject}</label>
-                    </div>
-                    <div className="col-md-6">
-                        <label className="showError"></label>
-                    </div>
-                </div>
-                <br/> 
-                <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-12 col-md-4 mb-3">
                         <label className="form-label"><i className="bi bi-person-vcard"></i>  Division </label>
                         <select className="form-select form-select-sm" aria-label="Small select example" name="Division"  onChange={handleChange}>
                             <option value=""> Select Division </option>
@@ -136,8 +129,9 @@ function AddLecture(){
                             <option value="C">C</option>
                             <option value="D">D</option>
                         </select>
+                        {errors.Division && (<label className="showError">{errors.Division}</label>)}
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-12 col-md-4 mb-3">
                         <label className="form-label"><i className="bi bi-person-vcard"></i>  Year </label>
                         <select className="form-select form-select-sm" aria-label="Small select example" name="Class" onChange={handleChange}>
                             <option value=""> Select Year </option>
@@ -145,9 +139,10 @@ function AddLecture(){
                             <option value="second">II</option>  
                             <option value="third">III</option>
                         </select>
+                        {errors.Class && (<label className="showError">{errors.Class}</label>)}
                     </div>
                 
-                     <div className="col-md-4">
+                     <div className="col-12 col-md-4 mb-3">
                         <label className="form-label"><i className="bi bi-person-vcard"></i> Department </label>
                         <select className="form-select form-select-sm" aria-label="Small select example" name="Department"  onChange={handleChange}>
                             <option value=""> Select Department </option>
@@ -156,21 +151,12 @@ function AddLecture(){
                             <option value="Art">Art</option>
                             <option value="Commerce">Commerce</option>
                         </select>
+                        {errors.Department && (<label className="showError">{errors.Department}</label>)}
                     </div>
                </div>
+               
                <div className="row">
-                    <div className="col-md-4">
-                        <label className="showError">{errors.Division}</label>
-                    </div>
-                    <div className="col-md-4">
-                        <label className="showError">{errors.Class}</label>
-                    </div>
-                    <div className="col-md-4">
-                        <label className="showError">{errors.Department}</label>
-                    </div>
-               </div>
-               <div className="row">
-                    <div className="col-12 col-md-4">
+                    <div className="col-12 col-md-4 w-100 mb-3">
                         <label className="form-label"><i className="bi bi-exclude"></i> In {FormData.Department} Department which Course </label>
                         {FormData.Department && 
                         (
@@ -185,7 +171,7 @@ function AddLecture(){
                             </select>
                         )}
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-12 col-md-4 mb-3">
                         <button className="btn btn-primary" type="button" onClick={isAllvalid}><i className="bi bi-file-plus-fill"></i>Add Lecture</button>
                     </div>
                 </div>

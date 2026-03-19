@@ -1,121 +1,135 @@
-.mentor-navbar {
-    background-color:#090909; 
-    padding: 15px 0;
+/* LOGO STYLING */
+.logo-img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
 }
 
-.mentor-navbar .navbar-brand {  
+.logo-img:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Brand text */
+.brand-text {
+    font-size: 20px;
+    font-weight: bold;
     color: gold;
-    font-size: 24px;
 }
 
+/* Navbar spacing */
+.mentor-navbar {
+    background-color: #090909;
+    padding: 12px 0;
+}
+
+/* Nav links */
 .mentor-navbar .nav-link {
-    color:goldenrod;
+    color: goldenrod;
     margin-right: 15px;
     font-weight: 500;
+    transition: all 0.3s ease;
 }
 
 .mentor-navbar .nav-link:hover {
     color: white;
-    font-size: 20px;
+    transform: scale(1.05);
 }
 
-.mentor-navbar .btn-success {
-    font-weight: 500;
-}
-
+/* Profile */
 .profile-hover {
-  position:static;
-}
-.text-muted{
-  color:#06f129;
+    position: relative;
 }
 
+/* Profile trigger */
 .profile-trigger {
-  color: white;
-  border-radius: 20px red;
-  cursor: pointer;
+    color: white;
+    cursor: pointer;
 }
 
-.profile-icon {
-  font-size: 22px;
-  color: #9dbdec;
-  margin-right: 5px;
-}
-
+/* Profile dropdown */
 .profile-menu {
-  position: absolute;
-  top: 50px;
-  right: 0;
-  width: 320px;
-  background: #e8abab;
-  border-radius: 10px;
-  box-shadow: 0 8px 50px rgba(165, 239, 5, 0.15);
-  display: none;
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 300px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    display: none;
+    padding: 10px;
 }
 
-
-.profile-hover:hover .profile-menu {
-  display:block;
+/* SHOW (for mobile click) */
+.profile-menu.show {
+    display: block;
 }
 
-
+/* Header */
 .profile-header {
-  text-align: center;
-  padding: 3px;
+    text-align: center;
+    padding: 10px;
 }
 
-.big-icon {
-  font-size: 40px;
-  color: #0460ea;
-}
-
-.profile-menu .dropdown-item {
-  padding: 10px 15px;
-  font-size: 14px;
-}
-
-.profile-menu .dropdown-item:hover {
-  background-color: #f46262;
-}
-
-
+/* Logout button */
 .logout {
-  color: red;
-}
-.logout{
-  width:100px;
-  margin-left: 100px;
-}
-
-.logout {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  background: #e8abab;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  border-radius: 8px;
-  cursor: pointer;
-
-  transition: all 0.3s ease;
-}
-
-.logout i {
-  font-size: 16px;
+    width: 100%;
+    background: #e60000;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    transition: 0.3s;
 }
 
 .logout:hover {
-  background: linear-gradient(135deg, #e60000, #cc0000);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(255, 0, 0, 0.3);
+    background: #cc0000;
 }
 
-.logout:active {
-  transform: scale(0.96);
+/* 🔥 MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+
+    /* Reduce logo size */
+    .logo-img {
+        height: 32px;
+        width: 32px;
+    }
+
+    /* Hide brand text (optional clean UI) */
+    .brand-text {
+        font-size: 16px;
+    }
+
+    /* Center nav items */
+    .navbar-nav {
+        text-align: center;
+    }
+
+    /* Better spacing */
+    .mentor-navbar .nav-link {
+        margin-right: 0;
+        padding: 10px 0;
+    }
+
+    /* Profile dropdown full width */
+    .profile-menu {
+        position: static;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* Button full width */
+    .logout {
+        width: 100%;
+    }
+}
+.navbar-nav {
+    overflow: visible !important;
+}
+.profile-hover:hover .profile-menu {
+    display: block;
+}
+
+.profile-menu.show {
+    display: block;
 }

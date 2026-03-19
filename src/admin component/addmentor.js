@@ -181,114 +181,87 @@ function AddMentor()
                 </div>
                 <br/>
                 <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-12 col-md-4 mb-3">
                         <label className="form-label"><i className="bi bi-person-vcard"></i>  Mentor Full Name </label>  
-                        <input type="text" className="form-control" name="Name" placeholder="Enter Full Name" onChange={handleChange}/>
+                        <input type="text" className={`form-control ${errors.Name ? "is-invalid" : ""}`} name="Name" placeholder="Enter Full Name" onChange={handleChange}/>
+                        {errors.Name && (<label className="showError">{errors.Name}</label>)}
                     </div>
-                    <div className="col-md-4">
+
+                    <div className="col-12 col-md-4 mb-3">
                         <label className="form-label"> <i className="bi bi-gender-ambiguous"></i>  Gender</label>
-                        <input type="text" className="form-control" name="Gender" placeholder="Enter Gender" onChange={handleChange}/>
+                        <input type="text" className={`form-control ${errors.Gender ? "is-invalid" : ""}`} name="Gender" placeholder="Enter Gender" onChange={handleChange}/>
+                        {errors.Gender && (<label className="showError">{errors.Gender}</label>)}
                     </div>
-                    <div className="col-md-4">
+
+                    <div className="col-12 col-md-4 mb-3">
                         <label className="form-label"><i className="bi bi-calendar-heart"></i>  DOB</label>
-                        <input type="date" className="form-control" name="DOB" placeholder="Enter DOB" onChange={handleChange}/>
+                        <input type="date" className={`form-control ${errors.DOB ? "is-invalid" : ""}`} name="DOB" placeholder="Enter DOB" onChange={handleChange}/>
+                        {errors.DOB && (<label className="showError">{errors.DOB}</label>)}
                     </div>
                 </div>
 
                 <div className="row">
-                    <div className="col-md-4">
-                        <label className="showError">{errors.Name}</label>
-                    </div>
-                    <div className="col-md-4">
-                        <label className="showError">{errors.Gender}</label>
-                    </div>
-                    <div className="col-md-4">
-                        <label className="showError">{errors.DOB}</label>
-                    </div>
-                </div>
-                <br/>
-                <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-12 col-md-4 mb-3">
                         <h4><i className="bi bi-briefcase">  Professional Details</i></h4>
                     </div>
                 </div>
-                <br/>
+                
                 <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-12 col-md-4 mb-3">
                         <label className="form-label"><i className="bi bi-building"></i> select Department Name</label>
-                        <select className="form-select form-select-sm" aria-label="Small select example" name="Department" onChange={handleChange}>
+                        <select className={`form-select form-select-sm ${errors.Department ? "is-invalid" : ""}`}  aria-label="Small select example" name="Department" onChange={handleChange}>
                             <option value=""> Select Department </option>
                             <option value="ComputerScience">Computer Science</option>  
                             <option value="Science">Science</option>  
                             <option value="Art">Art</option>
                             <option value="Commerce">Commerce</option>
                         </select>
+                        {errors.Department && (<label className="showError">{errors.Department}</label>)}   
                     </div>
-                    <div className="col-md-4 ">
+                    <div className="col-12 col-md-4 mb-3 ">
                         <label className="form-label"><i className="bi bi-award"></i> Qualification</label>  
-                        <input type="text" className="form-control" name="Qualification" placeholder="Enter Mentor Qualification" onChange={handleChange}/>
+                        <input type="text" className={`form-control ${errors.Qualification ? "is-invalid" : ""}`} name="Qualification" placeholder="Enter Mentor Qualification" onChange={handleChange}/>
+                        {errors.Qualification && (<label className="showError">{errors.Qualification}</label>)}
                     </div>
-                    <div className="col-md-4 ">
+                    <div className="col-12 col-md-4 mb-3 ">
                         <label className="form-label"><i className="bi bi-clock-history"></i>  Mentor Exprience</label>  
-                        <input type="text" className="form-control" name="Exprience" placeholder="Enter Mentor Expreience" onChange={handleChange}/>
+                        <input type="text" className={`form-control ${errors.Exprience ? "is-invalid" : ""}`} name="Exprience" placeholder="Enter Mentor Expreience" onChange={handleChange}/>
+                        {errors.Exprience && (<label className="showError">{errors.Exprience}</label>)}
                     </div>
                 </div>
+              
                 <div className="row">
-                    <div className="col-md-4">
-                        <label className="showError">{errors.Department}</label>
-                    </div>
-                    <div className="col-md-4">
-                        <label className="showError">{errors.Qualification}</label>
-                    </div>
-                    <div className="col-md-4">
-                        <label className="showError">{errors.Exprience}</label>
-                    </div>
-                </div>
-                <br/>
-                <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-12 col-md-4 mb-3">
                         <label className="form-label"><i className="bi bi-calendar-heart"></i>  Joining Date </label>
-                        <input type="date" className="form-control" name="JoinDate" placeholder="Enter Joining Date" onChange={handleChange}/>
+                        <input type="date" className={`form-control ${errors.JoinDate ? "is-invalid" : ""}`} name="JoinDate" placeholder="Enter Joining Date" onChange={handleChange}/>
+                        {errors.JoinDate && (<label className="showError">{errors.JoinDate}</label>)}
                     </div>
                 </div>
+               
                 <div className="row">
-                    <div className="col-md-4">
-                        <label className="showError">{errors.JoinDate}</label>
-                    </div>
-                </div>
-                <br/>
-                <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-12 col-md-3 mb-3">
                         <h4><i className="bi bi-telephone">  Contact Details</i></h4>
                     </div>
                 </div>
                 <br/>
                 <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-12 col-md-4 mb-3">
                         <label className="form-label"><i className="bi bi-phone"></i>  Mentor Mobile No. </label>  
-                        <input type="text" className="form-control" name="MobileNo" placeholder="Enter Mobile No." onChange={handleChange}/>
+                        <input type="text" className={`form-control ${errors.MobileNo ? "is-invalid" : ""}`} name="MobileNo" placeholder="Enter Mobile No." onChange={handleChange}/>
+                        {errors.MobileNo && (<label className="showError">{errors.MobileNo}</label>)}
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-12 col-md-4 mb-3">
                         <label className="form-label"> <i className="bi bi-envelope"></i>  Email Id</label>
-                        <input type="email" className="form-control" name="EmailId" placeholder="Enter Email Id" onChange={handleChange}/>
+                        <input type="email" className={`form-control ${errors.EmailId ? "is-invalid" : ""}`} name="EmailId" placeholder="Enter Email Id" onChange={handleChange}/>
+                        {errors.EmailId && (<label className="showError">{errors.EmailId}</label>)}
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-12 col-md-4 mb-3">
                         <label className="form-label"><i className="bi bi-geo-alt"></i>  Address</label>
-                        <input type="text" className="form-control" name="Address" placeholder="Enter Address" onChange={handleChange}/>
+                        <input type="text" className={`form-control ${errors.Address ? "is-invalid" : ""}`} name="Address" placeholder="Enter Address" onChange={handleChange}/>
+                        {errors.Address && (<label className="showError">{errors.Address}</label>)}
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-md-4">
-                        <label className="showError">{errors.MobileNo}</label>
-                    </div>
-                    <div className="col-md-4">
-                        <label className="showError">{errors.EmailId}</label>
-                    </div>
-                    <div className="col-md-4">
-                        <label className="showError">{errors.Address}</label>
-                    </div>
-                </div>
-                <br/>
+                
                 <div className="row">
                     <div className="col-md-12 d-flex justify-content-center">
                         <button className="btn btn-primary" type="button" onClick={isAllvalid}><i className="bi bi-file-plus-fill"></i>   Add Mentor</button>
@@ -296,52 +269,45 @@ function AddMentor()
                 </div>
             </div>)}
             { showconfirm && (
-                <div className="add-student-form animate__animated animate__slow animate__fadeInDown ">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <center><h2>Mentor Add In EduMentor @Sangolacollage</h2></center>
+                <div className="password-wrapper">
+                    <div className="success-card animate__animated animate__fadeInDown">
+                        <h3>Mentor Added Successfully 🎉</h3>
+                        <div className="success-info">
+                            <p><strong>Name:</strong> {FormData.Name}</p>
+                            <p><strong>ID:</strong> {MentorId}</p>
                         </div>
-                    </div>
-                    <br/>
-                    <div className="row">
-                        <div className="col-md-12">
-                            <h5>Mentor Name: {FormData.Name}</h5>
-                            <h5>Mentor Id: {MentorId}</h5>
-                        </div> 
-                    </div>
-                    <br/>
-                    <div className="row">
-                        <div className="col-md-4">
-                            <button className="btn btn-primary btn-mentor" onClick={()=>nevigate("/admin")}>
-                                <i className="bi bi-box-arrow-right"></i>    exit
-                            </button>
-                        </div>
+                        <button className="btn btn-primary w-100" onClick={() => nevigate("/admin")}>
+                            <i className="bi bi-box-arrow-right"></i> Go to Dashboard
+                        </button>
                     </div>
                 </div>
             )}
+            {showpassword &&(
+            <div className="password-wrapper">
+                <div className="set-password-card animate__animated animate__fadeInDown">
 
-            { showpassword &&(
-                <div className="set-password-card admin-content animate__animated animate__fadeInDown">
                     <h5 className="title">
-                     <i className="bi bi-shield-lock"></i> Set Password
+                        <i className="bi bi-shield-lock"></i> Set Password
                     </h5>
+
                     <div className="form-group">
                         <label>Enter Password</label>
-                            <input type="password" name="Password" placeholder="Set password" onChange={handleChange}/>
-                            <label className="showError">{errors.Password}</label>
+                        <input type="password" name="Password" placeholder="Set password" onChange={handleChange} className={`form-control ${errors.Password ? "is-invalid" : ""}`}/>
+                        {errors.Password && <small className="showError">{errors.Password}</small>}
                     </div>
+
                     <div className="form-group">
                         <label>Confirm Password</label>
-                        <input type="password" name="RePassword" placeholder="Confirm password" onChange={handleChange}/>
-                        <label className="showError">{errors.RePassword}</label>
+                        <input type="password" name="RePassword" placeholder="Confirm password" onChange={handleChange}  className={`form-control ${errors.RePassword ? "is-invalid" : ""}`} />
+                        {errors.RePassword && <small className="showError">{errors.RePassword}</small>}
                     </div>
 
                     <button className="set-btn" onClick={submitdata}>
                         <i className="bi bi-check-circle"></i> Set Password
                     </button>
+
                 </div>
-    
-            )}
+            </div>)}
             {showerror && (
             <div className="login-card admin-content animate__animated animate__fadeInDown">
                 <h2 className="title">{err}</h2>

@@ -15,8 +15,8 @@ function NevigationBar() {
 
         {/* Brand */}
         <a className="navbar-brand d-flex align-items-center" href="/dashboard">
-          <img src={logo} alt="Logo" style={{ height: '40px', width: '40px' }}/>
-          <span className="ms-2">EduMentor @Sangola Collage</span>
+          <img src={logo} alt="Logo" className="logo-img"/>
+          <span className="brand-text ms-2"> Sangola college Sangola</span>
         </a>
 
         {/* Toggle button */}

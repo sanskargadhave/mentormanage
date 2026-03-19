@@ -1,13 +1,25 @@
- import {NevigationBar} from "./nevigationBar" ;  
- import { Outlet } from "react-router-dom";
+import { NevigationBar } from "./nevigationBar";
+import { Outlet } from "react-router-dom";
+import { useState } from "react";
+
 function Layout() {
+
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
     <>
-      <NevigationBar/>
-      <div className="page-content">  
-        <Outlet />  
+      {/* Navbar */}
+      <NevigationBar 
+        collapsed={collapsed} 
+        setCollapsed={setCollapsed} 
+      />
+
+      {/* Page Content */}
+      <div className="page-content">
+        <Outlet context={{ collapsed, setCollapsed }} />
       </div>
     </>
   );
 }
-export {Layout};
+
+export { Layout };

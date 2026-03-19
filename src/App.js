@@ -5,15 +5,15 @@ import { Routes, Route } from "react-router-dom";
 
 import { StudentDashboardContent } from "./Main_pageComponent";
 import { AdminLogin, MentorLogin, Login } from "./login";
-import { AdminNavbar} from "./admin component/AdminNevbar.js";
-import LogoutWarning from "./admin component/AdminNevbar.js";
+import { AdminSidebar} from "./admin component/AdminNevbar.js";
+
 import { AddMentor } from "./admin component/addmentor.js";
 import { DeleteUser } from "./admin component/deleteUser";
 import { ViewUser } from "./admin component/viewUser";
 import { AddStudent } from "./admin component/addStudent";
 import {MentorDashboardContent} from "./mentor component/MentorDashbord.js";
-import MentorLayout from "./mentor component/MentorLayout.js";
-import { AdminLayout } from "./admin component/AdminLayout.js";
+import LogoutWarning from "./Logout.js";
+import SidebarLayout from "./SidebarLayout.js";
 import { AdminDashbord } from "./admin component/AdminDashbord.js";
 import { Addstudent } from "./mentor component/addStudent.js";
 import { AddTeacher } from "./admin component/addteacher.js";
@@ -32,13 +32,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="adminlogin" element={<AdminLogin />} />
         <Route path="/mentorlogin" element={<MentorLogin />} />
+        <Route path="/warning-logout" element={<LogoutWarning/>}/>
 
         {/* Admin */}
-        <Route path="/admin" element={<AdminLayout/>}>
+        <Route path="/admin" element={<SidebarLayout/>}>
           <Route index element={<AdminDashbord/>} />
           <Route path="add-mentor" element={<AddMentor />} />
           <Route path="add-student" element={<AddStudent />} />
-          <Route path="admin-dashboard" element={<AdminNavbar />} />
+          <Route path="admin-dashboard" element={<AdminSidebar />} />
           <Route path="view-users" element={<ViewUser />} />
           <Route path="delete-user" element={<DeleteUser />} />
           <Route path="warning-logout" element={<LogoutWarning/>}/>
@@ -49,7 +50,7 @@ function App() {
 
 
         {/* Mentor Layout */}
-        <Route path="/mentor" element={<MentorLayout />}>
+        <Route path="/mentor" element={<SidebarLayout />}>
           <Route index element={<MentorDashboardContent />} />
           <Route path="dashboard" element={<MentorDashboardContent />} />
           

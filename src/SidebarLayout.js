@@ -1,16 +1,17 @@
-import AdminSidebar from "./AdminNevbar";
-import { Outlet,useOutletContext } from "react-router-dom";
-import "./adminNevbar.css";
+import MainSidebar from "./MainSidebar";
+import { Outlet,useOutletContext} from "react-router-dom";
+import "./Sidebar.css";
+import "./mentor component/mentor.css";
 
-
-function AdminLayout() {
-   const { collapsed, setCollapsed } = useOutletContext();
+function SidebarLayout() {
+  const { collapsed, setCollapsed } = useOutletContext();
+  
 
   return (
     <div className="mentor-layout">
 
       {/* Sidebar */}
-      <AdminSidebar collapsed={collapsed} />
+      <MainSidebar collapsed={collapsed} />
 
       {/* Overlay for mobile */}
       {collapsed && (
@@ -38,4 +39,4 @@ function AdminLayout() {
   );
 }
 
-export default AdminLayout;
+export default SidebarLayout;

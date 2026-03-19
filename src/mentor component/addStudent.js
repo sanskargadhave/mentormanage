@@ -2,6 +2,7 @@ import { useState} from "react";
 import { useNavigate } from "react-router-dom";
 
 import './mentor.css';
+import '../Sidebar.css';
 import "animate.css";
 
 function Addstudent()
@@ -198,7 +199,7 @@ function Addstudent()
         }
     }
     return(
-    <div className="container-fluid mentor-content">
+    <div className="container-fluid">
     {showform && (
         <div className="add-student-form animate__animated animate__slow animate__fadeInDown ">
             <h3 className="form-label">

@@ -16,7 +16,7 @@ function MentorNavbar() {
       <nav className="navbar navbar-dark bg-dark flex-colunimate_animate__animated mn align-items-start">
 
         {/* Header */}
-        <div className="navbar-brand ms-1 mb-1 adminlogo  sidebar-btn">
+        <div className="navbar-brand ms-1 mb-1 adminlogo  sidebar-btn animate__animated animate__fadeInLeft animate__slow">
           Welcome Mentor 👋
         </div>
 
