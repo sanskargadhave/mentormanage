@@ -83,59 +83,59 @@ body{
   }
 }
 
-/* OTHER EXISTING STYLES (UNCHANGED) */
+
 
 .StudentManagment:hover {
   box-shadow: 0 0 60px rgba(99, 6, 206, 0.6);
 }
 
 .login-wrapper {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  margin-top: 20px;
+  min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #1f1f1f, #2c3e50);
 }
 
 .login-card {
-  background: #fff;
-  padding: 45px;
-  width: 500px;
-  border-radius: 15px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-  text-align: center;
-  margin-top:80px;
+  width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    padding: 30px 25px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.2);
+    text-align: center;
 }
 
 .war{
-  color:red;
+  margin-top: 10px;
+    font-size: 12px;
+    color: red;
 }
 
 .title {
-  font-weight: 700;
-  margin-bottom: 5px;
+   font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .subtitle {
-  color: #777;
-  margin-bottom: 25px;
+  font-size: 14px;
+    color: #777;
+    margin-bottom: 20px;
 }
 
 .role-btn {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 10px;
-  font-size: 18px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 15px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+ width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .role-btn i {
@@ -143,23 +143,20 @@ body{
 }
 
 .role-btn.admin {
-  background: #4f46e5;
-  color: white;
+  background: #e74c3c;
 }
 
 .role-btn.mentor {
-  background: #059669;
-  color: white;
+  background: #3498db;
 }
 
 .role-btn.guest{
-  background: #d0dc5f;
-  color: white;
+   background: #2ecc71;
 }
 
 .role-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  opacity: 0.9;
+  transform: scale(1.02);
 }
 
 .form-control{
@@ -170,41 +167,42 @@ body{
 .input-group {
     display: flex;
     align-items: center;
-    gap: 12px;
-    background: #f3f4f6;
-    padding: 12px;
-    border-radius: 10px;
+    background: #f1f1f1;
     margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 8px;
 }
 
 .input-group i {
-    font-size: 18px;
+     margin-right: 10px;
     color: #555;
+    font-size: 18px;
 }
 
 .input-group input {
-    border: none;
+     border: none;
     outline: none;
     background: transparent;
     width: 100%;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .action-buttons {
   display: flex;
-  gap: 15px;
-  justify-content: center;
-  margin-top: 20px;
+    gap: 10px;
+    margin-top: 20px;
 }
-
+.retry-btn,
+.exit-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+}
 .retry-btn {
-  background: #ffc107;
-  color: #000;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 500;
-  transition: 0.3s;
+  background: #3498db;
 }
 
 .retry-btn:hover {
@@ -212,13 +210,7 @@ body{
 }
 
 .exit-btn {
-  background: #dc3545;
-  color: #fff;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 500;
-  transition: 0.3s;
+  background: #e74c3c
 }
 
 .exit-btn:hover {
@@ -239,4 +231,39 @@ body{
   .notice-scroll {
     font-size: 14px;
   }
+  .login-card {
+        padding: 20px 15px;
+        border-radius: 10px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+    }
+
+    .input-group {
+        padding: 8px;
+    }
+
+    .role-btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .login-card {
+        max-width: 500px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
 }
