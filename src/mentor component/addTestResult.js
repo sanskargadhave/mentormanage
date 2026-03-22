@@ -1,4 +1,5 @@
 import axios from "axios";
+import "../admin component/admin.css";
 import { useEffect,useState} from "react";
 import Select from "react-select";
 import { useRef } from "react";
@@ -55,7 +56,7 @@ export function DataSummery({testid,message})
     }
     
     return (
-        <div className=" animate__animated animate__rotateInDownLeft">
+        <div className=" admin-content animate__animated animate__rotateInDownLeft">
             {showerror && (<GiveError show={showerror} message={message} duration={10000} onClose={()=>setshowerror(false)}/>)}
             
             <div className="row ">
@@ -260,7 +261,7 @@ export  function AssignMarks({date,studentdata,lectureid,totalmarks,testname,pas
         }
     }
     return(
-        <div className="mentor-content animate__animated animate__rotateInDownLeft">
+        <div className=" animate__animated animate__rotateInDownLeft">
             {step==="getresult" && (
             <div>
                 <div className="row">
@@ -453,7 +454,7 @@ function AddTestResult()
   (s) => s.lectureid === formdata.selected
 );
     return (
-        <div className="mentor-content animate__animated animate__zoomIn animate__slow">
+        <div className="admin-content animate__animated animate__zoomIn animate__slow">
             {step==="getdetails" && (
             <div>
                 <div className="row">

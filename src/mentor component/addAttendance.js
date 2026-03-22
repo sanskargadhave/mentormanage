@@ -8,7 +8,6 @@ import "./mentor.css";
 import { useContext } from "react";
 import { AuthContext } from "../Authintication";
 import logo from "../collageassets/logo-college.png";
-
 export default function ShowAttendance({totalstudent,totalabsent,totalpresent,lectureid})
 {
     const today = new Date().toISOString().split("T")[0];
@@ -32,120 +31,90 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
       }, [lectureid]
     );
     return (
-        <div className=" animate__animated animate__zoomIn">
-            <div className="row">
-                <div className="col-md-6">
-                        <h5 className="total side">
-                            <i className="bi bi-tag-fill set-icon"></i>
-                           {lectureid}
-                        </h5>
-                    <div className="professional-card">
-                        <h5 className="total">
-                            <i className="bi bi-people-fill set-icon"></i>
-                            Total students :  {totalstudent}
-                        </h5>
-                        <h5 className="total-present">
-                            <i className="bi bi-check-circle-fill set-icon"></i>
-                            Total Present :  {totalpresent}
-                        </h5>
-                        <h5 className="total-absent">
-                            <i className="bi bi-x-circle-fill set-icon"></i>
-                            Total Absent :  {totalabsent}
-                        </h5>
-                    </div>
+        <div className="admin-content animate__animated animate__zoomIn">
+            <div className="attendance-header">
+
+                <div className="header-top">
+                    <img src={logo} alt="logo" className="header-logo" />
+                    <h4 className="college-name">SANGOLA MAHAVIDYALAYA SANGOLA</h4>
                 </div>
-                <div className="col-md-6">
-                    <h5 className="total side">
-                        <i className="bi bi-tag-fill set-icon"></i>
-                        Monthly Absent Count Report
-                    </h5>
-                    <div className="professional-card ">
-                    {
-                        data.length!==0 &&(
-                        <h5 className="total">RollNo Total Status</h5> 
-                    )}
-                    {
-                        data.length===0 ? 
-                        (
-                           <h5>Nothing else AnyOne Break EduMentor Rule 🎉</h5>
-                        ): 
-                        (
-                            data.map((student,index)=>(
-                                <div key={index} className="roll-item">
-                                    <span className={student.totalabsent>5 ? "hint-item":"roll-item"}>{student.rollno}</span>
-                                    <span className={student.totalabsent>5 ? "hint-item":"roll-item"}>{student.totalabsent}</span>
-                                    <span className={student.totalabsent>5 ? "hint-item":"roll-item"}>{student.totalabsent>5 ?"🚫 Alert":"⭕ Normal"}</span>
-                                </div>
-                            ))
-                        )
-                    }
+
+                <div className="header-info">
+
+                    <div className="info-box">
+                        <span className="label">Lecture ID</span>
+                        <span className="value">{lectureid}</span>
                     </div>
+
+                    <div className="info-box">
+                        <span className="label">Date</span>
+                        <span className="value">{today}</span>
+                    </div>
+
+                    <div className="info-box">
+                        <span className="label">Total Students</span>
+                        <span className="value">{totalstudent}</span>
+                    </div>
+
+                    <div className="info-box">
+                        <span className="label">Present</span>
+                        <span className="value text-success">{totalpresent}</span>
+                    </div>
+
+                    <div className="info-box">
+                        <span className="label">Absent</span>
+                        <span className="value text-danger">{totalabsent}</span>
+                    </div>
+
+                    <div className="info-box">
+                        <span className="label">Percentage</span>
+                        <span className="value">
+                        {totalstudent > 0
+                            ? ((totalpresent / totalstudent) * 100).toFixed(2)
+                            : 0}%
+                        </span>
+                    </div>
+
                 </div>
             </div>
-            <br/>
-            <div className="row">
-                <div className="col-md-12 table-card">
-                     <h5 className="total">
-                        <i className="bi bi-tag-fill set-icon"></i>
-                       Today All Lectures Attendance | Date: {today}
-                    </h5>
-                    <table className="count-table">
-                        <thead className="bor">
-                            <tr>
-                                <th>Class</th>
-                                <th>Division</th>
-                                <th>Subject</th>
-                                <th>Present</th>
-                                <th>Absent</th>
-                                <th>Total</th>
-                                <th>percentage</th>
-                                <th>Submited Time </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                counts.map((data,index)=>{
-                                    const total = data.presentcount + data.absentcount;
-                                    const percentage = total > 0? ((data.presentcount / total) * 100).toFixed(2): 0;
-                                    let Time = "";
-                                    if (data.attendanceid) {
-                                        const parts = data.attendanceid.split("-");
-                                        if (parts.length === 2) {
-                                            const timestamp = parts[1];
-                                            const dateObj = new Date(Number(timestamp));
-                                            Time = dateObj.toLocaleTimeString("en-IN", {
-                                            hour: "2-digit",
-                                            minute: "2-digit"
-                                        });
-                                    }
-                                    else if (parts.length === 3) {
-                                        const timePart = parts[2];
-                                        if (timePart && timePart.length === 4) {
-                                            let hours = parseInt(timePart.substring(0, 2));
-                                            let minutes = timePart.substring(2, 4);
-                                            const ampm = hours >= 12 ? "PM" : "AM";
-                                            hours = hours % 12 || 12;
-                                            Time = `${hours}:${minutes} ${ampm}`;
-                                        }
-                                    }}
+            {data.length===0 
+                ? (<h5></h5>)
+                : (
+                    <div className="mobile-report">
+                    <br/>
+                        {data.map((student,index)=>(
+                            <div key={index} className="report-card">
+                                <p><strong>Roll No: </strong>{student.rollno}</p>
+                                <p><strong>Absents: </strong>{student.totalabsent}</p>
+                                <p><strong>Status: </strong>{""}
+                                    {student.totalabsent>5 ? "🚫Alert" : "⭕Normal"}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                )
+            }<br/>
+            <div className="mobile-summary">
+                <h6>Completed Sessions – Daily Overview</h6>
+                {counts.map((data, index) => {
+                const total = data.presentcount + data.absentcount;
+                const percentage = total > 0 ? ((data.presentcount / total) * 100).toFixed(2) : 0;
 
-                                    return (
-                                    <tr key={index}>
-                                        <td className={percentage>=80?"data-table":"data-table-war"}>{data.Class}</td>
-                                        <td className={percentage>=80?"data-table":"data-table-war"}>{data.division}</td>
-                                        <td className={percentage>=80?"data-table":"data-table-war"}>{data.subject}</td>
-                                        <td className={percentage>=80?"data-table":"data-table-war"}>{data.presentcount}</td>
-                                        <td className={percentage>=80?"data-table":"data-table-war"}>{data.absentcount}</td>
-                                        <td className={percentage>=80?"data-table":"data-table-war"}>{total}</td>
-                                        <td className={percentage>=80?"data-table":"data-table-war"}>{percentage}%</td>
-                                        <td className={percentage>=80?"data-table":"data-table-war"}>{Time}</td>
-                                    </tr>
-                                    );
-                                })
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                return (
+                    <div key={index} className="summary-card">
+                        <p><strong>Class:</strong> {data.Class}</p>
+                        <p><strong>Division:</strong> {data.division}</p>
+                        <p><strong>Subject:</strong> {data.subject}</p>
+                        <p>Present: {data.presentcount}</p>
+                        <p>Absent: {data.absentcount}</p>
+                        <p>Total: {total}</p>
+                        <p>Percentage:{" "}
+                            <span className={percentage >= 80 ? "good" : "bad"}>
+                                {percentage}%
+                            </span>
+                        </p>
+                    </div>
+                );})}
             </div>
         </div>
     );
@@ -165,6 +134,13 @@ function AddAttendance() {
     const [step,setstep]=useState("search");
     const [present,setpresent]=useState("");
     const [absent,setabsent]=useState("");
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useEffect(() => 
     {
@@ -252,20 +228,20 @@ function AddAttendance() {
             {step==="search" && (
             <div className="add-student-form animate__animated animate__slow animate__fadeInDown">
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-12 col-md-6">
                         <label className="form-label">
                             <i className="bi bi-person-vcard"></i> Select Lecture
                         </label>
                         <Select options={options} placeholder="Search and select lecture" maxMenuHeight={300} value={selected} onChange={setselected} isClearable/>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-12 col-md-4">
                         <label className="form-label"><i className="bi bi-calendar-heart"></i> Date </label>
                         <input type="date" className="form-control" value={date} max={today} onChange={(e) => setdate(e.target.value)}/>
                     </div>
                 </div>
                 <br/>
                 <div className="row">
-                    <div className="col-md-10">
+                    <div className="col-12 col-md-10">
                         {selected && 
                         (
                             <div className="mt-3 text-success">
@@ -276,7 +252,7 @@ function AddAttendance() {
                 </div>
                 <br/>
                 <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-12 col-md-4">
                         <button className="search-btn" onClick={searchstudent}>
                             <i className="bi bi-search"></i>
                             <span>Search Student</span>
@@ -284,37 +260,65 @@ function AddAttendance() {
                     </div>
                 </div>
             </div>)}
-            {step==="attendance" && (
-            <div className="animate__animated animate__jackInTheBox ">
-                <div className="row">
-                    <div className="col-12 col-md-12">
-                            <center><h4><img src={logo} alt="College Logo" width="40" /> SANGOLA MAHAVIDYLAYA SANGOLA</h4></center>
+           {step === "attendance" && (
+            <div className="animate__animated animate__jackInTheBox">
+                <div className="attendance-header">
+
+                    <div className="header-top">
+                        <img src={logo} alt="logo" className="header-logo" />
+                            <h4 className="college-name">SANGOLA MAHAVIDYALAYA SANGOLA</h4>
+                    </div>
+
+                    <div className="header-info">
+
+                        <div className="info-box">
+                            <span className="label">Lecture ID</span>
+                            <span className="value">{selected.value}</span>
+                        </div>
+
+                        <div className="info-box">
+                            <span className="label">Subject</span>
+                            <span className="value">{selected.value.split("-")[1]}</span>
+                        </div>
+
+                        <div className="info-box">
+                            <span className="label">Date</span>
+                            <span className="value">{date}</span>
+                        </div>
+
+                        <div className="info-box">
+                            <span className="label">Total Students</span>
+                            <span className="value">{studentdata.length}</span>
+                        </div>
+
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-12 col-md-4">
-                        <label>Lecture Id : {selected.value}</label>
+                {isMobile ? (
+                <div className="mobile-attendance">
+                    {studentdata.map((student) => (
+                        <div key={student._id} className="student-card">
+
+                            <div className="student-info">
+                                <strong>Roll: {student.collagedetails.rollno}</strong>
+                                <p>{student.personaldetails.name}</p>
+                            </div>
+
+                            <div className="attendance-buttons">
+                                <button className={ attendance[student.collagedetails.rollno] === "Present" ? "active-present" : ""} onClick={() => setStudentAttendance(student.collagedetails.rollno, true)}>
+                                    Present
+                                </button>
+
+                                <button className={ attendance[student.collagedetails.rollno] === "Absent" ? "active-absent" : ""} onClick={() => setStudentAttendance(student.collagedetails.rollno, false)}>
+                                    Absent
+                                </button>
+                            </div>
+
+                        </div>
+                        ))}
                     </div>
-                    <div className="col-12 col-md-4">
-                            <label>   {selected.value.split("-")[2]}   {selected.value.split("-")[3]}</label>
-                    </div>
-                    <div className="col-12 col-md-4">
-                        <label> Subject :- {selected.value.split("-")[1]}</label>
-                    </div>
-                </div><br/>
-                <div className="row">
-                    <div className="col-md-2">
-                        <label>Total :   </label>
-                    </div>
-                    <div className="col-md-4">
-                        <label>Date :  {date} </label>
-                    </div>
-                    <div className="col-md-4">
-                        <h5>Attendance Sheet </h5>
-                    </div>
-                </div><br/>
-                
-                <table className="attendance-table">
+                ) : (
+    
+                    <table className="attendance-table">
                     <thead>
                         <tr>
                             <th>Roll No</th>
@@ -324,32 +328,48 @@ function AddAttendance() {
                         </tr>
                     </thead>
                     <tbody>
-                        {studentdata.map((student)=>(
-                              <tr key={student._id}  className={attendance[student.collagedetails.rollno] === "Absent"? "absent-row": "present-row"}>
-                                <td>{student.collagedetails.rollno}</td>
-                                <td>{student.personaldetails.name}</td>
-                                <td>
-                                    <label className="attendance-check">
-                                        <input type="checkbox" checked={attendance[student.collagedetails.rollno] === "Present"} onChange={(e) => setStudentAttendance(student.collagedetails.rollno, e.target.checked)}/>
-                                        <span className="box"></span>
-                                    </label>
-                                </td>
-                                <td>{attendance[student.collagedetails.rollno]}</td>
-                              </tr>   
-                            ))
+                        {studentdata.map((student) => (
+                        <tr
+                            key={student._id}
+                            className={
+                            attendance[student.collagedetails.rollno] === "Absent"
+                            ? "absent-row"
+                            : "present-row"
                         }
-                    </tbody>        
-                </table>
-                <br/>
-                <div className="row">
-                    <div className="col-md-12">
-                        <button className="search-btn" onClick={storeattendance}>
-                            <i className="bi bi-folder-plus"></i>
-                            <span>Add Attendance</span>
-                        </button>
-                    </div>
-                </div>
-            </div>)}
+            >
+              <td>{student.collagedetails.rollno}</td>
+              <td>{student.personaldetails.name}</td>
+              <td>
+                <label className="attendance-check">
+                  <input
+                    type="checkbox"
+                    checked={
+                      attendance[student.collagedetails.rollno] === "Present"
+                    }
+                    onChange={(e) =>
+                      setStudentAttendance(
+                        student.collagedetails.rollno,
+                        e.target.checked
+                      )
+                    }
+                  />
+                  <span className="box"></span>
+                </label>
+              </td>
+              <td>{attendance[student.collagedetails.rollno]}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+
+    {/* BUTTON SAME */}
+    <br />
+    <button className="search-btn" onClick={storeattendance}>
+      Add Attendance
+    </button>
+  </div>
+)}
             {step==="summery" && (
                 <ShowAttendance totalstudent={totalstudent} totalabsent={absent} totalpresent={present} lectureid={selected.value}/>
             )}

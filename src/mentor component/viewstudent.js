@@ -1,6 +1,7 @@
 import {useState} from "react";
 import { GiveError,TypingEffect } from "../WarningOrSucess";
 import "./mentor.css";
+import "../admin component/admin.css";
 function ViewStudent() {
     const today = new Date().toISOString().split("T")[0];
     const [data,setdata]=useState();
@@ -51,10 +52,10 @@ function ViewStudent() {
         }
     }
     return (
-        <div className="mentor-content">
+        <div className="admin-content">
             <div className="row animate__animated animate__zoomIn">
                 <h5 className="carddemo"><i className="bi bi-search-heart"></i>  Enter Roll No For Searching </h5>
-                <form className="d-flex" role="search">
+                <form className="d-flex flex-wrap gap-2" role="search">
                     <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={(e)=>{setrollno(e.target.value)}}/><br/>
                     <button className="btn btn-outline-success lm" type="button" onClick={()=>{setevent("bydate")}}><i className="bi bi-search-heart"></i> Search On Date</button>
                     <button className="btn btn-outline-success lm" type="button" onClick={()=>{setevent("byrange")}}><i className="bi bi-search-heart"></i>  Search On Range</button>
@@ -64,7 +65,7 @@ function ViewStudent() {
             {showerror && (<GiveError show={showerror} message={message} duration={10000} onClose={()=>setshowerror(false)}/>)}
             {event==="bydate" && (
                 <div className="data-card animate__animated animate__zoomIn">
-                    <form className="d-flex" role="search">
+                    <form className="d-flex flex-wrap gap-2" role="search">
                         <input type="date" className="form-control" value={date} max={today} onChange={(e)=>{setdate(e.target.value)}}/>
                         <button className="btn btn-outline-success lm" type="button" onClick={fetchrecord}><i className="bi bi-search-heart"></i>  Search</button>
                     </form>
@@ -73,9 +74,9 @@ function ViewStudent() {
             {event==="byrange" && (
                 <div className="data-card animate__animated animate__zoomIn">
                     <label className="effective lm"><i className="bi bi-calendar-heart-fill set-icon"></i> From :</label>
-                    <label className="effective mm"><i className="bi bi-calendar-heart-fill set-icon "></i>  To :</label><br/>
-                    <form className="d-flex" role="search">
+                   <form className="d-flex flex-wrap gap-2" role="search">
                         <input type="date" className="form-control" value={fromdate} max={today} onChange={(e)=>{setfromdate(e.target.value)}}/>
+                        <label className="effective lm"><i className="bi bi-calendar-heart-fill set-icon "></i>  To :</label>
                         <input type="date" className="form-control lm" value={todate} max={today} onChange={(e)=>{settodate(e.target.value)}}/>
                         <button className="btn btn-outline-success lm" type="button" onClick={fetchrecord}><i className="bi bi-search-heart"></i>Search</button>
                     </form>
@@ -84,25 +85,25 @@ function ViewStudent() {
             {event==="showdata" && (
                     <div className="data-card animate__animated animate__zoomIn">
                         <div className="row">
-                            <div className="col-md-12">
+                            <div className="col-12 col-md-12">
                                 <label className="effective"><i className="bi bi-person-fill"></i>  Name : {data.personaldetails.name}</label>
                             </div>
                         </div>
                         <br/>
                         <div className="row">
-                            <div className="col-md-6">
+                            <div className="col-12 col-md-6">
                                 <label className="effective"><i className="bi bi-card-heading"></i>  Roll No: {data.collagedetails.rollno}</label>
                             </div>
-                            <div className="col-md-6">
+                            <div className="col-12 col-md-6">
                                 <label className="effective"><i className="bi bi-mortarboard-fill"></i>  Class : {data.collagedetails.year}</label>
                             </div>
                         </div>
                         <br/>
                         <div className="row">
-                            <div className="col-md-6">
+                            <div className="col-12 col-md-6">
                                 <label className="effective"><i className="bi bi-diagram-3-fill"></i>   Division : {data.collagedetails.division}</label>
                             </div>     
-                            <div className="col-md-6">
+                            <div className="col-12 col-md-6">
                                 <label className="effective"><i className="bi bi-phone-fill"></i>  Phone No : {data.personaldetails.mobileno}</label>
                             </div>                   
                         </div>
@@ -113,53 +114,70 @@ function ViewStudent() {
                     <div className="animate__animated animate__zoomIn">
                         <br/>
                         <div className="row">
-                            <div className="col-md-12 table-card">
+                            <div className="col-12 col-md-12 table-card">
                                 <h5 className="total">
                                     <i className="bi bi-tag-fill set-icon"></i>
                                     <TypingEffect key={data.personaldetails.name.split(" ")[1].toLowerCase()} text={`😎Lets See  How Loyal Was ${data.personaldetails.name.split(" ")[1].toLowerCase()} to the Classroom Attendance 🤔? `}/>
                                 </h5>
                                 {
                                     attendance.map((data, index) => (
-                                    <div key={data._id || index} className="attendance-card mb-3 p-3 shadow-sm">
-                                        <div className="d-flex justify-content-between align-items-center mb-2">
-                                            <h6 className="fw-bold">
-                                                <i className="bi bi-calendar-heart-fill set-icon "></i> {new Date(data._id).toLocaleDateString()}
+                                      <div key={data._id || index} className={`attendance-card premium-card ${data.absentcount > 0 ? "danger" : "success"}`}>
+                                        <div className="card-header-row">
+                                            <h6 className="date">
+                                                <i className="bi bi-calendar-heart-fill set-icon"></i>
+                                                {new Date(data._id).toLocaleDateString()}
                                             </h6>
-                                            <div>
-                                                <span className="badge bg-secondary me-4">
-                                                    📚 {data.lecturecount}
-                                                </span>
 
-                                                <span className="badge bg-success me-4">
-                                                    ✅ {data.presentcount}
-                                                </span>
+                                            <span className={`status-badge ${data.absentcount > 0 ? "bad" : "good"}`}>
+                                                {data.absentcount > 0 ? "⚠️ Warning" : "✅ Perfect"}
+                                            </span>
+                                        </div>
 
-                                                <span className="badge bg-danger">
-                                                    ❌ {data.absentcount}
-                                                </span>
+  
+                                        <div className="card-stats">
+                                            <div className="stat-box total">
+                                                📚 <span>{data.lecturecount}</span>
+                                            </div>
+
+                                            <div className="stat-box present">
+                                                ✅ <span>{data.presentcount}</span>
+                                            </div>
+
+                                            <div className="stat-box absent">
+                                                ❌ <span>{data.absentcount}</span>
                                             </div>
                                         </div>
-                                        {data.absentSubjects?.length > 0 ? (
-                                            <div className="mt-2 ps-2 border-start border-danger">
-                                                <small className="text-danger fw-semibold">
-                                                    Absent Lectures:
-                                                </small>
 
+                                        {(() => {
+                                            const percentage = data.lecturecount > 0
+                                                ? ((data.presentcount / data.lecturecount) * 100).toFixed(0)
+                                                : 0;
+
+                                                return (
+                                                    <div className="progress-container">
+                                                        <div className="progress-bar">
+                                                            <div className={`progress-fill ${percentage >= 75 ? "good" : "bad"}`} style={{ width: `${percentage}%` }}></div>
+                                                        </div>
+                                                        <small>{percentage}% Attendance</small>
+                                                    </div>
+                                                );
+                                        })()}
+                                        {data.absentSubjects?.length > 0 ? (
+                                            <div className="absent-section">
+                                                <small>Absent Lectures:</small>
                                                 {data.absentSubjects.map((subdata, ind) => (
-                                                    <div key={ind} className="small text-muted">
-                                                        • {subdata.subject} - Prof. {subdata.teacher}
+                                                    <div key={ind} className="absent-item">
+                                                        • {subdata.subject} - {subdata.teacher}
                                                     </div>
                                                 ))}
-                                            </div>):
-                                            <div className="mt-2 ps-2 border-start border-danger">
-                                                <div className="small text-muted">
-                                                    Present 🎉   
-                                                </div>
                                             </div>
+                                        ) : (
+                                        <div className="present-msg">🎉 Full Attendance</div>
+                                        )}
 
-                                        }
-                                        </div >))
-                                    }
+                                    </div>  
+                                    )
+                                )}
                             </div>
                         </div>
                     </div>

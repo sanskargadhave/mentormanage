@@ -402,7 +402,7 @@ function AddStudent()
                             <p><strong>Name:</strong> {FormData.Name}</p>
                             <p><strong>Roll No:</strong> {FormData.RollNo}</p>
                         </div>
-                        <button className="btn btn-primary w-100" onClick={() => nevigate("/admin")}>
+                        <button className="btn btn-primary w-100" onClick={() =>role==="Admin" ? nevigate("/admin") : role==="Mentor" ? nevigate("/mentor"):nevigate("/")}>
                             <i className="bi bi-box-arrow-right"></i> Go to Dashboard
                         </button>
                     </div>

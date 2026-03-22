@@ -15,7 +15,6 @@ import {MentorDashboardContent} from "./mentor component/MentorDashbord.js";
 import LogoutWarning from "./Logout.js";
 import SidebarLayout from "./SidebarLayout.js";
 import { AdminDashbord } from "./admin component/AdminDashbord.js";
-import { Addstudent } from "./mentor component/addStudent.js";
 import { AddTeacher } from "./admin component/addteacher.js";
 import {AddLecture} from "./admin component/addLecture.js";
 import { AddAttendance } from "./mentor component/addAttendance.js";
@@ -54,7 +53,7 @@ function App() {
           <Route index element={<MentorDashboardContent />} />
           <Route path="dashboard" element={<MentorDashboardContent />} />
           
-          <Route path="add-student" element={<Addstudent />} />
+          <Route path="add-student" element={<AddStudent />} />
           <Route path="view-users" element={<ViewUser />} />
           <Route path="delete-user" element={<DeleteUser />} />
           <Route path="add-attendance" element={<AddAttendance/>}/>
