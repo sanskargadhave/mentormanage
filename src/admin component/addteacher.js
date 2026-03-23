@@ -6,6 +6,7 @@ function AddTeacher()
 {
     const nevigate=useNavigate();
     const [teacherId,setTeacherId]=useState("");
+    const [loding,setloding]=useState(false);
     const [FormData,setFormData]=useState(
     {
         Name:"",
@@ -126,6 +127,7 @@ function AddTeacher()
             return;
         }
         else{
+            setloding(true);
             fetch("https://sangolacollage.onrender.com/api/add-teacher",{
             method:"POST",
             headers:{
@@ -161,6 +163,7 @@ function AddTeacher()
             else{
                 alert(data.error);
             }})
+            setloding(false);
         }
     }
     return(
@@ -257,7 +260,13 @@ function AddTeacher()
                 
                 <div className="row">
                     <div className="col-12 col-md-12 d-flex justify-content-center">
+                        {loding ? (
+                            <div class="spinner-border" role="status">
+                               <span class="visually-hidden">Loading...</span>
+                            </div>
+                        ):(
                         <button className="btn btn-primary" type="button" onClick={isAllvalid}><i className="bi bi-file-plus-fill"></i>   Add Teacher</button>
+                        )}
                     </div>
                 </div>
             </div>)}
@@ -300,11 +309,14 @@ function AddTeacher()
                         <input type="password" name="RePassword" placeholder="Confirm password" onChange={handleChange}  className={`form-control ${errors.RePassword ? "is-invalid" : ""}`} />
                         {errors.RePassword && <small className="showError">{errors.RePassword}</small>}
                     </div>
-
-                    <button className="set-btn" onClick={submitdata}>
-                        <i className="bi bi-check-circle"></i> Set Password
-                    </button>
-
+                    {loding ? (
+                            <div class="spinner-border" role="status">
+                               <span class="visually-hidden">Loading...</span>
+                            </div>
+                        ):(
+                        <button className="set-btn" onClick={submitdata}>
+                            <i className="bi bi-check-circle"></i> Set Password
+                        </button>)}
                 </div>
             </div>
             )}

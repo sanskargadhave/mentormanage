@@ -19,6 +19,7 @@ function AssignMentor()
     const [mentor,setmentor]=useState([]);
     const [studentdata,setstudentdata]=useState([]);
     const [assigndata,setassigndata]=useState([]);
+    const [loding,setloding]=useState(false);
     const [showerror,setshowerror]=useState(false);
     const [message,setmessage]=useState("");
     const [event,setevent]=useState("showselect");
@@ -64,6 +65,7 @@ function AssignMentor()
             setmessage("Please Select Appropriate Roll NO Range...")
             return (setshowerror(true));
         }
+        setloding(true);
         try {
             const resp = await axios.put("https://sangolacollage.onrender.com/api/assign-mentors",
                 {
@@ -80,6 +82,7 @@ function AssignMentor()
             setmessage(err.response?.data?.message);
             setshowerror(true);
         }
+        setloding(false);
     }
     function getstudentdata()
     {
@@ -88,6 +91,8 @@ function AssignMentor()
             setmessage("Please Provide All Details");
             return(setshowerror(true));
         }
+        setloding(true);
+
         axios.get("https://sangolacollage.onrender.com/api/get-students", {
             params: {
                 course: selectedCourse,
@@ -103,7 +108,7 @@ function AssignMentor()
             setevent("showassign");
         })
         .catch((err) => alert(err.message));
-        
+        setloding(false);
     }
     return (
         <div className="admin-content">
@@ -165,7 +170,13 @@ function AssignMentor()
                 <div className="row">
                     <div className="col-md-4">
                         <form className="d-flex" role="search">
+                            {loding ? (
+                            <div class="spinner-border" role="status">
+                               <span class="visually-hidden">Loading...</span>
+                            </div>
+                        ):(
                             <button className="btn btn-outline-success lm" type="button" onClick={getstudentdata}><i className="bi bi-search-heart set-icon"></i>Search</button>
+                        )}
                         </form> 
                     </div>
                     
@@ -247,7 +258,13 @@ function AssignMentor()
                         </div>
                         <div className="col-md-4">
                             <form className="d-flex" role="search">
-                            <button className="btn btn-outline-success lm" type="button" onClick={assignmentor}><i className="bi bi-search-heart set-icon"></i>Assign Students</button>
+                                {loding ? (
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    ):(
+                                        <button className="btn btn-outline-success lm" type="button" onClick={assignmentor}><i className="bi bi-search-heart set-icon"></i>Assign Students</button>
+                                )}
                         </form>
                         </div>
                     </div>

@@ -8,6 +8,7 @@ function AddStudent()
 {
     const {role}=useContext(AuthContext);
     const nevigate=useNavigate();
+    const [loding,setloding]=useState(false);
     const [showNotice, setShowNotice] = useState(true);
     const [showconfirm,setshowconfirm]=useState(false);
     const [showform,setshowform]=useState(true);
@@ -156,6 +157,7 @@ function AddStudent()
         }
         else
         {
+            setloding(true);
             fetch("https://sangolacollage.onrender.com/add-student",{
                 method:"POST",
                 headers:{
@@ -199,7 +201,7 @@ function AddStudent()
                     setshowconfirm(true);
                 }
             });
-            
+            setloding(false);
         }
     }
     return(
@@ -387,7 +389,13 @@ function AddStudent()
 
             <div className="row">
                 <div className="col-md-12 mb-3 d-flex justify-content-center">
+                    {loding ? (
+                            <div class="spinner-border" role="status">
+                               <span class="visually-hidden">Loading...</span>
+                            </div>
+                        ):(
                     <button className="btn btn-primary" type="button" onClick={isAllvalid}><i className="bi bi-file-plus-fill "></i>  Add Student</button>
+                    )}
                 </div>
             </div>
             <br/><br/>

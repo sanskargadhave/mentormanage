@@ -12,6 +12,7 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
 {
     const today = new Date().toISOString().split("T")[0];
     const [data, setData] = useState([]);
+    const [loding,setloding]=useState(false);
     const [counts,setcounts]=useState([]);
     const fetchData = async () => 
     {
@@ -134,6 +135,7 @@ function AddAttendance() {
     const [step,setstep]=useState("search");
     const [present,setpresent]=useState("");
     const [absent,setabsent]=useState("");
+    const [loding,setloding]=useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
     useEffect(() => {

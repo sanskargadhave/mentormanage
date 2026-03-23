@@ -54,6 +54,10 @@ function MainSidebar({collapsed}){
             <span className="menu-text">{!collapsed && "Assign Mentor"}</span>
         </li>
 
+        <li onClick={() => {navigate("/admin/add-admission-details")}}>
+            <i className="bi bi-clipboard-data set-icon"></i>
+            <span className="menu-text">{!collapsed && "Add Admission Details"}</span>
+        </li>
         
       </ul>
 

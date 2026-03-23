@@ -126,6 +126,18 @@
     .close-btn {
         align-self: flex-end;
     }
+    .upload-container {
+        padding: 15px;
+    }
+
+    .upload-box {
+        padding: 20px;
+    }
+
+    .upload-btn {
+        font-size: 14px;
+        padding: 10px;
+    }
 }
 
 .error-toast {
@@ -196,6 +208,11 @@
 .form-select {
   border-radius: 10px;
   padding: 10px;
+}
+.data-card {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
 }
 
 .form-label i{
@@ -540,5 +557,74 @@ margin-right: 20px;
   color: #000;
 }
 
+.upload-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+}
 
+/* Upload Box */
+.upload-box {
+    border: 2px dashed #4CAF50;
+    padding: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    transition: 0.3s;
+}
+
+.upload-box:hover {
+    background-color: #f5fff5;
+}
+
+/* Hide default input */
+.upload-box input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* File preview */
+.file-preview {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #333;
+    word-break: break-all;
+}
+
+/* Button */
+.upload-btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.upload-btn:hover {
+    background-color: #45a049;
+}
+
+/* 📱 Mobile Responsive */
+@media (max-width: 480px) {
+    .upload-container {
+        padding: 15px;
+    }
+
+    .upload-box {
+        padding: 20px;
+    }
+
+    .upload-btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
 

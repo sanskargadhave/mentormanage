@@ -8,6 +8,7 @@ function AddLecture(){
     const [teachers,setteachers]=useState([]);
     const [selected,setselected]=useState(null);
     const [lectureid,stlectureid]=useState("");
+    const [loding,setloding]=useState(false);
     const [showerror,setshowerror]=useState(false);
     const [message,setmessage]=useState("");
     const courses={
@@ -67,7 +68,7 @@ function AddLecture(){
         }
         setErrors({ ...errors, [name]: error});
     }
-    function isAllvalid() 
+    const isAllvalid = async ()=> 
     {
         const { Password, RePassword, ...rest } = FormData;
         const hasEmptyField = Object.values(rest).some(v => v === "");
@@ -82,25 +83,32 @@ function AddLecture(){
         }
         else
         {
-            fetch("https://sangolacollage.onrender.com/api/store-lecture",{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({
-                    subject:FormData.Subject,
-                    teacherid:selected.value,
-                    division:FormData.Division,
-                    Class:FormData.Class,
-                    department:FormData.Department,
-                    course:FormData.course
-                })
-            }).then(resp=>resp.json())
-            .then(data=>{
-                stlectureid(data.lectureid);
-                setmessage(data.message);
-                setshowerror(true);
-            });
+            try{
+                setloding(true);
+                const res = await axios.post(
+                "https://sangolacollage.onrender.com/api/store-lecture",
+                {
+                    subject: FormData.Subject,
+                    teacherid: selected.value,
+                    division: FormData.Division,
+                    Class: FormData.Class,
+                    department: FormData.Department,
+                    course: FormData.course
+                }
+            );
+
+            const data = res.data;
+
+            stlectureid(data.lectureid);
+            setmessage(data.message);
+            setshowerror(true);
+
+            }
+            catch(err)
+            {
+                console.log(err);
+            }
+            setloding(false);
         }
     }
     return (
@@ -172,8 +180,14 @@ function AddLecture(){
                         )}
                     </div>
                     <div className="col-12 col-md-4 mb-3">
+                        {loding ? (
+                            <div class="spinner-border" role="status">
+                               <span class="visually-hidden">Loading...</span>
+                            </div>
+                        ):(
                         <button className="btn btn-primary" type="button" onClick={isAllvalid}><i className="bi bi-file-plus-fill"></i>Add Lecture</button>
-                    </div>
+                        )}
+                        </div>
                 </div>
             </div>
         </div>

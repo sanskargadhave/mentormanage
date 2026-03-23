@@ -1,11 +1,13 @@
 import { useState} from "react";
 import {useNavigate} from 'react-router-dom';
+import axios from "axios";
 import "animate.css";
 import './admin.css';
 function AddMentor()
 {
     const nevigate=useNavigate();
     const [MentorId,setMentorId]=useState("");
+    const [loding,setloding]=useState(false);
     const [FormData,setFormData]=useState(
     {
         Name:"",
@@ -118,7 +120,7 @@ function AddMentor()
     setshowpassword(true);
 }
 
-    function submitdata()
+    const  submitdata= async ()=>
     {
         const isFormValid = Object.values(errors).every((msg) => msg === "");
         const hasEmptyField = Object.values(FormData).some((v) => v === "");
@@ -128,46 +130,52 @@ function AddMentor()
             return;
         }
         else{
-            fetch("https://sangolacollage.onrender.com/api/add-mentor",{
-            method:"POST",
-            headers:{
-                    "Content-Type":"application/json"
-                },
-            body:JSON.stringify({
-                personaldetails:{
-                    name:FormData.Name,
-                    gender:FormData.Gender,
-                    dob:FormData.DOB,
-                },
-                professionaldetails:{
-                    department:FormData.Department,
-                    qualification:FormData.Qualification,
-                    exprience:FormData.Exprience,
-                    joiningdate:FormData.JoinDate,
-                },
-                contactdetails:{
-                    mobileno:FormData.MobileNo,
-                    emailid:FormData.EmailId,
-                    address:FormData.Address
-                },
-                password:FormData.Password
-            })
-           }).then(res=>res.json())
-           .then(data=>{
-            if(data.message==="Mentor Add Sucessfully")
-            {
-                setMentorId(data.mentorId);
-                setshowerror(false);
-                setshowpassword(false);
-                setshowconfirm(true);
-            }
-            else{
+            setloding(true);
+            try {
+                const res = await axios.post("https://sangolacollage.onrender.com/api/add-mentor",
+                    {
+                        personaldetails: {
+                            name: FormData.Name,
+                            gender: FormData.Gender,
+                            dob: FormData.DOB,
+                        },
+                        professionaldetails: {
+                            department: FormData.Department,
+                            qualification: FormData.Qualification,
+                            exprience: FormData.Exprience,
+                            joiningdate: FormData.JoinDate,
+                        },
+                        contactdetails: {
+                            mobileno: FormData.MobileNo,
+                            emailid: FormData.EmailId,
+                            address: FormData.Address
+                        },
+                        password: FormData.Password
+                    }
+                );
 
-                seterr(data.message||data.error);
+                const data = res.data;
+
+                if (data.message === "Mentor Add Sucessfully") {
+                    setMentorId(data.mentorId);
+                    setshowerror(false);
+                    setshowpassword(false);
+                    setshowconfirm(true);
+                }
+                else {
+                    seterr(data.message || data.error);
+                    setshowerror(true);
+                    setshowform(false);
+                    setshowpassword(false);
+                }
+
+            }
+            catch (err) {
+                console.error(err);
+                seterr("Something went wrong");
                 setshowerror(true);
-                setshowform(false);
-                setshowpassword(false);
-            }})
+            }
+            setloding(false);
         }
     }
     return(
@@ -264,7 +272,13 @@ function AddMentor()
                 
                 <div className="row">
                     <div className="col-md-12 d-flex justify-content-center">
+                        {loding ? (
+                            <div class="spinner-border" role="status">
+                               <span class="visually-hidden">Loading...</span>
+                            </div>
+                        ):(
                         <button className="btn btn-primary" type="button" onClick={isAllvalid}><i className="bi bi-file-plus-fill"></i>   Add Mentor</button>
+                        )}
                     </div>
                 </div>
             </div>)}
@@ -301,10 +315,16 @@ function AddMentor()
                         <input type="password" name="RePassword" placeholder="Confirm password" onChange={handleChange}  className={`form-control ${errors.RePassword ? "is-invalid" : ""}`} />
                         {errors.RePassword && <small className="showError">{errors.RePassword}</small>}
                     </div>
-
-                    <button className="set-btn" onClick={submitdata}>
-                        <i className="bi bi-check-circle"></i> Set Password
-                    </button>
+                    {loding ? (
+                            <div class="spinner-border" role="status">
+                               <span class="visually-hidden">Loading...</span>
+                            </div>
+                        ):(
+                        <button className="set-btn" onClick={submitdata}>
+                            <i className="bi bi-check-circle"></i> Set Password
+                        </button>
+                        )}
+                    
 
                 </div>
             </div>)}

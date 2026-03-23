@@ -21,6 +21,8 @@ import { AddAttendance } from "./mentor component/addAttendance.js";
 import { ViewStudent } from "./mentor component/viewstudent.js"; 
 import { AssignMentor } from "./admin component/GiveMentor.js";
 import {AddTestResult} from "./mentor component/addTestResult.js";
+import AddAdmissionDetails from "./admin component/addAdmissionDetails.js"
+
 function App() {
   return (
     <Routes>
@@ -45,6 +47,7 @@ function App() {
           <Route path="add-teacher" element={<AddTeacher/>}/>
           <Route path="add-lecture" element={<AddLecture/>}/>
           <Route path="assign-mentor" element={<AssignMentor/>}/>
+          <Route path="add-admission-details" element={<AddAdmissionDetails/>}/>
         </Route>
 
 
