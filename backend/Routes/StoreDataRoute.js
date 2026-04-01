@@ -11,7 +11,11 @@ const {StoreTest}=require("../controllers/TestControler");
 const CreateTestId=require("../middleware/testMiddleware");
 const {sendMessage}=require("../controllers/messagecontroler");
 const {getexcelsheet}=require("../controllers/getexceldata");
-const uplode=require("../middleware/exceldataMiddleware");
+const {uplode,iscorrectdata}=require("../middleware/exceldataMiddleware");
+
+
+
+
 router.post("/add-student",StoreStudentDetails);
 
 router.post("/api/store-attendance",StoreAttendances);
@@ -24,6 +28,6 @@ router.post("/api/admin-login",AdminLogin);
 router.post("/api/add-teacher",AddTeacher);
 router.post("/api/store-test-result",CreateTestId,StoreTest);
 router.post("/api/sendMessage", sendMessage);
-router.post("/api/store-excel-data",uplode.single("file"),getexcelsheet);
+router.post("/api/store-excel-data",uplode.single("file"),iscorrectdata,getexcelsheet);
 
 module.exports = router;

@@ -23,8 +23,10 @@ const StoreStudentScema=new mongoose.Schema({
         rollno:{type:Number,required:true,unique:true},
         idno:{type:String,required:true},
         mentor:{type:mongoose.Schema.Types.ObjectId,ref:"mentor",default:null}
-    }
     },
+    password:{type:String,default:null},
+    },
+    
     {timestamps:true}
 );
 

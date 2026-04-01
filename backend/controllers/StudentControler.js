@@ -1,5 +1,6 @@
 const {StoreStudent}= require("../model/studentSchema");
 const {StoreLecture,StoreAttendance}=require("../model/AttendanceSchema");
+const bcrypt = require("bcryptjs");
 // /add-student  URL
 const StoreStudentDetails=async (req, res) => {
   try {
@@ -18,7 +19,7 @@ const StoreStudentDetails=async (req, res) => {
         message: "Aadhar No or Roll No already exists"
       });
     }
-
+    req.body.password = await bcrypt.hash(req.body.password, 10);
     const student = new StoreStudent(req.body);
     await student.save();
 
