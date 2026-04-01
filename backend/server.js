@@ -2,13 +2,16 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-
+const http =require("http");
+const {initSocket} =require("./socket");
 
 const GetDataRoute = require("./Routes/GetDataRoute");
 const StoreDataRoute =require("./Routes/StoreDataRoute");
 const UpdateDataRoute =require("./Routes/UpdateDataRoute");
 
 const app = express();
+const server = http.createServer(app);
+initSocket(server);
 
 app.use(cors());
 app.use(express.json());

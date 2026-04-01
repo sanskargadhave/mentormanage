@@ -1,6 +1,8 @@
 const {StoreStudent}= require("../model/studentSchema");
 const {StoreLecture,StoreAttendance}=require("../model/AttendanceSchema");
 const bcrypt = require("bcryptjs");
+const {getIO}=require("../socket");
+
 // /add-student  URL
 const StoreStudentDetails=async (req, res) => {
   try {
@@ -22,6 +24,15 @@ const StoreStudentDetails=async (req, res) => {
     req.body.password = await bcrypt.hash(req.body.password, 10);
     const student = new StoreStudent(req.body);
     await student.save();
+
+    const io=getIO();
+    io.emit("StudentAdded",{
+      name: req.body.personaldetails.name,
+      rollNo: req.body.collagedetails.rollno
+    })
+
+
+
 
     res.status(201).json({
       message: "Student added successfully"
