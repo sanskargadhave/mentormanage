@@ -1,9 +1,12 @@
 import { useState } from "react";
 import "./admin.css";
-import axios from "axios"
+import axios from "axios";
+import { GiveError } from "../WarningOrSucess";
 function AddAdmissionDetails() {
     const [file, setFile] = useState(null);
-    const [excelData,setexceldata]=useState([]);
+    
+    const [showerror,setshowerror]=useState(false);
+    const [message,setmessage]=useState("");
     const sendFile = async () => {
         if (!file) {
             return alert("Please select file first");
@@ -11,15 +14,19 @@ function AddAdmissionDetails() {
 
         const formdata = new FormData();
         formdata.append("file", file);
-
-        const res = await axios.post("http://localhost:5000/api/store-excel-data",formdata)
-
-        
-        setexceldata(res.data);
-        console.log(excelData);
-
+        try{
+            const res = await axios.post("http://localhost:5000/api/store-excel-data",formdata);
+            setmessage(res.data.message);
+            setshowerror(true);
+        }
+        catch(err)
+        {
+            setmessage(err.response?.data?.message || "Server Error");
+            setshowerror(true);
+        }
     };
 
+    
     return (
         <div className="admin-content upload-container">
             
@@ -36,7 +43,9 @@ function AddAdmissionDetails() {
                     Selected: {file.name}
                 </div>
             )}
-
+            {showerror && (
+                <GiveError show={showerror} message={message} duration={10000} onClose={()=>setshowerror(false)}/>
+            )}
             <button className="upload-btn" onClick={sendFile}>
                 Upload File
             </button>
