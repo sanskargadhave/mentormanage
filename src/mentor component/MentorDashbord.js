@@ -1,19 +1,30 @@
-import { io } from "socket.io-client";
 import { useEffect } from "react";
-function MentorDashboardContent()
-{
-    const socket = io("https://sangolacollage.onrender.com");
-    useEffect(() => {
-        socket.on("studentAdded", (data) => {
-            alert(`New student added: ${data.name}`);
-        });
+import { socket } from "../socket";
 
-        return () => socket.off("studentAdded");
-    }, []);
-    return (
-        <div>
-            
-        </div>
-    );
+function MentorDashboardContent() {
+
+  useEffect(() => {
+
+    socket.on("connect", () => {
+      console.log("Socket connected:", socket.id);
+    });
+
+    socket.on("StudentAdded", (data) => {
+      console.log("Notification received:", data);
+      alert(`New student added: ${data.name}`);
+    });
+
+    return () => {
+      socket.off("StudentAdded");
+    };
+
+  }, []);
+
+  return (
+    <div>
+      Mentor Dashboard
+    </div>
+  );
 }
-export {MentorDashboardContent};
+
+export { MentorDashboardContent };

@@ -26,6 +26,7 @@ const StoreStudentDetails=async (req, res) => {
     await student.save();
 
     const io=getIO();
+    console.log("Sending notification");
     io.emit("StudentAdded",{
       name: req.body.personaldetails.name,
       rollNo: req.body.collagedetails.rollno
