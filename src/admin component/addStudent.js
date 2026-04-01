@@ -229,16 +229,18 @@ function AddStudent()
         .then(res=>res.json())
         .then(data=>{
 
-            if(data.message.includes("exists") || data.message.includes("Duplicate"))
-            {
-                alert(data.message);
-            }
-
-            else
-            {
-                setshowpassword(false);
-                setshowconfirm(true);
-            }
+            if (data.message === "Student added successfully") {
+                    
+                    setshowerror(false);
+                    setshowpassword(false);
+                    setshowconfirm(true);
+                }
+                else {
+                    seterr(data.message || data.error);
+                    setshowerror(true);
+                    setshowform(false);
+                    setshowpassword(false);
+                }
 
         })
         .catch(()=>{
@@ -528,7 +530,25 @@ function AddStudent()
                         )}
                 </div>
             </div>)}
+            {showerror && (
+            <div className="login-card admin-content animate__animated animate__fadeInDown">
+                <h2 className="title">{err}</h2>
+                <div className="action-buttons">
+                    <button className="retry-btn" onClick={()=>{
+                        setshowpassword(false);
+                        setshowerror(false);
+                        setshowform(true);
+                    }}>
+                        <i className="bi bi-arrow-repeat"></i>
+                            Try Again
+                        </button>
 
+                    <button className="exit-btn" onClick={()=>{nevigate("/")}}>
+                        <i className="bi bi-door-open"></i>
+                        Exit
+                    </button>
+                </div>
+            </div>)}
 
     </div>
     )
