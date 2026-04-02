@@ -1,5 +1,6 @@
 const {StoreLecture,StoreAttendance}=require("../model/AttendanceSchema");
 const {StoreStudent,StoreMentor,StoreTeacher}= require("../model/studentSchema");
+const adduser=require("../model/userSchema");
 const bcrypt = require("bcryptjs");
 //   /api/Mentor/count   URL  GET
 const MentorCount= async (req, resp) => {
@@ -18,15 +19,29 @@ const AddMentor= async (req,res)=>{
     const {emailid}=req.body.contactdetails;
     const {mobileno}=req.body.contactdetails;
 
-    const exist=await StoreMentor.findOne({$or:[{"contactdetails.emailid":emailid},{"contactdetails.mobileno":mobileno}]});
-    if(exist)
+    const emailidexist=await StoreMentor.findOne({"contactdetails.emailid":emailid});
+    const mobilenoexist=await StoreMentor.findOne({"contactdetails.mobileno":mobileno});
+    if(emailidexist)
     {
-      return res.status(400).json({message:"Email or Mobile No Already Exists...."});
+      return res.status(400).json({message:"Your Emailid  Is  Already Exists"});
+    }
+    else if(mobilenoexist)
+    {
+      return res.status(400).json({message:"Your Mobile No Is Already Exists"})
     }
 
     req.body.password = await bcrypt.hash(req.body.password, 10);
     const mentor=new StoreMentor(req.body);
     await mentor.save();
+
+    await adduser.create({
+      userid: mentor.mentorId,
+      password: req.body.password,
+      emailid: emailid,
+      role: "Mentor",
+      active: true
+    });
+
     res.status(201).json({message:"Mentor Add Sucessfully",mentorId:mentor.mentorId});
   }
   catch(err)
