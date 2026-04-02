@@ -61,6 +61,7 @@ const StoreStudentDetails=async (req, res) => {
       message: "Failed to add student",
       error: err.message
     });
+    console.log(err.message);
   }
 };
 
