@@ -1,27 +1,31 @@
-import { useEffect } from "react";
+import { useEffect,useState} from "react";
 import { socket } from "../socket";
 
 function MentorDashboardContent() {
 
-  useEffect(() => {
-    socket.on("connect",()=>{
-      console.log("Socket connected:", socket.id);
-    });
+  const [notification,setnotification]=useState([]);
+  useEffect(()=>{
+      const handlenotification=(data)=>{
+        console.log(data);   
+        setnotification(prev => [data, ...prev]);
+      };
+      socket.on("notification", handlenotification);
 
-    socket.on("StudentAdded",(data) => {
-      console.log("Notification received:", data);
-      alert(`New student added: ${data.name}`);
-    });
-
-    return () => {
-      socket.off("StudentAdded");
-    };
-
-  }, []);
+      return()=>{
+        socket.off("notification",handlenotification);
+      }
+  },[]);
 
   return (
     <div>
-      Mentor Dashboard
+      {notification.map((n,index)=>(
+        <div key={index} className="notification-card">
+          <p>{n.message}</p>
+          <p>Name: {n.student.name}</p>
+          <p>Roll: {n.student.rollno}</p>
+          <p>Email: {n.student.email}</p>
+        </div>
+      ))}
     </div>
   );
 }

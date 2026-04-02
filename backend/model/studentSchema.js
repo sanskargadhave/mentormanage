@@ -28,6 +28,7 @@ const StoreStudentScema=new mongoose.Schema({
     emailid:{type:String,required:true,unique:true},
     password:{type:String,default:null},
     studentid:{type:String},
+    isactive:{type:Boolean,default:false}
     },
     
     {timestamps:true}

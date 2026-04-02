@@ -47,10 +47,20 @@ const StoreStudentDetails=async (req, res) => {
 
     const io=getIO();
     console.log("Sending notification");
-    io.emit("StudentAdded",{
-      name: req.body.personaldetails.name,
-      rollNo: req.body.collagedetails.rollno
-    })
+
+    io.to("mentor_room").emit("notification",{
+      type:"student_added",
+      message:"New Student Registered",
+      student:{
+        id:student.studentid,
+        name:student.personaldetails.name,
+        rollno:student.collagedetails.rollno,
+        email:student.emailid,
+        parentno:student.personaldetails.parentno,
+        mobileno:student.personaldetails.mobileno
+      },
+      time:new Date()
+    });
 
     res.status(201).json({
       message: "Student added successfully"
