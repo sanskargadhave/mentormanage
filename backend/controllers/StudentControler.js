@@ -38,7 +38,7 @@ const StoreStudentDetails=async (req, res) => {
 
 
     await adduser.create({
-      userid: req.body.userid,
+      userid: student.studentid,
       password: req.body.password,
       emailid: req.body.emailid,
       role: "Student",
