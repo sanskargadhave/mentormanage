@@ -4,7 +4,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { Routes, Route } from "react-router-dom";
 
 import { StudentDashboardContent } from "./Main_pageComponent";
-import { AdminLogin, MentorLogin, Login } from "./login";
+import {  Login } from "./login";
 import { AdminSidebar} from "./admin component/AdminNevbar.js";
 
 import { AddMentor } from "./admin component/addmentor.js";
@@ -31,8 +31,7 @@ function App() {
 
         {/* For Only login */}
         <Route path="/login" element={<Login />} />
-        <Route path="adminlogin" element={<AdminLogin />} />
-        <Route path="/mentorlogin" element={<MentorLogin />} />
+        
         <Route path="/warning-logout" element={<LogoutWarning/>}/>
 
         {/* Admin */}
