@@ -37,13 +37,14 @@ const StoreStudentDetails=async (req, res) => {
     await student.save();
 
 
-    await adduser.insertOne({userid:req.body.userid,
-                            password:req.body.password,
-                            emailid:req.body.emailid,
-                            role:"Student",
-                            active:true
-                          })
-                          
+    await adduser.create({
+      userid: req.body.userid,
+      password: req.body.password,
+      emailid: req.body.emailid,
+      role: "Student",
+      active: true
+    });
+
     const io=getIO();
     console.log("Sending notification");
     io.emit("StudentAdded",{
