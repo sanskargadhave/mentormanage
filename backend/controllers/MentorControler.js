@@ -47,6 +47,7 @@ const AddMentor= async (req,res)=>{
   catch(err)
   {
     res.status(500).json({error:err.message});
+    console.log(err.message);
   }
 };
 
@@ -70,6 +71,7 @@ const MentorLogin = async (req, resp) => {
 
   } catch (err) {
     resp.status(500).json({ message: err.message });
+
   }
 };
 

@@ -39,6 +39,8 @@ function AddTeacher()
     const [showconfirm,setshowconfirm]=useState(false);
     const [showform,setshowform]=useState(true);
     const [showpassword,setshowpassword]=useState(false);
+    const [showerror,setshowerror]=useState(false);
+    const [err,seterr]=useState("");
     function handleChange(e)
     {
         const isEmpty= (v) => v.trim() === "";
@@ -154,15 +156,20 @@ function AddTeacher()
             })
            }).then(res=>res.json())
            .then(data=>{
-            if(data.message)
+            if(data.message==="Teacher Add Sucessfully")
             {
                 setTeacherId(data.teacherId);
+                setshowerror(false);
                 setshowpassword(false);
                 setshowconfirm(true);
             }
             else{
-                alert(data.error);
+                seterr(data.message || data.error);
+                setshowerror(true);
+                setshowform(false);
+                setshowpassword(false);
             }})
+
             setloding(false);
         }
     }
@@ -320,6 +327,25 @@ function AddTeacher()
                 </div>
             </div>
             )}
+            {showerror && (
+            <div className="login-card admin-content animate__animated animate__fadeInDown">
+                <h2 className="title">{err}</h2>
+                <div className="action-buttons">
+                    <button className="retry-btn" onClick={()=>{
+                        setshowpassword(false);
+                        setshowerror(false);
+                        setshowform(true);
+                    }}>
+                        <i className="bi bi-arrow-repeat"></i>
+                            Try Again
+                        </button>
+
+                    <button className="exit-btn" onClick={()=>{nevigate("/")}}>
+                        <i className="bi bi-door-open"></i>
+                        Exit
+                    </button>
+                </div>
+            </div>)}
         </div>
     );  
 }
