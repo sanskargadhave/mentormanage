@@ -12,7 +12,7 @@ const CreateTestId=require("../middleware/testMiddleware");
 const {sendMessage}=require("../controllers/messagecontroler");
 const {getexcelsheet}=require("../controllers/getexceldata");
 const {uplode,iscorrectdata}=require("../middleware/exceldataMiddleware");
-
+const {userlogin} = require("../controllers/userControler");
 
 
 
@@ -23,7 +23,7 @@ router.post("/api/store-attendance",StoreAttendances);
 router.post("/api/add-mentor",AddMentor);
 router.post("/api/mentor-login",MentorLogin);
 router.post("/api/store-lecture",StoreLectures);
-
+router.post("/api/user-login",userlogin);
 router.post("/api/admin-login",AdminLogin);
 router.post("/api/add-teacher",AddTeacher);
 router.post("/api/store-test-result",CreateTestId,StoreTest);

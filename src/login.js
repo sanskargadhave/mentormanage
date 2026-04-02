@@ -2,7 +2,7 @@ import "./Main_pageComponent.css";
 import "animate.css";
 import {useState } from "react";
 import {useNavigate} from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext} from "react";
 import { AuthContext } from "../src/Authintication";
 
 
@@ -118,34 +118,114 @@ function AdminLogin()
         </div>
     );
 }
-function Login()
-{
+
+
+
+
+
+
+function Login() {
+
+    const [email,setEmail]=useState("");
+    const [password,setPassword]=useState("");
+    const [showPassword,setShowPassword]=useState(false);
+    const [error,seterror]=useState("");
     const nevigate=useNavigate();
-    return (
-        <div className="login-wrapper">
-            <div className="login-card  animate__animated animate__fadeInDown">
+    const [loading,setLoading]=useState(false);
+    const { login } = useContext(AuthContext);
+    const handleSubmit=async (e)=>{
+        e.preventDefault();
+        await verifyData();
+    };
+    async function verifyData()
+    {
+        try{
+            setLoading(true);
+            const resp=await fetch("http://localhost:5000/api/user-login",{
+                method:"POST",
+                headers:{
+                "Content-Type":"application/json"},
+                body:JSON.stringify({
+                    emailid:email,
+                    password:password
+                })
+            })
+            const data=await resp.json();
+            if(data.islogin)
+            {
+                login({
+                    id:data.userdetails.userid,
+                    role:data.userdetails.role,
+                    email:data.userdetails.emailid,
+                    name:"Sanskar Gadhave"
+                }); 
+                const role=data.userdetails.role;
+                if(role==="Admin")
+                {
+                    nevigate("/admin");
+                }  
+                else if(role==="Mentor")
+                {
+                    nevigate("/mentor");
+                }
+                else
+                {
+                    nevigate("/");
+                }
+            }
+            else
+            {
+                seterror(data.message);
+            }
+            
+        }
+        catch(err)
+        {
+            seterror(err);
+        }
+        setLoading(false);
+    }
+    return(
 
-                <h2 className="title">Select Your Role</h2>
-                <p className="subtitle">Login as Admin or Mentor</p>
+        <div className="login-page">
+            <h2 className="login-title">Welcome Back</h2>
+            <p className="login-sub">Login to continue</p>
+            <form className="login-form" onSubmit={handleSubmit}>
+                <div className="input-box">
+                    <input type="email" placeholder=" " value={email} required onChange={(e)=>setEmail(e.target.value)}/>
+                    <label>Email ID</label>
+                </div>
 
-                <button className="role-btn admin" onClick={()=>nevigate("/adminlogin")}>
-                    <i className="bi bi-shield-lock-fill"></i>
-                    <span>Admin</span>
+                <div className="input-box password-box">
+                    <input type={showPassword ? "text" : "password"} placeholder=" " value={password} required onChange={(e)=>setPassword(e.target.value)} />
+                    <label>Password</label>
+
+                    <span className="toggle-pass" onClick={()=>setShowPassword(!showPassword)}>
+                        {showPassword ? "🙈" : "🐵"}
+                    </span>
+
+                </div>
+
+                {error && <p className="error">{error}</p>}
+
+                <button className={`login-btn ${loading ? "loading" : ""}`}  disabled={loading} >
+                    {loading ? (
+                        <div class="spinner-border text-danger" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    ) : ("Login")}
                 </button>
 
-                <button className="role-btn mentor" onClick={()=>nevigate("/mentorlogin")}>
-                    <i className="bi bi-person-badge-fill"></i>
-                    <span>Mentor</span>
-                </button>
 
-                <button className="role-btn guest" onClick={()=>nevigate("/")}>
-                    <i className="bi bi-person-circle"></i>
-                    <span>Stay as Guest</span>
-                </button>
-            </div>
+            </form>
+
         </div>
     );
 }
+
+
+
+
 
 function MentorLogin()
 {

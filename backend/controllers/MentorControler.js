@@ -67,7 +67,7 @@ const MentorLogin = async (req, resp) => {
       return resp.status(401).json({ message: "Password Doesn't Match" });
     }
 
-    resp.status(200).json({ message: "Login Success.... Welcome Mentor" ,mentor});
+    resp.status(200).json({ message: "Login Success Welcome Mentor" ,mentor});
 
   } catch (err) {
     resp.status(500).json({ message: err.message });
