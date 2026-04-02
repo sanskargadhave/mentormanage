@@ -4,12 +4,11 @@ import { socket } from "../socket";
 function MentorDashboardContent() {
 
   useEffect(() => {
-
-    socket.on("connect", () => {
+    socket.on("connect",()=>{
       console.log("Socket connected:", socket.id);
     });
 
-    socket.on("StudentAdded", (data) => {
+    socket.on("StudentAdded",(data) => {
       console.log("Notification received:", data);
       alert(`New student added: ${data.name}`);
     });

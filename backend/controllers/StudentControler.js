@@ -2,38 +2,54 @@ const {StoreStudent}= require("../model/studentSchema");
 const {StoreLecture,StoreAttendance}=require("../model/AttendanceSchema");
 const bcrypt = require("bcryptjs");
 const {getIO}=require("../socket");
+const {adduser}=require("../model/userSchema");
 
 // /add-student  URL
 const StoreStudentDetails=async (req, res) => {
   try {
     const { aadharno } = req.body.personaldetails;
     const { rollno } = req.body.collagedetails;
-
-    const exist = await StoreStudent.findOne({
-      $or: [
-        { "personaldetails.aadharno": aadharno },
-        { "collagedetails.rollno": rollno }
-      ]
-    });
-
-    if (exist) {
+    const {emailid} = req.body;
+    const aadharnoexist = await StoreStudent.findOne({"personaldetails.aadharno": aadharno});
+    const rollnoexist = await StoreStudent.findOne({ "collagedetails.rollno": rollno });
+    const emailidexist= await StoreStudent.findOne({"emailid":emailid});
+    if (aadharnoexist) {
       return res.status(400).json({
-        message: "Aadhar No or Roll No already exists"
+        message: "Aadhar No Already exists"
       });
     }
+    else if(rollnoexist)
+    {
+      return res.status(400).json({
+        message: "RollNo Already exists"
+      });
+    }
+
+    else if (emailidexist)
+    {
+      return res.status(400).json({
+        message: "This Email Already Used "
+      });
+    }
+
     req.body.password = await bcrypt.hash(req.body.password, 10);
     const student = new StoreStudent(req.body);
     await student.save();
 
+
+    await adduser.insertOne({userid:req.body.userid,
+                            password:req.body.password,
+                            emailid:req.body.emailid,
+                            role:"Student",
+                            active:true
+                          })
+                          
     const io=getIO();
     console.log("Sending notification");
     io.emit("StudentAdded",{
       name: req.body.personaldetails.name,
       rollNo: req.body.collagedetails.rollno
     })
-
-
-
 
     res.status(201).json({
       message: "Student added successfully"
@@ -46,7 +62,6 @@ const StoreStudentDetails=async (req, res) => {
     });
   }
 };
-
 
 // /api/students/count   URL
 const StudentCounts= async (req, resp) => {
@@ -158,6 +173,7 @@ const GetStudentDetailsByRoll= async (req, resp) => {
               }
             }
           }
+          
         },
         {$project:{
           lecturecount:1,

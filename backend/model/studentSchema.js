@@ -22,9 +22,12 @@ const StoreStudentScema=new mongoose.Schema({
         division:{type:String,required:true},
         rollno:{type:Number,required:true,unique:true},
         idno:{type:String,required:true},
-        mentor:{type:mongoose.Schema.Types.ObjectId,ref:"mentor",default:null}
+        mentor:{type:mongoose.Schema.Types.ObjectId,ref:"mentor",default:null},
+        
     },
+    emailid:{type:String,required:true,unique:true},
     password:{type:String,default:null},
+    studentid:{type:String},
     },
     
     {timestamps:true}
@@ -89,6 +92,26 @@ addMentor.pre("save", async function () {
     });
 
     this.mentorId = `MN-${dobPart}-${String(count + 1).padStart(3, "0")}`;
+  }
+});
+
+StoreStudentScema.pre("save", async function () {
+  if (!this.isNew) return;
+
+  if (!this.studentid && this.personaldetails?.dob) {
+    const dob = new Date(this.personaldetails.dob);
+
+    const dd = String(dob.getDate()).padStart(2, "0");
+    const mm = String(dob.getMonth() + 1).padStart(2, "0");
+    const yyyy = dob.getFullYear();
+
+    const dobPart = `${dd}${mm}${yyyy}`;
+
+    const count = await this.constructor.countDocuments({
+      "personaldetails.dob": this.personaldetails.dob
+    });
+
+    this.studentid = `ST-${dobPart}-${String(count + 1).padStart(3, "0")}`;
   }
 });
 

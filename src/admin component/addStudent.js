@@ -42,6 +42,7 @@ function AddStudent()
         Division:"",
         RollNo:"",
         Id:"",
+        EmailId:"",
         Password:"",
         RePassword:""
     });
@@ -61,6 +62,7 @@ function AddStudent()
         HscPercentage:"",
         Department:"",
         Course:"",
+        EmailId:"",
         Year:"",
         Division:"",
         RollNo:"",
@@ -165,6 +167,11 @@ function AddStudent()
                 else if(FormData.Password!==value) error = "Password Not Match";
                 else error = "";
                 break;
+            case "EmailId":
+                if(!/^\S+@\S+\.\S+$/.test(value)) error = "Invalid Email";
+                else if (isEmpty(value)) error = "Email is required";
+                else error="";
+                break;
 
             default:
                 break;
@@ -222,7 +229,8 @@ function AddStudent()
                     rollno:FormData.RollNo,
                     idno:FormData.Id
                 },
-                password:FormData.RePassword
+                password:FormData.RePassword,
+                emailid:FormData.EmailId
             })
 
         })
@@ -456,7 +464,13 @@ function AddStudent()
                         {errors.Id && (<label className="showError">{errors.Id}</label>)}
                     </div>
                 </div>
-
+                <div className="row">
+                    <div className="col-12 col-md-4 mb-3">
+                        <label className="form-label"> <i className="bi bi-envelope"></i>  Email Id</label>
+                        <input type="email" className={`form-control ${errors.EmailId ? "is-invalid" : ""}`} name="EmailId" placeholder="Enter Email Id" onChange={handleChange}/>
+                        {errors.EmailId && (<label className="showError">{errors.EmailId}</label>)}
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-md-12 mb-3 d-flex justify-content-center">
                         {loding ? (
