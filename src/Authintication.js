@@ -47,8 +47,9 @@ export function AuthProvider({ children }) {
       userid: userdata.id,
       role: userdata.role
     });
+     console.log("Join room emitted:", userdata.id, userdata.role);
   }
-  console.log("Join room emitted:", userdata.id, userdata.role);
+ 
   function logout() {
     setid(null);
     setname(null);
