@@ -10,10 +10,26 @@ const initSocket=(server)=>{
             const {userid,role}=data;
             console.log("Joined room:", "user_"+userid);
             socket.join("user_"+userid);
-            if(role==="Mentor") socket.join("mentor_room");
-            if(role==="Student") socket.join("student_room");
-            if(role==="Teacher") socket.join("teacher_room");
-            if(role==="Admin") socket.join("admin_room");
+            if(role==="Mentor") 
+            {
+                socket.join("mentor_room");
+                console.log("Mentor join mentor room");
+            }
+            if(role==="Student")
+            { 
+                socket.join("student_room");
+                console.log("student join student room")
+            }
+            if(role==="Teacher") 
+            {
+                socket.join("teacher_room");
+                console.log("Teacher join teacher room");
+            }
+            if(role==="Admin") 
+            {    
+                socket.join("admin_room");
+                console.log("Admin Join admin room");
+            }
 
         });
     });

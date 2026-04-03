@@ -17,10 +17,20 @@ export function AuthProvider({ children }) {
   const [role, setrole] = useState(() => localStorage.getItem("role") || "Guest");
 
   useEffect(()=>{
-    if(id && role && role !== "Guest"){
-      socket.emit("join_room",{userid:id,role:role});
-    }
-  },[id,role]);
+  if(id && role && role !== "Guest"){
+
+    socket.on("connect",()=>{
+      console.log("Socket connected:",socket.id);
+
+      socket.emit("join_room",{
+        userid:id,
+        role:role
+      });
+
+    });
+
+  }
+},[id,role]);
 
 
   function login(userdata) {
@@ -38,7 +48,7 @@ export function AuthProvider({ children }) {
       role: userdata.role
     });
   }
-
+  console.log("Join room emitted:", userdata.id, userdata.role);
   function logout() {
     setid(null);
     setname(null);
