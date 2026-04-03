@@ -14,7 +14,7 @@ function MentorDashboardContent() {
       try {
         const resp = await axios.get(`https://sangolacollage.onrender.com/api/get-notifications/${id}`
         );
-        // Sort newest first
+        
         const sorted = resp.data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
@@ -26,7 +26,7 @@ function MentorDashboardContent() {
     getNotifications();
   }, [id]);
 
-  // Listen for live notifications via Socket.io
+  
   useEffect(() => {
     const handleNotification = (data) => {
       if (data.receiverid === id) {
@@ -47,10 +47,7 @@ function MentorDashboardContent() {
       ) : (
         <div className="notifications-list">
           {notifications.map((notif) => (
-            <div
-              key={notif._id}
-              className={`notification-card ${!notif.read ? "unread" : ""}`}
-            >
+            <div key={notif._id} className={`notification-card ${!notif.read ? "unread" : ""}`}>
               <div className="notification-header">
                 <span className="notification-type">{notif.type}</span>
                 <span className="notification-time">
@@ -58,6 +55,22 @@ function MentorDashboardContent() {
                 </span>
               </div>
               <div className="notification-message">{notif.message}</div>
+              <div className="notification-details">
+                <p><strong>Student Id:</strong> {notif.data.id}</p>
+                <p><strong>Name:</strong> {notif.data.name}</p>
+                <p><strong>Email Id:</strong> {notif.data.email}</p>
+
+                <div className="verify-parent-number">
+                  <span className="badge rounded-pill bg-warning text-dark">
+                    Please Verify This Parent Whatsapp No
+                  </span>
+                  <p>
+                    <strong>Parent Whatsapp No:</strong>
+                    <a href={`tel:${notif.data.parentno}`} className="verify-btn"> Call / Verify</a>
+                  </p>
+                </div>
+                <p><strong>Student Mobile No:</strong> {notif.data.mobileno}</p>
+              </div>
             </div>
           ))}
         </div>
