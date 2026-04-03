@@ -2,7 +2,14 @@
   .add-student-form {
     padding: 15px;
   }
-
+    .notifications-panel {
+    margin: 10px;
+    padding: 10px;
+  }
+  .panel-title {
+    font-size: 1.4rem;
+  }
+  
   .form-label {
     font-size: 14px;
   }
@@ -797,3 +804,100 @@ body {
   font-weight: 500;
 }
 
+.notifications-panel {
+  max-width: 650px;
+  margin: 20px auto;
+  padding: 15px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.panel-title {
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.no-notifications {
+  text-align: center;
+  color: #777;
+  padding: 20px 0;
+}
+
+.notifications-list {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.notification-card {
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  background: #f9f9f9;
+  transition: background 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+
+.notification-card:hover {
+  background: #eef6ff;
+  transform: translateY(-2px);
+}
+
+.notification-card.unread {
+  border-left: 4px solid #007bff;
+  background: #e6f0ff;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.notification-type {
+  font-weight: 600;
+}
+
+.notification-time {
+  font-style: italic;
+  font-size: 0.75rem;
+  color: #999;
+}
+
+.notification-message {
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* Scrollbar for desktop */
+.notifications-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.notifications-list::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.notifications-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .notifications-panel {
+    margin: 10px;
+    padding: 10px;
+  }
+  .panel-title {
+    font-size: 1.4rem;
+  }
+}

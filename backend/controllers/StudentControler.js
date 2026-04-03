@@ -3,7 +3,7 @@ const {StoreLecture,StoreAttendance}=require("../model/AttendanceSchema");
 const bcrypt = require("bcryptjs");
 const {getIO}=require("../socket");
 const adduser=require("../model/userSchema");
-
+const NotificationSchema=require("../model/notificationsScema");
 // /add-student  URL
 const StoreStudentDetails=async (req, res) => {
   try {
@@ -45,12 +45,33 @@ const StoreStudentDetails=async (req, res) => {
       active: true
     });
 
+
+    await NotificationSchema.create({
+      senderId:student._id,
+      receiver_Id:student.mentor,
+      receiverid:student.mentorId,
+      receiverRole:"Mentor",
+      type:"student_added",
+      message:`${student.personaldetails.name}  Registered`,
+      data:{
+        id:student.studentid,
+        name:student.personaldetails.name,
+        rollno:student.collagedetails.rollno,
+        email:student.emailid,
+        parentno:student.personaldetails.parentno,
+        mobileno:student.personaldetails.mobileno
+      }
+    })
+
+
+
+
     const io=getIO();
     console.log("Sending notification");
 
     io.to("user_"+mentorId).emit("notification",{
       type:"student_added",
-      message:"New Student Registered",
+      message:`${student.personaldetails.name}  Registered`,
       student:{
         id:student.studentid,
         name:student.personaldetails.name,

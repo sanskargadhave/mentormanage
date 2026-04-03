@@ -8,7 +8,7 @@ const {GetLectures} =require("../controllers/LectureControler");
 const {GetTeacher}=require("../controllers/TeacherControler");
 const {UserCounts}=require("../controllers/AdminControler");
 const {GetTestSummery,MakeTestReport}=require("../controllers/TestControler");
-
+const getNotification =require("../controllers/notificationControler");
 
 router.get("/api/students/count",StudentCounts);
 router.get("/api/serach-student/:lectureid",SearchStudent);
@@ -22,4 +22,5 @@ router.get("/api/get-students",GetStudent);
 router.get("/api/get-usercounts",UserCounts);
 router.get("/api/get-test-summery/:testid",GetTestSummery);
 router.get("/api/make-test-report/:testid",MakeTestReport);
+router.get("/api/get-notifications/:mentorid",getNotification);
 module.exports = router;
