@@ -1,5 +1,7 @@
 import { io } from "socket.io-client";
 
-export const socket = io("https://sangolacollage.onrender.com", {
+const socket = io("https://sangolacollage.onrender.com", {
   transports: ["websocket"]
 });
+
+export default socket;
