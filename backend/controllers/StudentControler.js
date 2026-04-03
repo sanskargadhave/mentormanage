@@ -48,8 +48,8 @@ const StoreStudentDetails=async (req, res) => {
 
     await NotificationSchema.create({
       senderId:student._id,
-      receiver_Id:student.mentor,
-      receiverid:student.mentorId,
+      receiver_Id:student.collagedetails.mentor,
+      receiverid:student.collagedetails.mentorId,
       receiverRole:"Mentor",
       type:"student_added",
       message:`${student.personaldetails.name}  Registered`,
