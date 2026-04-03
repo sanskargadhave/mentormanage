@@ -8,7 +8,7 @@ const adduser=require("../model/userSchema");
 const StoreStudentDetails=async (req, res) => {
   try {
     const { aadharno } = req.body.personaldetails;
-    const { rollno } = req.body.collagedetails;
+    const { rollno,mentorId } = req.body.collagedetails;
     const {emailid} = req.body;
     const aadharnoexist = await StoreStudent.findOne({"personaldetails.aadharno": aadharno});
     const rollnoexist = await StoreStudent.findOne({ "collagedetails.rollno": rollno });
@@ -48,7 +48,7 @@ const StoreStudentDetails=async (req, res) => {
     const io=getIO();
     console.log("Sending notification");
 
-    io.to("mentor_room").emit("notification",{
+    io.to("user_"+mentorId).emit("notification",{
       type:"student_added",
       message:"New Student Registered",
       student:{
