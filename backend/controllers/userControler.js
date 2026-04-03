@@ -4,12 +4,17 @@ const userlogin=async (req,resp)=>{
     try{
         const {emailid,password}=req.body;
         const user=await adduser.findOne({emailid});
+        
         console.log("password from frontend:",password);
         if(!user)
         {
             return resp.status(404).json({message:"Emailid or Password Incorrect",islogin:false});
         }
-        console.log(user);
+        if(user.active===false)
+        {
+            return resp.status(404).json({message:"Oops ! You Have Banned From Mentor"})
+        }
+
         const match = await bcrypt.compare(password, user.password);
         if(!match)
         {

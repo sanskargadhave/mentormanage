@@ -7,7 +7,7 @@ import "./mentor.css";
 function MentorDashboardContent() {
   const { id } = useContext(AuthContext);
   const [notifications, setNotifications] = useState([]);
-
+  const [message,setmessage]=useState("");
   
   useEffect(() => {
     async function getNotifications() {
@@ -29,7 +29,7 @@ function MentorDashboardContent() {
   useEffect(() => {
     const handleNotification = (data) => {
       if (data.receiverid === id) {
-        // Prepend live notification to existing notifications
+        
         setNotifications((prev) => [data, ...prev]);
       }
     };
@@ -38,6 +38,26 @@ function MentorDashboardContent() {
     return () => socket.off("notification", handleNotification);
   }, [id]);
 
+  async function giveapprove(id)
+  {
+    try{
+      const resp=await axios.put(`https://sangolacollage.onrender.com/api/give-approve/${id}`);
+      setmessage(resp.data.message);
+    }
+    catch{
+      console.log("error at Give Approve");
+    }
+  }
+  async function givereject(id)
+  {
+    try{
+      const resp=await axios.put(`https://sangolacollage.onrender.com/api/give-reject/${id}`);
+      setmessage(resp.data.message);
+    }
+    catch{
+      console.log("error at Give reject");
+    }
+  }
   return (
     <div className="notifications-panel">
       <h2 className="panel-title">Notifications</h2>
@@ -64,18 +84,22 @@ function MentorDashboardContent() {
                     Please Verify This Parent Whatsapp No
                   </span>
                   <p>
-                    <strong>Parent Whatsapp No:</strong>
-                    <a href={`tel:${notif.data.parentno}`} className="verify-btn"> Call / Verify</a>
+                    <strong>Parent Whatsapp No:</strong>  {notif.data.parentno}
+                    <a href={`tel:${notif.data.parentno}`}> 
+                      <button className="call-btn">
+                        <i className="bi bi-telephone-fill"></i> Call 
+                      </button>
+                    </a>
                   </p>
                 </div>
                 <p><strong>Student Mobile No:</strong> {notif.data.mobileno}</p>
               </div>
               <div className="notification-actions">
-                <button className="approve-icon">
+                <button className="approve-btn" onClick={giveapprove(notif.data.id)}>
                   <i className="bi bi-check-lg"></i>
                 </button>
 
-                <button className="reject-icon">
+                <button className="reject-btn" onClick={givereject(notif.data.id)}>
                   <i className="bi bi-x-lg"></i>
                 </button>
               </div>

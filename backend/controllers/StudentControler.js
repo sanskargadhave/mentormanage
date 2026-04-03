@@ -268,4 +268,36 @@ const GetStudent= async (req,resp)=>{
 };
 
 
-module.exports={GetStudentDetailsByRoll,SearchStudent,StudentCounts,StoreStudentDetails,GetStudent};
+const giveApprove = async (req,resp)=>{
+      try{
+          const {studentid}=req.params;
+          await StoreStudent.updateOne({studentid:studentid},{$set:{isactive:true}});
+          resp.status(200).json({message:"Student Approved"});
+      }
+      catch(err)
+      {
+        resp.status(500).json({message:err.message});
+        console.log(err.message);
+      }
+}
+
+const giveReject = async (req,resp)=>{
+      try{
+          const {studentid}=req.params;
+          await StoreStudent.updateOne({studentid:studentid},{$set:{isactive:false}});
+          await adduser.updateOne({userid:studentid},{$set:{active:false}});
+          resp.status(200).json({message:"Student Rejected "});
+      }
+      catch(err)
+      {
+        resp.status(500).json({message:err.message});
+        console.log(err.message);
+      }
+}
+
+module.exports={GetStudentDetailsByRoll,
+                SearchStudent,StudentCounts,
+                StoreStudentDetails,GetStudent,
+                giveApprove,giveReject
+              
+              };
