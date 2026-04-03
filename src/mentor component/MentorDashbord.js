@@ -45,8 +45,8 @@ function MentorDashboardContent() {
       setmessage(resp.data.message);
       setNotifications((prev)=>prev.filter((notif)=> notif.data.id !== studentid));
     }
-    catch{
-      console.log("error at Give Approve");
+    catch(err){
+      console.log("error at Give Approve",err);
     }
   }
   async function givereject(studentid)
@@ -56,8 +56,8 @@ function MentorDashboardContent() {
       setmessage(resp.data.message);
       setNotifications((prev)=>prev.filter((notif)=> notif.data.id !== studentid));
     }
-    catch{
-      console.log("error at Give reject");
+    catch(err){
+      console.log("error at Give reject",err);
     }
   }
   return (
