@@ -1,4 +1,4 @@
-import socket from "./socket";
+import socket from './socket';
 
 import { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext({
@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
 
   useEffect(()=>{
     if(id && role && role !== "Guest"){
-      socket.emit("join_room",{userId:id,role:role});
+      socket.emit("join_room",{userid:id,role:role});
     }
   },[id,role]);
 
@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem("role", userdata.role);
 
     socket.emit("join_room",{
-      userId: userdata.id,
+      userid: userdata.id,
       role: userdata.role
     });
   }
