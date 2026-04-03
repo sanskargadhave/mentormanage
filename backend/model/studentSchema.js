@@ -23,7 +23,7 @@ const StoreStudentScema=new mongoose.Schema({
         rollno:{type:Number,required:true,unique:true},
         idno:{type:String,required:true},
         mentor:{type:mongoose.Schema.Types.ObjectId,ref:"mentor",default:null},
-        
+        mentorId:{type:String,required:true}
     },
     emailid:{type:String,required:true,unique:true},
     password:{type:String,default:null},

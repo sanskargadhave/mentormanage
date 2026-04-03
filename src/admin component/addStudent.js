@@ -1,8 +1,10 @@
-import { useState,useContext} from "react";
+import { useState,useContext,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../Authintication';
+import Select from 'react-select';
 import './admin.css';
 import "animate.css";
+import axios from "axios";
 
 function AddStudent()
 {
@@ -15,14 +17,24 @@ function AddStudent()
     const [showpassword,setshowpassword]=useState(false);
     const [showerror,setshowerror] = useState(false);
     const [err,seterr] = useState("");
-
+    const [selected,setselected]=useState(null);
+    const [mentor,setmentor]=useState([]);
     const courses={
        Science:["Physics","Zoology","Mathematics","Chemistry","Botany","BSC"],
         ComputerScience:["Data Science","BCA","BSC [ECS]"],
        Art:["Economics","English","Marathi","History","Geography","Hindi"],
        Commerce:["Commerce"],
     }
-
+    useEffect(()=>{
+            axios.get("https://sangolacollage.onrender.com/api/getmentor")
+            .then((resp)=>setmentor(resp.data))
+            .catch((err)=>console.log(err.message))
+    },[])
+    const option=mentor.map((data)=>({
+        value:data._id,
+        mentorId:data.mentorId,
+        label:` Prof. ${data.personaldetails.name} `
+    }));
     const [FormData,setFormData]=useState({
         Name:"",
         Address:"",
@@ -227,7 +239,9 @@ function AddStudent()
                     year:FormData.Year,
                     division:FormData.Division,
                     rollno:FormData.RollNo,
-                    idno:FormData.Id
+                    idno:FormData.Id,
+                    mentor:selected.value,
+                    mentorId:selected.mentorId
                 },
                 password:FormData.RePassword,
                 emailid:FormData.EmailId
@@ -263,7 +277,10 @@ function AddStudent()
 
     function isAllvalid()
     {
-
+        if(!selected)
+        {
+            alert("please select First Your Mentor");
+        }
         const { Password, RePassword, ...rest } = FormData;
 
         const hasEmptyField = Object.values(rest).some(v => v === "");
@@ -469,6 +486,11 @@ function AddStudent()
                         <label className="form-label"> <i className="bi bi-envelope"></i>  Email Id</label>
                         <input type="email" className={`form-control ${errors.EmailId ? "is-invalid" : ""}`} name="EmailId" placeholder="Enter Email Id" onChange={handleChange}/>
                         {errors.EmailId && (<label className="showError">{errors.EmailId}</label>)}
+                    </div>
+                    <div className="col-12 col-md-6 mb-3">
+                        <label className="form-label"><i className="bi bi-person-vcard"></i>Select Your Mentor Name </label>
+                        <Select options={option} placeholder="Search And Select" maxMenuHeight={200} value={selected} onChange={(option)=>setselected(option)}/>
+                        {!selected  && (<label className="showError">Select Mentor</label>)}    
                     </div>
                 </div>
                 <div className="row">
