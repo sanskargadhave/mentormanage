@@ -171,6 +171,48 @@
  
 
 }
+.notification-actions{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.notification-actions button{
+  border:none;
+  padding:6px 14px;
+  border-radius:20px;
+  font-size:14px;
+  font-weight:500;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+/* Approve Button */
+.approve-btn{
+  background:#e8f9f0;
+  color:#1aa35c;
+}
+
+.approve-btn:hover{
+  background:#1aa35c;
+  color:white;
+  transform:scale(1.05);
+}
+
+/* Reject Button */
+.reject-btn{
+  background:#ffecec;
+  color:#e53935;
+}
+
+.reject-btn:hover{
+  background:#e53935;
+  color:white;
+  transform:scale(1.05);
+}
 .stat-card-body {
   display: flex;
   justify-content: space-between;

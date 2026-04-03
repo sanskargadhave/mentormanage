@@ -12,9 +12,8 @@ function MentorDashboardContent() {
   useEffect(() => {
     async function getNotifications() {
       try {
-        const resp = await axios.get(`https://sangolacollage.onrender.com/api/get-notifications/${id}`
-        );
-        
+        const resp = await axios.get(`https://sangolacollage.onrender.com/api/get-notifications/${id}`);
+        //const resp=await axios.get(`http://localhost:3000/api/get-notifications/${id}`);
         const sorted = resp.data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
@@ -70,6 +69,15 @@ function MentorDashboardContent() {
                   </p>
                 </div>
                 <p><strong>Student Mobile No:</strong> {notif.data.mobileno}</p>
+              </div>
+              <div className="notification-actions">
+                <button className="approve-icon">
+                  <i className="bi bi-check-lg"></i>
+                </button>
+
+                <button className="reject-icon">
+                  <i className="bi bi-x-lg"></i>
+                </button>
               </div>
             </div>
           ))}
