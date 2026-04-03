@@ -38,21 +38,23 @@ function MentorDashboardContent() {
     return () => socket.off("notification", handleNotification);
   }, [id]);
 
-  async function giveapprove(id)
+  async function giveapprove(studentid)
   {
     try{
-      const resp=await axios.put(`https://sangolacollage.onrender.com/api/give-approve/${id}`);
+      const resp=await axios.put(`https://sangolacollage.onrender.com/api/give-approve/${studentid}`);
       setmessage(resp.data.message);
+      setNotifications((prev)=>prev.filter((notif)=> notif.data.id !== studentid));
     }
     catch{
       console.log("error at Give Approve");
     }
   }
-  async function givereject(id)
+  async function givereject(studentid)
   {
     try{
-      const resp=await axios.put(`https://sangolacollage.onrender.com/api/give-reject/${id}`);
+      const resp=await axios.put(`https://sangolacollage.onrender.com/api/give-reject/${studentid}`);
       setmessage(resp.data.message);
+      setNotifications((prev)=>prev.filter((notif)=> notif.data.id !== studentid));
     }
     catch{
       console.log("error at Give reject");
@@ -85,21 +87,21 @@ function MentorDashboardContent() {
                   </span>
                   <p>
                     <strong>Parent Whatsapp No:</strong>  {notif.data.parentno}
-                    <a href={`tel:${notif.data.parentno}`}> 
-                      <button className="call-btn">
-                        <i className="bi bi-telephone-fill"></i> Call 
-                      </button>
-                    </a>
                   </p>
                 </div>
                 <p><strong>Student Mobile No:</strong> {notif.data.mobileno}</p>
               </div>
               <div className="notification-actions">
-                <button className="approve-btn" onClick={giveapprove(notif.data.id)}>
+                <a href={`tel:${notif.data.parentno}`}> 
+                    <button className="call-btn">
+                      <i className="bi bi-telephone-fill"></i> Call 
+                    </button>
+                </a>
+                <button className="approve-btn" onClick={()=>{giveapprove(notif.data.id)}}>
                   <i className="bi bi-check-lg"></i>
                 </button>
 
-                <button className="reject-btn" onClick={givereject(notif.data.id)}>
+                <button className="reject-btn" onClick={()=>{givereject(notif.data.id)}}>
                   <i className="bi bi-x-lg"></i>
                 </button>
               </div>
