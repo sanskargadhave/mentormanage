@@ -7,17 +7,19 @@ import "./mentor.css";
 function MentorDashboardContent() {
   const { id } = useContext(AuthContext);
   const [notifications, setNotifications] = useState([]);
-  const [message,setmessage]=useState("");
+  const [loding,setloding]=useState(false);
   
   useEffect(() => {
     async function getNotifications() {
       try {
+        setloding(true);
         const resp = await axios.get(`https://sangolacollage.onrender.com/api/get-notifications/${id}`);
         //const resp=await axios.get(`http://localhost:3000/api/get-notifications/${id}`);
         const sorted = resp.data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
         setNotifications(sorted);
+        setloding(false);
       } catch (err) {
         console.error("Error fetching stored notifications", err);
       }
@@ -42,7 +44,7 @@ function MentorDashboardContent() {
   {
     try{
       const resp=await axios.put(`https://sangolacollage.onrender.com/api/give-approve/${studentid}`);
-      setmessage(resp.data.message);
+      
       setNotifications((prev)=>prev.filter((notif)=> notif.data.id !== studentid));
     }
     catch(err){
@@ -53,7 +55,6 @@ function MentorDashboardContent() {
   {
     try{
       const resp=await axios.put(`https://sangolacollage.onrender.com/api/give-reject/${studentid}`);
-      setmessage(resp.data.message);
       setNotifications((prev)=>prev.filter((notif)=> notif.data.id !== studentid));
     }
     catch(err){
@@ -62,7 +63,13 @@ function MentorDashboardContent() {
   }
   return (
     <div className="notifications-panel">
+      
       <h2 className="panel-title">Notifications</h2>
+      {loding && (
+        <div class="spinner-border text-dark" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      )}
       {notifications.length === 0 ? (
         <p className="no-notifications">No notifications yet</p>
       ) : (
@@ -71,6 +78,12 @@ function MentorDashboardContent() {
             <div key={notif._id} className={`notification-card ${!notif.read ? "unread" : ""}`}>
               <div className="notification-header">
                 <span className="notification-type">{notif.type}</span>
+                <button type="button" class="btn btn-primary position-relative">
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {notifications.length}
+                    <span class="visually-hidden">unread messages</span>
+                    </span>
+                </button>
                 <span className="notification-time">
                   {new Date(notif.createdAt).toLocaleString()}
                 </span>
