@@ -224,7 +224,48 @@
   background:#ffecec;
   color:#e53935;
 }
+.notification-container{
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    
+}
 
+.notification-icon{
+    font-size: 28px;
+    color: #333;
+}
+
+/* Notification Badge */
+.notification-badge{
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: #ff3b3b;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 7px;
+    border-radius: 50px;
+    min-width: 20px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+
+    animation: pulse 1.5s infinite;
+}
+
+/* Pulse animation */
+@keyframes pulse{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
 .reject-btn:hover{
   background:#e53935;
   color:white;

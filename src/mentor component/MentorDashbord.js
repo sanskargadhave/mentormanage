@@ -64,7 +64,15 @@ function MentorDashboardContent() {
   return (
     <div className="notifications-panel">
       
-      <h2 className="panel-title">Notifications</h2>
+      <h5 className="panel-title">Notifications
+        <div className="notification-container">
+          <i className="fa fa-bell notification-icon"></i>
+          <span className="notification-badge">
+            {notifications.length}
+          </span>
+        </div>
+      </h5>
+      
       {loding && (
         <div class="spinner-border text-dark" role="status">
           <span class="visually-hidden">Loading...</span>
@@ -74,16 +82,11 @@ function MentorDashboardContent() {
         <p className="no-notifications">No notifications yet</p>
       ) : (
         <div className="notifications-list">
+          
           {notifications.map((notif) => (
             <div key={notif._id} className={`notification-card ${!notif.read ? "unread" : ""}`}>
               <div className="notification-header">
                 <span className="notification-type">{notif.type}</span>
-                <button type="button" class="btn btn-primary position-relative">
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    {notifications.length}
-                    <span class="visually-hidden">unread messages</span>
-                    </span>
-                </button>
                 <span className="notification-time">
                   {new Date(notif.createdAt).toLocaleString()}
                 </span>
