@@ -228,9 +228,19 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
-    
+    margin-left: 20px;
+}
+.close-panel-btn{
+  border:none;
+  background:transparent;
+  font-size:20px;
+  cursor:pointer;
+  margin-left:10px;
 }
 
+.close-panel-btn:hover{
+  color:red;
+}
 .notification-icon{
     font-size: 28px;
     color: #333;
@@ -931,13 +941,107 @@ body {
 }
 
 .panel-title {
-  margin-bottom: 15px;
-  font-size: 1.6rem;
-  color: #333;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 8px;
+    display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#f8f9fa;
+  padding:10px 15px;
+  border-radius:8px;
+}
+.title-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
+.title-text{
+  
+ font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color:#2c3e50;
+}
+.notification-wrapper{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+.notification-icon{
+  font-size:22px;
+  color:#2c3e50;
+  transition:0.3s;
+}
+
+.notification-icon:hover{
+  color:#0d6efd;
+}
+
+.notification-count{
+  position:absolute;
+  top:-6px;
+  right:-8px;
+  background:#ff3b3b;
+  color:white;
+  font-size:11px;
+  font-weight:600;
+  padding:2px 6px;
+  border-radius:50px;
+  min-width:18px;
+  text-align:center;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+}
+.notification-count{
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop{
+  0%{transform:scale(0.5);}
+  100%{transform:scale(1);}
+}
+.rounded-pill{
+  margin-bottom: 5px;
+}
+.notification-icon{
+  font-size:18px;
+  color:#333;
+}
+
+.notification-badge{
+  background:red;
+  color:white;
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:20px;
+}
+
+.hide-btn{
+  border:none;
+  background:#dc3545;
+  color:white;
+  padding:5px 12px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.show-btn{
+  border:none;
+  background:#198754;
+  color:white;
+  padding:5px 12px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.hide-btn:hover{
+  background:#bb2d3b;
+}
+
+.show-btn:hover{
+  background:#157347;
+}
 .no-notifications {
   text-align: center;
   color: #777;

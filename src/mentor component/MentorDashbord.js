@@ -8,7 +8,7 @@ function MentorDashboardContent() {
   const { id } = useContext(AuthContext);
   const [notifications, setNotifications] = useState([]);
   const [loding,setloding]=useState(false);
-  
+  const [show,setshow]=useState(true);
   useEffect(() => {
     async function getNotifications() {
       try {
@@ -62,17 +62,41 @@ function MentorDashboardContent() {
     }
   }
   return (
-    <div className="notifications-panel">
-      
-      <h5 className="panel-title">Notifications
-        <div className="notification-container">
+    <div className="admin-content">
+      <h5 className="panel-title">
+
+        <div className="title-left">
           <i className="fa fa-bell notification-icon"></i>
+          <span className="title-text">Notifications</span>
           <span className="notification-badge">
             {notifications.length}
           </span>
         </div>
+        <div className="notification-wrapper">
+          <i className="fa fa-bell notification-icon"></i>
+
+          {notifications.length > 0 && (
+            <span className="notification-count">
+              {notifications.length}
+            </span>
+          )}
+        </div>
+        <div className="title-right">
+
+          {show ? (
+            <button className="hide-btn" onClick={() => setshow(false)}>
+              Hide
+            </button>
+          ) : (
+          <button className="show-btn" onClick={() => setshow(true)}>
+            Show
+          </button>)}
+
+        </div>
+
       </h5>
-      
+    {show && (
+    <div className="notifications-panel">
       {loding && (
         <div class="spinner-border text-dark" role="status">
           <span class="visually-hidden">Loading...</span>
@@ -80,7 +104,8 @@ function MentorDashboardContent() {
       )}
       {notifications.length === 0 ? (
         <p className="no-notifications">No notifications yet</p>
-      ) : (
+      ) 
+       :(
         <div className="notifications-list">
           
           {notifications.map((notif) => (
@@ -95,9 +120,9 @@ function MentorDashboardContent() {
               <div className="notification-details">
                 <h6><strong>Name:</strong> {notif.data.name}</h6>
                 <h6><strong>Department:</strong> {notif.data.department}</h6>
-                <h6><strong>Course:</strong>{notif.data.course}</h6>
-                <h6><strong>Year:</strong>{notif.data.year}</h6>
-                <h6><strong>Division:</strong>{notif.data.division}</h6>
+                <h6><strong>Course:</strong>  {notif.data.course}</h6>
+                <h6><strong>Year:</strong>  {notif.data.year}</h6>
+                <h6><strong>Division:</strong>  {notif.data.division}</h6>
                 <div className="verify-parent-number">
                   <span className="badge rounded-pill bg-warning text-dark">
                     Please Verify This Parent Whatsapp No
@@ -106,7 +131,7 @@ function MentorDashboardContent() {
                     <strong>Parent Whatsapp No:</strong>  {notif.data.parentno}
                   </p>
                 </div>
-                <p><strong>Student Mobile No:</strong> {notif.data.mobileno}</p>
+                <p><strong>Student Mobile No:</strong>  {notif.data.mobileno}</p>
               </div>
               <div className="notification-actions">
                 <a href={`tel:${notif.data.parentno}`}> 
@@ -128,7 +153,8 @@ function MentorDashboardContent() {
           ))}
         </div>
       )}
-    </div>
+    </div>)}
+  </div>
   );
 }
 
