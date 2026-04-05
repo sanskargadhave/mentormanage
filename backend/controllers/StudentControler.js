@@ -57,7 +57,10 @@ const StoreStudentDetails=async (req, res) => {
         id:student.studentid,
         name:student.personaldetails.name,
         rollno:student.collagedetails.rollno,
-        email:student.emailid,
+        department:student.collagedetails.department,
+        course:student.collagedetails.course,
+        year:student.collagedetails.year,
+        division:student.collagedetails.division,
         parentno:student.personaldetails.parentno,
         mobileno:student.personaldetails.mobileno
       }
@@ -76,7 +79,10 @@ const StoreStudentDetails=async (req, res) => {
         id:student.studentid,
         name:student.personaldetails.name,
         rollno:student.collagedetails.rollno,
-        email:student.emailid,
+        department:student.collagedetails.department,
+        course:student.collagedetails.course,
+        year:student.collagedetails.year,
+        division:student.collagedetails.division,
         parentno:student.personaldetails.parentno,
         mobileno:student.personaldetails.mobileno
       },

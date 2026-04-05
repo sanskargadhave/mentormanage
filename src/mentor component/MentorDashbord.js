@@ -86,17 +86,18 @@ function MentorDashboardContent() {
           {notifications.map((notif) => (
             <div key={notif._id} className={`notification-card ${!notif.read ? "unread" : ""}`}>
               <div className="notification-header">
-                <span className="notification-type">{notif.type}</span>
+                <span className="notification-type">New Student Registered Verify </span>
                 <span className="notification-time">
                   {new Date(notif.createdAt).toLocaleString()}
                 </span>
               </div>
-              <div className="notification-message">{notif.message}</div>
+              <div className="notification-message"><span class="badge rounded-pill bg-success">{notif.message}</span></div>
               <div className="notification-details">
-                <p><strong>Student Id:</strong> {notif.data.id}</p>
-                <p><strong>Name:</strong> {notif.data.name}</p>
-                <p><strong>Email Id:</strong> {notif.data.email}</p>
-
+                <h6><strong>Name:</strong> {notif.data.name}</h6>
+                <h6><strong>Department:</strong> {notif.data.department}</h6>
+                <h6><strong>Course:</strong>{notif.data.course}</h6>
+                <h6><strong>Year:</strong>{notif.data.year}</h6>
+                <h6><strong>Division:</strong>{notif.data.division}</h6>
                 <div className="verify-parent-number">
                   <span className="badge rounded-pill bg-warning text-dark">
                     Please Verify This Parent Whatsapp No
@@ -120,6 +121,8 @@ function MentorDashboardContent() {
                 <button className="reject-btn" onClick={()=>{givereject(notif.data.id)}}>
                   <i className="bi bi-x-lg"></i>
                 </button>
+
+                
               </div>
             </div>
           ))}
