@@ -267,9 +267,10 @@ const MakeTestReport = async (req, resp) => {
         {
             resource_type: "raw",
             type: "upload",
+            access_mode: "public",
             folder: "test_reports",
-            format: "pdf",
-            public_id: `report_${testid}_${Date.now()}`
+            public_id: `report_${testid}_${Date.now()}`,
+            format: "pdf"
         },
         (error, result) => {
           if (error) reject(error);
