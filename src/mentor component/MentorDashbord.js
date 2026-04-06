@@ -27,7 +27,15 @@ function MentorDashboardContent() {
     getNotifications();
   }, [id]);
 
-  
+  useEffect(() => {
+  if (id) {
+    socket.emit("join_room", {
+      userid: id,
+      role: "Mentor"
+    });
+  }
+}, [id]);
+
   useEffect(() => {
     const handleNotification = (data) => {
       if (data.receiverid === id) {
@@ -98,8 +106,8 @@ function MentorDashboardContent() {
     {show && (
     <div className="notifications-panel">
       {loding && (
-        <div class="spinner-border text-dark" role="status">
-          <span class="visually-hidden">Loading...</span>
+        <div className="spinner-border text-dark" role="status">
+          <span className="visually-hidden">Loading...</span>
         </div>
       )}
       {notifications.length === 0 ? (
@@ -116,7 +124,7 @@ function MentorDashboardContent() {
                   {new Date(notif.createdAt).toLocaleString()}
                 </span>
               </div>
-              <div className="notification-message"><span class="badge rounded-pill bg-success">{notif.message}</span></div>
+              <div className="notification-message"><span className="badge rounded-pill bg-success">{notif.message}</span></div>
               <div className="notification-details">
                 <h6><strong>Name:</strong> {notif.data.name}</h6>
                 <h6><strong>Department:</strong> {notif.data.department}</h6>

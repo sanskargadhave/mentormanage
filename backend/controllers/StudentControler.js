@@ -73,9 +73,11 @@ const StoreStudentDetails=async (req, res) => {
     console.log("Sending notification");
 
     io.to("user_"+mentorId).emit("notification",{
+      receiverid: mentorId,
       type:"student_added",
-      message:`${student.personaldetails.name}  Registered`,
-      student:{
+      message:`${student.personaldetails.name} Registered`,
+      createdAt:new Date(),
+      data:{
         id:student.studentid,
         name:student.personaldetails.name,
         rollno:student.collagedetails.rollno,
@@ -85,8 +87,7 @@ const StoreStudentDetails=async (req, res) => {
         division:student.collagedetails.division,
         parentno:student.personaldetails.parentno,
         mobileno:student.personaldetails.mobileno
-      },
-      time:new Date()
+      }
     });
 
     res.status(201).json({
