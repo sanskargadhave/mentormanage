@@ -265,7 +265,7 @@ const MakeTestReport = async (req, resp) => {
 
       const stream = cloudinary.uploader.upload_stream(
         {
-            resource_type: "raw",
+            resource_type: "image",
             type: "upload",
             access_mode: "public",
             folder: "test_reports",
