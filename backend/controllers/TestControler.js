@@ -193,7 +193,9 @@ const MakeTestReport = async (req, resp) => {
     });
 
   } catch (err) {
+     console.log(err.message);
     resp.status(500).json({ message: err.message });
+   
   }
 };
 
