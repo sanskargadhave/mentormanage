@@ -156,7 +156,7 @@ function MentorDashboardContent() {
     </div>)}
 
 
-    <a href={"https://res.cloudinary.com/dcp7rapiq/raw/upload/v1773490944/test_reports/report_TS-08032026-Statistics-SECOND-A.pdf"} target="_blank">
+    <a href={"https://etotjdwbarivaxvwufpn.supabase.co/storage/v1/object/public/test-reports/report_TS-02042026-English-SECOND-B_1775465760904.pdf"} target="_blank">
       View Report
     </a>
   </div>
