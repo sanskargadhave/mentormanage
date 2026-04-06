@@ -154,6 +154,11 @@ function MentorDashboardContent() {
         </div>
       )}
     </div>)}
+
+
+    <a href={"https://res.cloudinary.com/dcp7rapiq/raw/upload/v1773490944/test_reports/report_TS-08032026-Statistics-SECOND-A.pdf"} target="_blank">
+      View Report
+    </a>
   </div>
   );
 }
