@@ -88,7 +88,7 @@ const StoreStudentDetails=async (req, res) => {
         parentno:student.personaldetails.parentno,
         mobileno:student.personaldetails.mobileno
       }
-    });
+});
 
     res.status(201).json({
       message: "Student added successfully"

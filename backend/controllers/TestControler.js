@@ -21,7 +21,7 @@ const MakeTestReport = async (req, resp) => {
       { $unwind: "$students" },
       {
         $lookup: {
-          from: "StudentDetails",
+          from: "StudentDetails", 
           localField: "students.studentid",
           foreignField: "_id",
           as: "studentinfo"
@@ -104,15 +104,15 @@ const MakeTestReport = async (req, resp) => {
       countabsent: 0
     };
 
-    const rows = studentsdata.map((data) => `
-      <tr>
-        <td>${data.rollno}</td>
-        <td>${data.name}</td>
-        <td>${data.marks}</td>
-        <td>${data.status}</td>
-        <td>${data.marks >= testdetails.passingmarks ? "Pass" : "Fail"}</td>
-      </tr>
-    `).join("");
+      const rows = studentsdata.map((data) => `
+        <tr>
+          <td>${data.rollno}</td>
+          <td>${data.name}</td>
+          <td>${data.marks}</td>
+          <td>${data.status}</td>
+          <td>${data.marks >= testdetails.passingmarks ? "Pass" : "Fail"}</td>
+        </tr>
+      `).join("");
 
     const html = `
       <html>

@@ -69,13 +69,21 @@ function MentorDashboardContent() {
       console.log("error at Give reject",err);
     }
   }
+  async function generateReport() {
+    
+  }
   return (
     <div className="admin-content">
+      <button className="report-btn" onClick={generateReport}>
+        <i className="fa fa-chart-bar"></i>
+        Generate Today Attendance Report
+      </button>
+
       <h5 className="panel-title">
 
         <div className="title-left">
           <i className="fa fa-bell notification-icon"></i>
-          <span className="title-text">Notifications</span>
+          <span className="title-text">Registered Students</span>
           <span className="notification-badge">
             {notifications.length}
           </span>
@@ -111,7 +119,7 @@ function MentorDashboardContent() {
         </div>
       )}
       {notifications.length === 0 ? (
-        <p className="no-notifications">No notifications yet</p>
+        <p className="no-notifications">No Student Registered yet</p>
       ) 
        :(
         <div className="notifications-list">
@@ -162,11 +170,7 @@ function MentorDashboardContent() {
         </div>
       )}
     </div>)}
-
-
-    <a href={"https://etotjdwbarivaxvwufpn.supabase.co/storage/v1/object/public/test-reports/report_TS-02042026-English-SECOND-B_1775465760904.pdf"} target="_blank">
-      View Report
-    </a>
+    
   </div>
   );
 }
