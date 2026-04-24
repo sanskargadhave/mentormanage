@@ -118,35 +118,7 @@ const GetAttendanceByLectureId= async (req,resp)=>{
         attendanceid:1,
       }}
     ])
-
-    const browser = await puppeteer.launch({
-          args: [...chromium.args, "--no-sandbox", "--disable-setuid-sandbox"],
-          executablePath: await chromium.executablePath(),
-          headless: true
-        });
     
-        const page = await browser.newPage();
-    
-        await page.setContent(html, {
-          waitUntil: "networkidle0",
-          timeout: 0
-        });
-    
-        const pdf = await page.pdf({
-          format: "A4",
-          printBackground: true
-        });
-    
-        await browser.close();
-        const fileName = `attendance.pdf`;
-        const { data, error } = await supabase.storage
-              .from("test-reports")
-              .upload(fileName, pdf, {
-                contentType: "application/pdf"
-              });
-        
-            if (error) throw new Error(error.message);
-
     resp.status(200).json({result:result,counts:counts});
   }
   catch(err)
