@@ -442,4 +442,56 @@ const MakeAttendanceReport= async (req,resp)=>{
     }
   }
 
-module.exports={StoreAttendances,GetAttendanceByLectureId,MakeAttendanceReport}
+const GetTodayAttendance=async(req,resp)=>{
+  try{
+    const {department,course,year,division}=req.query;
+    const today = new Date();
+
+    const start = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
+
+    const end = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 1
+    );
+
+      const completeLecture=await StoreAttendance.aggregate([ 
+      {$match: { 
+        date: { 
+          $gte: start, 
+          $lt:end 
+        } 
+      }}, 
+      {$lookup: {
+        from: "LectureDetails", 
+        localField: "lectureid",
+        foreignField: "lectureid",
+        as: "lectureInfo" 
+      } },
+      { $unwind: "$lectureInfo" },
+      {$match:{ 
+        $and:[ 
+          {"lectureInfo.department":department}, 
+          {"lectureInfo.course":course},
+          {"lectureInfo.Class":year},
+          {"lectureInfo.division":division}, 
+        ]
+      }}, 
+      {$group:{_id:"$lectureInfo.subject"}},
+      { $project:{
+        subject:"$_id",
+        _id:0
+      } } 
+    ])
+    resp.status(200).json({completeLecture});
+  }
+  catch(err)
+  {
+    resp.status(500).json({message:err.message});
+  }
+}
+module.exports={StoreAttendances,GetAttendanceByLectureId,MakeAttendanceReport,GetTodayAttendance}

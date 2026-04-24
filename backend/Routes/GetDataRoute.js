@@ -2,7 +2,7 @@ const express =require("express");
 const router=express.Router();
 
 const {GetStudentDetailsByRoll,SearchStudent,StudentCounts,GetStudent}=require("../controllers/StudentControler");
-const {GetAttendanceByLectureId,MakeAttendanceReport}=require("../controllers/AttendanceControler");
+const {GetAttendanceByLectureId,MakeAttendanceReport,GetTodayAttendance}=require("../controllers/AttendanceControler");
 const {MentorCount,GetMentors}=require("../controllers/MentorControler");
 const {GetLectures} =require("../controllers/LectureControler");
 const {GetTeacher}=require("../controllers/TeacherControler");
@@ -24,4 +24,5 @@ router.get("/api/get-test-summery/:testid",GetTestSummery);
 router.get("/api/make-test-report/:testid",MakeTestReport);
 router.get("/api/get-notifications/:mentorid",getNotification);
 router.get("/api/make-attendance-report",MakeAttendanceReport);
+router.get("/api/get-today-attendance",GetTodayAttendance);
 module.exports = router;
