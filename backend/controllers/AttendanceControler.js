@@ -225,177 +225,178 @@ const MakeAttendanceReport= async (req,resp)=>{
      
 
       const rows = attendanceCounts.map((data) => `
-      <tr>
-        <td>${data.rollno}</td>
-        <td>${data.totalLectures}</td>
-        <td>${data.presentCount}</td>
-        <td>${data.absentCount}</td>
-        <td>${data.absentSubjects.length === 0 ? "--" : data.absentSubjects.join(", ")}</td>
-      </tr>
-      `);
+        <tr>
+          <td>${data.rollno}</td>
+          <td>${data.totalLectures}</td>
+          <td class="present">${data.presentCount}</td>
+          <td class="absent">${data.absentCount}</td>
+          <td>${data.absentSubjects.length === 0 ? "--" : data.absentSubjects.join(", ")}</td>
+        </tr>
+      `).join("");
 
       const html=`
       <html>
         <head>
           <style>
-
-            body{
-              font-family: Arial;
-              padding: 30px;
+            body {
+              font-family: "Segoe UI", Arial, sans-serif;
+              padding: 40px;
+              color: #333;
             }
 
-            h2{
-              text-align:center;
+            .header {
+              text-align: center;
+              border-bottom: 2px solid #444;
+              padding-bottom: 10px;
+              margin-bottom: 20px;
             }
 
-            h3{ 
-              text-align:center;
+            .header h1 {
+              margin: 0;
+              font-size: 24px;
+              letter-spacing: 1px;
+            }
+
+            .header h2 {
+              margin: 5px 0;
+              font-size: 18px;
+              font-weight: normal;
+            }
+
+            .report-title {
+              margin-top: 10px;
+              font-size: 16px;
+              font-weight: bold;
+              color: #2c3e50;
+            }
+
+            .info {
+              display: flex;
+              justify-content: space-between;
+              margin-top: 20px;
+              font-size: 14px;
+            }
+
+            .info div {
+              width: 30%;
+            }
+
+            .info b {
+              display: inline-block;
+              width: 80px;
             } 
-
-            table{
-              width:100%;
+      
+            table {
+              width: 100%;
               border-collapse: collapse;
-              margin-top:20px;
+              margin-top: 25px;
+              font-size: 14px;
             }
 
-            th,td{
-              border:1px solid black;
-              padding:6px;
-              text-align:center ;
+            th {
+              background: #2c3e50;
+              color: white;
+              padding: 10px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
             }
 
-            th{
-              background:#f2f2f2;
+            td {
+              padding: 8px;
+              border-bottom: 1px solid #ddd;
             }
 
-            .header{
-              display:flex;
-              align-items:center;
-              justify-content:center;
-              gap:20px;
+            tr:nth-child(even) {
+              background: #f9f9f9;
             }
 
-            .logo{
-              width:70px;
+            .present {
+              color: green;
+              font-weight: bold;
             }
 
-            .title{
-              text-align:center;
+            .absent {
+              color: red;
+              font-weight: bold;
             }
 
-            .footer{
-              margin-top:40px;
-              border-top:2px solid #444;
-              padding-top:10px;
-              text-align:center;
-              font-size:12px;
-              color:#555;
+            .footer {
+              margin-top: 40px;
+              font-size: 12px;
+              text-align: center;
+              color: #666;
             }
 
-            .system-info{
-              font-weight:bold;
-              margin-bottom:4px;
+            .signatures {
+              display: flex;
+              justify-content: space-between;
+              margin-top: 60px;
             }
 
-            .project-desc{
-              font-style:italic;
-              margin-bottom:4px;
+            .sign-box {
+              width: 200px;
+              text-align: center;
             }
 
-            .date{
-              font-size:11px;
-              color:#777;
+            .sign-line {
+              border-top: 1px solid #000;
+              margin-top: 40px;
+              padding-top: 5px;
             }
-
-            .signatures{
-              display:flex;
-              justify-content:space-between;
-              margin-top:40px;
-              text-align:center;
-            }
-
-            .signatures div{
-              width:200px;
-              border-top:1px solid black;
-              padding-top:5px;
-            }
-
-            .bolds{
-              margin-left:10px;
-            }
-
-          </style>
+          </style>        
         </head>
 
         <body>
 
           <div class="header">
-
-            <div class="title">
-              <h2>Sangola Mahavidyalaya Sangola</h2>
-              <h3>Department of ${department}</h3>
-              <h3>Daily Attendance Report </h3>
-              
-            </div>
-
+            <h1>Sangola Mahavidyalaya, Sangola</h1>
+            <h2>Department of ${department}</h2>
+            <div class="report-title">Daily Attendance Report</div>
           </div>
 
-          <hr>
+          <div class="info">
+            <div><b>Course:</b> ${course}</div>
+            <div><b>Year:</b> ${year}</div>
+            <div><b>Division:</b> ${division}</div>
+          </div>
 
-          
-
-          <p>
-            <b>Course:</b> ${course}
-            <b>Year:</b> ${year}
-            <b>Division:</b> ${division}
-          </p>
-
-
-          <p><b>Date:</b>${today}</p>
-
+          <div class="info">
+            <div><b>Date:</b> ${new Date().toLocaleDateString()}</div>
+          </div>
 
           <table>
-
             <thead>
               <tr>
                 <th>Roll No</th>
-                <th>Total Lectures</th>
+                <th>Total</th>
                 <th>Present</th>
                 <th>Absent</th>
-                <th>Absent Lecture</th>
+                <th>Absent Subjects</th>
               </tr>
             </thead>
 
             <tbody>
               ${rows}
             </tbody>
-
           </table>
 
-          <br><br>
-
           <div class="footer">
-
-            <div class="system-info">
-              Generated by <b>EduMentor @SangolaCollege Platform</b>
-            </div>
-
-            <div class="project-desc">
-              🎓 EduMentor Platform – Automated Student Test And Attendance Analysis and Reporting Platform
-            </div>
-
-            <div class="date">
-              📅 Generated on: ${today}
-            </div>
-
+            Generated by <b>EduMentor Platform</b><br>
+            Automated Attendance Analysis System
           </div>
 
           <div class="signatures">
+            <div class="sign-box">
+              <div class="sign-line">Class Teacher</div>
+            </div>
 
-            <div>Class Teacher</div>
-            <div>Head of Department</div>
-            <div>Principal</div>
+            <div class="sign-box">
+              <div class="sign-line">HOD</div>
+            </div>
 
+            <div class="sign-box">
+              <div class="sign-line">Principal</div>
+            </div>
           </div>
 
         </body>
@@ -429,7 +430,7 @@ const MakeAttendanceReport= async (req,resp)=>{
     const fileName = `Attendance-report-${cleanCourse}-${cleanYear}-${cleanDivision}-${simpleDate}.pdf`;
 
     const { data, error } = await supabase.storage
-      .from("test-reports")
+      .from("Attendance Report")
       .upload(fileName, pdf, {
         contentType: "application/pdf"
       });
@@ -449,7 +450,7 @@ const MakeAttendanceReport= async (req,resp)=>{
       uplodeDate:today,
     })
 
-    resp.status(200).json({message:"Report Uplode Succeessful"});
+    resp.status(200).json({message:"Report Uplode Succeessfuly"});
 
     }
     catch(err)
