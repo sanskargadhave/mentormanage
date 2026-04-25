@@ -421,8 +421,12 @@ const MakeAttendanceReport= async (req,resp)=>{
     });
 
     await browser.close();
+    const cleanCourse = course.replace(/[^a-zA-Z0-9]/g, "-");
+    const cleanDivision = division.replace(/[^a-zA-Z0-9]/g, "-");
+    const cleanYear = year.replace(/[^a-zA-Z0-9]/g, "-");
+    const simpleDate = new Date().toISOString().split("T")[0];
 
-    const fileName = `Attendance-report-${course}-${year}-${division}-${today}.pdf`;
+    const fileName = `Attendance-report-${cleanCourse}-${cleanYear}-${cleanDivision}-${simpleDate}.pdf`;
 
     const { data, error } = await supabase.storage
       .from("test-reports")
@@ -431,6 +435,7 @@ const MakeAttendanceReport= async (req,resp)=>{
       });
 
     if (error) throw new Error(error.message);
+    
 
     const pdfurl = `${process.env.SUPABASE_URL}/storage/v1/object/public/test-reports/${fileName}`;
     
