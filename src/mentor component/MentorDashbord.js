@@ -103,6 +103,18 @@ function MentorDashboardContent() {
       console.log(err);
     }
   };
+  const generateReport=async ()=>{
+    try{
+      const res=await fetch(`https://sangolacollage.onrender.com/api/make-attendance-report?department=${filters.department}&course=${filters.course}&year=${filters.year}&division=${filters.division}`);
+      const result=await res.json();
+      alert(result.message);
+    }
+    catch(err)
+    {
+      console.log(err);
+    }
+
+  }
 
   return (
     <div className="admin-content">
@@ -202,14 +214,16 @@ function MentorDashboardContent() {
     {event === "" && (
       <button className="report-btn" onClick={()=>{setevent("showoptions")}}>
         <i className="fa fa-chart-bar"></i>
-        Generate Today Attendance Report
+        Uplode Today Attendance Report
       </button>)}
 
     {event ==="showoptions" && (
-      <div className="report-filter-box">
+      <div className="report-filter-box ">
 
-        <h5>Generate Attendance Report</h5>
-
+        <h5>Uplode Attendance Report
+        <button className="close-btn" onClick={() => setevent("")}>
+          <i className="bi bi-x-lg"></i>
+        </button></h5>
         <div className="filter-row">
 
           <select  className="filter-input" id="department" value={filters.department} onChange={(e) => setFilters({...filters, department: e.target.value})}>
@@ -261,8 +275,10 @@ function MentorDashboardContent() {
       {event === "showsubmitedattendance" && (
         <>
           <div className="attendance-header">
-            <h2>Today's Attendance</h2>
-            <button onClick={fetchTodayAttendance}>Refresh</button>
+            <h5>Today's Attendance</h5>
+            <button className="close-btn" onClick={() => setevent("showoptions")}>
+              <i className="bi bi-x-lg"></i>
+            </button>          
           </div>
 
           {subjects.length === 0 ? (
@@ -277,7 +293,13 @@ function MentorDashboardContent() {
                     <p className="status success">✔ Submitted</p>
                   </div>
                 ))}
+                <div className="report-action-container">
+                  <button className="generate-report-btn" onClick={generateReport}>
+                    📄 Generate Report
+                  </button>
+                </div>
               </div>
+              
             )
           }
         </>

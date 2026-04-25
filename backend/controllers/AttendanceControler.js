@@ -1,7 +1,9 @@
 const {StoreLecture,StoreAttendance}=require("../model/AttendanceSchema");
+const ReportdetailsSchema =require("../model/reportSchema");
 const puppeteer = require("puppeteer-core");
 const chromium = require("@sparticuz/chromium");
 const supabase =require("../config/supabase");
+const 
 //   /api/store-attendance URL
 const StoreAttendances=async (req,resp)=>{
   try{    
@@ -118,7 +120,7 @@ const GetAttendanceByLectureId= async (req,resp)=>{
         attendanceid:1,
       }}
     ])
-    
+
     resp.status(200).json({result:result,counts:counts});
   }
   catch(err)
@@ -129,12 +131,29 @@ const GetAttendanceByLectureId= async (req,resp)=>{
 
 const MakeAttendanceReport= async (req,resp)=>{
     try{
+    const {department,course,year,division}=req.query;
+    const today = new Date();
+
+    const start = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
+
+    const end = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 1
+    );
+
+
+
       const attendanceCounts=await StoreAttendance.aggregate([
         {
           $match: {
             date: {
-              $gte: new Date("2026-02-16T00:00:00.000Z"),
-              $lt: new Date("2026-02-17T00:00:00.000Z")
+              $gte: start,
+              $lt: end
             }
           }
       },
@@ -149,14 +168,16 @@ const MakeAttendanceReport= async (req,resp)=>{
         { $unwind: "$attendance" },
 				{$match:{
         	$and:[
-						{"lectureInfo.department":"ComputerScience"},
-						{"lectureInfo.course":"BSC [ECS]"},
-						{"lectureInfo.Class":"second"},
-						{"lectureInfo.division":"B"},
+						{"lectureInfo.department":department},
+						{"lectureInfo.course":course},
+						{"lectureInfo.Class":year},
+						{"lectureInfo.division":division},
 					]
 				}},
-   			{$group: {
+   			{
+          $group: {
             _id: "$attendance.rollno",
+
             totalLectures: { $sum: 1 },
 
             presentCount: {
@@ -170,27 +191,36 @@ const MakeAttendanceReport= async (req,resp)=>{
                 $cond: [{ $eq: ["$attendance.status", "Absent"] }, 1, 0]
               }
             },
-      
+
             absentSubjects: {
-              $addToSet: {
-                $cond:  [
+              $push: {
+                $cond: [
                   { $eq: ["$attendance.status", "Absent"] },
-                  "$lectureInfo.subject","$$REMOVE"
+                    "$lectureInfo.subject",
+                  null   
                 ]
-              }
+              } 
             }
-          
           }
         },
         {$sort:{_id:1}},
-        {$project:{
-          rollno:"$_id",
-          _id:0,
-          totalLectures:1,
-          presentCount:1,
-          absentCount:1,
-          absentSubjects:1
-        }}
+        {
+          $project: {
+            rollno: "$_id",
+            _id: 0,
+            totalLectures: 1,
+            presentCount: 1,
+            absentCount: 1,
+
+            absentSubjects: {
+              $filter: {
+                input: "$absentSubjects",
+                as: "sub",
+                cond: { $ne: ["$$sub", null] }
+              }
+            }
+          }
+        }
       ])
       
      
@@ -304,7 +334,7 @@ const MakeAttendanceReport= async (req,resp)=>{
 
             <div class="title">
               <h2>Sangola Mahavidyalaya Sangola</h2>
-              <h3>Department of Computer Science</h3>
+              <h3>Department of ${department}</h3>
               <h3>Daily Attendance Report </h3>
               
             </div>
@@ -316,13 +346,13 @@ const MakeAttendanceReport= async (req,resp)=>{
           
 
           <p>
-            <b>Course:BSC [ECS]</b> 
-            <b>Year:</b> second
-            <b>Division:</b> A
+            <b>Course:</b> ${course}
+            <b>Year:</b> ${year}
+            <b>Division:</b> ${division}
           </p>
 
 
-          <p><b>Date:</b>2026-02-16</p>
+          <p><b>Date:</b>${today}</p>
 
 
           <table>
@@ -356,7 +386,7 @@ const MakeAttendanceReport= async (req,resp)=>{
             </div>
 
             <div class="date">
-              📅 Generated on: 
+              📅 Generated on: ${today}
             </div>
 
           </div>
@@ -393,7 +423,7 @@ const MakeAttendanceReport= async (req,resp)=>{
 
     await browser.close();
 
-    const fileName = `Attendance Report.pdf`;
+    const fileName = `Attendance-report-${course}-${year}-${division}-${today}.pdf`;
 
     const { data, error } = await supabase.storage
       .from("test-reports")
@@ -404,6 +434,17 @@ const MakeAttendanceReport= async (req,resp)=>{
     if (error) throw new Error(error.message);
 
     const pdfurl = `${process.env.SUPABASE_URL}/storage/v1/object/public/test-reports/${fileName}`;
+    
+    await ReportdetailsSchema.create({
+      ReportType:"Attendance",
+      ReportUrl:pdfurl,
+      class:year,
+      division:division,
+      course:course,
+      department:department,
+      uplodeDate:today,
+    })
+
     resp.status(200).json({message:"Report Uplode Succeessful"});
 
     }

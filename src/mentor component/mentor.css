@@ -1206,7 +1206,19 @@ body {
 .attendance-header button:hover {
   background-color: #1d4ed8;
 }
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #555;
+  transition: 0.2s;
+}
 
+.close-btn:hover {
+  color: #e11d48; /* red on hover */
+  transform: scale(1.2);
+}
 
 .card-grid {
   display: grid;
@@ -1246,4 +1258,46 @@ body {
   background: #fff3cd;
   border-radius: 10px;
   text-align: center;
+}
+/* Container */
+.report-action-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.generate-report-btn {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+
+.generate-report-btn:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: translateY(-2px);
+}
+
+.generate-report-btn:active {
+  transform: scale(0.98);
+}
+
+
+@media (max-width: 600px) {
+  .generate-report-btn {
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 8px;
+  }
 }
