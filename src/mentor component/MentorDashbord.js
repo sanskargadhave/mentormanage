@@ -105,9 +105,11 @@ function MentorDashboardContent() {
   };
   const generateReport=async ()=>{
     try{
+      setloding(true);
       const res=await fetch(`https://sangolacollage.onrender.com/api/make-attendance-report?department=${filters.department}&course=${filters.course}&year=${filters.year}&division=${filters.division}`);
       const result=await res.json();
       alert(result.message);
+      setloding(false);
     }
     catch(err)
     {
@@ -294,9 +296,16 @@ function MentorDashboardContent() {
                   </div>
                 ))}
                 <div className="report-action-container">
-                  <button className="generate-report-btn" onClick={generateReport}>
-                    📄 Generate Report
+                  <button className="generate-report-btn" onClick={generateReport} disable={loding}>
+                    📄 Generate Report 
+                    {loding && (
+                    <div className="spinner-grow text-danger" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>)}
                   </button>
+                  
+                  
+
                 </div>
               </div>
               
