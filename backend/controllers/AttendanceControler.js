@@ -3,7 +3,6 @@ const ReportdetailsSchema =require("../model/reportSchema");
 const puppeteer = require("puppeteer-core");
 const chromium = require("@sparticuz/chromium");
 const supabase =require("../config/supabase");
-const 
 //   /api/store-attendance URL
 const StoreAttendances=async (req,resp)=>{
   try{    
