@@ -11,6 +11,8 @@ function MentorDashboardContent() {
   const [show,setshow]=useState(true);
   const [event,setevent]=useState("");
   const [subjects,setSubjects]=useState([]);
+  const [message,setmessage]=useState("");
+  const [url,seturl]=useState("");
   const [filters, setFilters] = useState({
     department:"",
     course: "",
@@ -108,12 +110,15 @@ function MentorDashboardContent() {
       setloding(true);
       const res=await fetch(`https://sangolacollage.onrender.com/api/make-attendance-report?department=${filters.department}&course=${filters.course}&year=${filters.year}&division=${filters.division}`);
       const result=await res.json();
-      alert(result.message);
+      setmessage(result.message);
+      seturl(result.url);
       setloding(false);
+      setevent("showmessage");
     }
     catch(err)
     {
       console.log(err);
+      setevent("showmessage");
     }
 
   }
@@ -274,6 +279,18 @@ function MentorDashboardContent() {
       </button>
       
     </div>)}
+    {event=== "showmessage" && (
+      <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6 text-center border">
+        <h2 className="text-xl font-semibold text-gray-800">
+          {message}
+        </h2>
+        <div class="bg-gray-100 rounded-lg p-2 mt-4 text-sm text-gray-700 break-all">
+          {url}
+        </div>
+      </div>
+    )}
+
+
       {event === "showsubmitedattendance" && (
         <>
           <div className="attendance-header">
@@ -297,15 +314,14 @@ function MentorDashboardContent() {
                 ))}
                 <div className="report-action-container">
                   <button className="generate-report-btn" onClick={generateReport} disable={loding}>
-                    📄 Generate Report 
+                    {!loding && (
+                      <h6>📄 Generate Report</h6>
+                    )}
                     {loding && (
                     <div className="spinner-grow text-danger" role="status">
                       <span className="visually-hidden">Loading...</span>
                     </div>)}
                   </button>
-                  
-                  
-
                 </div>
               </div>
               

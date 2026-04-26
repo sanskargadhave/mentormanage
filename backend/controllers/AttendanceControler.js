@@ -453,7 +453,7 @@ const MakeAttendanceReport= async (req,resp)=>{
       uplodeDate:today,
     })
 
-    resp.status(200).json({message:"Report Uplode Succeessfuly"});
+    resp.status(200).json({message:"Report Uplode Succeessfuly",url:pdfurl});
 
     }
     catch(err)
