@@ -284,9 +284,9 @@ function MentorDashboardContent() {
         <h2 className="text-xl font-semibold text-gray-800">
           {message}
         </h2>
-        <div class="bg-gray-100 rounded-lg p-2 mt-4 text-sm text-gray-700 break-all">
-          {url}
-        </div>
+        <a href={url} target="_blank" className="text-blue-600 underline break-all">
+         {url}
+        </a>
       </div>
     )}
 

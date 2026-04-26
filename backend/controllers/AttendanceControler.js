@@ -441,7 +441,7 @@ const MakeAttendanceReport= async (req,resp)=>{
     if (error) throw new Error(error.message);
     
 
-    const pdfurl = `${process.env.SUPABASE_URL}/storage/v1/object/public/test-reports/${fileName}`;
+    const pdfurl = `${process.env.SUPABASE_URL}/storage/v1/object/public/Attendance Report/${fileName}`;
     
     await ReportdetailsSchema.create({
       ReportType:"Attendance",
@@ -453,7 +453,7 @@ const MakeAttendanceReport= async (req,resp)=>{
       uplodeDate:today,
     })
 
-    resp.status(200).json({message:"Report Uplode Succeessfuly",url:pdfurl});
+    resp.status(200).json({message:"Report Uplode Succeessfuly",url:pdfurl}); 
 
     }
     catch(err)
