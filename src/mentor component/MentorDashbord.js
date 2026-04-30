@@ -90,7 +90,7 @@ function MentorDashboardContent() {
   }
   const fetchTodayAttendance = async () => {
     try {
-
+      setloding(true);
       if (!filters.department || !filters.course || !filters.year || !filters.division) {
         alert("Please select all filters");
         return;
@@ -100,6 +100,7 @@ function MentorDashboardContent() {
 
       setSubjects(data.completeLecture);
       setevent("showsubmitedattendance");
+      setloding(false);
     } 
     catch (err) {
       console.log(err);
@@ -274,22 +275,37 @@ function MentorDashboardContent() {
         </div>
 
       <button className="report-btn" onClick={fetchTodayAttendance}>
-        <i className="fa fa-chart-bar"></i>
-        Generate Report
+        {!loding && (
+          <h6>📄 Generate Report</h6>
+        )}
+        {loding && (
+          <div className="spinner-grow text-danger" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        )}
       </button>
       
     </div>)}
-    {event=== "showmessage" && (
-      <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6 text-center border">
-        <h2 className="text-xl font-semibold text-gray-800">
-          {message}
-        </h2>
-        <a href={url} target="_blank" className="text-blue-600 underline break-all">
-         {url}
-        </a>
-      </div>
+    {event === "showmessage" && (
+      <>
+      <button className="close-btn" onClick={() => setevent("")}>
+              <i className="bi bi-x-lg"></i>
+            </button>
+          <h4 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">
+            {message}
+               
+          </h4>
+          {url?.length > 0 && (
+            <>
+              <p className="text-sm text-gray-500 mb-2">Your Report Link:</p>
+              <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline break-words font-medium">
+                {url.length > 35 ? url.slice(0, 35) + "..." : url}
+              </a>
+            </>
+          )}
+          </>
+        
     )}
-
 
       {event === "showsubmitedattendance" && (
         <>
@@ -313,7 +329,7 @@ function MentorDashboardContent() {
                   </div>
                 ))}
                 <div className="report-action-container">
-                  <button className="generate-report-btn" onClick={generateReport} disable={loding}>
+                  <button className="generate-report-btn" onClick={generateReport}>
                     {!loding && (
                       <h6>📄 Generate Report</h6>
                     )}

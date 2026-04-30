@@ -220,7 +220,8 @@ const GetStudentDetailsByRoll= async (req, resp) => {
           presentcount:1,
           absentcount:1,
           absentSubjects:1,
-        }}
+        }},
+        { $sort: { _id: -1 } }   
     ])
     resp.status(200).json({
       student: result,
