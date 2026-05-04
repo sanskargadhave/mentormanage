@@ -4,6 +4,7 @@ import "./mentor.css";
 import "../admin component/admin.css";
 function ViewStudent() {
     const today = new Date().toISOString().split("T")[0];
+    const token=localStorage.getItem("token");
     const [data,setdata]=useState();
     const [rollno,setrollno]=useState("");
     const [showerror,setshowerror]=useState(false);
@@ -21,7 +22,7 @@ function ViewStudent() {
             setshowerror(true);
             return;
         }
-        let url = `https://sangolacollage.onrender.com/api/get-studentdetails/${rollno}`;
+        let url = `https://sangolacollage.onrender.com/api/mentor/get-studentdetails/${rollno}`;
 
         if (event === "bydate" && date) {
             url=url+`?date=${date}`;
@@ -31,7 +32,12 @@ function ViewStudent() {
         }
 
         try {
-            const resp = await fetch(url);
+            const resp = await fetch(url,{
+             headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
         
             if(resp.status === 404) {
                 const errorData = await resp.json();

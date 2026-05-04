@@ -5,9 +5,16 @@ const mongoose = require("mongoose");
 const http =require("http");
 const {initSocket} =require("./socket");
 
-const GetDataRoute = require("./Routes/GetDataRoute");
-const StoreDataRoute =require("./Routes/StoreDataRoute");
-const UpdateDataRoute =require("./Routes/UpdateDataRoute");
+
+
+const AdminRoutes=require("./Routes/AdminRoutes");
+const AuthenticateRoutes=require("./Routes/AuthenticateRoutes");
+const CommonRoutes=require("./Routes/CommonRoutes");
+const MentorRoutes=require("./Routes/MentorRoutes");
+const StudentRoutes=require("./Routes/StudentRoutes");
+const TeacherRoutes=require("./Routes/TeacherRoutes");
+
+
 
 const app = express();
 const server = http.createServer(app);
@@ -26,9 +33,14 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
-app.use("/",GetDataRoute);
-app.use("/",StoreDataRoute);
-app.use("/",UpdateDataRoute);
+
+app.use("/api/admin",AdminRoutes);
+app.use("/api/authenticate",AuthenticateRoutes);
+app.use("/api/common",CommonRoutes);
+app.use("/api/mentor",MentorRoutes);
+app.use("/api/student",StudentRoutes);
+app.use("/api/teacher",TeacherRoutes);
+
 
 
 const PORT = process.env.PORT || 5000;

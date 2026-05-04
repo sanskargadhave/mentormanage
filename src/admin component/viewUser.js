@@ -7,11 +7,16 @@ function ViewUser() {
         totalMentors: 0,
         totalteachers: 0
     });
-
+    const token=localStorage.getItem("token");
     useEffect(() => {
         const fetchCounts = async () => {
             try {
-                const response = await axios.get("https://sangolacollage.onrender.com/api/get-usercounts");
+                const response = await axios.get("https://sangolacollage.onrender.com/api/admin/get-usercounts",{
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
                 setcounts(response.data);
             } catch (err) {
                 alert("Error fetching counts", err);

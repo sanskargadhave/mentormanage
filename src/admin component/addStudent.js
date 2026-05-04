@@ -8,7 +8,7 @@ import axios from "axios";
 
 function AddStudent()
 {
-    const {role}=useContext(AuthContext);
+    const {role,token}=useContext(AuthContext);
     const nevigate=useNavigate();
     const [loding,setloding]=useState(false);
     const [showNotice, setShowNotice] = useState(true);
@@ -26,7 +26,12 @@ function AddStudent()
        Commerce:["Commerce"],
     }
     useEffect(()=>{
-            axios.get("https://sangolacollage.onrender.com/api/getmentor")
+            axios.get("https://sangolacollage.onrender.com/api/common/getmentor",{
+                        headers: {
+                            Authorization: `Bearer ${token}`, 
+                            "Content-Type": "application/json"
+                        }
+                    })
             .then((resp)=>setmentor(resp.data))
             .catch((err)=>console.log(err.message))
     },[])
@@ -206,11 +211,12 @@ function AddStudent()
 
         setloding(true);
 
-        fetch("https://sangolacollage.onrender.com/add-student",{
+        fetch("https://sangolacollage.onrender.com/api/common/add-student",{
 
             method:"POST",
 
             headers:{
+                 Authorization: `Bearer ${token}`,
                 "Content-Type":"application/json"
             },
 
@@ -516,7 +522,8 @@ function AddStudent()
 
             <div className="success-card">
 
-                <h3>Student Added Successfully 🎉</h3>
+                <h3>Your Application Has Send To Mentor  🎉</h3>
+                <h5>Please Wait For Your Verification </h5>
 
                 <p><strong>Name:</strong> {FormData.Name}</p>
                 <p><strong>Roll No:</strong> {FormData.RollNo}</p>

@@ -4,9 +4,14 @@ import { useEffect,useState} from "react";
 function StudentDashboardContent()
 {
   const[totalStudent,setTotalStudent]=useState(0);
-
+  const token=localStorage.getItem("token");
   useEffect(()=>{
-    fetch("https://sangolacollage.onrender.com/api/students/count")
+    fetch("https://sangolacollage.onrender.com/api/common/students/count",{
+             headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        })
     .then(res=>res.json())
     .then(data=>setTotalStudent(data.count))
   },[]);
@@ -14,7 +19,12 @@ function StudentDashboardContent()
   const[totalMentor,setTotalMentor]=useState(0);
 
   useEffect(()=>{
-    fetch("https://sangolacollage.onrender.com/api/Mentor/count")
+    fetch("https://sangolacollage.onrender.com/api/common/Mentor/count",{
+             headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        })
     .then(res=>res.json())
     .then(data=>setTotalMentor(data.count))
   },[]);

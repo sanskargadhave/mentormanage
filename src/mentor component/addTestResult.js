@@ -9,12 +9,18 @@ import logo from "../collageassets/logo-college.png";
 export function DataSummery({testid,message})
 {
     const [counts,setcounts]=useState({});
+    const token=localStorage.getItem("token");
     const [topStudents,setTopStudents]=useState([]);
     const [showerror,setshowerror]=useState(true);
     const [url,seturl]=useState("");
     useEffect(()=>{
         const getData = async ()=>{
-            const response=await axios.get(`https://sangolacollage.onrender.com/api/get-test-summery/${testid}`);
+            const response=await axios.get(`https://sangolacollage.onrender.com/api/teacher/get-test-summery/${testid}`,{
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
             setcounts(response.data.testcounts[0]);
             setTopStudents(response.data.topstudents)
         }
@@ -24,7 +30,12 @@ export function DataSummery({testid,message})
         async function uploadReport() {
             try{    
                 const response = await axios.get(
-                    `https://sangolacollage.onrender.com/api/make-test-report/${testid}`
+                    `https://sangolacollage.onrender.com/api/teacher/make-test-report/${testid}`,{
+             headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        }
                 );
                 seturl(response.data.url);
                
@@ -38,12 +49,17 @@ export function DataSummery({testid,message})
     },[testid]);
     const sendParentMessage = async () => {
         try{
-            const response = await axios.post("https://sangolacollage.onrender.com/api/sendMessage",{
+            const response = await axios.post("https://sangolacollage.onrender.com/api/mentor/sendMessage",{
                 name: "Vikram pawar",
                 marks: 10,
                 totalMarks: 100,
                 phone:6361782144
-            });
+            },{
+             headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
 
             console.log(response.data);
             
@@ -156,7 +172,7 @@ export  function AssignMarks({date,studentdata,lectureid,totalmarks,testname,pas
     const [errors,seterror]=useState({});
     const [step,setstep] = useState("getresult");
     const [message,setmessage]=useState("")
-    
+    const token=useState("token");
     const [testid,settestid]=useState("");
 
     const isEmpty= (v) => v.trim() === "";
@@ -221,10 +237,12 @@ export  function AssignMarks({date,studentdata,lectureid,totalmarks,testname,pas
             alert("please Check Validations");
             return;
         }
-        fetch("https://sangolacollage.onrender.com/api/store-test-result",{
+        fetch("https://sangolacollage.onrender.com/api/teacher/store-test-result",{
             method:"POST",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                Authorization: `Bearer ${token}`
+
             },
             body:JSON.stringify({
                     teacherid:teacherid,
@@ -363,6 +381,7 @@ export  function AssignMarks({date,studentdata,lectureid,totalmarks,testname,pas
 function AddTestResult()
 {
     const today = new Date().toISOString().split("T")[0];
+    const token=localStorage.getItem("token");
     const [studentdata,setstudentdata]=useState([]);
     const [subjects,setsubjects]=useState([]);
     const [step,setstep] = useState("getdetails");
@@ -420,7 +439,12 @@ function AddTestResult()
 
     useEffect(()=>{
         const getsubjectdetails= async ()=>{
-            const resp=await axios.get("https://sangolacollage.onrender.com/api/getlecture");
+            const resp=await axios.get("https://sangolacollage.onrender.com/api/common/getlecture",{
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+            });
             setsubjects(resp.data);
         }
         getsubjectdetails();
@@ -440,7 +464,12 @@ function AddTestResult()
     useEffect(()=>{
         const getstudentdetails = async ()=>{
             if(!formdata.selected) return;
-            const response=await axios.get(`https://sangolacollage.onrender.com/api/serach-student/${formdata.selected}`); 
+            const response=await axios.get(`https://sangolacollage.onrender.com/api/mentor/serach-student/${formdata.selected}`,{
+             headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        }); 
             setstudentdata(response.data);
         }
         getstudentdetails();

@@ -6,6 +6,7 @@ import Select from 'react-select';
 import { GiveError } from "../WarningOrSucess";
 function AddLecture(){
     const [teachers,setteachers]=useState([]);
+    const token = localStorage.getItem("token");
     const [selected,setselected]=useState(null);
     const [lectureid,stlectureid]=useState("");
     const [loding,setloding]=useState(false);
@@ -32,7 +33,12 @@ function AddLecture(){
         course:""
     });
     useEffect(()=>{
-        axios.get("https://sangolacollage.onrender.com/api/getteacher")
+        axios.get("https://sangolacollage.onrender.com/api/common/getteacher",{
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+        }
+        })
         .then((resp)=>setteachers(resp.data))
         .catch((err)=>alert(err));
     },[]);
@@ -86,7 +92,7 @@ function AddLecture(){
             try{
                 setloding(true);
                 const res = await axios.post(
-                "https://sangolacollage.onrender.com/api/store-lecture",
+                "https://sangolacollage.onrender.com/api/admin/store-lecture",
                 {
                     subject: FormData.Subject,
                     teacherid: selected.value,
@@ -94,6 +100,12 @@ function AddLecture(){
                     Class: FormData.Class,
                     department: FormData.Department,
                     course: FormData.course
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, 
+                        "Content-Type": "application/json"
+                    }
                 }
             );
 

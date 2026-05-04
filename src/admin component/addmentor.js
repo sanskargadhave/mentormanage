@@ -6,6 +6,7 @@ import './admin.css';
 function AddMentor()
 {
     const nevigate=useNavigate();
+    const token = localStorage.getItem("token");
     const [MentorId,setMentorId]=useState("");
     const [loding,setloding]=useState(false);
     const [FormData,setFormData]=useState(
@@ -132,7 +133,7 @@ function AddMentor()
         else{
             setloding(true);
             try {
-                const res = await axios.post("https://sangolacollage.onrender.com/api/add-mentor",
+                const res = await axios.post("https://sangolacollage.onrender.com/api/admin/add-mentor",
                     {
                         personaldetails: {
                             name: FormData.Name,
@@ -151,6 +152,12 @@ function AddMentor()
                             address: FormData.Address
                         },
                         password: FormData.Password
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`, 
+                            "Content-Type": "application/json"
+                        }
                     }
                 );
 

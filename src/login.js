@@ -13,7 +13,7 @@ function Login() {
     const [error,seterror]=useState("");
     const nevigate=useNavigate();
     const [loading,setLoading]=useState(false);
-    const { login } = useContext(AuthContext);
+    const { login,token} = useContext(AuthContext);
     const handleSubmit=async (e)=>{
         e.preventDefault();
         await verifyData();
@@ -22,10 +22,12 @@ function Login() {
     {
         try{
             setLoading(true);
-            const resp=await fetch("https://sangolacollage.onrender.com/api/user-login",{
+            const resp=await fetch("https://sangolacollage.onrender.com/api/authenticate/user-login",{
                 method:"POST",
                 headers:{
-                "Content-Type":"application/json"},
+                "Content-Type":"application/json",
+                Authorization: `Bearer ${token}`
+            },
                 body:JSON.stringify({
                     emailid:email,
                     password:password
@@ -35,12 +37,13 @@ function Login() {
             if(data.islogin)
             {
                 login({
-                    id:data.userdetails.userid,
-                    role:data.userdetails.role,
-                    email:data.userdetails.emailid,
-                    name:"Sanskar Gadhave"
+                    id: data.user.id,
+                    role: data.user.role,
+                    email: data.user.emailid,
+                    name: "Sanskar Gadhave",
+                    token: data.token 
                 }); 
-                const role=data.userdetails.role;
+                const role=data.user.role;
                 if(role==="Admin")
                 {
                     nevigate("/admin");

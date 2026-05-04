@@ -6,6 +6,7 @@ function AddTeacher()
 {
     const nevigate=useNavigate();
     const [teacherId,setTeacherId]=useState("");
+    const token=localStorage.getItem("token");
     const [loding,setloding]=useState(false);
     const [FormData,setFormData]=useState(
     {
@@ -130,10 +131,11 @@ function AddTeacher()
         }
         else{
             setloding(true);
-            fetch("https://sangolacollage.onrender.com/api/add-teacher",{
+            fetch("https://sangolacollage.onrender.com/api/admin/add-teacher",{
             method:"POST",
             headers:{
-                    "Content-Type":"application/json"
+                    "Content-Type":"application/json",
+                     Authorization: `Bearer ${token}`
                 },
             body:JSON.stringify({
                 personaldetails:{

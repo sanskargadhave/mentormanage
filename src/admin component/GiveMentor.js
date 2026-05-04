@@ -12,6 +12,7 @@ function AssignMentor()
        Art:["Economics","English","Marathi","History","Geography","Hindi"],
        Commerce:["Commerce"],
     } 
+    const token =localStorage.getItem("token");
     const [selected,setselected]=useState(null);
     const [selectedClass, setSelectedClass] = useState("");
     const [selectedDivision, setSelectedDivision] = useState("");
@@ -32,7 +33,12 @@ function AssignMentor()
         exprience:""
     });
     useEffect(()=>{
-        axios.get("https://sangolacollage.onrender.com/api/getmentor")
+        axios.get("https://sangolacollage.onrender.com/api/common/getmentor",{
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        })
         .then((resp)=>setmentor(resp.data))
         .catch((err)=>console.log(err.message))
     },[])
@@ -67,11 +73,17 @@ function AssignMentor()
         }
         setloding(true);
         try {
-            const resp = await axios.put("https://sangolacollage.onrender.com/api/assign-mentors",
+            const resp = await axios.put("https://sangolacollage.onrender.com/api/admin/assign-mentors",
                 {
                     from: from,
                     to: to,
                     mentorid: data.mentorid
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
                 }
             );
             setmessage(resp.data.message);
@@ -93,12 +105,17 @@ function AssignMentor()
         }
         setloding(true);
 
-        axios.get("https://sangolacollage.onrender.com/api/get-students", {
+        axios.get("https://sangolacollage.onrender.com/api/common/get-students", {
             params: {
                 course: selectedCourse,
                 department: data.department,
                 Class: selectedClass,
                 division: selectedDivision
+            }
+        },{
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
             }
         })
         .then((resp) => {

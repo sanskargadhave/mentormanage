@@ -11,6 +11,7 @@ import logo from "../collageassets/logo-college.png";
 export default function ShowAttendance({totalstudent,totalabsent,totalpresent,lectureid})
 {
     const today = new Date().toISOString().split("T")[0];
+    const token=localStorage.getItem("token");
     const [data, setData] = useState([]);
     const [loding,setloding]=useState(false);
     const [counts,setcounts]=useState([]);
@@ -18,7 +19,12 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
     {
         try 
         {
-            const response = await axios.get(`https://sangolacollage.onrender.com/api/get-attendance/${lectureid}`);
+            const response = await axios.get(`https://sangolacollage.onrender.com/api/common/get-attendance/${lectureid}`,{
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            });
             setData(response.data.result);
             setcounts(response.data.counts);
         } 
@@ -122,8 +128,9 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
 }
 
 function AddAttendance() {
-    const {id}=useContext(AuthContext);
+    const {id,token}=useContext(AuthContext);
     const today = new Date().toISOString().split("T")[0];
+
     const [selected, setselected] = useState(null);
     const [lecture, setlecture] = useState([]);
     const [date,setdate]=useState(today);
@@ -157,7 +164,12 @@ function AddAttendance() {
 
 
     useEffect(() => {
-        axios.get("https://sangolacollage.onrender.com/api/getlecture")
+        axios.get("https://sangolacollage.onrender.com/api/common/getlecture",{
+             headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        })
             .then((resp) => {
                 setlecture(resp.data);
             })  
@@ -187,10 +199,11 @@ function AddAttendance() {
             rollno,
             status
         }))
-        fetch("https://sangolacollage.onrender.com/api/store-attendance",{
+        fetch("https://sangolacollage.onrender.com/api/teacher/store-attendance",{
              method:"POST", 
                 headers:{
-                    "Content-Type":"application/json"
+                    "Content-Type":"application/json",
+                    Authorization: `Bearer ${token}`
                 },
                 body:JSON.stringify({
                     date:date,
@@ -216,7 +229,12 @@ function AddAttendance() {
             setshowerror("true");
         }
         else{
-            axios.get(`https://sangolacollage.onrender.com/api/serach-student/${selected.value}`)
+            axios.get(`https://sangolacollage.onrender.com/api/mentor/serach-student/${selected.value}`,{
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        })
             .then((resp) => {
             setstudentdata(resp.data);
             })
@@ -365,7 +383,7 @@ function AddAttendance() {
       </table>
     )}
 
-    {/* BUTTON SAME */}
+   
     <br />
     <button className="search-btn" onClick={storeattendance}>
       Add Attendance

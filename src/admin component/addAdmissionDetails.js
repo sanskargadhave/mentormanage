@@ -4,7 +4,7 @@ import axios from "axios";
 import { GiveError } from "../WarningOrSucess";
 function AddAdmissionDetails() {
     const [file, setFile] = useState(null);
-    
+    const token = localStorage.getItem("token");
     const [showerror,setshowerror]=useState(false);
     const [message,setmessage]=useState("");
     const sendFile = async () => {
@@ -15,7 +15,17 @@ function AddAdmissionDetails() {
         const formdata = new FormData();
         formdata.append("file", file);
         try{
-            const res = await axios.post("http://localhost:5000/api/store-excel-data",formdata);
+            
+            const res = await axios.post("https://sangolacollage.onrender.com/api/mentor/store-excel-data",
+                formdata,
+                {   headers: {
+                        Authorization: `Bearer ${token}`, 
+                        "Content-Type": "multipart/form-data"
+                    }
+                }
+
+
+            );
             setmessage(res.data.message);
             setshowerror(true);
         }

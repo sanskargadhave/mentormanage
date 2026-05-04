@@ -5,7 +5,7 @@ import { AuthContext } from "../Authintication";
 import "./mentor.css";
 
 function MentorDashboardContent() {
-  const { id } = useContext(AuthContext);
+  const { id,token } = useContext(AuthContext);
   const [notifications, setNotifications] = useState([]);
   const [loding,setloding]=useState(false);
   const [show,setshow]=useState(true);
@@ -32,8 +32,13 @@ function MentorDashboardContent() {
     async function getNotifications() {
       try {
         setloding(true);
-        const resp = await axios.get(`https://sangolacollage.onrender.com/api/get-notifications/${id}`);
-        //const resp=await axios.get(`http://localhost:3000/api/get-notifications/${id}`);
+        const resp = await axios.get(`https://sangolacollage.onrender.com/api/mentor/get-notifications/${id}`,{
+             headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+        //const resp=await axios.get(`http://localhost:3000/api/mentor/get-notifications/${id}`);
         const sorted = resp.data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
@@ -70,7 +75,12 @@ function MentorDashboardContent() {
   async function giveapprove(studentid)
   {
     try{
-      const resp=await axios.put(`https://sangolacollage.onrender.com/api/give-approve/${studentid}`);
+      const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-approve/${studentid}`,{
+             headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
       
       setNotifications((prev)=>prev.filter((notif)=> notif.data.id !== studentid));
     }
@@ -81,7 +91,12 @@ function MentorDashboardContent() {
   async function givereject(studentid)
   {
     try{
-      const resp=await axios.put(`https://sangolacollage.onrender.com/api/give-reject/${studentid}`);
+      const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-reject/${studentid}`,{
+             headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
       setNotifications((prev)=>prev.filter((notif)=> notif.data.id !== studentid));
     }
     catch(err){
@@ -95,7 +110,12 @@ function MentorDashboardContent() {
         alert("Please select all filters");
         return;
       }
-      const res = await fetch(`https://sangolacollage.onrender.com/api/get-today-attendance?department=${filters.department}&course=${filters.course}&year=${filters.year}&division=${filters.division}`);
+      const res = await fetch(`https://sangolacollage.onrender.com/api/mentor/get-today-attendance?department=${filters.department}&course=${filters.course}&year=${filters.year}&division=${filters.division}`,{
+             headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
       const data = await res.json();
 
       setSubjects(data.completeLecture);
@@ -109,7 +129,12 @@ function MentorDashboardContent() {
   const generateReport=async ()=>{
     try{
       setloding(true);
-      const res=await fetch(`https://sangolacollage.onrender.com/api/make-attendance-report?department=${filters.department}&course=${filters.course}&year=${filters.year}&division=${filters.division}`);
+      const res=await fetch(`https://sangolacollage.onrender.com/api/mentor/make-attendance-report?department=${filters.department}&course=${filters.course}&year=${filters.year}&division=${filters.division}`,{
+             headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
       const result=await res.json();
       setmessage(result.message);
       seturl(result.url);
