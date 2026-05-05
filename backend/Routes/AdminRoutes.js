@@ -11,7 +11,7 @@ const isAdmin=require("../middleware/isadminmiddleware");
 
 
 
-router.use(verifyToken, isAdmin);
+router.use(verifyToken);
 
 router.get("/get-usercounts",UserCounts);
 
