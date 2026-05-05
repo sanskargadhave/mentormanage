@@ -25,14 +25,14 @@ const userlogin = async (req, resp) => {
 
    
     const token = jwt.sign(
-      { userid: user._id, role: user.role },
+      { userid: user.userid, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
     
     const safeUser = {
-      id: user._id,
+      id: user.userid,
       emailid: user.emailid,
       role: user.role
     };
