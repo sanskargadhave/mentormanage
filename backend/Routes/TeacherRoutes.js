@@ -8,7 +8,7 @@ const {StoreTest}=require("../controllers/TestControler");
 const verifyToken=require("../middleware/authmiddleware");
 const isTeacher=require("../middleware/isteachermiddleware");
 
-router.use(verifyToken);
+router.use(verifyToken,isTeacher);
 router.get("/make-test-report/:testid",MakeTestReport);
 router.get("/get-test-summery/:testid",GetTestSummery);
 

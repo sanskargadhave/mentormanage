@@ -11,7 +11,7 @@ const {giveApprove,giveReject}=require("../controllers/StudentControler");
 const verifyToken=require("../middleware/authmiddleware");
 const isMentor=require("../middleware/ismentormiddleware");
 
-router.use(verifyToken);
+router.use(verifyToken,isMentor);
 
 router.get("/serach-student/:lectureid",SearchStudent);
 router.get("/get-studentdetails/:rollno",GetStudentDetailsByRoll);
