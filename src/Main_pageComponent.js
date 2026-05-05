@@ -6,7 +6,7 @@ function StudentDashboardContent()
   const[totalStudent,setTotalStudent]=useState(0);
   const token=localStorage.getItem("token");
   useEffect(()=>{
-    if(!token) return;
+    
     fetch("https://sangolacollage.onrender.com/api/common/students/count",{
              headers: {
                 Authorization: `Bearer ${token}`,
@@ -20,7 +20,7 @@ function StudentDashboardContent()
   const[totalMentor,setTotalMentor]=useState(0);
 
   useEffect(()=>{
-    if(!token) return;
+    
     fetch("https://sangolacollage.onrender.com/api/common/Mentor/count",{
              headers: {
                 Authorization: `Bearer ${token}`,
