@@ -34,8 +34,9 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
         }
     };
     useEffect(() => {
+        if(!token) return;
         fetchData();
-      }, [lectureid]
+      }, [lectureid,token]
     );
     return (
         <div className="admin-content animate__animated animate__zoomIn">
@@ -45,7 +46,7 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
                     <img src={logo} alt="logo" className="header-logo" />
                     <h4 className="college-name">SANGOLA MAHAVIDYALAYA SANGOLA</h4>
                 </div>
-
+ 
                 <div className="header-info">
 
                     <div className="info-box">
@@ -164,6 +165,7 @@ function AddAttendance() {
 
 
     useEffect(() => {
+        if(!token) return;
         axios.get("https://sangolacollage.onrender.com/api/common/getlecture",{
              headers: {
                 Authorization: `Bearer ${token}`,
@@ -174,7 +176,7 @@ function AddAttendance() {
                 setlecture(resp.data);
             })  
             .catch((err) => {setmessage(err.message);setshowerror(true)});
-    }, []);
+    }, [token]);
 
     const options = lecture.map((s) => ({
         value: s.lectureid,

@@ -6,6 +6,7 @@ function StudentDashboardContent()
   const[totalStudent,setTotalStudent]=useState(0);
   const token=localStorage.getItem("token");
   useEffect(()=>{
+    if(!token) return;
     fetch("https://sangolacollage.onrender.com/api/common/students/count",{
              headers: {
                 Authorization: `Bearer ${token}`,
@@ -14,11 +15,12 @@ function StudentDashboardContent()
         })
     .then(res=>res.json())
     .then(data=>setTotalStudent(data.count))
-  },[]);
+  },[token]);
 
   const[totalMentor,setTotalMentor]=useState(0);
 
   useEffect(()=>{
+    if(!token) return;
     fetch("https://sangolacollage.onrender.com/api/common/Mentor/count",{
              headers: {
                 Authorization: `Bearer ${token}`,
@@ -27,7 +29,7 @@ function StudentDashboardContent()
         })
     .then(res=>res.json())
     .then(data=>setTotalMentor(data.count))
-  },[]);
+  },[token]);
 
   return (
   <div className="container" style={{marginTop:"100px"}}>

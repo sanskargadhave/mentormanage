@@ -14,6 +14,7 @@ export function DataSummery({testid,message})
     const [showerror,setshowerror]=useState(true);
     const [url,seturl]=useState("");
     useEffect(()=>{
+        if(!token) return;
         const getData = async ()=>{
             const response=await axios.get(`https://sangolacollage.onrender.com/api/teacher/get-test-summery/${testid}`,{
             headers: {
@@ -25,8 +26,9 @@ export function DataSummery({testid,message})
             setTopStudents(response.data.topstudents)
         }
         getData();
-    },[testid]);
+    },[testid,token]);
     useEffect(()=>{
+        if(!token) return;
         async function uploadReport() {
             try{    
                 const response = await axios.get(
@@ -46,7 +48,7 @@ export function DataSummery({testid,message})
             }
         }
         uploadReport();
-    },[testid]);
+    },[testid,token]);
     const sendParentMessage = async () => {
         try{
             const response = await axios.post("https://sangolacollage.onrender.com/api/mentor/sendMessage",{
@@ -438,6 +440,7 @@ function AddTestResult()
     }
 
     useEffect(()=>{
+        if(!token) return;
         const getsubjectdetails= async ()=>{
             const resp=await axios.get("https://sangolacollage.onrender.com/api/common/getlecture",{
             headers: {
@@ -448,7 +451,7 @@ function AddTestResult()
             setsubjects(resp.data);
         }
         getsubjectdetails();
-    },[]);
+    },[token]);
     
     function isAllvalid(){
         const isFormValid=Object.values(errors).every((msg) => msg === "")
@@ -462,6 +465,7 @@ function AddTestResult()
         }
     }
     useEffect(()=>{
+        if(!token) return;
         const getstudentdetails = async ()=>{
             if(!formdata.selected) return;
             const response=await axios.get(`https://sangolacollage.onrender.com/api/mentor/serach-student/${formdata.selected}`,{
@@ -473,7 +477,7 @@ function AddTestResult()
             setstudentdata(response.data);
         }
         getstudentdetails();
-    },[formdata.selected]);
+    },[formdata.selected,token]);
 
      const options = subjects.map((s) =>({
         value: s.lectureid,

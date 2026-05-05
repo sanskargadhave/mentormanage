@@ -9,6 +9,7 @@ function ViewUser() {
     });
     const token=localStorage.getItem("token");
     useEffect(() => {
+        if(!token) return;
         const fetchCounts = async () => {
             try {
                 const response = await axios.get("https://sangolacollage.onrender.com/api/admin/get-usercounts",{
@@ -23,7 +24,7 @@ function ViewUser() {
             }
         };
         fetchCounts();
-    }, []);
+    }, [token]);
 
     
     return (

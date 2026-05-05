@@ -5,7 +5,8 @@ import { AuthContext } from "../Authintication";
 import "./mentor.css";
 
 function MentorDashboardContent() {
-  const { id,token } = useContext(AuthContext);
+  const { id,token} = useContext(AuthContext);
+  
   const [notifications, setNotifications] = useState([]);
   const [loding,setloding]=useState(false);
   const [show,setshow]=useState(true);
@@ -29,28 +30,35 @@ function MentorDashboardContent() {
 
 
   useEffect(() => {
-    async function getNotifications() {
-      try {
-        setloding(true);
-        const resp = await axios.get(`https://sangolacollage.onrender.com/api/mentor/get-notifications/${id}`,{
-             headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        });
-        //const resp=await axios.get(`http://localhost:3000/api/mentor/get-notifications/${id}`);
-        const sorted = resp.data.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
-        setNotifications(sorted);
-        setloding(false);
-      } catch (err) {
-        console.error("Error fetching stored notifications", err);
-      }
-    }
-    getNotifications();
-  }, [id]);
+  if (!token || !id) return; 
 
+  async function getNotifications() {
+    try {
+      setloding(true);
+
+      const resp = await axios.get(
+        `https://sangolacollage.onrender.com/api/mentor/get-notifications/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const sorted = resp.data.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+
+      setNotifications(sorted);
+    } catch (err) {
+      console.error("Error fetching stored notifications", err);
+    } finally {
+      setloding(false);
+    }
+  }
+
+  getNotifications();
+}, [id, token]);
   useEffect(() => {
   if (id) {
     socket.emit("join_room", {

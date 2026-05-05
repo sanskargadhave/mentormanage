@@ -26,6 +26,7 @@ function AddStudent()
        Commerce:["Commerce"],
     }
     useEffect(()=>{
+        if(!token) return;
             axios.get("https://sangolacollage.onrender.com/api/common/getmentor",{
                         headers: {
                             Authorization: `Bearer ${token}`, 
@@ -34,7 +35,7 @@ function AddStudent()
                     })
             .then((resp)=>setmentor(resp.data))
             .catch((err)=>console.log(err.message))
-    },[])
+    },[token])
     const option=mentor.map((data)=>({
         value:data._id,
         mentorId:data.mentorId,

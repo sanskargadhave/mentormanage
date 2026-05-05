@@ -33,6 +33,7 @@ function AssignMentor()
         exprience:""
     });
     useEffect(()=>{
+        if(!token) return;
         axios.get("https://sangolacollage.onrender.com/api/common/getmentor",{
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -41,7 +42,7 @@ function AssignMentor()
         })
         .then((resp)=>setmentor(resp.data))
         .catch((err)=>console.log(err.message))
-    },[])
+    },[token])
     
    
     const option=mentor.map((data)=>({

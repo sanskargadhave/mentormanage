@@ -5,10 +5,12 @@ const verifyToken = (req, res, next) => {
 
   
   if (!authHeader) {
+    console.log("No token provided")
     return res.status(401).json({ message: "No token provided" });
   }
 
   if (!authHeader.startsWith("Bearer ")) {
+    console.log("Invalid token format");
     return res.status(401).json({ message: "Invalid token format" });
   }
 

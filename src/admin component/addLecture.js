@@ -33,6 +33,7 @@ function AddLecture(){
         course:""
     });
     useEffect(()=>{
+        if(!token) return;
         axios.get("https://sangolacollage.onrender.com/api/common/getteacher",{
         headers: {
             Authorization: `Bearer ${token}`,
@@ -41,7 +42,7 @@ function AddLecture(){
         })
         .then((resp)=>setteachers(resp.data))
         .catch((err)=>alert(err));
-    },[]);
+    },[token]);
 
     const option=teachers.map((s)=>({
         value:s.TeacherId,
