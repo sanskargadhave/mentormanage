@@ -3,7 +3,7 @@ const NotificationSchema = require("../model/notificationsScema");
 const getNotification = async (req, resp) => {
   try {
     const { mentorid } = req.params; 
-
+    console.log(req.headers);
     const notifications = await NotificationSchema.find({receiverid: mentorid,read:false}).sort({ createdAt: -1 }); 
     resp.status(200).json(notifications);
   } catch (err) {
