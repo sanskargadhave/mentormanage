@@ -27,6 +27,11 @@
   function App() {
     return (
       <Routes>
+        <Route path="/unauthorized" element={
+          <div style={{ textAlign: "center", marginTop: "50px" }}>
+            <h1>❌Access Denied❌</h1>
+            <p>Your session expired or you don’t have permission.</p>
+          </div>} />
         <Route element={<Layout/>}>
           <Route path="/" element={<StudentDashboardContent />} />
 
@@ -34,7 +39,6 @@
           <Route path="/login" element={<Login />} />
           
           <Route path="/warning-logout" element={<LogoutWarning/>}/>
-          <Route path="/unauthorized" element={<h1>401 Unauthorized</h1>} />
 
           {/* Admin */}
           <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
@@ -68,7 +72,15 @@
               <Route path="add-test-result" element={<AddTestResult/>}/>
             </Route>
           </Route>
-
+          <Route element={<ProtectedRoute allowedRoles={["Teacher"]}/>}>
+            <Route path="/teacher" element={<SidebarLayout/>}>
+            
+            
+            
+            
+            </Route>
+          
+          </Route>
         </Route>
       </Routes>
     );
