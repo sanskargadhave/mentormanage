@@ -4,8 +4,10 @@ import axios from "axios";
 import "./admin.css";
 import Select from 'react-select';
 import { GiveError } from "../WarningOrSucess";
+import { useNavigate } from "react-router-dom";
 function AddLecture(){
     const [teachers,setteachers]=useState([]);
+    const navigate=useNavigate();
     const token = localStorage.getItem("token");
     const [selected,setselected]=useState(null);
     const [lectureid,stlectureid]=useState("");
@@ -41,7 +43,15 @@ function AddLecture(){
         }
         })
         .then((resp)=>setteachers(resp.data))
-        .catch((err)=>alert(err));
+        .catch((err)=>{
+            if(err.response?.status === 401){
+                localStorage.clear();
+                navigate("/unauthorized");
+                return;
+            } 
+            alert(err)
+        
+        });
     },[token]);
 
     const option=teachers.map((s)=>({
@@ -119,9 +129,17 @@ function AddLecture(){
             }
             catch(err)
             {
+                if(err.response?.status === 401){
+                    localStorage.clear();
+                    navigate("/unauthorized");
+                    return;
+                } 
                 console.log(err);
             }
-            setloding(false);
+            finally
+            {
+                setloding(false);
+            }
         }
     }
     return (

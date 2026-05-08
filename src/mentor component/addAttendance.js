@@ -6,6 +6,7 @@ import Select from "react-select";
 import { GiveError } from "../WarningOrSucess";
 import "./mentor.css";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Authintication";
 import logo from "../collageassets/logo-college.png";
 export default function ShowAttendance({totalstudent,totalabsent,totalpresent,lectureid})
@@ -19,12 +20,14 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
     {
         try 
         {
+            setloding(true);
             const response = await axios.get(`https://sangolacollage.onrender.com/api/common/get-attendance/${lectureid}`,{
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json"
                 }
             });
+
             setData(response.data.result);
             setcounts(response.data.counts);
         } 
@@ -32,12 +35,16 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
         {
             console.error(error);
         }
+        finally
+        {
+            setloding(false);
+        }
     };
     useEffect(() => {
-      
+    if(lectureid && token){
         fetchData();
-      }, [lectureid,token]
-    );
+    }
+}, [lectureid, token]);
     return (
         <div className="admin-content animate__animated animate__zoomIn">
             <div className="attendance-header">
@@ -131,7 +138,7 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
 function AddAttendance() {
     const {id,token}=useContext(AuthContext);
     const today = new Date().toISOString().split("T")[0];
-
+    const nevigate=useNavigate();
     const [selected, setselected] = useState(null);
     const [lecture, setlecture] = useState([]);
     const [date,setdate]=useState(today);
@@ -151,6 +158,7 @@ function AddAttendance() {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
+
 
     useEffect(() => 
     {
@@ -222,7 +230,8 @@ function AddAttendance() {
          setstep("summery");
         })
         .catch((err)=>{setmessage(err.message);setshowerror(true)})
-        setloding(false);
+        .finally(()=>{setloding(false)})
+        
     }
 
     function searchstudent() 
@@ -230,7 +239,7 @@ function AddAttendance() {
         if(!selected)
         {
             setmessage("Please Select Lecture First");
-            setshowerror("true");
+            setshowerror(true);
         }
         else{
             setloding(true);
@@ -241,11 +250,20 @@ function AddAttendance() {
             }
             })
             .then((resp) => {
-            setstudentdata(resp.data);
+                setstudentdata(resp.data);
+                setstep("attendance")
             })
-            .catch((err) => {setmessage(err.message);setshowerror(true)});
-            setstep("attendance");  
-            setloding(false);
+            .catch((err) => {
+                if(err.response?.status === 401){
+                    localStorage.clear();
+                    nevigate("/unauthorized");
+                    return;
+                }
+                setmessage(err.message);
+                setshowerror(true)
+            })
+            
+            .finally(()=>{setloding(false)})  
         }
     }
     
@@ -279,15 +297,17 @@ function AddAttendance() {
                 <br/>
                 <div className="row">
                     <div className="col-12 col-md-4">
+                        {!loding && (
                         <button className="search-btn" onClick={searchstudent}>
                                 <i className="bi bi-search"></i>
                            <span> Search Student</span>
-                            {loding && (
-                                <div className="spinner-grow text-danger" role="status">
-                                    <span className="visually-hidden">Loading...</span>
-                                </div>
-                            )}
-                        </button>
+                        </button>)}
+                        {loding && (
+                        <button className="search-btn" >
+                            <div className="spinner-grow text-danger" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </button>)}
                     </div>
                 </div>
             </div>)}
@@ -396,16 +416,21 @@ function AddAttendance() {
 
    
     <br />
-    <button className="search-btn" onClick={storeattendance}>
-        {loding && (
+    {!loding && (
+        <button className="search-btn" onClick={storeattendance}>
+            <i className="bi bi-search"></i>
+            <span>Add Attendance</span>
+        </button>
+    )}
+    {loding && (
+        <button className="search-btn" >
             <div className="spinner-grow text-danger" role="status">
                 <span className="visually-hidden">Loading...</span>
             </div>
-        )}
-    
-            Add Attendance 
+        </button>
+    )}
             
-    </button>
+   
   </div>
 )}
             {step==="summery" && (

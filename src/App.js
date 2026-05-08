@@ -31,10 +31,12 @@
           <div style={{ textAlign: "center", marginTop: "50px" }}>
             <h1>❌Access Denied❌</h1>
             <p>Your session expired or you don’t have permission.</p>
+            {localStorage.clear}
           </div>} />
+        
         <Route element={<Layout/>}>
           <Route path="/" element={<StudentDashboardContent />} />
-
+          <Route path="/register-student" element={<AddStudent />} />
           {/* For Only login */}
           <Route path="/login" element={<Login />} />
           

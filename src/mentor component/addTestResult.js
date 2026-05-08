@@ -6,8 +6,10 @@ import { useRef } from "react";
 import { GiveError } from "../WarningOrSucess";
 import {ResultChart} from "../Visulaisation Charts/passvsfailchart";
 import logo from "../collageassets/logo-college.png";
+import { useNavigate } from "react-router-dom";
 export function DataSummery({testid,message})
 {
+    const navigate =useNavigate();
     const [counts,setcounts]=useState({});
     const token=localStorage.getItem("token");
     const [topStudents,setTopStudents]=useState([]);
@@ -15,17 +17,30 @@ export function DataSummery({testid,message})
     const [url,seturl]=useState("");
     useEffect(()=>{
         if(!token) return;
-        const getData = async ()=>{
-            const response=await axios.get(`https://sangolacollage.onrender.com/api/teacher/get-test-summery/${testid}`,{
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
+        try{
+            
+            const getData = async ()=>{
+                const response=await axios.get(`https://sangolacollage.onrender.com/api/teacher/get-test-summery/${testid}`,{
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            });
+                setcounts(response.data.testcounts[0]);
+                setTopStudents(response.data.topstudents)
             }
-        });
-            setcounts(response.data.testcounts[0]);
-            setTopStudents(response.data.topstudents)
+            getData();
+            
         }
-        getData();
+        catch(err)
+        {
+            if(err.response?.status === 401){
+                localStorage.clear();
+                navigate("/unauthorized");
+                return;
+            } 
+        }
+          
     },[testid,token]);
     useEffect(()=>{
         if(!token) return;
@@ -43,6 +58,11 @@ export function DataSummery({testid,message})
                
             }
             catch(err){
+                if(err.response?.status === 401){
+                    localStorage.clear();
+                    navigate("/unauthorized");
+                    return;
+                } 
                 console.log(err);
                 alert("Failed to generate report");
             }
@@ -68,6 +88,11 @@ export function DataSummery({testid,message})
         }
         catch(err)
         {
+            if(err.response?.status === 401){
+                localStorage.clear();
+                navigate("/unauthorized");
+                return;
+            } 
             console.log(err);
             alert("Failed to send message");
         }
@@ -167,7 +192,7 @@ export function DataSummery({testid,message})
 
 export  function AssignMarks({date,studentdata,lectureid,totalmarks,testname,passingmarks,subject,teacherid})
 {
-    
+    const navigate=useNavigate();
     let firstob=studentdata[0];
     const inputRefs = useRef({});
     const [result,setresult]=useState({});
@@ -261,7 +286,16 @@ export  function AssignMarks({date,studentdata,lectureid,totalmarks,testname,pas
             })
         }).then((resp)=>resp.json())
         .then((data)=>{setmessage(data.message); settestid(data.testid); setstep("summery")})
-        .catch((err)=>alert(err.message))
+        .catch((err)=>{
+            if(err.response?.status === 401){
+                localStorage.clear();
+                navigate("/unauthorized");
+                return;
+            } 
+             alert(err.message);
+        }
+
+    )
     }
     function handleKey(e, index) {
         if (e.key === "Enter" || e.key === "ArrowDown") {
@@ -382,6 +416,7 @@ export  function AssignMarks({date,studentdata,lectureid,totalmarks,testname,pas
 
 function AddTestResult()
 {
+    const navigate=useNavigate();
     const today = new Date().toISOString().split("T")[0];
     const token=localStorage.getItem("token");
     const [studentdata,setstudentdata]=useState([]);
@@ -441,16 +476,28 @@ function AddTestResult()
 
     useEffect(()=>{
         if(!token) return;
-        const getsubjectdetails= async ()=>{
-            const resp=await axios.get("https://sangolacollage.onrender.com/api/common/getlecture",{
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
+        try{
+            const getsubjectdetails= async ()=>{
+                const resp=await axios.get("https://sangolacollage.onrender.com/api/common/getlecture",{
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+                });
+                setsubjects(resp.data);
+
             }
-            });
-            setsubjects(resp.data);
+            getsubjectdetails();
         }
-        getsubjectdetails();
+        catch(err)
+        {
+            if(err.response?.status === 401){
+                localStorage.clear();
+                navigate("/unauthorized");
+                return;
+            } 
+        }
+        
     },[token]);
     
     function isAllvalid(){
@@ -466,17 +513,28 @@ function AddTestResult()
     }
     useEffect(()=>{
         if(!token) return;
-        const getstudentdetails = async ()=>{
-            if(!formdata.selected) return;
-            const response=await axios.get(`https://sangolacollage.onrender.com/api/mentor/serach-student/${formdata.selected}`,{
-             headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
+        try{
+            const getstudentdetails = async ()=>{
+                if(!formdata.selected) return;
+                const response=await axios.get(`https://sangolacollage.onrender.com/api/mentor/serach-student/${formdata.selected}`,{
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            }); 
+                setstudentdata(response.data);
             }
-        }); 
-            setstudentdata(response.data);
+            getstudentdetails();
         }
-        getstudentdetails();
+        catch(err)
+        {
+            if(err.response?.status === 401){
+                localStorage.clear();
+                navigate("/unauthorized");
+                return;
+            } 
+        }
+            
     },[formdata.selected,token]);
 
      const options = subjects.map((s) =>({

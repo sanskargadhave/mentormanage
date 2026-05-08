@@ -5,7 +5,7 @@ import "animate.css";
 import './admin.css';
 function AddMentor()
 {
-    const nevigate=useNavigate();
+    const navigate=useNavigate();
     const token = localStorage.getItem("token");
     const [MentorId,setMentorId]=useState("");
     const [loding,setloding]=useState(false);
@@ -178,6 +178,11 @@ function AddMentor()
 
             }
             catch (err) {
+                if(err.response?.status === 401){
+                    localStorage.clear();
+                    navigate("/unauthorized");
+                    return;
+                } 
                 console.error(err);
                 seterr("Something went wrong");
                 setshowerror(true);
@@ -297,7 +302,7 @@ function AddMentor()
                             <p><strong>Name:</strong> {FormData.Name}</p>
                             <p><strong>ID:</strong> {MentorId}</p>
                         </div>
-                        <button className="btn btn-primary w-100" onClick={() => nevigate("/admin")}>
+                        <button className="btn btn-primary w-100" onClick={() => navigate("/admin")}>
                             <i className="bi bi-box-arrow-right"></i> Go to Dashboard
                         </button>
                     </div>
@@ -348,7 +353,7 @@ function AddMentor()
                             Try Again
                         </button>
 
-                    <button className="exit-btn" onClick={()=>{nevigate("/")}}>
+                    <button className="exit-btn" onClick={()=>{navigate("/")}}>
                         <i className="bi bi-door-open"></i>
                         Exit
                     </button>

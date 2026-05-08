@@ -2,11 +2,13 @@ import { useState } from "react";
 import "./admin.css";
 import axios from "axios";
 import { GiveError } from "../WarningOrSucess";
+import { useNavigate } from "react-router-dom";
 function AddAdmissionDetails() {
     const [file, setFile] = useState(null);
     const token = localStorage.getItem("token");
     const [showerror,setshowerror]=useState(false);
     const [message,setmessage]=useState("");
+    const navigate=useNavigate();
     const sendFile = async () => {
         if (!file) {
             return alert("Please select file first");
@@ -31,6 +33,11 @@ function AddAdmissionDetails() {
         }
         catch(err)
         {
+           if(err.response?.status === 401){
+                localStorage.clear();
+                navigate("/unauthorized");
+                return;
+            } 
             setmessage(err.response?.data?.message || "Server Error");
             setshowerror(true);
         }

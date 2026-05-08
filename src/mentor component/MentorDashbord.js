@@ -2,11 +2,12 @@ import { useEffect, useState, useContext } from "react";
 import socket from "../socket";
 import axios from "axios";
 import { AuthContext } from "../Authintication";
+import { useNavigate } from "react-router-dom";
 import "./mentor.css";
 
 function MentorDashboardContent() {
   const { id,token} = useContext(AuthContext);
-  
+  const navigate=useNavigate();
   const [notifications, setNotifications] = useState([]);
   const [loding,setloding]=useState(false);
   const [show,setshow]=useState(true);
@@ -50,9 +51,17 @@ function MentorDashboardContent() {
       );
 
       setNotifications(sorted);
-    } catch (err) {
+    } 
+    catch (err) 
+    {
+      if(err.response?.status === 401){
+        localStorage.clear();
+        navigate("/unauthorized");
+        return;
+      }
       console.error("Error fetching stored notifications", err);
-    } finally {
+    } 
+    finally {
       setloding(false);
     }
   }
@@ -93,6 +102,11 @@ function MentorDashboardContent() {
       setNotifications((prev)=>prev.filter((notif)=> notif.data.id !== studentid));
     }
     catch(err){
+      if(err.response?.status === 401){
+        localStorage.clear();
+        navigate("/unauthorized");
+        return;
+      }
       console.log("error at Give Approve",err);
     }
   }
@@ -108,6 +122,11 @@ function MentorDashboardContent() {
       setNotifications((prev)=>prev.filter((notif)=> notif.data.id !== studentid));
     }
     catch(err){
+      if(err.response?.status === 401){
+        localStorage.clear();
+        navigate("/unauthorized");
+        return;
+      }
       console.log("error at Give reject",err);
     }
   }
@@ -131,6 +150,11 @@ function MentorDashboardContent() {
       setloding(false);
     } 
     catch (err) {
+      if(err.response?.status === 401){
+        localStorage.clear();
+        navigate("/unauthorized");
+        return;
+      }
       console.log(err);
     }
   };
@@ -151,6 +175,11 @@ function MentorDashboardContent() {
     }
     catch(err)
     {
+      if(err.response?.status === 401){
+        localStorage.clear();
+        navigate("/unauthorized");
+        return;
+      }
       console.log(err);
       setevent("showmessage");
     }

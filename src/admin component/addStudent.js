@@ -26,7 +26,7 @@ function AddStudent()
        Commerce:["Commerce"],
     }
     useEffect(()=>{
-        if(!token) return;
+        
             axios.get("https://sangolacollage.onrender.com/api/common/getmentor",{
                         headers: {
                             Authorization: `Bearer ${token}`, 

@@ -1,9 +1,12 @@
 import "./Main_pageComponent.css";
 import { useEffect,useState} from "react";
-
+import { Link } from "react-router-dom";
+import { PersonPlusFill } from "react-bootstrap-icons";
+import { useNavigate } from "react-router-dom"; 
 function StudentDashboardContent()
 {
   const[totalStudent,setTotalStudent]=useState(0);
+  const navigate =useNavigate();
   const token=localStorage.getItem("token");
   useEffect(()=>{
     
@@ -74,9 +77,42 @@ function StudentDashboardContent()
           <h3>00</h3>
         </div>
       </div>
+      <div className="registration-card">
+        <div className="blur-circle"></div>
+          <div className="row align-items-center">
+            <div className="col-12 col-lg-8 mb-4 mb-lg-0">
+              <div className="d-flex align-items-center gap-3 mb-3">
+                <div className="registration-icon">
+                  <i className="bi bi-person-plus-fill"></i>
+                </div>
+                <div>
+                  <h3 className="registration-title">
+                    Student Registration
+                  </h3>
 
-    </div>
-  </div> 
+                  <span className="registration-badge">
+                   Mentor Verifiacation
+                  </span>
+                </div>
+              </div>
+
+              <p className="registration-description">
+                Students who have not completed their registration can now
+                submit their details using the official registration form.
+                Please ensure all information is correct before final
+                submission.
+              </p>
+            </div>
+            <div className="col-12 col-lg-4 text-lg-end">
+              <button className="registration-btn" onClick={()=>{navigate("/register-student")}}>
+                <i className="bi bi-person-plus-fill me-2"></i>
+                Add New Student
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
   );
 }
 

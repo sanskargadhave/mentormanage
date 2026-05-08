@@ -4,7 +4,7 @@ import "animate.css";
 import './admin.css';
 function AddTeacher()
 {
-    const nevigate=useNavigate();
+    const navigate=useNavigate();
     const [teacherId,setTeacherId]=useState("");
     const token=localStorage.getItem("token");
     const [loding,setloding]=useState(false);
@@ -131,32 +131,33 @@ function AddTeacher()
         }
         else{
             setloding(true);
-            fetch("https://sangolacollage.onrender.com/api/admin/add-teacher",{
-            method:"POST",
-            headers:{
-                    "Content-Type":"application/json",
-                    Authorization: `Bearer ${token}`
-                },
-            body:JSON.stringify({
-                personaldetails:{
-                    name:FormData.Name,
-                    gender:FormData.Gender,
-                    dob:FormData.DOB,
-                },
-                professionaldetails:{
-                    department:FormData.Department,
-                    qualification:FormData.Qualification,
-                    exprience:FormData.Exprience,
-                    joiningdate:FormData.JoinDate,
-                },
-                contactdetails:{
-                    mobileno:FormData.MobileNo,
-                    emailid:FormData.EmailId,
-                    address:FormData.Address
-                },
-                password:FormData.Password
-            })
-           }).then(res=>res.json())
+            
+                fetch("https://sangolacollage.onrender.com/api/admin/add-teacher",{
+                method:"POST",
+                headers:{
+                        "Content-Type":"application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                body:JSON.stringify({
+                    personaldetails:{
+                        name:FormData.Name,
+                        gender:FormData.Gender,
+                        dob:FormData.DOB,
+                    },
+                    professionaldetails:{
+                        department:FormData.Department,
+                        qualification:FormData.Qualification,
+                        exprience:FormData.Exprience,
+                        joiningdate:FormData.JoinDate,
+                    },
+                    contactdetails:{
+                        mobileno:FormData.MobileNo,
+                        emailid:FormData.EmailId,
+                        address:FormData.Address
+                    },
+                    password:FormData.Password
+                })
+            }).then(res=>res.json())
            .then(data=>{
             if(data.message==="Teacher Add Sucessfully")
             {
@@ -171,8 +172,15 @@ function AddTeacher()
                 setshowform(false);
                 setshowpassword(false);
             }})
-
-            setloding(false);
+            .catch((err)=>{
+                if(err.response?.status === 401){
+                    localStorage.clear();
+                    navigate("/unauthorized");
+                    return;
+                }
+            })
+            .finally(()=>{setloding(false);})
+            
         }
     }
     return(
@@ -289,7 +297,7 @@ function AddTeacher()
                             <p><strong>Name:</strong> {FormData.Name}</p>
                             <p><strong>ID:</strong> {teacherId}</p>
                         </div>
-                        <button className="btn btn-primary w-100" onClick={() => nevigate("/admin")}>
+                        <button className="btn btn-primary w-100" onClick={() => navigate("/admin")}>
                             <i className="bi bi-box-arrow-right"></i> Go to Dashboard
                         </button>
                     </div>
@@ -342,7 +350,7 @@ function AddTeacher()
                             Try Again
                         </button>
 
-                    <button className="exit-btn" onClick={()=>{nevigate("/")}}>
+                    <button className="exit-btn" onClick={()=>{navigate("/")}}>
                         <i className="bi bi-door-open"></i>
                         Exit
                     </button>
