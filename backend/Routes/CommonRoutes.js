@@ -6,6 +6,7 @@ const {MentorCount,GetMentors}=require("../controllers/MentorControler");
 const {GetLectures} =require("../controllers/LectureControler");
 const {GetTeacher}=require("../controllers/TeacherControler");
 const {GetAttendanceByLectureId}=require("../controllers/AttendanceControler");
+const {StoreAttendances}=require("../controllers/AttendanceControler");
 
 
 router.get("/getlecture",GetLectures);
@@ -17,5 +18,5 @@ router.get("/students/count",StudentCounts);
 router.get("/get-attendance/:lectureid",GetAttendanceByLectureId);
 
 router.post("/add-student",StoreStudentDetails);
-
+router.post("/store-attendance",StoreAttendances);
 module.exports = router;

@@ -34,7 +34,7 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
         }
     };
     useEffect(() => {
-        if(!token) return;
+      
         fetchData();
       }, [lectureid,token]
     );
@@ -201,6 +201,7 @@ function AddAttendance() {
             rollno,
             status
         }))
+        setloding(true);
         fetch("https://sangolacollage.onrender.com/api/teacher/store-attendance",{
              method:"POST", 
                 headers:{
@@ -221,6 +222,7 @@ function AddAttendance() {
          setstep("summery");
         })
         .catch((err)=>{setmessage(err.message);setshowerror(true)})
+        setloding(false);
     }
 
     function searchstudent() 
@@ -231,17 +233,19 @@ function AddAttendance() {
             setshowerror("true");
         }
         else{
+            setloding(true);
             axios.get(`https://sangolacollage.onrender.com/api/mentor/serach-student/${selected.value}`,{
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json"
             }
-        })
+            })
             .then((resp) => {
             setstudentdata(resp.data);
             })
             .catch((err) => {setmessage(err.message);setshowerror(true)});
-            setstep("attendance")    
+            setstep("attendance");  
+            setloding(false);
         }
     }
     
@@ -276,8 +280,13 @@ function AddAttendance() {
                 <div className="row">
                     <div className="col-12 col-md-4">
                         <button className="search-btn" onClick={searchstudent}>
-                            <i className="bi bi-search"></i>
-                            <span>Search Student</span>
+                                <i className="bi bi-search"></i>
+                           <span> Search Student</span>
+                            {loding && (
+                                <div className="spinner-grow text-danger" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            )}
                         </button>
                     </div>
                 </div>
@@ -388,7 +397,14 @@ function AddAttendance() {
    
     <br />
     <button className="search-btn" onClick={storeattendance}>
-      Add Attendance
+        {loding && (
+            <div className="spinner-grow text-danger" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+        )}
+    
+            Add Attendance 
+            
     </button>
   </div>
 )}
