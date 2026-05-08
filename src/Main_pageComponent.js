@@ -3,6 +3,7 @@ import { useEffect,useState} from "react";
 import { Link } from "react-router-dom";
 import { PersonPlusFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom"; 
+import collagephoto from "./collageassets/collagephoto.jpeg";
 function StudentDashboardContent()
 {
   const[totalStudent,setTotalStudent]=useState(0);
@@ -44,7 +45,32 @@ function StudentDashboardContent()
         🔔 Result Soon: BSc ECS-II Sem 3
       </div>
     </div>
+    <div class="college-info-section">
 
+  <div class="college-card">
+    <div class="college-image">
+      <img src={collagephoto} alt="College Campus" />
+    </div>
+
+    <div class="college-content">
+      <span class="college-tag">EduMentor @SangolaCollege</span>
+
+      <h2>Welcome to Sangola College EduMentor Management System</h2>
+
+      <p>
+        A modern and secure platform designed to simplify student management,
+        attendance tracking, academic monitoring, and campus communication
+        for a smarter educational experience.
+      </p>
+
+      <div class="college-buttons">
+        <button>Explore Dashboard</button>
+        <button class="outline-btn">Learn More</button>
+      </div>
+    </div>
+  </div>
+
+</div>
     {/* NEW WRAPPER (important) */}
     <div className="dashboard-container">
 

@@ -576,3 +576,161 @@ margin-bottom:5px;
 position:relative;
 margin-bottom:25px;
 }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+
+
+.college-info-section{
+    width:100%;
+    padding:30px 20px;
+}
+
+.college-card{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:30px;
+
+    background:rgba(162, 32, 32, 0.08);
+    border:1px solid rgba(255, 255, 255, 0.1);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border-radius:28px;
+    overflow:hidden;
+
+    box-shadow:
+    0 10px 40px rgba(0,0,0,0.25);
+
+    transition:0.4s ease;
+}
+
+.college-card:hover{
+    transform:translateY(-5px);
+}
+
+.college-image{
+    flex:1;
+    min-width:320px;
+    height:350px;
+}
+
+.college-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.college-content{
+    flex:1;
+    padding:40px;
+    color:rgb(223, 177, 177);
+}
+
+.college-tag{
+    display:inline-block;
+    padding:8px 18px;
+    background:rgba(99,102,241,0.2);
+    border:1px solid rgba(99,102,241,0.4);
+    color:#0535f4;
+    border-radius:30px;
+    font-size:14px;
+    margin-bottom:20px;
+}
+
+.college-content h2{
+    font-size:42px;
+    line-height:1.2;
+    margin-bottom:20px;
+    font-weight:700;
+}
+
+.college-content p{
+    font-size:17px;
+    line-height:1.8;
+    color:#da3590;
+    margin-bottom:30px;
+}
+
+.college-buttons{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.college-buttons button{
+    padding:14px 28px;
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.college-buttons button:first-child{
+    background:#4d4fe7;
+    color:white;
+}
+
+.college-buttons button:first-child:hover{
+    background:#4f46e5;
+}
+
+.outline-btn{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.2) !important;
+    color:rgb(232, 187, 187);
+}
+
+.outline-btn:hover{
+    background:rgba(255,255,255,0.08);
+}
+
+
+
+@media(max-width:992px){
+
+    .college-card{
+        flex-direction:column;
+    }
+
+    .college-image{
+        width:100%;
+        min-width:100%;
+        height:260px;
+    }
+
+    .college-content{
+        padding:30px 22px;
+    }
+
+    .college-content h2{
+        font-size:32px;
+    }
+
+    .college-content p{
+        font-size:15px;
+    }
+}
+
+@media(max-width:576px){
+
+    .college-info-section{
+        padding:15px;
+    }
+
+    .college-content h2{
+        font-size:26px;
+    }
+
+    .college-buttons button{
+        width:100%;
+    }
+}
