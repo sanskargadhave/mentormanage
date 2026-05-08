@@ -202,7 +202,7 @@ function AddAttendance() {
             status
         }))
         setloding(true);
-        fetch("https://sangolacollage.onrender.com/api/teacher/store-attendance",{
+        fetch("https://sangolacollage.onrender.com/api/common/store-attendance",{
              method:"POST", 
                 headers:{
                     "Content-Type":"application/json",
