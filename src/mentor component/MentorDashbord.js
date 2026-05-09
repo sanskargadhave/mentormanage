@@ -92,7 +92,7 @@ function MentorDashboardContent() {
   async function giveapprove(studentid)
   {
     try{
-      const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-approve/${studentid}`,{
+      const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-approve/${studentid}`,{},{
              headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json"
@@ -113,7 +113,7 @@ function MentorDashboardContent() {
   async function givereject(studentid)
   {
     try{
-      const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-reject/${studentid}`,{
+      const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-reject/${studentid}`,{},{
              headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json"

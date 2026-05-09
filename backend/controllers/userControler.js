@@ -13,7 +13,7 @@ const userlogin = async (req, resp) => {
     }
     if (!user.active) 
     {
-      return resp.status(403).json({ message: "Oops! You have been banned"});
+      return resp.status(403).json({ message: "Oops! You Are Not Approved"});
     }
 
    

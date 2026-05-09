@@ -105,29 +105,41 @@ function StudentDashboardContent()
       </div>
       <div className="registration-card">
         <div className="blur-circle"></div>
-          <div className="row align-items-center">
-            <div className="col-12 col-lg-8 mb-4 mb-lg-0">
-              <div className="d-flex align-items-center gap-3 mb-3">
-                <div className="registration-icon">
-                  <i className="bi bi-person-plus-fill"></i>
-                </div>
-                <div>
-                  <h3 className="registration-title">
-                    Student Registration
-                  </h3>
-
-                  <span className="registration-badge">
-                   Mentor Verifiacation
-                  </span>
-                </div>
+        <div className="row align-items-center">
+          <div className="col-12 col-lg-8 mb-4 mb-lg-0">
+            <div className="d-flex align-items-center gap-3 mb-3">
+              <div className="registration-icon">
+                <i className="bi bi-person-plus-fill"></i>
               </div>
+              <div>
+                <h3 className="registration-title">
+                  Student Registration
+                </h3>
 
-              <p className="registration-description">
-                Students who have not completed their registration can now
-                submit their details using the official registration form.
-                Please ensure all information is correct before final
-                submission.
-              </p>
+                <span className="registration-badge">
+                  Mentor Verifiacation
+                </span>
+              </div>
+            </div>
+
+            <p className="registration-description">
+              Students who have not completed their registration can now
+              submit their details using the official registration form.
+              Please ensure all information is correct before final
+              submission.
+            </p>
+            <div className="registration-link-box">
+              <span className="registration-link-label">
+                <i className="bi bi-link-45deg me-2"></i>
+                Registration Link
+              </span>
+
+              <div className="registration-link-wrapper">
+                <a href="/register-student" className="registration-link" target="_blank" rel="noopener noreferrer">
+                  https://sangolacollagesangola.vercel.app/register-student
+                </a>
+              </div>
+            </div>
             </div>
             <div className="col-12 col-lg-4 text-lg-end">
               <button className="registration-btn" onClick={()=>{navigate("/register-student")}}>

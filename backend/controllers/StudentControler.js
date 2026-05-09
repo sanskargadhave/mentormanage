@@ -303,6 +303,7 @@ const giveReject = async (req,resp)=>{
       }
 }
 
+
 module.exports={GetStudentDetailsByRoll,
                 SearchStudent,StudentCounts,
                 StoreStudentDetails,GetStudent,
