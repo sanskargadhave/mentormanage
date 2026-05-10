@@ -9,7 +9,7 @@ const StoreStudentDetails=async (req, res) => {
   try {
     const { aadharno } = req.body.personaldetails;
     const { rollno,mentorId } = req.body.collagedetails;
-    const {emailid} = req.body;
+    const {emailid,imageurl} = req.body;
     const aadharnoexist = await StoreStudent.findOne({"personaldetails.aadharno": aadharno});
     const rollnoexist = await StoreStudent.findOne({ "collagedetails.rollno": rollno });
     const emailidexist= await StoreStudent.findOne({"emailid":emailid});
@@ -41,6 +41,7 @@ const StoreStudentDetails=async (req, res) => {
       userid: student.studentid,
       password: req.body.password,
       emailid: req.body.emailid,
+      profileurl:imageurl,
       role: "Student",
       active: true
     });

@@ -1,4 +1,5 @@
 import { useState,useContext,useEffect} from "react";
+import { supabase}  from "../supabase";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../Authintication';
 import Select from 'react-select';
@@ -8,6 +9,8 @@ import axios from "axios";
 
 function AddStudent()
 {
+    const [profile,setProfile]=useState(null);
+    const [preview,setPreview]=useState("");
     const {role,token}=useContext(AuthContext);
     const nevigate=useNavigate();
     const [loding,setloding]=useState(false);
@@ -88,7 +91,26 @@ function AddStudent()
         Password:"",
         RePassword:""
     });
+    const uploadImage = async () => {
 
+       
+        if(!profile){ return ""}
+        const filename = `${Date.now()}-${FormData.RollNo}`;
+
+        const { error } = await supabase.storage
+            .from("Profile Picture")
+            .upload(filename, profile);
+
+        if(error){
+            console.log(error);
+            return "";
+        }
+
+        const { data } = supabase.storage
+            .from("Profile Picture")
+            .getPublicUrl(filename);
+            return data.publicUrl;
+    }
     function handleChange(e) {
 
         const isEmpty= (v) => v.trim() === "";
@@ -198,7 +220,7 @@ function AddStudent()
         setErrors({ ...errors, [name]: error});
     }
 
-    function submitdata()
+    async function submitdata()
     {
 
         const isFormValid = Object.values(errors).every((msg)=>msg === "");
@@ -211,7 +233,7 @@ function AddStudent()
         }
 
         setloding(true);
-
+        const imageUrl = await uploadImage();
         fetch("https://sangolacollage.onrender.com/api/common/add-student",{
 
             method:"POST",
@@ -251,7 +273,8 @@ function AddStudent()
                     mentorId:selected.mentorId
                 },
                 password:FormData.RePassword,
-                emailid:FormData.EmailId
+                emailid:FormData.EmailId,
+                imageurl:imageUrl
             })
 
         })
@@ -501,22 +524,52 @@ function AddStudent()
                     </div>
                 </div>
                 <div className="row">
+                    <div className="col-12 col-md-6 mb-3">
+                        <div className="profile-upload-card">
+                            <div className="profile-preview-wrapper">
+      
+                                {
+                                    preview ? (
+                                        <img src={preview} alt="profile" className="profile-preview"/>
+                                    ) : 
+                                    (
+                                        <div className="profile-placeholder">
+                                            <i className="bi bi-person-fill"></i>
+                                        </div>
+                                    )
+                                }
+                                <label className="upload-btn">
+                                    <i className="bi bi-camera-fill"></i>
+
+                                    <input type="file" accept="image/*" hidden onChange={(e)=>{ const file = e.target.files[0]; setProfile(file);
+                                        if(file){
+                                            setPreview(URL.createObjectURL(file));
+                                        }
+                                        }}
+                                    />
+                                </label>
+                            </div>
+                            <div className="upload-content">
+                                <h5>Upload  Profile Picture</h5>
+                                <p>Choose a clear profile picture </p>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                <div className="row">
                     <div className="col-md-12 mb-3 d-flex justify-content-center">
                         {loding ? (
                                 <div class="spinner-border" role="status">
                                     <span class="visually-hidden">Loading...</span>
                                 </div>  
                             ):(
-                        <button className="btn btn-primary" type="button" onClick={isAllvalid}><i className="bi bi-file-plus-fill "></i>  Add Student</button>
+                        <button className="btn btn-primary" type="button" onClick={isAllvalid}><i className="bi bi-file-plus-fill "></i>  Register</button>
                         )}
                     </div>
                 </div>
                 <br/><br/>
             </div>
-
-
     )}
-
     { showconfirm && (
 
         <div className="add-student-form animate__animated animate__slow animate__fadeInDown ">

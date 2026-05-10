@@ -4,6 +4,7 @@ const adduser=new  mongoose.Schema({
     password:{type:String,default:null},
     emailid:{type:String},  
     role:{type:String,required:true,enum:["Mentor","Admin","Student","Teacher"]},
-    active: {type: Boolean,default: true}
+    active: {type: Boolean,default: true},
+    profileurl:{type:String}
 });
 module.exports=mongoose.model("Users",adduser,"UserDetails");
