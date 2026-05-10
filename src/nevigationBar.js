@@ -7,7 +7,7 @@ import "./Nevigation_Bar.css";
 
 function NevigationBar() {
 
-    const {role,email,id,name}=useContext(AuthContext);
+    const {role,email,id,name,profilepic}=useContext(AuthContext);
     const nevigate=useNavigate();
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top mentor-navbar">
@@ -60,13 +60,13 @@ function NevigationBar() {
               (
                 <li className="nav-item profile-hover">
                   <div className="profile-trigger d-flex align-items-center">
-                    <i className="bi bi-person-circle profile-icon"></i>
+                        <img src={ profilepic || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"} alt="profile" className="big-profile-img" />
                       <span className="ms-1">Profile</span>
                   </div>
 
                   <div className="profile-menu">
                     <div className="profile-header">
-                      <i className="bi bi-person-circle big-icon"></i>
+                      <img src={profilepic || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"} alt="profile" className="navbar-profile-img"/>
                       <h6 className="mb-2">Prof. {name}</h6>
                       <hr/>
                       <small className="text-muted">Role: {role}</small>

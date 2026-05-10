@@ -7,6 +7,7 @@ export const AuthContext = createContext({
   email: null,
   role: "Guest",
   token:null,
+  profilepic:null,
   login: () => {},
   logout: () => {}
 });
@@ -17,6 +18,7 @@ export function AuthProvider({ children }) {
   const [email, setemail] = useState(() => localStorage.getItem("email"));
   const [role, setrole] = useState(() => localStorage.getItem("role") || "Guest");
   const [token,settoken]=useState(()=>localStorage.getItem("token"));
+  const [profilepic,setprofilepic]=useState(()=>localStorage.getItem("profilepic"));
   useEffect(() => {
     if (id && role && role !== "Guest") {
 
@@ -43,12 +45,13 @@ export function AuthProvider({ children }) {
     setemail(userdata.email);
     setrole(userdata.role);
     settoken(userdata.token);
+    setprofilepic(userdata.profileurl)
     localStorage.setItem("id", userdata.id);
     localStorage.setItem("name", userdata.name);
     localStorage.setItem("email", userdata.email);
     localStorage.setItem("role", userdata.role);
     localStorage.setItem("token",userdata.token);
-
+    localStorage.setItem("profilepic",userdata.profileurl)
     socket.emit("join_room",{
       userid: userdata.id,
       role: userdata.role
@@ -62,12 +65,13 @@ export function AuthProvider({ children }) {
     setemail(null);
     setrole("Guest");
     settoken(null);
+    setprofilepic(null);
     localStorage.clear();
     socket.disconnect();
   }
 
   return (
-    <AuthContext.Provider value={{ id,name,email,role,token,login, logout }}>
+    <AuthContext.Provider value={{ id,name,email,role,token,profilepic,login, logout }}>
       {children}
     </AuthContext.Provider>
   );

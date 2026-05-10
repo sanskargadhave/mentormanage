@@ -98,16 +98,17 @@ function AddStudent()
         const filename = `${Date.now()}-${FormData.RollNo}`;
 
         const { error } = await supabase.storage
-            .from("Profile Picture")
+            .from("test-reports")
             .upload(filename, profile);
 
         if(error){
             console.log(error);
+            console.log(error.message);
             return "";
         }
 
         const { data } = supabase.storage
-            .from("Profile Picture")
+            .from("test-reports ")
             .getPublicUrl(filename);
             return data.publicUrl;
     }

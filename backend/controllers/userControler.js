@@ -34,7 +34,8 @@ const userlogin = async (req, resp) => {
     const safeUser = {
       id: user.userid,
       emailid: user.emailid,
-      role: user.role
+      role: user.role,
+      profileurl:user.profileurl
     };
 
     resp.status(200).json({ message: `Login Success Welcome ${user.role}`, token: token, islogin: true, user: safeUser });

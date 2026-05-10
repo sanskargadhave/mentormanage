@@ -41,7 +41,8 @@ function Login() {
                     role: data.user.role,
                     email: data.user.emailid,
                     name: "Sanskar Gadhave",
-                    token: data.token 
+                    token: data.token,
+                    profilepic:data.profileurl
                 }); 
                 const role=data.user.role;
                 if(role==="Admin")
