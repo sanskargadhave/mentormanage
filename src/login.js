@@ -42,7 +42,7 @@ function Login() {
                     email: data.user.emailid,
                     name: "Sanskar Gadhave",
                     token: data.token,
-                    profilepic:data.profileurl
+                    profilepic:data.user.profileurl
                 }); 
                 const role=data.user.role;
                 if(role==="Admin")

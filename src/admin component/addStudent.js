@@ -95,7 +95,7 @@ function AddStudent()
 
        
         if(!profile){ return ""}
-        const filename = `${Date.now()}-${FormData.RollNo}`;
+        const filename = `${Date.now()}-${FormData.RollNo}-${profile.Name}`;
 
         const { error } = await supabase.storage
             .from("test-reports")
@@ -108,7 +108,7 @@ function AddStudent()
         }
 
         const { data } = supabase.storage
-            .from("test-reports ")
+            .from("test-reports")
             .getPublicUrl(filename);
             return data.publicUrl;
     }

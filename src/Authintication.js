@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
     socket.on("connect", handleConnect);
 
     return () => {
-      socket.off("connect", handleConnect); // 🔥 cleanup
+      socket.off("connect", handleConnect);   
     };
   }
   }, [id, role]);
@@ -51,7 +51,8 @@ export function AuthProvider({ children }) {
     localStorage.setItem("email", userdata.email);
     localStorage.setItem("role", userdata.role);
     localStorage.setItem("token",userdata.token);
-    localStorage.setItem("profilepic",userdata.profileurl)
+    localStorage.setItem("profilepic",userdata.profileurl);
+    console.log(userdata.profileurl);
     socket.emit("join_room",{
       userid: userdata.id,
       role: userdata.role
