@@ -60,7 +60,7 @@ function NevigationBar() {
               (
                 <li className="nav-item profile-hover">
                   <div className="profile-trigger d-flex align-items-center">
-                        <img src={ profilepic || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"} alt="profile" className="big-profile-img" />
+                        <img src={ profilepic || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"} alt="profile" className="navbar-profile-img" />
                       <span className="ms-1">Profile</span>
                   </div>
 

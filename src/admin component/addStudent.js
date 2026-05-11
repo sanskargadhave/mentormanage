@@ -1,6 +1,6 @@
 import { useState,useContext,useEffect} from "react";
 import { supabase}  from "../supabase";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { AuthContext } from '../Authintication';
 import Select from 'react-select';
 import './admin.css';
@@ -95,10 +95,10 @@ function AddStudent()
 
        
         if(!profile){ return ""}
-        const filename = `${Date.now()}-${FormData.RollNo}-${profile.Name}`;
+        const filename = `${Date.now()}-${FormData.RollNo}-${FormData.Name}`;
 
         const { error } = await supabase.storage
-            .from("test-reports")
+            .from("Profile Picture")
             .upload(filename, profile);
 
         if(error){
@@ -108,7 +108,7 @@ function AddStudent()
         }
 
         const { data } = supabase.storage
-            .from("test-reports")
+            .from("Profile Picture")
             .getPublicUrl(filename);
             return data.publicUrl;
     }

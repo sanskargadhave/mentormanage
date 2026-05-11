@@ -45,14 +45,14 @@ export function AuthProvider({ children }) {
     setemail(userdata.email);
     setrole(userdata.role);
     settoken(userdata.token);
-    setprofilepic(userdata.profileurl)
+    setprofilepic(userdata.profilepic)
     localStorage.setItem("id", userdata.id);
     localStorage.setItem("name", userdata.name);
     localStorage.setItem("email", userdata.email);
     localStorage.setItem("role", userdata.role);
     localStorage.setItem("token",userdata.token);
-    localStorage.setItem("profilepic",userdata.profileurl);
-    console.log(userdata.profileurl);
+    localStorage.setItem("profilepic",userdata.profilepic);
+    console.log(userdata.profilepic);
     socket.emit("join_room",{
       userid: userdata.id,
       role: userdata.role

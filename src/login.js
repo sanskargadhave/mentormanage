@@ -44,6 +44,7 @@ function Login() {
                     token: data.token,
                     profilepic:data.user.profileurl
                 }); 
+                
                 const role=data.user.role;
                 if(role==="Admin")
                 {
