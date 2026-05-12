@@ -7,33 +7,21 @@ import collagephoto from "./collageassets/collagephoto.jpeg";
 function StudentDashboardContent()
 {
   const[totalStudent,setTotalStudent]=useState(0);
+  const[totalMentor,setTotalMentor]=useState(0);
   const navigate =useNavigate();
   const token=localStorage.getItem("token");
   useEffect(()=>{
     
-    fetch("https://sangolacollage.onrender.com/api/common/students/count",{
+    fetch("https://sangolacollage.onrender.com/api/common/User-Counts",{
              headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json"
             }
         })
     .then(res=>res.json())
-    .then(data=>setTotalStudent(data.count))
+    .then(data=>{setTotalStudent(data.totalStudents);setTotalMentor(data.totalMentor)})
   },[token]);
 
-  const[totalMentor,setTotalMentor]=useState(0);
-
-  useEffect(()=>{
-    
-    fetch("https://sangolacollage.onrender.com/api/common/Mentor/count",{
-             headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        })
-    .then(res=>res.json())
-    .then(data=>setTotalMentor(data.count))
-  },[token]);
 
   return (
   <div className="container" style={{marginTop:"100px"}}>

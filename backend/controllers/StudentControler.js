@@ -43,7 +43,7 @@ const StoreStudentDetails=async (req, res) => {
       emailid: req.body.emailid,
       profileurl:imageurl,
       role: "Student",
-      active: true
+      active: false
     });
 
 
