@@ -1,27 +1,15 @@
 import "./Main_pageComponent.css";
-import { useEffect,useState} from "react";
+import { useEffect,useState,useContext} from "react";
 import { Link } from "react-router-dom";
 import { PersonPlusFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom"; 
 import collagephoto from "./collageassets/collagephoto.jpeg";
+import { DashbordContext } from "./DashbordAuthContext";
 function StudentDashboardContent()
 {
-  const[totalStudent,setTotalStudent]=useState(0);
-  const[totalMentor,setTotalMentor]=useState(0);
+ 
+  const {totalStudent,totalMentor}=useContext(DashbordContext);
   const navigate =useNavigate();
-  const token=localStorage.getItem("token");
-  useEffect(()=>{
-    
-    fetch("https://sangolacollage.onrender.com/api/common/User-Counts",{
-             headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        })
-    .then(res=>res.json())
-    .then(data=>{setTotalStudent(data.totalStudents);setTotalMentor(data.totalMentor)})
-  },[token]);
-
 
   return (
   <div className="container" style={{marginTop:"100px"}}>
