@@ -23,7 +23,7 @@
   import {AddTestResult} from "./mentor component/addTestResult.js";
   import AddAdmissionDetails from "./admin component/addAdmissionDetails.js"
   import ProtectedRoute from "./protectedRoute.js"; 
-
+  import LeaveApplication from "./student comonent/leaveApplication.js";
   function App() {
     return (
       <Routes>
@@ -76,12 +76,19 @@
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["Teacher"]}/>}>
             <Route path="/teacher" element={<SidebarLayout/>}>
-            
+
             
             
             
             </Route>
           
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["Student"]}/>}>
+            <Route path="/student" element={<SidebarLayout/>}>
+              <Route path="leave-application-to-mentor" element={<LeaveApplication/>}/>
+            
+            
+            </Route>
           </Route>
         </Route>
       </Routes>

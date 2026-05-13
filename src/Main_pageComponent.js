@@ -126,6 +126,35 @@ function StudentDashboardContent()
           </div>
         </div>
       </div>
+      <div className="leave-banner-card">
+        <div className="leave-banner-overlay"></div>
+
+          <div className="leave-banner-content">
+    
+            
+
+            <div className="leave-text-section">
+              <span className="leave-tag">
+                Student Excuse Department
+              </span>
+
+              <h2>
+                “Not feeling well...  
+                but feeling strong enough to submit leave online 😌”
+              </h2>
+
+              <p>
+                Whether it’s fever, function, festival, or just needing a break from
+                assignments — submit your leave request directly to your mentor in
+                seconds.
+              </p>
+
+              <button className="leave-apply-btn" onClick={() => navigate("/student/leave-application-to-mentor")}>
+                📄 Apply For Leave
+              </button>
+            </div>
+          </div>
+        </div>
     </div> 
   );
 }
