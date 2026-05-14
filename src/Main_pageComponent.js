@@ -5,10 +5,12 @@ import { PersonPlusFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom"; 
 import collagephoto from "./collageassets/collagephoto.jpeg";
 import { DashbordContext } from "./DashbordAuthContext";
+import { AuthContext } from "./Authintication";
 function StudentDashboardContent()
 {
  
   const {totalStudent,totalMentor}=useContext(DashbordContext);
+  const {role}=useContext(AuthContext);
   const navigate =useNavigate();
 
   return (
@@ -126,14 +128,12 @@ function StudentDashboardContent()
           </div>
         </div>
       </div>
+      {role ==="Student" && (
       <div className="leave-banner-card">
         <div className="leave-banner-overlay"></div>
 
           <div className="leave-banner-content">
-    
-            
-
-            <div className="leave-text-section">
+                <div className="leave-text-section">
               <span className="leave-tag">
                 Student Excuse Department
               </span>
@@ -154,7 +154,7 @@ function StudentDashboardContent()
               </button>
             </div>
           </div>
-        </div>
+        </div>)}
     </div> 
   );
 }

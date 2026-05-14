@@ -304,10 +304,28 @@ const giveReject = async (req,resp)=>{
       }
 }
 
+const getMentordetails=async (req,resp)=>{
+  try{
+      const {studentid}=req.params;
+      
+      const MentorDetails=await StoreStudent.findOne({studentid:studentid}).populate("collagedetails.mentor");
+      if(!MentorDetails)
+      {
+        return resp.status(404).json({message:"Student Not Found"});
+      }
+      resp.status(200).json({MentorDetails:MentorDetails});
+  }
+  catch(err){
+      resp.status(500).json({message:err.message});
+
+  }
+}
+
+
 
 module.exports={GetStudentDetailsByRoll,
                 SearchStudent,StudentCounts,
                 StoreStudentDetails,GetStudent,
-                giveApprove,giveReject
+                giveApprove,giveReject,getMentordetails
               
               };

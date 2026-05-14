@@ -1,10 +1,22 @@
-import { useState } from "react";
+import { useState,useEffect,useContext} from "react";
 import "./student.css";
 
+import axios from "axios";
+import { AuthContext } from '../Authintication';
 function LeaveApplication() {
-
+  const {id,token}=useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState(null);
-
+  const [MentorDetails,setMentorDetails]=useState(null);
+  useEffect(()=>{
+    axios.get(`https://sangolacollage.onrender.com/api/student/get-mentordetails/${id}`,{
+                headers: {
+                  Authorization: `Bearer ${token}`, 
+                  "Content-Type": "application/json"
+                }
+              })
+              .then((resp)=>{setMentorDetails(resp.data.MentorDetails)})
+              .catch((err)=>alert(err.message))
+  },[token,id])
   function handleFileChange(e) {
     const file = e.target.files[0];
 
@@ -43,7 +55,7 @@ function LeaveApplication() {
             </p>
           </div>
           <span className="pending-status">
-            Pending Review
+            {MentorDetails.personaldetails.name}
           </span>
         </div>
         <form className="leave-form-grid">
@@ -89,10 +101,9 @@ function LeaveApplication() {
               <p>
                 JPG, PNG or PDF files supported
               </p>
-              <label className="custom-upload-btn">
-                Choose File
-                <input type="file" onChange={handleFileChange} hidden />
-              </label>
+              
+
+              <input type="file" onChange={handleFileChange} />
               {
                 selectedFile && (
                   <div className="selected-file">
