@@ -304,23 +304,34 @@ const giveReject = async (req,resp)=>{
       }
 }
 
-const getMentordetails=async (req,resp)=>{
-  try{
-      const {studentid}=req.params;
-      
-      const MentorDetails=await StoreStudent.findOne({studentid:studentid}).populate("collagedetails.mentor");
-      if(!MentorDetails)
-      {
-        return resp.status(404).json({message:"Student Not Found"});
-      }
-      resp.status(200).json({MentorDetails:MentorDetails});
-  }
-  catch(err){
-      resp.status(500).json({message:err.message});
+const getMentordetails = async (req, resp) => {
+  try {
+
+    const { studentid } = req.params;
+
+    const StudentDetails = await StoreStudent
+      .findOne({ studentid: studentid })
+      .populate("collagedetails.mentor");
+
+    if (!StudentDetails) {
+      return resp.status(404).json({
+        message: "Record Not Found"
+      });
+    }
+
+    resp.status(200).json({
+      StudentDetails,
+      MentorDetails: StudentDetails.collagedetails.mentor
+    });
+
+  } catch (err) {
+
+    resp.status(500).json({
+      message: err.message
+    });
 
   }
-}
-
+};
 
 
 module.exports={GetStudentDetailsByRoll,

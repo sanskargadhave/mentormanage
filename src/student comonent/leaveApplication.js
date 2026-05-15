@@ -7,6 +7,7 @@ function LeaveApplication() {
   const {id,token}=useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState(null);
   const [MentorDetails,setMentorDetails]=useState(null);
+  const [studentDetails,setStudentDetails]=useState(null);
   useEffect(()=>{
     axios.get(`https://sangolacollage.onrender.com/api/student/get-mentordetails/${id}`,{
                 headers: {
@@ -14,7 +15,7 @@ function LeaveApplication() {
                   "Content-Type": "application/json"
                 }
               })
-              .then((resp)=>{setMentorDetails(resp.data.MentorDetails)})
+              .then((resp)=>{setMentorDetails(resp.data.MentorDetails);setStudentDetails(resp.data.StudentDetails)})
               .catch((err)=>alert(err.message))
   },[token,id])
   function handleFileChange(e) {
@@ -51,12 +52,9 @@ function LeaveApplication() {
           <div>
             <h2>Leave Application Form</h2>
             <p className="small-text">
-              Fill all required details carefully
+              To Your Mentor <b>Prof. {MentorDetails?.personaldetails?.name}</b>
             </p>
           </div>
-          <span className="pending-status">
-            {MentorDetails.personaldetails.name}
-          </span>
         </div>
         <form className="leave-form-grid">
           <div className="input-box">
