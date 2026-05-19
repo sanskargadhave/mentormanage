@@ -55,9 +55,6 @@ function LeaveApplication() {
   async function sendApplication()
   {
     try{
-      
-      
-
       const data = {
         leaveType,
         fromDate,
@@ -66,7 +63,7 @@ function LeaveApplication() {
         senderId: studentDetails._id,
         receiver_Id: MentorDetails._id,
         receiverid: MentorDetails.mentorId,
-        message: `${studentDetails?.personaldetails?.name} has Request For Leave`,
+        message: `${studentDetails?.personaldetails?.name} has Requested For Leave`,
         certificateUrl: ""
       };
 
