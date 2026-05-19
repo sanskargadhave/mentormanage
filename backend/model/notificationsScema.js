@@ -14,4 +14,4 @@ const NotificationSchema = new mongoose.Schema({
 
 NotificationSchema.index({receiverId:1});
 
-module.exports = mongoose.model("Notification",NotificationSchema,"NotificationDetails");
+module.exports = mongoose.model("Notification",NotificationSchema,"NotificationDetails"); 

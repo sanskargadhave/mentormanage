@@ -247,6 +247,28 @@
 
   transition: 0.3s;
 }
+.leave-student-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 22px;
+  background:#f8fafc;
+  border-radius:14px;
+  border:1px solid #e2e8f0;
+  margin-bottom:20px;
+}
+
+.leave-student-header h2{
+  margin:0;
+  font-size:24px;
+  color:#0f172a;
+}
+
+.leave-student-header p{
+  margin-top:5px;
+  color:#64748b;
+  font-size:15px;
+}
 
 .custom-upload-btn:hover {
   transform: translateY(-2px);

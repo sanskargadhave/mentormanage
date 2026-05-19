@@ -1,6 +1,6 @@
 import { useState,useEffect,useContext} from "react";
 import "./student.css";
-
+import { supabase}  from "../supabase";
 import axios from "axios";
 import { AuthContext } from '../Authintication';
 function LeaveApplication() {
@@ -8,6 +8,12 @@ function LeaveApplication() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [MentorDetails,setMentorDetails]=useState(null);
   const [studentDetails,setStudentDetails]=useState(null);
+  const [leaveType,setLeaveType]=useState("");
+  const [fromDate,setFromDate]=useState("");
+  const [toDate,setToDate]=useState("");
+  const [reason,setReason]=useState("");
+
+
   useEffect(()=>{
     axios.get(`https://sangolacollage.onrender.com/api/student/get-mentordetails/${id}`,{
                 headers: {
@@ -25,7 +31,68 @@ function LeaveApplication() {
       setSelectedFile(file);
     }
   }
+  const uploadImage = async () => {
+  
+         
+          if(!selectedFile){ return ""}
+          const filename = `${Date.now()}-${studentDetails?.collagedetails?.rollno}-${studentDetails?.personaldetails?.name}`;
+  
+          const { error } = await supabase.storage
+              .from("medical_certificate")
+              .upload(filename, selectedFile);
+  
+          if(error){
+              console.log(error);
+              console.log(error.message);
+              return "";
+          }
+  
+          const { data } = supabase.storage
+              .from("medical_certificate")
+              .getPublicUrl(filename);
+              return data.publicUrl;
+      }
+  async function sendApplication()
+  {
+    try{
+      
+      
 
+      const data = {
+        leaveType,
+        fromDate,
+        toDate,
+        reason,
+        senderId: studentDetails._id,
+        receiver_Id: MentorDetails._id,
+        receiverid: MentorDetails.mentorId,
+        message: `${studentDetails?.personaldetails?.name} has Request For Leave`,
+        certificateUrl: ""
+      };
+
+      if(selectedFile){
+        
+        const imageUrl = await uploadImage();
+        data.certificateUrl = imageUrl;
+        
+      }
+      
+      const resp = await axios.post("https://sangolacollage.onrender.com/api/student/send-application",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      alert(resp.data.message);
+    }
+    catch(err)
+    {
+      alert(err.response?.data?.message||err.message);
+    } 
+  }
   return (
     <div className="leave-form-wrapper">
       <div className="leave-top-banner">
@@ -57,22 +124,19 @@ function LeaveApplication() {
           </div>
         </div>
         <form className="leave-form-grid">
-          <div className="input-box">
-            <input type="text" placeholder="Enter full name" />
+          <div className="leave-student-header">
+            <div>
+              <h2>
+                Name: {studentDetails?.personaldetails?.name}
+              </h2>
+              <p>
+                Roll No :{studentDetails?.collagedetails?.rollno}
+              </p>
+            </div>
           </div>
           <div className="input-box">
-            <input type="text" placeholder="Enter roll number" />
-          </div>
-          <div className="input-box">
-            <select>
-              <option>Select Department</option>
-              <option>Science</option>
-              <option>Computer Science</option>
-              <option>Commerce</option>
-            </select>
-          </div>
-          <div className="input-box">
-            <select>
+            Select Type Of Leave
+            <select onChange={(e)=>{setLeaveType(e.target.value)}}>
               <option>Select Type</option>
               <option>Medical Leave</option>
               <option>Emergency Leave</option>
@@ -80,13 +144,15 @@ function LeaveApplication() {
             </select>
           </div>
           <div className="input-box">  
-            <input type="date" placeholder="From Date"/>
+            From --
+            <input type="date" placeholder="From Date" onChange={(e)=>{setFromDate(e.target.value)}}/>
           </div>
           <div className="input-box">
-            <input type="date" placeholder="To Date"/>
+            To -- 
+            <input type="date" placeholder="To Date" onChange={(e)=>{setToDate(e.target.value)}}/>
           </div>
           <div className="input-box full-width">
-            <textarea rows="5" placeholder="Write detailed reason for leave..." ></textarea>
+            <textarea rows="5" placeholder="Write detailed reason for leave..." onChange={(e)=>{setReason(e.target.value)}} ></textarea>
           </div>
           <div className="input-box full-width">
             <div className="upload-area">
@@ -115,7 +181,7 @@ function LeaveApplication() {
             <button type="button" className="cancel-btn">
               Cancel
             </button>
-            <button type="submit" className="submit-btn">
+            <button type="button" className="submit-btn" onClick={sendApplication}>
               Submit Application
             </button>
           </div>

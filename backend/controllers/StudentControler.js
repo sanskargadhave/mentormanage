@@ -333,10 +333,48 @@ const getMentordetails = async (req, resp) => {
   }
 };
 
+const sendApplication = async (req, resp) => {
+  try {
+    const io = getIO();
+    const {leaveType,fromDate,toDate,reason,senderId,receiver_Id,
+      receiverid,receiverRole,type,message,certificateUrl}=req.body;
+    const totalDays =
+      Math.ceil((new Date(toDate) - new Date(fromDate)) / (1000 * 60 * 60 * 24) ) + 1;
 
+    const notificationData = {
+      senderId:senderId,
+      receiver_Id:receiver_Id,
+      receiverid:receiverid,
+      receiverRole:"Mentor",
+      type:"Leave_application",
+      message:message,
+      data: {
+        leaveType:leaveType,
+        fromDate:fromDate,
+        toDate:toDate,
+        reason:reason,
+        certificateUrl:certificateUrl,
+        status:"Pending",
+        totalDays:totalDays
+      },
+    };
+
+    io.to("user_" +receiverid)
+      .emit("notification", notificationData);
+    resp.status(200).json({message:"Notification send"});
+
+  } catch (err) {
+    console.log(err.message);
+
+    resp.status(500).json({ 
+      message: err.message
+    });
+  }
+};
 module.exports={GetStudentDetailsByRoll,
                 SearchStudent,StudentCounts,
                 StoreStudentDetails,GetStudent,
-                giveApprove,giveReject,getMentordetails
+                giveApprove,giveReject,getMentordetails,
+                sendApplication
               
               };
