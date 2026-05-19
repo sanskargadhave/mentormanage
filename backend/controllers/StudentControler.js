@@ -358,9 +358,9 @@ const sendApplication = async (req, resp) => {
         totalDays:totalDays
       },
     };
-
+    const storedNotification=await NotificationSchema.create(notificationData)
     io.to("user_" +receiverid)
-      .emit("notification", notificationData);
+      .emit("notification", storedNotification);
     resp.status(200).json({message:"Notification send"});
 
   } catch (err) {
