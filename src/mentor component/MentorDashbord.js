@@ -188,8 +188,54 @@ function MentorDashboardContent() {
 
   return (
     <div className="admin-content">
-      
+      <div className="mentor-dashboard-hero">
 
+        <div>
+
+          <h1>Mentor Control Panel</h1>
+
+          <p>
+            Manage student verifications,
+            leave approvals and attendance reports.
+          </p>
+
+        </div>
+
+      </div>
+      <div className="live-status">
+        <span className="live-dot"></span>
+        Live Notification System Active
+      </div>
+      <div className="mentor-stats-grid">
+
+        <div className="mentor-stat-card">
+          <h3>{notifications.length}</h3>
+          <p>Total Notifications</p>
+        </div>
+
+        <div className="mentor-stat-card">
+          <h3>
+            {
+              notifications.filter(
+                (item)=>item.type==="student_added"
+              ).length
+            }
+          </h3>
+          <p>Student Requests</p>
+        </div>
+
+        < div className="mentor-stat-card">
+          <h3>
+            {
+              notifications.filter(
+                (item)=>item.type==="Leave_application"
+              ).length
+            }
+          </h3>
+          <p>Leave Requests</p>
+        </div>
+
+      </div>
       <h5 className="panel-title">
 
         <div className="title-left">
@@ -234,50 +280,173 @@ function MentorDashboardContent() {
       ) 
        :(
         <div className="notifications-list">
-          
-          {notifications.map((notif) => (
-            <div key={notif._id} className={`notification-card ${!notif.read ? "unread" : ""}`}>
-              <div className="notification-header">
-                <span className="notification-type">New Student Registered Verify </span>
-                <span className="notification-time">
-                  {new Date(notif.createdAt).toLocaleString()}
-                </span>
-              </div>
-              <div className="notification-message"><span className="badge rounded-pill bg-success">{notif.message}</span></div>
-              <div className="notification-details">
-                <h6><strong>Name:</strong> {notif.data.name}</h6>
-                <h6><strong>Department:</strong> {notif.data.department}</h6>
-                <h6><strong>Course:</strong>  {notif.data.course}</h6>
-                <h6><strong>Year:</strong>  {notif.data.year}</h6>
-                <h6><strong>Division:</strong>  {notif.data.division}</h6>
-                <div className="verify-parent-number">
-                  <span className="badge rounded-pill bg-warning text-dark">
-                    Please Verify This Parent Whatsapp No
+          {notifications.map((notif) => {
+
+          // STUDENT REGISTER NOTIFICATION
+          if (notif.type === "student_added") {
+
+            return (
+              <div key={notif._id}  className={`notification-card ${!notif.read ? "unread" : ""}`}>
+
+                <div className="notification-header">
+
+                  <span className="notification-type"> New Student Registered Verify </span>
+
+                  <span className="notification-time">
+                    {new Date(notif.createdAt).toLocaleString()}
                   </span>
-                  <p>
-                    <strong>Parent Whatsapp No:</strong>  {notif.data.parentno}
-                  </p>
+
                 </div>
-                <p><strong>Student Mobile No:</strong>  {notif.data.mobileno}</p>
-              </div>
-              <div className="notification-actions">
-                <a href={`tel:${notif.data.parentno}`}> 
+
+                <div className="notification-message">
+
+                  <span className="badge rounded-pill bg-success">
+                    {notif.message}
+                  </span>
+
+                </div>
+
+                <div className="notification-details">
+
+                  <h6>
+                    <strong>Name:</strong>
+                    {notif.data.name}
+                  </h6>
+
+                  <h6>
+                    <strong>Department:</strong>
+                    {notif.data.department}
+                  </h6>
+
+                  <h6>
+                    <strong>Course:</strong>
+                    {notif.data.course}
+                  </h6>
+
+                  <h6>
+                    <strong>Year:</strong>
+                    {notif.data.year}
+                  </h6>
+
+                  <h6>
+                    <strong>Division:</strong>
+                    {notif.data.division}
+                  </h6>
+
+                  <div className="verify-parent-number">
+
+                    <span className="badge rounded-pill bg-warning text-dark">
+                      Please Verify This Parent Whatsapp No
+                    </span>
+
+                    <p>
+                      <strong>Parent Whatsapp No:</strong>
+                      {notif.data.parentno}
+                    </p>
+
+                  </div>
+
+                  <p>
+                    <strong>Student Mobile No:</strong>
+                    {notif.data.mobileno}
+                  </p>
+
+                </div>
+
+                <div className="notification-actions">
+
+                  <a href={`tel:${notif.data.parentno}`}>
+
                     <button className="call-btn">
-                      <i className="bi bi-telephone-fill"></i> Call 
+                      <i className="bi bi-telephone-fill"></i>
+                      Call
                     </button>
-                </a>
-                <button className="approve-btn" onClick={()=>{giveapprove(notif.data.id)}}>
-                  <i className="bi bi-check-lg"></i>
-                </button>
 
-                <button className="reject-btn" onClick={()=>{givereject(notif.data.id)}}>
-                  <i className="bi bi-x-lg"></i>
-                </button>
+                  </a>
 
-                
+                  <button className="approve-btn" onClick={() => giveapprove(notif.data.id)}>
+                    <i className="bi bi-check-lg"></i>
+                  </button>
+
+                  <button className="reject-btn" onClick={() => givereject(notif.data.id)}>
+                    <i className="bi bi-x-lg"></i>
+                  </button>
+
+                </div>
+
+              </div >
+            );
+          }
+
+          // LEAVE APPLICATION NOTIFICATION
+          if (notif.type === "Leave_application") {
+
+            return (
+              <div key={notif._id} className="notification-card leave-card">
+
+                <div className="notification-header">
+
+                  <span className="notification-type">
+                    Leave Application
+                  </span>
+
+                  <span className="notification-time">
+                    {new Date(notif.createdAt).toLocaleString()}
+                  </span>
+
+                </div>
+
+                <div className="notification-message">
+
+                  <span className="badge rounded-pill bg-primary">
+                    {notif.message}
+                  </span>
+
+                </div>
+
+                <div className="notification-details">
+
+                  <h6>
+                    <strong>Leave Type:</strong>
+                    {notif.data.leaveType}
+                  </h6>
+
+                  <h6>
+                    <strong>From:</strong>
+                    {notif.data.fromDate}
+                  </h6>
+
+                  <h6>
+                    <strong>To:</strong>
+                    {notif.data.toDate}
+                  </h6>
+
+                  <h6>
+                    <strong>Total Days:</strong>
+                    {notif.data.totalDays}
+                  </h6>
+
+                  <p>
+                    <strong>Reason:</strong>
+                    {notif.data.reason}
+                  </p>
+
+                  {
+                    notif.data.certificateUrl && (
+                    <a href={notif.data.certificateUrl} target="_blank" rel="noreferrer">
+                      View Certificate
+                    </a>
+                  )}
+
+                </div>
+
               </div>
-            </div>
-          ))}
+            );
+          }
+
+          return null;
+
+          })} 
         </div>
       )}
     </div>)}

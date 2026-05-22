@@ -14,8 +14,10 @@ function ViewStudent() {
     const [date,setdate]=useState(today);
     const [fromdate,setfromdate]=useState(today);
     const [todate,settodate]=useState(today);
-    
+    const [loding,setloding]=useState(false);
     const fetchrecord = async () => {
+            setloding(true);
+        
         if(!rollno.trim()) 
         {
             setmessage("Please Enter Roll No.....");
@@ -56,6 +58,9 @@ function ViewStudent() {
             setmessage(err.message);
             setshowerror(true);
         }
+        finally{
+            setloding(false);
+        }
     }
     return (
         <div className="admin-content">
@@ -73,7 +78,13 @@ function ViewStudent() {
                 <div className="data-card animate__animated animate__zoomIn">
                     <form className="d-flex flex-wrap gap-2" role="search">
                         <input type="date" className="form-control" value={date} max={today} onChange={(e)=>{setdate(e.target.value)}}/>
-                        <button className="btn btn-outline-success lm" type="button" onClick={fetchrecord}><i className="bi bi-search-heart"></i>  Search</button>
+                        <button className="btn btn-outline-success lm" type="button" onClick={fetchrecord}>
+                            {loding ? (
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>  
+                            ):(<i className="bi bi-search-heart">Search</i>   )}
+                        </button>
                     </form>
                 </div>
             )}
@@ -84,7 +95,13 @@ function ViewStudent() {
                         <input type="date" className="form-control" value={fromdate} max={today} onChange={(e)=>{setfromdate(e.target.value)}}/>
                         <label className="effective lm"><i className="bi bi-calendar-heart-fill set-icon "></i>  To :</label>
                         <input type="date" className="form-control lm" value={todate} max={today} onChange={(e)=>{settodate(e.target.value)}}/>
-                        <button className="btn btn-outline-success lm" type="button" onClick={fetchrecord}><i className="bi bi-search-heart"></i>Search</button>
+                        <button className="btn btn-outline-success lm" type="button" onClick={fetchrecord}>
+                            {loding ? (
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>  
+                            ):(<i className="bi bi-search-heart">Search</i>   )}
+                        </button>
                     </form>
                 </div>
             )}
