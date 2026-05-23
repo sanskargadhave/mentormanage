@@ -365,11 +365,11 @@ function MentorDashboardContent() {
                   </a>
 
                   <button className="approve-btn" onClick={() => giveapprove(notif.data.id)}>
-                    <i className="bi bi-check-lg"></i>
+                    <i className="bi bi-check-lg"></i> Approve
                   </button>
 
                   <button className="reject-btn" onClick={() => givereject(notif.data.id)}>
-                    <i className="bi bi-x-lg"></i>
+                    <i className="bi bi-x-lg"></i>  Reject
                   </button>
 
                 </div>
