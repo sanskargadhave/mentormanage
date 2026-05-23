@@ -2,7 +2,7 @@
   import "animate.css";
   import "bootstrap-icons/font/bootstrap-icons.css";
   import { Routes, Route } from "react-router-dom";
-
+  import { useNavigate } from "react-router-dom";
   import { StudentDashboardContent } from "./Main_pageComponent";
   import {  Login } from "./login";
   import { AdminSidebar} from "./admin component/AdminNevbar.js";
@@ -24,14 +24,17 @@
   import AddAdmissionDetails from "./admin component/addAdmissionDetails.js"
   import ProtectedRoute from "./protectedRoute.js"; 
   import LeaveApplication from "./student comonent/leaveApplication.js";
+import { use } from "react";
   function App() {
+    const navigate=useNavigate();
     return (
       <Routes>
         <Route path="/unauthorized" element={
           <div style={{ textAlign: "center", marginTop: "50px" }}>
             <h1>❌Access Denied❌</h1>
             <p>Your session expired or you don’t have permission.</p>
-            {localStorage.clear}
+            
+            <a href="/login">Login Again</a>
           </div>} />
         
         <Route element={<Layout/>}>
@@ -74,15 +77,16 @@
               <Route path="add-test-result" element={<AddTestResult/>}/>
             </Route>
           </Route>
+
+          {/*   Teacher Layout */}
           <Route element={<ProtectedRoute allowedRoles={["Teacher"]}/>}>
             <Route path="/teacher" element={<SidebarLayout/>}>
 
-            
-            
-            
             </Route>
           
           </Route>
+
+          {/*  Student Layout */}
           <Route element={<ProtectedRoute allowedRoles={["Student"]}/>}>
             <Route path="/student" element={<SidebarLayout/>}>
               <Route path="leave-application-to-mentor" element={<LeaveApplication/>}/>

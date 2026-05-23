@@ -23,7 +23,7 @@
 
 /* Collapse (Desktop) */
 .mentor-sidebar.collapsed{
-  width:70px;
+  width:200px;
 }
 /* Hover effect */
 .collapse-btn:hover{
@@ -56,7 +56,7 @@
   font-size:18px;
   font-weight:bold;
   border-bottom:1px solid #fb0202;
-  margin-top:20px;
+  margin-top:60px;
 }
 
 /* ===== SIDEBAR LIST ===== */
@@ -168,7 +168,7 @@
   .mentor-sidebar{
    
     top:85px;                     /* KEEP SAME */
-    height:calc(100vh - 70px); 
+    height:calc(100vh - 120px); 
     transform:translateX(-100%);
     transition:transform 0.3s ease;
 

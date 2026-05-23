@@ -991,7 +991,10 @@ body {
   align-items:center;
   gap:10px;
 }
-
+.live-status{
+  color:#052b01;
+  border-radius:8px;
+}
 .title-text{
   
  font-family: "Poppins", sans-serif;

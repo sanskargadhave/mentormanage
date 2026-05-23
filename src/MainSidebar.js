@@ -14,49 +14,41 @@ function MainSidebar({collapsed}){
     <div className={`mentor-sidebar ${collapsed ? "collapsed" : ""}`}>
     
       <div className="mentor-logo">
-        {collapsed ? "" : `Welcome ${role} 👋`}
+        {`Welcome ${role} 👋`}
       </div>
       {role==="Admin" && (
         <ul>
 
         <li onClick={() => {navigate("/admin/add-student")}}>
-          <i className="bi bi-person-add set-icon"></i>
-          <span className="menu-text">{!collapsed && "Add Student"}</span>
+          <i className="bi bi-person-add set-icon"></i> Add Student
         </li>
 
         <li onClick={() => {navigate("/admin/add-mentor")}}>
-          <i className="bi bi-person-x set-icon"></i>
-          <span className="menu-text">{!collapsed && "Add Mentor"}</span>
+          <i className="bi bi-person-x set-icon"></i> Add Mentor
         </li>
 
         <li onClick={() =>{ navigate("/admin/add-teacher")}}>
-          <i className="bi bi-binoculars set-icon"></i>
-          <span className="menu-text">{!collapsed && "Add Teacher"}</span>
+          <i className="bi bi-binoculars set-icon"></i> Add Teacher
         </li>
 
         <li onClick={()=>{navigate("/admin/add-lecture")}}>
-          <i className="bi bi-calendar-check set-icon"></i>
-          <span className="menu-text">{!collapsed && "Add Lecture"}</span>
+          <i className="bi bi-calendar-check set-icon"></i>Add Lecture
         </li>
 
         <li onClick={() =>{ navigate("/admin/delete-user")}}>
-          <i className="bi bi-clipboard-data set-icon"></i>
-          <span className="menu-text">{!collapsed && "Delete User"}</span>
+          <i className="bi bi-clipboard-data set-icon"></i>Delete User
         </li>
 
         <li onClick={() => {navigate("/admin/view-users")}}>
-            <i className="bi bi-clipboard-data set-icon"></i>
-            <span className="menu-text">{!collapsed && "View User"}</span>
+            <i className="bi bi-clipboard-data set-icon"></i>View User
         </li>
 
         <li onClick={() => {navigate("/admin/assign-mentor")}}>
-            <i className="bi bi-clipboard-data set-icon"></i>
-            <span className="menu-text">{!collapsed && "Assign Mentor"}</span>
+            <i className="bi bi-clipboard-data set-icon"></i>Assign Mentor
         </li>
 
         <li onClick={() => {navigate("/admin/add-admission-details")}}>
-            <i className="bi bi-clipboard-data set-icon"></i>
-            <span className="menu-text">{!collapsed && "Add Admission Details"}</span>
+            <i className="bi bi-clipboard-data set-icon"></i>Add Admission Details
         </li>
         
       </ul>
@@ -65,36 +57,39 @@ function MainSidebar({collapsed}){
       { role==="Mentor" && (
         <ul>
           <li onClick={()=>navigate("/mentor/add-student")}>
-            <i className="bi bi-person-add set-icon"></i>
-            <span className="menu-text">{!collapsed && "Add Student"}</span>
+            <i className="bi bi-person-add set-icon"></i>Add Student
           </li>
 
           <li onClick={()=>navigate("/mentor/delete-user")}>
-            <i className="bi bi-person-x set-icon"></i>
-            <span className="menu-text">{!collapsed && "Delete Student"}</span>
+            <i className="bi bi-person-x set-icon"></i>Delete Student
           </li>
 
         <li onClick={()=>navigate("/mentor/view-student")}>
-          <i className="bi bi-binoculars set-icon"></i>
-          <span className="menu-text">{!collapsed && "View Student"}</span>
+          <i className="bi bi-binoculars set-icon"></i>View Student
         </li>
 
         <li onClick={()=>navigate("/mentor/add-attendance")}>
-          <i className="bi bi-calendar-check set-icon"></i>
-          <span className="menu-text">{!collapsed && "Add Attendance"}</span>
+          <i className="bi bi-calendar-check set-icon"></i>Add Attendance
         </li>
 
         <li onClick={()=>navigate("/mentor/add-test-result")}>
-          <i className="bi bi-clipboard-data set-icon"></i>
-          <span className="menu-text">{!collapsed && "Add Test Result"}</span>
+          <i className="bi bi-clipboard-data set-icon"></i>Add Test Result
         </li>
 
       </ul>
       )}
+      {role ==="Student" && (
+        <ul>
+        <li onClick={()=>navigate("/student/leave-application-to-mentor")}>
+          <i className="bi bi-clipboard-data set-icon"></i>  
+          Apply For Leave 
+        </li>
+        </ul>
+      )}
       <div className="sidebar-bottom">
         <button className="logouts" onClick={()=>navigate("/warning-logout")}>
-            <i className="bi bi-box-arrow-right"></i>
-            {!collapsed && " Logout"}
+            <i className="bi bi-box-arrow-right"></i> Logout
+           
         </button>
       </div>
     </div>

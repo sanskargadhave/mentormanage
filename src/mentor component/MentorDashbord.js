@@ -198,14 +198,13 @@ function MentorDashboardContent() {
             Manage student verifications,
             leave approvals and attendance reports.
           </p>
-
+          <div className="live-status">
+            <label className="animate__animated animate__pulse animate__slow animate__infinite"> 🟢 </label>   Live Notification System Active
+          </div>
         </div>
-
+    
       </div>
-      <div className="live-status">
-        <span className="live-dot"></span>
-        Live Notification System Active
-      </div>
+      
       <div className="mentor-stats-grid">
 
         <div className="mentor-stat-card">
@@ -221,7 +220,7 @@ function MentorDashboardContent() {
               ).length
             }
           </h3>
-          <p>Student Requests</p>
+          <p>Student Registered Requests</p>
         </div>
 
         < div className="mentor-stat-card">
@@ -232,7 +231,7 @@ function MentorDashboardContent() {
               ).length
             }
           </h3>
-          <p>Leave Requests</p>
+          <p>Leave Application Requests</p>
         </div>
 
       </div>
@@ -290,8 +289,6 @@ function MentorDashboardContent() {
 
                 <div className="notification-header">
 
-                  <span className="notification-type"> New Student Registered Verify </span>
-
                   <span className="notification-time">
                     {new Date(notif.createdAt).toLocaleString()}
                   </span>
@@ -301,7 +298,7 @@ function MentorDashboardContent() {
                 <div className="notification-message">
 
                   <span className="badge rounded-pill bg-success">
-                    {notif.message}
+                    New Student Registered Verify
                   </span>
 
                 </div>
@@ -386,9 +383,7 @@ function MentorDashboardContent() {
 
                 <div className="notification-header">
 
-                  <span className="notification-type">
-                    Leave Application
-                  </span>
+                  
 
                   <span className="notification-time">
                     {new Date(notif.createdAt).toLocaleString()}
@@ -399,7 +394,8 @@ function MentorDashboardContent() {
                 <div className="notification-message">
 
                   <span className="badge rounded-pill bg-primary">
-                    {notif.message}
+                    Leave Application
+                    
                   </span>
 
                 </div>

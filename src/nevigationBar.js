@@ -29,7 +29,7 @@ function NevigationBar() {
           <ul className="navbar-nav ms-auto">
 
             <li className="nav-item">
-              <a className="nav-link " href="/dashboard">
+              <a className="nav-link " href="/">
                 <i className="bi bi-house"></i>  Dashboard
               </a> 
             </li>
