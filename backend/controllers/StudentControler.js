@@ -1,4 +1,5 @@
 const {StoreStudent}= require("../model/studentSchema");
+const mongoose = require("mongoose");
 const {StoreLecture,StoreAttendance}=require("../model/AttendanceSchema");
 const bcrypt = require("bcryptjs");
 const {getIO}=require("../socket");
