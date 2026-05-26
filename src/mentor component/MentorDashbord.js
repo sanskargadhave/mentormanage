@@ -9,7 +9,7 @@ function MentorDashboardContent() {
   const { id,token} = useContext(AuthContext);
   const navigate=useNavigate();
   const [notifications, setNotifications] = useState([]);
-  const [loding,setloding]=useState(false);
+  const [loding,setloding]=useState({});
   const [show,setshow]=useState(true);
   const [event,setevent]=useState("");
   const [subjects,setSubjects]=useState([]);
@@ -35,7 +35,7 @@ function MentorDashboardContent() {
 
   async function getNotifications() {
     try {
-      setloding(true);
+      setloding((prev)=>({...prev,getNotifications:true}));
 
       const resp = await axios.get(
         `https://sangolacollage.onrender.com/api/mentor/get-notifications/${id}`,
@@ -62,7 +62,7 @@ function MentorDashboardContent() {
       console.error("Error fetching stored notifications", err);
     } 
     finally {
-      setloding(false);
+     setloding((prev)=>({...prev,getNotifications:false}));
     }
   }
 
@@ -91,7 +91,9 @@ function MentorDashboardContent() {
 
   async function giveapprove(studentid)
   {
+    
     try{
+      setloding((prev)=>({...prev,[studentid]:true}));
       const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-approve/${studentid}`,{},{
              headers: {
                 Authorization: `Bearer ${token}`,
@@ -109,10 +111,14 @@ function MentorDashboardContent() {
       }
       console.log("error at Give Approve",err);
     }
+    finally{
+      setloding((prev)=>({...prev,[studentid]:true}));    
+    }
   }
   async function givereject(studentid)
   {
     try{
+      setloding((prev)=>({...prev,[studentid]:true}));
       const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-reject/${studentid}`,{},{
              headers: {
                 Authorization: `Bearer ${token}`,
@@ -129,10 +135,13 @@ function MentorDashboardContent() {
       }
       console.log("error at Give reject",err);
     }
+    finally{
+      setloding((prev)=>({...prev,[studentid]:false}));
+    }
   }
   const fetchTodayAttendance = async () => {
     try {
-      setloding(true);
+      setloding((prev)=>({...prev,fetchTodayAttendance:true}));
       if (!filters.department || !filters.course || !filters.year || !filters.division) {
         alert("Please select all filters");
         return;
@@ -147,7 +156,7 @@ function MentorDashboardContent() {
 
       setSubjects(data.completeLecture);
       setevent("showsubmitedattendance");
-      setloding(false);
+      
     } 
     catch (err) {
       if(err.response?.status === 401){
@@ -157,10 +166,12 @@ function MentorDashboardContent() {
       }
       console.log(err);
     }
+    finally{
+      setloding((prev)=>({...prev,fetchTodayAttendance:false}));    }
   };
   const generateReport=async ()=>{
     try{
-      setloding(true);
+      setloding((prev)=>({...prev,generateReport:true}));
       const res=await fetch(`https://sangolacollage.onrender.com/api/mentor/make-attendance-report?department=${filters.department}&course=${filters.course}&year=${filters.year}&division=${filters.division}`,{
              headers: {
                 Authorization: `Bearer ${token}`,
@@ -170,7 +181,7 @@ function MentorDashboardContent() {
       const result=await res.json();
       setmessage(result.message);
       seturl(result.url);
-      setloding(false);
+      
       setevent("showmessage");
     }
     catch(err)
@@ -183,37 +194,34 @@ function MentorDashboardContent() {
       console.log(err);
       setevent("showmessage");
     }
+    finally{
+      setloding((prev)=>({...prev,generateReport:false}))
+    }
 
   }
   async function givePermission(permission, applicationid)
-{
-  try{
-
-    const resp = await axios.put(
-      `https://sangolacollage.onrender.com/api/mentor/give-permission/${permission}/${applicationid}`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
+  {
+    const key=`${permission}-${applicationid}`;
+    try{
+      setloding((prev)=>({...prev,[key]:true}));
+      const resp = await axios.put(
+        `https://sangolacollage.onrender.com/api/mentor/give-permission/${permission}/${applicationid}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
         }
-      }
-    );
+      );
 
-    console.log(resp.data);
+      console.log(resp.data);
 
-    // update frontend instantly
-    setNotifications((prev)=>
-      prev.map((notif)=>
-        notif.data.applicationid === applicationid
-          ? {
-              ...notif,
-              data: {
-                ...notif.data,
-                status: permission
-              }
-            }
-          : notif
+      setNotifications((prev)=>
+        prev.map((notif)=>
+          notif.data.applicationid === applicationid
+            ? { ...notif, data: {...notif.data, status: permission} }
+            : notif
       )
     );
 
@@ -221,6 +229,9 @@ function MentorDashboardContent() {
   catch(err)
   {
     console.log(err);
+  }
+  finally{
+    setloding((prev)=>({...prev,[key]:false}));
   }
 }
   return (
@@ -274,13 +285,7 @@ function MentorDashboardContent() {
       </div>
       <h5 className="panel-title">
 
-        <div className="title-left">
-          <i className="fa fa-bell notification-icon"></i>
-          <span className="title-text">Registered Students</span>
-          <span className="notification-badge">
-            {notifications.length}
-          </span>
-        </div>
+        
         <div className="notification-wrapper">
           <i className="fa fa-bell notification-icon"></i>
 
@@ -292,23 +297,28 @@ function MentorDashboardContent() {
         </div>
         <div className="title-right">
 
-          {show ? (
-            <button className="hide-btn" onClick={() => setshow(false)}>
-              Hide
-            </button>
-          ) : (
-          <button className="show-btn" onClick={() => setshow(true)}>
-            Show
-          </button>)}
+          <button className={`toggle-notification-btn ${show ? "active" : ""}`} onClick={() => setshow(!show)}>
+            {show ? (
+              <>
+                <i className="bi bi-eye-slash-fill"></i>
+                Hide Notifications
+              </>
+            ) : (
+              <>
+                <i className="bi bi-eye-fill"></i>
+                Show Notifications
+              </>
+            )}
+          </button>
 
         </div>
 
       </h5>
     {show && (
     <div className="notifications-panel">
-      {loding && (
+      {loding['getNotifications'] && (
         <div className="spinner-border text-dark" role="status">
-          <span className="visually-hidden">Loading...</span>
+          <span className="visually-hidden">loding...</span>
         </div>
       )}
       {notifications.length === 0 ? (
@@ -398,12 +408,26 @@ function MentorDashboardContent() {
 
                   </a>
 
-                  <button className="approve-btn" onClick={() => giveapprove(notif.data.id)}>
-                    <i className="bi bi-check-lg"></i> Approve
+                  <button className="approve-btn" onClick={() => giveapprove(notif.data.id)} disabled={loding[notif.data.id]}>
+                    {loding[notif.data.id]  ? (
+                        <div className="spinner-grow text-warning" role="status">
+                          <span className="visually-hidden">loding...</span>
+                        </div>
+                      ):(
+                        <><i className="bi bi-check-lg"></i> Approve</>
+                      )}
+                    
                   </button>
 
-                  <button className="reject-btn" onClick={() => givereject(notif.data.id)}>
-                    <i className="bi bi-x-lg"></i>  Reject
+                  <button className="reject-btn" onClick={() => givereject(notif.data.id)} disabled={loding[notif.data.id]}>
+                   
+                    {loding[notif.data.id]  ? (
+                        <div className="spinner-grow text-warning" role="status">
+                          <span className="visually-hidden">loding...</span>
+                        </div>
+                      ):(
+                        <> <i className="bi bi-x-lg"></i>  Reject</>
+                      )}
                   </button>
 
                 </div>
@@ -420,8 +444,6 @@ function MentorDashboardContent() {
 
                 <div className="notification-header">
 
-                  
-
                   <span className="notification-time">
                     {new Date(notif.createdAt).toLocaleString()}
                   </span>
@@ -432,7 +454,6 @@ function MentorDashboardContent() {
 
                   <span className="badge rounded-pill bg-primary">
                     Leave Application
-                    
                   </span>
 
                 </div>
@@ -474,14 +495,38 @@ function MentorDashboardContent() {
                       View Certificate
                     </a>
                   )}
+                  {notif.data.status === "Approved" && (
+                    <span className="status-badge approved-status">
+                      ✅ Leave Approved 
+                    </span>
+                  )}
+
+                  {notif.data.status === "Rejected" && (
+                    <span className="status-badge rejected-status">
+                    ❌ Leave Rejected 
+                  </span>
+                  )}
                   {notif.data.status === "Pending" && (
                   <>
-                    <button className="approve-btn" onClick={() => givePermission("Approved", notif.data.applicationid)}>
-                      Approve
+                    <button className="approve-btn" onClick={() => givePermission("Approved", notif.data.applicationid)} disabled={loding[`Approved-${notif.data.applicationid}`]}>
+                      {loding[`Approved-${notif.data.applicationid}`]  ? (
+                        <div className="spinner-grow text-warning" role="status">
+                          <span className="visually-hidden">loding...</span>
+                        </div>
+                      ):(
+                        <>Approve</>
+                      )}
+                      
                     </button>
 
-                    <button className="reject-btn" onClick={() => givePermission("Rejected", notif.data.applicationid)}> 
-                      Reject
+                    <button className="reject-btn" onClick={() => givePermission("Rejected", notif.data.applicationid)} disabled={loding[`Rejected-${notif.data.applicationid}`]}> 
+                      { loding[`Rejected-${notif.data.applicationid}`] ? (
+                        <div className="spinner-grow text-warning" role="status">
+                          <span className="visually-hidden">loding...</span>
+                        </div>
+                      ):(
+                        <>Reject</>
+                      )}
                     </button>
                   </>
                   )}
@@ -499,7 +544,7 @@ function MentorDashboardContent() {
       )}
     </div>)}
     {event === "" && (
-      <button className="report-btn" onClick={()=>{setevent("showoptions")}}>
+      <button className="report-btn" onClick={()=>{setevent("showoptions")}} >
         <i className="fa fa-chart-bar"></i>
         Uplode Today Attendance Report
       </button>)}
@@ -553,14 +598,13 @@ function MentorDashboardContent() {
 
         </div>
 
-      <button className="report-btn" onClick={fetchTodayAttendance}>
-        {!loding && (
-          <h6>📄 Generate Report</h6>
-        )}
-        {loding && (
+      <button className="report-btn" onClick={fetchTodayAttendance} disabled={loding["fetchTodayAttendance"]}>
+        {loding["fetchTodayAttendance"] ? (
           <div className="spinner-grow text-danger" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
+              <span className="visually-hidden">loding...</span>
+            </div>
+        ):(
+          <h6>📄 Generate Report</h6>  
         )}
       </button>
       
@@ -608,14 +652,14 @@ function MentorDashboardContent() {
                   </div>
                 ))}
                 <div className="report-action-container">
-                  <button className="generate-report-btn" onClick={generateReport}>
-                    {!loding && (
-                      <h6>📄 Generate Report</h6>
+                  <button className="generate-report-btn" onClick={generateReport} disabled={loding["generateReport"]}>
+                    {loding["generateReport"] ? (
+                      <div className="spinner-grow text-danger" role="status">
+                        <span className="visually-hidden">loding...</span>
+                      </div>
+                    ):(
+                      <h6>📄 Generate Report</h6>  
                     )}
-                    {loding && (
-                    <div className="spinner-grow text-danger" role="status">
-                      <span className="visually-hidden">Loading...</span>
-                    </div>)}
                   </button>
                 </div>
               </div>
