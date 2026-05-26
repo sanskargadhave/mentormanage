@@ -6,7 +6,7 @@
   import { StudentDashboardContent } from "./Main_pageComponent";
   import {  Login } from "./login";
   import { AdminSidebar} from "./admin component/AdminNevbar.js";
-
+  import StudentDashbord from "./student comonent/StudentDashbord.js";
   import { AddMentor } from "./admin component/addmentor.js";
   import { DeleteUser } from "./admin component/deleteUser";
   import { ViewUser } from "./admin component/viewUser";
@@ -89,8 +89,9 @@ import { use } from "react";
           {/*  Student Layout */}
           <Route element={<ProtectedRoute allowedRoles={["Student"]}/>}>
             <Route path="/student" element={<SidebarLayout/>}>
+              <Route index element={<StudentDashbord/>}/>
               <Route path="leave-application-to-mentor" element={<LeaveApplication/>}/>
-            
+
             
             </Route>
           </Route>

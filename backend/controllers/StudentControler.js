@@ -340,8 +340,10 @@ const sendApplication = async (req, resp) => {
       receiverid,receiverRole,type,message,certificateUrl}=req.body;
     const totalDays =
       Math.ceil((new Date(toDate) - new Date(fromDate)) / (1000 * 60 * 60 * 24) ) + 1;
-
-    const notificationData = {
+    
+      const applicationid = new mongoose.Types.ObjectId();
+    
+      const notificationData = {
       senderId:senderId,
       receiver_Id:receiver_Id,
       receiverid:receiverid,
@@ -349,6 +351,7 @@ const sendApplication = async (req, resp) => {
       type:"Leave_application",
       message:message,
       data: {
+        applicationid:applicationid,
         leaveType:leaveType,
         fromDate:fromDate,
         toDate:toDate,
@@ -371,10 +374,55 @@ const sendApplication = async (req, resp) => {
     });
   }
 };
-module.exports={GetStudentDetailsByRoll,
-                SearchStudent,StudentCounts,
-                StoreStudentDetails,GetStudent,
-                giveApprove,giveReject,getMentordetails,
-                sendApplication
-              
-              };
+
+const givePermission = async (req, resp) => {
+
+  try {
+
+    const { permission, applicationid } = req.params;
+
+    if (
+      permission !== "Approved" &&
+      permission !== "Rejected"
+    ) {
+      return resp.status(400).json({
+        message: "Invalid permission value"
+      });
+    }
+
+    const updatenoti = await NotificationSchema.updateOne(
+      { "data.applicationid": applicationid },
+      {
+        $set: {
+          "data.status": permission
+        }
+      }
+    );
+
+    if (updatenoti.matchedCount === 0) {
+
+      return resp.status(404).json({
+        message: "Application Not Found"
+      });
+    }
+
+    resp.status(200).json({
+      message: `Application ${permission}`
+    });
+
+  }
+  catch (err) {
+
+    console.log(err.message);
+
+    resp.status(500).json({
+      message: err.message
+    });
+  }
+};
+
+
+
+module.exports={GetStudentDetailsByRoll,SearchStudent,StudentCounts,
+  StoreStudentDetails,GetStudent,giveApprove,giveReject,
+  getMentordetails,sendApplication,givePermission};

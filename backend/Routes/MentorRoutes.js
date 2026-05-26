@@ -1,7 +1,7 @@
 const express =require("express");
 const router=express.Router();
 
-const {GetStudentDetailsByRoll,SearchStudent}=require("../controllers/StudentControler"); 
+const {GetStudentDetailsByRoll,SearchStudent, givePermission}=require("../controllers/StudentControler"); 
 const {MakeAttendanceReport,GetTodayAttendance}=require("../controllers/AttendanceControler");
 const getNotification =require("../controllers/notificationControler");
 const {sendMessage}=require("../controllers/messagecontroler");
@@ -26,5 +26,5 @@ router.post("/sendMessage", sendMessage);
 
 router.put("/give-approve/:studentid",giveApprove);
 router.put("/give-reject/:studentid",giveReject);
-
+router.put("/give-permission/:permission/:applicationid",givePermission);
 module.exports = router;

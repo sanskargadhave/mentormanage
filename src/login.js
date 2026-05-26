@@ -54,7 +54,10 @@ function Login() {
                 {
                     nevigate("/mentor");
                 }
-                
+                else if(role==="Student")
+                {
+                    nevigate("/student")
+                }
                 else
                 {
                     nevigate("/");

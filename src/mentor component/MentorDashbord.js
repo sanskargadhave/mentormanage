@@ -185,7 +185,44 @@ function MentorDashboardContent() {
     }
 
   }
+  async function givePermission(permission, applicationid)
+{
+  try{
 
+    const resp = await axios.put(
+      `https://sangolacollage.onrender.com/api/mentor/give-permission/${permission}/${applicationid}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    console.log(resp.data);
+
+    // update frontend instantly
+    setNotifications((prev)=>
+      prev.map((notif)=>
+        notif.data.applicationid === applicationid
+          ? {
+              ...notif,
+              data: {
+                ...notif.data,
+                status: permission
+              }
+            }
+          : notif
+      )
+    );
+
+  }
+  catch(err)
+  {
+    console.log(err);
+  }
+}
   return (
     <div className="admin-content">
       <div className="mentor-dashboard-hero">
@@ -418,6 +455,10 @@ function MentorDashboardContent() {
                   </h6>
 
                   <h6>
+                    <strong>Status:</strong> {notif.data.status}
+                  </h6> 
+
+                  <h6>
                     <strong>Total Days:</strong>
                     {notif.data.totalDays}
                   </h6>
@@ -432,6 +473,17 @@ function MentorDashboardContent() {
                     <a href={notif.data.certificateUrl} target="_blank" rel="noreferrer">
                       View Certificate
                     </a>
+                  )}
+                  {notif.data.status === "Pending" && (
+                  <>
+                    <button className="approve-btn" onClick={() => givePermission("Approved", notif.data.applicationid)}>
+                      Approve
+                    </button>
+
+                    <button className="reject-btn" onClick={() => givePermission("Rejected", notif.data.applicationid)}> 
+                      Reject
+                    </button>
+                  </>
                   )}
 
                 </div>
