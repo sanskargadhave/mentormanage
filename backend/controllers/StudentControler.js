@@ -376,6 +376,7 @@ const sendApplication = async (req, resp) => {
   }
 };
 
+
 const givePermission = async (req, resp) => {
 
   try {
@@ -392,7 +393,10 @@ const givePermission = async (req, resp) => {
     }
 
     const updatenoti = await NotificationSchema.updateOne(
-      { "data.applicationid": applicationid },
+      {
+        "data.applicationid":
+          new mongoose.Types.ObjectId(applicationid)
+      },
       {
         $set: {
           "data.status": permission
