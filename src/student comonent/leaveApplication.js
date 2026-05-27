@@ -2,12 +2,13 @@ import { useState,useEffect,useContext} from "react";
 import "./student.css";
 import { supabase}  from "../supabase";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../Authintication';
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 function LeaveApplication() {
+  const navigate=useNavigate();
   const {id,token}=useContext(AuthContext);
   const [message,setmessage]=useState("");
-  const [event,setevent]=useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
   const [MentorDetails,setMentorDetails]=useState(null);
   const [studentDetails,setStudentDetails]=useState(null);
@@ -15,11 +16,12 @@ function LeaveApplication() {
   const [fromDate,setFromDate]=useState("");
   const [toDate,setToDate]=useState("");
   const [reason,setReason]=useState("");
+  const [loding,setloding]=useState(false);
 
   const showtoast = (tmessage) => {
       setmessage(tmessage);
       const toastElement = document.getElementById("liveToast");
-      const toast = new bootstrap.Toast(toastElement);
+      const toast = new bootstrap.Toast(toastElement, { delay: 8000 });
       toast.show();
     }
 
@@ -64,10 +66,12 @@ function LeaveApplication() {
   async function sendApplication()
   {
     try{
+      
       if(!leaveType || !fromDate || !toDate || !reason)
       {
         return alert("Please Fill All Required fields");
       }
+      setloding(true);
       const data = {
         leaveType,
         fromDate,
@@ -96,19 +100,20 @@ function LeaveApplication() {
           }
         }
       );
-      setevent(false);
+    
       showtoast(resp.data.message);
     }
     catch(err)
     {
-      setevent(false);
       showtoast(err.response?.data?.message||err.message);
+    }
+    finally{
+      setloding(false);
     }
   }
   return (
     <div className="leave-form-wrapper">
-      {event && (
-        <>
+      
       <div className="leave-top-banner">
         <div className="banner-content">
           <span className="leave-mini-tag">
@@ -192,25 +197,28 @@ function LeaveApplication() {
             </div>
           </div>
           <div className="full-width action-buttons">
-            <button type="button" className="cancel-btn">
+            {!loding && (
+            <button type="button" className="cancel-btn" onClick={()=>{navigate("/student")}}>
               Cancel
-            </button>
-            <button type="button" className="submit-btn" onClick={sendApplication}>
-              Submit Application
+            </button>)}
+            <button type="button" className="submit-btn" onClick={sendApplication} disabled={loding}>
+              
+              {loding ? (
+                <div className="spinner-border text-danger" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              ):(<>Submit Application</>)}
+              
             </button>
           </div>
-        </form>
-      </div></>)}
-            <div aria-live="polite" aria-atomic="true" className="d-flex justify-content-center align-items-center w-100 mt-4">
+          <div aria-live="polite" aria-atomic="true" classNa  me="d-flex justify-content-center align-items-center w-100 mt-8">
 
                 <div id="liveToast" className="toast" role="alert" aria-live="assertive" aria-atomic="true">
 
                     <div className="toast-header">
 
-                        <span className="leave-mini-tag">
-                          📄 Smart Leave Portal
-                        </span>
-                        
+                        <strong class="me-auto">Leave Application</strong>
+                        <small>For Your Service</small>
 
                         <button
                             type="button"
@@ -222,16 +230,17 @@ function LeaveApplication() {
                     </div>
 
                     <div className="toast-body">
-                        
-                          To Your Mentor <b>Prof. {MentorDetails?.personaldetails?.name}</b> 
-                          <b>${message}</b>
-                       
+                        {message}
                     </div>
 
                 </div>
 
             </div>
 
+        </form>
+      </div>
+      
+            
     </div>
   );
 }

@@ -440,8 +440,22 @@ const givePermission = async (req, resp) => {
   }
 };
 
-
+const getapplication = async (req,resp)=>{
+  try{
+      const {studentid} = req.params;
+      const applications = await NotificationSchema.find({senderId:studentid,type:"Leave_application"});
+        if (applications.length === 0) {
+          return resp.status(404).json({ message: "Applications Not Found"});
+        }
+      resp.status(200).json({applications});
+  }
+  catch(err)
+  {
+    console.log(err.message);
+    resp.status(500).json({message:err.message});
+  }
+}
 
 module.exports={GetStudentDetailsByRoll,SearchStudent,StudentCounts,
   StoreStudentDetails,GetStudent,giveApprove,giveReject,
-  getMentordetails,sendApplication,givePermission};
+  getMentordetails,sendApplication,givePermission,getapplication};
