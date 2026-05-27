@@ -339,6 +339,20 @@ const sendApplication = async (req, resp) => {
     const io = getIO();
     const {leaveType,fromDate,toDate,reason,senderId,receiver_Id,
       receiverid,receiverRole,type,message,certificateUrl}=req.body;
+
+    const existingApplication = await NotificationSchema.findOne({ senderId: senderId, type: "Leave_application",
+
+      $or: [
+        { "data.fromDate": { $lte: toDate }, "data.toDate": { $gte: fromDate }}
+      ]
+    });
+
+    if(existingApplication)
+    {
+      console.log(existingApplication);
+      return resp.status(400).json({message:`you have already applied from ${fromDate} To ${toDate}`});
+    }
+  
     const totalDays =
       Math.ceil((new Date(toDate) - new Date(fromDate)) / (1000 * 60 * 60 * 24) ) + 1;
     
@@ -365,7 +379,7 @@ const sendApplication = async (req, resp) => {
     const storedNotification=await NotificationSchema.create(notificationData)
     io.to("user_" +receiverid)
       .emit("notification", storedNotification);
-    resp.status(200).json({message:"Notification send"});
+    resp.status(200).json({message:"Your Application Has been Send For Your Mentor"});
 
   } catch (err) {
     console.log(err.message);

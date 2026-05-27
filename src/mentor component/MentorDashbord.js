@@ -286,15 +286,7 @@ function MentorDashboardContent() {
       <h5 className="panel-title">
 
         
-        <div className="notification-wrapper">
-          <i className="fa fa-bell notification-icon"></i>
-
-          {notifications.length > 0 && (
-            <span className="notification-count">
-              {notifications.length}
-            </span>
-          )}
-        </div>
+        
         <div className="title-right">
 
           <button className={`toggle-notification-btn ${show ? "active" : ""}`} onClick={() => setshow(!show)}>
@@ -491,8 +483,9 @@ function MentorDashboardContent() {
 
                   {
                     notif.data.certificateUrl && (
+                      
                     <a href={notif.data.certificateUrl} target="_blank" rel="noreferrer">
-                      View Certificate
+                      View  Medical Certificates
                     </a>
                   )}
                   {notif.data.status === "Approved" && (
@@ -544,10 +537,26 @@ function MentorDashboardContent() {
       )}
     </div>)}
     {event === "" && (
-      <button className="report-btn" onClick={()=>{setevent("showoptions")}} >
-        <i className="fa fa-chart-bar"></i>
-        Uplode Today Attendance Report
-      </button>)}
+      <div className="attendance-report-section">
+        <div className="attendance-report-content">
+          <div className="attendance-report-icon">
+            <i className="bi bi-clipboard-data-fill"></i>
+          </div>
+          <div className="attendance-report-text">
+            <h3>Daily Attendance Management</h3>
+            <p>
+              Generate and upload today’s attendance report
+              to maintain accurate student records and lecture tracking.
+            </p>
+          </div>
+        </div>
+        <button className="attendance-upload-btn" onClick={() => setevent("showoptions")}>
+          <i className="bi bi-cloud-arrow-up-fill"></i>
+          Upload Today Attendance
+        </button>
+
+      </div>
+    )}
 
     {event ==="showoptions" && (
       <div className="report-filter-box ">

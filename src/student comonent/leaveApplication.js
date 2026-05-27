@@ -3,8 +3,11 @@ import "./student.css";
 import { supabase}  from "../supabase";
 import axios from "axios";
 import { AuthContext } from '../Authintication';
+import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 function LeaveApplication() {
   const {id,token}=useContext(AuthContext);
+  const [message,setmessage]=useState("");
+  const [event,setevent]=useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
   const [MentorDetails,setMentorDetails]=useState(null);
   const [studentDetails,setStudentDetails]=useState(null);
@@ -13,6 +16,12 @@ function LeaveApplication() {
   const [toDate,setToDate]=useState("");
   const [reason,setReason]=useState("");
 
+  const showtoast = (tmessage) => {
+      setmessage(tmessage);
+      const toastElement = document.getElementById("liveToast");
+      const toast = new bootstrap.Toast(toastElement);
+      toast.show();
+    }
 
   useEffect(()=>{
     axios.get(`https://sangolacollage.onrender.com/api/student/get-mentordetails/${id}`,{
@@ -55,6 +64,10 @@ function LeaveApplication() {
   async function sendApplication()
   {
     try{
+      if(!leaveType || !fromDate || !toDate || !reason)
+      {
+        return alert("Please Fill All Required fields");
+      }
       const data = {
         leaveType,
         fromDate,
@@ -83,15 +96,19 @@ function LeaveApplication() {
           }
         }
       );
-      alert(resp.data.message);
+      setevent(false);
+      showtoast(resp.data.message);
     }
     catch(err)
     {
-      alert(err.response?.data?.message||err.message);
-    } 
+      setevent(false);
+      showtoast(err.response?.data?.message||err.message);
+    }
   }
   return (
     <div className="leave-form-wrapper">
+      {event && (
+        <>
       <div className="leave-top-banner">
         <div className="banner-content">
           <span className="leave-mini-tag">
@@ -183,7 +200,38 @@ function LeaveApplication() {
             </button>
           </div>
         </form>
-      </div>
+      </div></>)}
+            <div aria-live="polite" aria-atomic="true" className="d-flex justify-content-center align-items-center w-100 mt-4">
+
+                <div id="liveToast" className="toast" role="alert" aria-live="assertive" aria-atomic="true">
+
+                    <div className="toast-header">
+
+                        <span className="leave-mini-tag">
+                          📄 Smart Leave Portal
+                        </span>
+                        
+
+                        <button
+                            type="button"
+                            className="btn-close"
+                            data-bs-dismiss="toast"
+                            aria-label="Close"
+                        ></button>
+
+                    </div>
+
+                    <div className="toast-body">
+                        
+                          To Your Mentor <b>Prof. {MentorDetails?.personaldetails?.name}</b> 
+                          <b>${message}</b>
+                       
+                    </div>
+
+                </div>
+
+            </div>
+
     </div>
   );
 }

@@ -1036,7 +1036,109 @@ body {
 .toggle-notification-btn:active{
   transform:scale(0.97);
 }
+.attendance-report-section{
+  width:100%;
+  background:linear-gradient(135deg,#ffffff,#f8fbff);
+  border-radius:24px;
+  padding:28px;
+  margin-top:30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:25px;
+  flex-wrap:wrap;
+  border:1px solid #e9f2ff;
+  box-shadow:0 10px 30px rgba(13,110,253,0.08);
+}
 
+.attendance-report-content{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex:1;
+  min-width:260px;
+}
+
+.attendance-report-icon{
+  width:72px;
+  height:72px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#0d6efd,#4c8dff);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  font-size:30px;
+  box-shadow:0 8px 20px rgba(13,110,253,0.25);
+}
+
+.attendance-report-text h3{
+  margin:0;
+  font-size:24px;
+  font-weight:700;
+  color:#1d2b53;
+}
+
+.attendance-report-text p{
+  margin-top:8px;
+  margin-bottom:0;
+  font-size:15px;
+  color:#6c757d;
+  line-height:1.6;
+  max-width:600px;
+}
+
+.attendance-upload-btn{
+  border:none;
+  outline:none;
+  padding:14px 24px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#198754,#31b86f);
+  color:white;
+  font-size:15px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  box-shadow:0 8px 22px rgba(25,135,84,0.25);
+}
+
+.attendance-upload-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 28px rgba(25,135,84,0.35);
+}
+
+.attendance-upload-btn:active{
+  transform:scale(0.97);
+}
+
+.attendance-upload-btn i{
+  font-size:18px;
+}
+
+@media(max-width:768px){
+
+  .attendance-report-section{
+    padding:22px;
+  }
+
+  .attendance-report-content{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .attendance-report-text h3{
+    font-size:21px;
+  }
+
+  .attendance-upload-btn{
+    width:100%;
+    justify-content:center;
+  }
+
+}
 .toggle-notification-btn.active{
   background:linear-gradient(135deg,#dc3545,#ff5b6b);
   box-shadow:0 4px 12px rgba(220,53,69,0.25);
@@ -1073,6 +1175,7 @@ body {
     transform:translateY(0);
   }
 }
+
 .title-left{
   display:flex;
   align-items:center;
