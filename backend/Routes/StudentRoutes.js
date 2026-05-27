@@ -7,7 +7,7 @@ const isStudent=require("../middleware/isstudentmiddleware");
 router.use(verifyToken,isStudent);
 
 router.get("/get-mentordetails/:studentid",getMentordetails);
-router.get("/get-student-applications/:studentid",getapplication);
+router.get("/get-student-applications/:id",getapplication);
 
 router.post("/send-application",sendApplication);
 

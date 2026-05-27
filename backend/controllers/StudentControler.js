@@ -442,8 +442,8 @@ const givePermission = async (req, resp) => {
 
 const getapplication = async (req,resp)=>{
   try{
-      const {studentid} = req.params;
-      const applications = await NotificationSchema.find({senderId:studentid,type:"Leave_application"});
+      const {id} = req.params;
+      const applications = await NotificationSchema.find({senderId:id,type:"Leave_application"});
         if (applications.length === 0) {
           return resp.status(404).json({ message: "Applications Not Found"});
         }

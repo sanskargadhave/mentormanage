@@ -5,13 +5,19 @@ import { AuthContext } from '../Authintication';
 
 function StudentDashbord() {
     const {id,token}=useContext(AuthContext);
+   
     const [applications,setapplications]=useState([]);
 
     useEffect(()=>{
         if(!token || !id) return ;
         async function getapplication(){
             try{
-                const resp= await axios.get(`https://sangolacollage.onrender.com/api/student/get-student-applications/${id}`);
+                const resp= await axios.get(`https://sangolacollage.onrender.com/api/student/get-student-applications/${id}`,{
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
                 setapplications(resp.data.applications);
                 console.log(resp.data.applications);
             }
