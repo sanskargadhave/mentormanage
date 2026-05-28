@@ -445,7 +445,7 @@ const getapplication = async (req,resp)=>{
       
       const {id} = req.params;
       const _id = await StoreStudent.findOne({studentid:id},"_id");
-      const applications = await NotificationSchema.find({senderId:_id,type:"Leave_application"},"data");
+      const applications = await NotificationSchema.find({senderId:_id,type:"Leave_application"}).sort({createdAt:-1});
         if (applications.length === 0) {
           return resp.status(404).json({ message: "Applications Not Found"});
         }
