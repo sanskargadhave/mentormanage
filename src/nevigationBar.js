@@ -47,8 +47,8 @@ function NevigationBar() {
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="/dashboard">
-                <i className="bi bi-building-check"></i>   Reports
+              <a className="nav-link" href="/settings">
+                <i className="bi bi-gear"></i>   settings
               </a>
             </li>
             <li className="nav-item">

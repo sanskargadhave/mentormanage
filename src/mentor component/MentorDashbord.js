@@ -329,7 +329,11 @@ function MentorDashboardContent() {
                 <div className="notification-header">
 
                   <span className="notification-time">
-                    {new Date(notif.createdAt).toLocaleString()}
+                    {new Date(notif.createdAt).toLocaleDateString("en-IN",{
+                                                    day:"numeric",
+                                                    month:"short",
+                                                    year:"numeric"
+                                                })}
                   </span>
 
                 </div>
@@ -437,7 +441,12 @@ function MentorDashboardContent() {
                 <div className="notification-header">
 
                   <span className="notification-time">
-                    {new Date(notif.createdAt).toLocaleString()}
+                    
+                    {new Date(notif.createdAt).toLocaleDateString("en-IN",{
+                                                    day:"numeric",
+                                                    month:"short",
+                                                    year:"numeric"
+                                                })}
                   </span>
 
                 </div>
@@ -458,13 +467,20 @@ function MentorDashboardContent() {
                   </h6>
 
                   <h6>
-                    <strong>From:</strong>
-                    {notif.data.fromDate}
-                  </h6>
-
-                  <h6>
-                    <strong>To:</strong>
-                    {notif.data.toDate}
+                    <strong>From :</strong>
+                  
+                    {new Date(notif.data.fromDate).toLocaleDateString("en-IN",{
+                                                    day:"numeric",
+                                                    month:"short",
+                                                    year:"numeric"
+                                                })}
+                  
+                    <strong>   To:</strong>
+                    {new Date(notif.data.toDate).toLocaleDateString("en-IN",{
+                                                    day:"numeric",
+                                                    month:"short",
+                                                    year:"numeric"
+                                                })}
                   </h6>
 
                   <h6>

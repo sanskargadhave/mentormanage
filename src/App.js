@@ -24,6 +24,7 @@
   import AddAdmissionDetails from "./admin component/addAdmissionDetails.js"
   import ProtectedRoute from "./protectedRoute.js"; 
   import LeaveApplication from "./student comonent/leaveApplication.js";
+  import Settings from "./settings.js";
 import { use } from "react";
   function App() {
     const navigate=useNavigate();
@@ -44,6 +45,7 @@ import { use } from "react";
           <Route path="/login" element={<Login />} />
           
           <Route path="/warning-logout" element={<LogoutWarning/>}/>
+          <Route path="/settings" element={<Settings/>}/>
 
           {/* Admin */}
           <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
@@ -51,7 +53,7 @@ import { use } from "react";
               <Route index element={<AdminDashbord/>} />
               <Route path="add-mentor" element={<AddMentor />} />
               <Route path="add-student" element={<AddStudent />} />
-              <Route path="admin-dashboard" element={<AdminSidebar />} />
+              <Route path="admin-dashboard" element={<  AdminSidebar />} />
               <Route path="view-users" element={<ViewUser />} />
               <Route path="delete-user" element={<DeleteUser />} />
               <Route path="warning-logout" element={<LogoutWarning/>}/>

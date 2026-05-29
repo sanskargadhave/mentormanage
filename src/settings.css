@@ -1,0 +1,368 @@
+.settings-page{
+
+   min-height:100vh;
+
+   background:#f8fafc;
+}
+
+.settings-card{
+
+   background:white;
+
+   border-radius:30px;
+
+   padding:40px;
+
+   box-shadow:0 10px 40px rgba(0,0,0,0.06);
+}
+
+/* PROFILE SECTION */
+
+.profile-section{
+   text-align:center;
+   padding-right:30px;
+}
+
+.profile-image-wrapper{
+   position:relative;
+   width:150px;
+   margin:auto;
+}
+
+.profile-image{
+
+   width:150px;
+   height:150px;
+
+   border-radius:50%;
+
+   object-fit:cover;
+
+   border:5px solid #6366f1;
+}
+
+.upload-btn{
+
+   display:inline-block;
+
+   margin-top:20px;
+
+   background:#eef2ff;
+
+   color:#4f46e5;
+
+   padding:10px 18px;
+
+   border-radius:12px;
+
+   font-weight:600;
+
+   cursor:pointer;
+}
+
+.profile-section h3{
+
+   margin-top:25px;
+
+   font-weight:700;
+
+   color:#0f172a;
+}
+
+.role-text{
+   color:#64748b;
+}
+
+.profile-info{
+
+   margin-top:40px;
+
+   text-align:left;
+}
+
+.profile-info div{
+   margin-bottom:25px;
+}
+
+.profile-info span{
+
+   color:#64748b;
+
+   font-size:14px;
+}
+
+.profile-info p{
+
+   margin-top:4px;
+
+   color:#0f172a;
+
+   font-weight:600;
+}
+
+.active-status{
+   color:#16a34a !important;
+}
+
+/* SETTINGS CONTENT */
+
+.settings-content{
+   padding-left:30px;
+}
+
+.settings-section{
+   margin-bottom:50px;
+}
+
+.section-header{
+   margin-bottom:30px;
+}
+
+.section-header h3{
+
+   font-size:24px;
+
+   font-weight:700;
+
+   color:#0f172a;
+}
+
+.section-header p{
+
+   margin-top:8px;
+
+   color:#64748b;
+}
+
+.mentor-note{
+   color:#6366f1 !important;
+   font-weight:600;
+}
+
+/* INPUT DESIGN */
+
+.input-group-custom{
+   margin-bottom:35px;
+}
+
+.input-group-custom label{
+
+   display:block;
+
+   margin-bottom:10px;
+
+   color:#334155;
+
+   font-weight:600;
+}
+
+.underline-input{
+
+   width:100%;
+
+   border:none;
+
+   border-bottom:2px solid #dbeafe;
+
+   background:transparent;
+
+   padding:12px 0;
+
+   font-size:16px;
+
+   color:#0f172a;
+
+   transition:0.3s;
+}
+
+.underline-input:focus{
+
+   outline:none;
+
+   border-bottom:2px solid #6366f1;
+
+   box-shadow:0 10px 18px -18px #6366f1;
+}
+
+.disabled-input{
+
+   color:#94a3b8;
+
+   cursor:not-allowed;
+}
+
+/* SAVE BUTTON */
+
+.save-btn-wrapper{
+   display:flex;
+   justify-content:flex-end;
+}
+
+.save-btn{
+
+   border:none;
+
+   background:#6366f1;
+
+   color:white;
+
+   padding:14px 32px;
+
+   border-radius:14px;
+
+   font-weight:600;
+
+   transition:0.3s;
+}
+
+.save-btn:hover{
+
+   background:#4f46e5;
+
+   transform:translateY(-2px);
+}
+
+/* MOBILE */
+
+@media(max-width:992px){
+
+   .profile-section{
+      padding-right:0;
+      margin-bottom:50px;
+   }
+
+   .settings-content{
+      padding-left:0;
+   }
+}
+
+.mentor-card{
+
+   margin-top:40px;
+
+   background:#f8fafc;
+
+   border-radius:24px;
+
+   padding:30px;
+
+   border:1px solid #e2e8f0;
+}
+
+.mentor-header{
+
+   display:flex;
+
+   align-items:center;
+
+   gap:18px;
+
+   margin-bottom:25px;
+}
+
+.mentor-image{
+
+   width:80px;
+   height:80px;
+
+   border-radius:50%;
+
+   object-fit:cover;
+
+   border:3px solid #6366f1;
+}
+
+.mentor-header h4{
+
+   margin:0;
+
+   font-weight:700;
+
+   color:#0f172a;
+}
+
+.mentor-header p{
+
+   margin-top:4px;
+
+   color:#64748b;
+}
+
+.mentor-info div{
+   margin-bottom:18px;
+}
+
+.mentor-info span{
+
+   color:#64748b;
+
+   font-size:14px;
+}
+
+.mentor-info p{
+
+   margin-top:4px;
+
+   font-weight:600;
+
+   color:#0f172a;
+}
+.profile-update-info{
+    width: 100%;
+    padding: 18px 22px;
+    margin-top: 20px;
+   margin-bottom: 20px;
+    background: #fff8e1;
+    border-left: 5px solid #f4b400;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profile-update-info h4{
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    color: #d97706;
+    letter-spacing: 0.3px;
+}
+
+.profile-update-info p{
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: #5f5f5f;
+}
+.mentor-btn{
+
+   margin-top:15px;
+
+   border:none;
+
+   background:#6366f1;
+
+   color:white;
+
+   padding:12px 24px;
+
+   border-radius:12px;
+
+   font-weight:600;
+
+   transition:0.3s;
+}
+
+.mentor-btn:hover{
+
+   background:#4f46e5;
+
+   transform:translateY(-2px);
+}

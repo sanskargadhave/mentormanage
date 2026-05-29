@@ -398,3 +398,200 @@
   }
 
 }
+
+/* WRAPPER */
+
+.student-application-wrapper{
+    width:100%;
+    padding:20px;
+}
+
+/* HEADER */
+
+.student-application-header{
+    margin-bottom:25px;
+}
+
+.student-application-header h2{
+    font-size:30px;
+    font-weight:700;
+    color:#222;
+    margin-bottom:8px;
+}
+
+.student-application-header p{
+    color:#666;
+    font-size:15px;
+    max-width:600px;
+    line-height:1.6;
+}
+
+/* GRID */
+
+.student-application-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:20px;
+}
+
+/* CARD */
+
+.student-application-card{
+    background:#fff;
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+    transition:0.3s ease;
+    border:1px solid #ececec;
+    position:relative;
+    overflow:hidden;
+}
+
+.student-application-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* TOP */
+
+.application-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.application-top h3{
+    font-size:20px;
+    font-weight:700;
+    color:#222;
+    margin:0;
+}
+
+/* STATUS */
+
+.application-status{
+    padding:7px 14px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:600;
+    color:white;
+}
+
+.application-status.pending{
+    background:#f59e0b;
+}
+
+.application-status.approved{
+    background:#10b981;
+}
+
+.application-status.rejected{
+    background:#ef4444;
+}
+
+/* MESSAGE */
+
+.application-message{
+    font-size:14px;
+    color:#555;
+    line-height:1.7;
+    margin-bottom:20px;
+}
+
+/* DATES */
+
+.application-dates{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.application-dates div{
+    flex:1;
+    background:#f8f9fb;
+    padding:14px;
+    border-radius:12px;
+}
+
+.application-dates small{
+    color:#777;
+    font-size:12px;
+}
+
+.application-dates h5{
+    margin-top:6px;
+    font-size:15px;
+    color:#222;
+}
+
+/* REASON */
+
+.application-reason{
+    background:#fafafa;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+.application-reason small{
+    color:#888;
+    font-size:12px;
+}
+
+.application-reason p{
+    margin-top:8px;
+    color:#333;
+    line-height:1.6;
+    font-size:14px;
+}
+
+/* FOOTER */
+
+.application-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:10px;
+    border-top:1px solid #eee;
+    padding-top:15px;
+}
+
+.application-footer span{
+    font-size:13px;
+    color:#2563eb;
+    font-weight:600;
+}
+
+.application-footer small{
+    color:#888;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .student-application-wrapper{
+        padding:12px;
+    }
+
+    .student-application-header h2{
+        font-size:24px;
+    }
+
+    .student-application-card{
+        padding:18px;
+    }
+
+    .application-top{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .application-dates{
+        flex-direction:column;
+    }
+
+}

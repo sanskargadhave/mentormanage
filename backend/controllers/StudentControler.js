@@ -458,6 +458,22 @@ const getapplication = async (req,resp)=>{
   }
 }
 
+const getProfiledetails = async (req,resp)=>{
+  try{
+    const {id} =  req.params;
+    const profileDetails = await StoreStudent.findOne({studentid:id}).populate("collagedetails.mentor");
+    if(!profileDetails)
+    {
+      resp.status(401).json({message:"Student Not Found "});
+    }
+    resp.status(200).json({profileDetails});
+  }
+  catch(err)
+  {
+    resp.status(500).json({message:err.message})
+  }
+}
+
 module.exports={GetStudentDetailsByRoll,SearchStudent,StudentCounts,
   StoreStudentDetails,GetStudent,giveApprove,giveReject,
-  getMentordetails,sendApplication,givePermission,getapplication};
+  getMentordetails,sendApplication,givePermission,getapplication,getProfiledetails};

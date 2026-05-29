@@ -148,7 +148,12 @@ function ViewStudent() {
                                         <div className="card-header-row">
                                             <h6 className="date">
                                                 <i className="bi bi-calendar-heart-fill set-icon"></i>
-                                                {new Date(data._id).toLocaleDateString()}
+                                                
+                                                {new Date(data._id).toLocaleDateString("en-IN",{
+                                                    day:"numeric",
+                                                    month:"short",
+                                                    year:"numeric"
+                                                })}
                                             </h6>
 
                                             <span className={`status-badge ${data.absentcount > 0 ? "bad" : "good"}`}>
