@@ -461,7 +461,7 @@ const getapplication = async (req,resp)=>{
 const getProfiledetails = async (req,resp)=>{
   try{
     const {id} =  req.params;
-    const profileDetails = await StoreStudent.findOne({studentid:id}).populate("collagedetails.mentor");
+    const profileDetails = await StoreStudent.findOne({studentid:id}).select("-password -__v").populate({path:"collagedetails.mentor",select:"personaldetails.name professionaldetails.department professionaldetails.exprience contactdetails.mobileno contactdetails.emailid"});
     if(!profileDetails)
     {
       resp.status(401).json({message:"Student Not Found "});
