@@ -510,4 +510,4 @@ const updateProfiledetails = async (req,resp)=>{
 
 module.exports={GetStudentDetailsByRoll,SearchStudent,StudentCounts,
   StoreStudentDetails,GetStudent,giveApprove,giveReject,
-  getMentordetails,sendApplication,givePermission,getapplication,getProfiledetails,updateProfiledetailss};
+  getMentordetails,sendApplication,givePermission,getapplication,getProfiledetails,updateProfiledetails};
