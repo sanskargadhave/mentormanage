@@ -4,7 +4,21 @@ import { AuthContext } from './Authintication';
 import axios from "axios";
 function Settings() {
    const {id,token}=useContext(AuthContext);
+   const [profiledetails,setprofiledetails]=useState([]);
+   const [personalDetails,setpersonalDetails]=useState({
+      aadharno:"",
+      address:"",
+      dob:"",
+      fathername:"",
+      mothername:"",
+      mobileno:"",
+      parentno:"",
+      pincode:"",
+      name:"",
+
+   })
    const [profileImage, setProfileImage] = useState("https://i.pravatar.cc/300");
+   
    useEffect(()=>{
         if(!token || !id) return ;
         async function getProfiledetails(){
@@ -14,6 +28,12 @@ function Settings() {
                         Authorization: `Bearer ${token}`,
                     },
                 });
+                setprofiledetails(resp.data.profileDetails);
+                const data=resp.data.profileDetails.personaldetails;
+                if(data)
+                {
+                  setpersonalDetails(data);
+                }
                 console.log(resp.data.profileDetails);
             }
             catch(err)
@@ -39,6 +59,25 @@ function Settings() {
       }
    };
 
+   async function updateinfo()
+   {
+      if(!token || !id) return ;
+      try{
+            const resp=await axios.put(`https://sangolacollage.onrender.com/api/student/updateprofile-details`,{personalDetails,id},{
+                   headers: {
+                      Authorization: `Bearer ${token}`,
+                      "Content-Type": "application/json"
+                  }
+              });
+              alert(resp.data.message);
+      }
+      catch(err)
+      {
+         alert(err.message);
+      }
+   }
+
+
    return (
       <div className="settings-page">
          <div className="container py-5">
@@ -53,17 +92,17 @@ function Settings() {
                               <input type="file" hidden onChange={handleImage}/>
                            </label>
                         </div>
-                        <h3>Sanskar</h3>
-                        <p className="role-text">Mentor</p>
+                        <h3>{personalDetails?.name}</h3>
+                        <p className="role-text">Student</p>
 
                         <div className="profile-info">
                            <div>
                               <span>Email</span>
-                              <p>sanskar@gmail.com</p>
+                              <p>{profiledetails?.emailid}</p>
                            </div>
                            <div>
                               <span>Department</span>
-                              <p>Computer Science</p>
+                              <p>{profiledetails?.collagedetails?.department}</p>
                            </div>
                            <div>
                               <span>Status</span>
@@ -80,7 +119,7 @@ function Settings() {
                            <div className="profile-update-info">
                            <h4>Profile Update Policy</h4>
                               <p>
-                                  You can update your personal details only once every 7 days.
+                                  You can update your details only once every 7 days.
                               </p>
                         </div> 
                            <div className="section-header">
@@ -91,7 +130,7 @@ function Settings() {
                               <div className="col-md-6">
                                  <div className="input-group-custom">
                                     <label>Full Name</label>
-                                    <input type="text" value="Sanskar" className="underline-input"/>
+                                    <input type="text" value={personalDetails.name} className="underline-input"/>
                                  </div>
                               </div>
                               <div className="col-md-6">
@@ -99,13 +138,13 @@ function Settings() {
                                     <label>
                                        Address
                                     </label>
-                                    <input type="text" value="At Post Piliv " className="underline-input" />
+                                    <input type="text" value={personalDetails.address} className="underline-input" />
                                  </div>
                               </div>
                               <div className="col-md-6">
                                  <div className="input-group-custom">
                                     <label> Pincode </label>
-                                    <input type="text" value="413310" className="underline-input"/>
+                                    <input type="text" value={personalDetails.pincode} className="underline-input"/>
                                  </div>
                               </div>
                               <div className="col-md-6">
@@ -113,7 +152,11 @@ function Settings() {
                                     <label>
                                        DOB
                                     </label>
-                                    <input type="date" value="02/01/2006" disabled className="underline-input disabled-input"/>
+                                    <input type="text" value={ new Date(personalDetails.dob).toLocaleDateString("en-IN",{
+                                                    day:"numeric",
+                                                    month:"short",
+                                                    year:"numeric"
+                                                })} disabled className="underline-input disabled-input"/>
                                  </div>
                               </div>
                               <div className="col-md-6">
@@ -121,7 +164,7 @@ function Settings() {
                                     <label>
                                        Aadhar No
                                     </label>
-                                    <input type="text" value="818234391788" className="underline-input"/>
+                                    <input type="text" value={personalDetails.aadharno} className="underline-input"/>
                                  </div>
                               </div>
                               <div className="col-md-6">
@@ -129,7 +172,7 @@ function Settings() {
                                     <label>
                                       Father Name
                                     </label>
-                                    <input type="text" value="Gadhave Shantinath Aba" className="underline-input"/>
+                                    <input type="text" value={personalDetails.fathername} className="underline-input"/>
                                  </div>
                               </div>
                               <div className="col-md-6">
@@ -137,7 +180,7 @@ function Settings() {
                                     <label>
                                       Mother Name
                                     </label>
-                                    <input type="text" value="Gadhave Sunita" className="underline-input"/>
+                                    <input type="text" value={personalDetails.mothername} className="underline-input"/>
                                  </div>
                               </div>
                               <div className="col-md-6">
@@ -145,7 +188,7 @@ function Settings() {
                                     <label>
                                       Mobile No
                                     </label>
-                                    <input type="text" value="7276699105" className="underline-input"/>
+                                    <input type="text" value={personalDetails.mobileno} className="underline-input"/>
                                  </div>
                               </div>
                               <div className="col-md-6">
@@ -153,7 +196,7 @@ function Settings() {
                                     <label>
                                       Parent Mobile No.
                                     </label>
-                                    <input type="text" value="9096269105" disabled className="disabled-input underline-input"/>
+                                    <input type="text" value={personalDetails.parentno} disabled className="disabled-input underline-input"/>
                                  </div>
                               </div>
                            </div>
@@ -181,7 +224,7 @@ function Settings() {
                                     <label>
                                        Course
                                     </label>
-                                    <input type="text" value="Bsc [ECS]" disabled className="underline-input disabled-input"/>
+                                    <input type="text" value={profiledetails?.collagedetails?.course} disabled className="underline-input disabled-input"/>
                                  </div>
                               </div>
                               <div className="col-md-6"> 
@@ -189,7 +232,7 @@ function Settings() {
                                     <label>
                                        Year
                                     </label>
-                                    <input type="text" value="Second" disabled className="underline-input disabled-input"/>
+                                    <input type="text" value={profiledetails?.collagedetails?.year} disabled className="underline-input disabled-input"/>
                                  </div>
                               </div>
                               <div className="col-md-6"> 
@@ -197,7 +240,7 @@ function Settings() {
                                     <label>
                                        Division
                                     </label>
-                                    <input type="text" value="A" disabled className="underline-input disabled-input"/>
+                                    <input type="text" value={profiledetails?.collagedetails?.division} disabled className="underline-input disabled-input"/>
                                  </div>
                               </div>
                               <div className="col-md-6"> 
@@ -205,7 +248,7 @@ function Settings() {
                                     <label>
                                        Roll Number
                                     </label>
-                                    <input type="text" value="3121" disabled className="underline-input disabled-input"/>
+                                    <input type="text" value={profiledetails?.collagedetails?.rollno} disabled className="underline-input disabled-input"/>
                                  </div>
                               </div>
                               <div className="col-md-6"> 
@@ -213,7 +256,7 @@ function Settings() {
                                     <label>
                                        Id No.
                                     </label>
-                                    <input type="text" value="BT#192039" disabled className="underline-input disabled-input"/>
+                                    <input type="text" value={profiledetails?.collagedetails?.idno} disabled className="underline-input disabled-input"/>
                                  </div>
                               </div>
                            </div>
@@ -226,7 +269,7 @@ function Settings() {
 
                            <img  alt="" className="mentor-image" />
                            <div>
-                              <h5> Prof. Subhash Patil Sir</h5>
+                              <h5> Prof. {profiledetails?.collagedetails?.mentor?.personaldetails?.name} </h5>
                               <p>Mentor </p>
                            </div>
                         </div>
@@ -236,7 +279,7 @@ function Settings() {
                                  <label>
                                     Department
                                  </label>
-                                 <input type="text" value="Computer Science" disabled className="underline-input disabled-input"/>
+                                 <input type="text" value={profiledetails?.collagedetails?.mentor?.professionaldetails?.department} disabled className="underline-input disabled-input"/>
                               </div>
                            </div>
                            <div className="col-md-6">
@@ -244,7 +287,7 @@ function Settings() {
                                  <label>
                                     Exprience
                                  </label>
-                                 <input type="text" value="11 Years" disabled className="underline-input disabled-input"/>
+                                 <input type="text" value={profiledetails?.collagedetails?.mentor?.professionaldetails?.exprience} disabled className="underline-input disabled-input"/>
                               </div>
                            </div>
                            <div className="col-md-6">
@@ -252,7 +295,7 @@ function Settings() {
                                  <label>
                                     Mobile No.
                                  </label>
-                                 <input type="text" value="2838393983" disabled className="underline-input disabled-input"/>
+                                 <input type="text" value={profiledetails?.collagedetails?.mentor?.contactdetails?.mobileno} disabled className="underline-input disabled-input"/>
                               </div>
                            </div>
                            <div className="col-md-6">
@@ -260,7 +303,7 @@ function Settings() {
                                  <label>
                                     Email Id 
                                  </label>
-                                 <input type="email" value="saasms@gmail.com" disabled className="underline-input disabled-input"/>
+                                 <input type="email" value={profiledetails?.collagedetails?.mentor?.contactdetails?.emailid} disabled className="underline-input disabled-input"/>
                               </div>
                            </div>
                         </div>
@@ -302,7 +345,7 @@ function Settings() {
                         </div>
                         
                         <div className="save-btn-wrapper">
-                           <button className="save-btn">
+                           <button className="save-btn" onClick={updateinfo}>
                               Save Changes
                            </button>
                         </div>
