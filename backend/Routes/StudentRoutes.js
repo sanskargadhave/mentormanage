@@ -9,7 +9,10 @@ router.use(verifyToken,isStudent);
 router.get("/get-mentordetails/:studentid",getMentordetails);
 router.get("/get-student-applications/:id",getapplication);
 router.get("/get-profiledetails/:id",getProfiledetails);
-router.get("/updateprofile-details",updateProfiledetails);
+
+
+
+router.put("/updateprofile-details",updateProfiledetails);
 
 
 router.post("/send-application",sendApplication);

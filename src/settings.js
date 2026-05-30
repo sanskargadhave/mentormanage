@@ -77,6 +77,16 @@ function Settings() {
       }
    }
 
+   const handleChange = (e) => {
+
+   const { name, value } = e.target;
+
+   setpersonalDetails(prev => ({
+      ...prev,
+      [name]: value
+   }));
+
+};
 
    return (
       <div className="settings-page">
@@ -130,7 +140,7 @@ function Settings() {
                               <div className="col-md-6">
                                  <div className="input-group-custom">
                                     <label>Full Name</label>
-                                    <input type="text" value={personalDetails.name} className="underline-input"/>
+                                    <input type="text" name="name" value={personalDetails.name} className="underline-input" onChange={handleChange}/>
                                  </div>
                               </div>
                               <div className="col-md-6">
@@ -138,13 +148,13 @@ function Settings() {
                                     <label>
                                        Address
                                     </label>
-                                    <input type="text" value={personalDetails.address} className="underline-input" />
+                                    <input type="text" name="address" value={personalDetails.address} className="underline-input" onChange={handleChange}/>
                                  </div>
                               </div>
                               <div className="col-md-6">
                                  <div className="input-group-custom">
                                     <label> Pincode </label>
-                                    <input type="text" value={personalDetails.pincode} className="underline-input"/>
+                                    <input type="text" name="pincode" value={personalDetails.pincode} className="underline-input" onChange={handleChange}/>
                                  </div>
                               </div>
                               <div className="col-md-6">
@@ -164,7 +174,7 @@ function Settings() {
                                     <label>
                                        Aadhar No
                                     </label>
-                                    <input type="text" value={personalDetails.aadharno} className="underline-input"/>
+                                    <input type="text" name="aadharno" value={personalDetails.aadharno} className="underline-input" onChange={handleChange}/>
                                  </div>
                               </div>
                               <div className="col-md-6">
@@ -172,7 +182,7 @@ function Settings() {
                                     <label>
                                       Father Name
                                     </label>
-                                    <input type="text" value={personalDetails.fathername} className="underline-input"/>
+                                    <input type="text" name="fathername" value={personalDetails.fathername} className="underline-input" onChange={handleChange}/>
                                  </div>
                               </div>
                               <div className="col-md-6">
@@ -180,7 +190,7 @@ function Settings() {
                                     <label>
                                       Mother Name
                                     </label>
-                                    <input type="text" value={personalDetails.mothername} className="underline-input"/>
+                                    <input type="text" name="mothername" value={personalDetails.mothername} className="underline-input" onChange={handleChange}/>
                                  </div>
                               </div>
                               <div className="col-md-6">
@@ -188,7 +198,7 @@ function Settings() {
                                     <label>
                                       Mobile No
                                     </label>
-                                    <input type="text" value={personalDetails.mobileno} className="underline-input"/>
+                                    <input type="text" name="mobileno" value={personalDetails.mobileno} className="underline-input" onChange={handleChange}/>
                                  </div>
                               </div>
                               <div className="col-md-6">
