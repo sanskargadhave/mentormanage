@@ -477,14 +477,21 @@ const getProfiledetails = async (req,resp)=>{
 const updateProfiledetails = async (req,resp)=>{
     try{
       const {personalDetails,id}=req.body;
-      const updatedAt = new Date(profiledetails.updatedAt);
+      
+      const updatedAt = await StoreStudent.findOne({studentid:id},"updatedAt");
+      if(!updatedAt)
+      {
+        return resp.status(404).json({message:"Student Not Found"});
+      }
+
+      const updatedAt = new Date(updatedAt);
 
       const today = new Date();
 
       const differenceInDays = Math.floor((today - updatedAt) / (1000 * 60 * 60 * 24));
 
-      if (!differenceInDays >= 7) {
-        resp.status(404).json({message:`You can Update after  ${7 - differenceInDays} more days`})
+      if (differenceInDays < 7) {
+        return resp.status(404).json({message:`You can Update after  ${7 - differenceInDays} more days`})
       } 
       
 
