@@ -4,7 +4,7 @@ import { supabase}  from "../supabase";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../Authintication';
-import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
+
 function LeaveApplication() {
   const navigate=useNavigate();
   const {id,token}=useContext(AuthContext);
@@ -17,13 +17,15 @@ function LeaveApplication() {
   const [toDate,setToDate]=useState("");
   const [reason,setReason]=useState("");
   const [loding,setloding]=useState(false);
+  const [showToast,setShowToast]=useState(false);
+  const showtoast = (msg) => {
+  setmessage(msg);
+  setShowToast(true);
 
-  const showtoast = (tmessage) => {
-      setmessage(tmessage);
-      const toastElement = document.getElementById("liveToast");
-      const toast = new bootstrap.Toast(toastElement, { delay: 8000 });
-      toast.show();
-    }
+  setTimeout(() => {
+    setShowToast(false);
+  }, 5000);
+};
 
   useEffect(()=>{
     axios.get(`https://sangolacollage.onrender.com/api/student/get-mentordetails/${id}`,{
@@ -102,10 +104,12 @@ function LeaveApplication() {
       );
     
       showtoast(resp.data.message);
+      
     }
     catch(err)
     {
       showtoast(err.response?.data?.message||err.message);
+       
     }
     finally{
       setloding(false);
@@ -211,32 +215,30 @@ function LeaveApplication() {
               
             </button>
           </div>
-          <div aria-live="polite" aria-atomic="true" classNa  me="d-flex justify-content-center align-items-center w-100 mt-8">
+          {showToast && (
+  <div className="toast-overlay">
+    <div
+      id="liveToast"
+      className="toast show custom-toast"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div className="toast-header">
+        <strong className="me-auto">Leave Application</strong>
+        <button
+          type="button"
+          className="btn-close"
+          onClick={() => setShowToast(false)}
+        ></button>
+      </div>
 
-                <div id="liveToast" className="toast" role="alert" aria-live="assertive" aria-atomic="true">
-
-                    <div className="toast-header">
-
-                        <strong class="me-auto">Leave Application</strong>
-                        <small>For Your Service</small>
-
-                        <button
-                            type="button"
-                            className="btn-close"
-                            data-bs-dismiss="toast"
-                            aria-label="Close"
-                        ></button>
-
-                    </div>
-
-                    <div className="toast-body">
-                        {message}
-                    </div>
-
-                </div>
-
-            </div>
-
+      <div className="toast-body">
+        {message}
+      </div>
+    </div>
+  </div>
+)}
         </form>
       </div>
       

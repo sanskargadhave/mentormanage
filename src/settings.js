@@ -4,7 +4,9 @@ import { AuthContext } from './Authintication';
 import axios from "axios";
 function Settings() {
    const {id,token}=useContext(AuthContext);
+   const [message,setmessage]=useState("");
    const [profiledetails,setprofiledetails]=useState([]);
+    const [showToast,setShowToast]=useState(false);
    const [personalDetails,setpersonalDetails]=useState({
       aadharno:"",
       address:"",
@@ -18,7 +20,15 @@ function Settings() {
 
    })
    const [profileImage, setProfileImage] = useState("https://i.pravatar.cc/300");
-   
+   const showtoast = (msg) => {
+      setmessage(msg);
+      setShowToast(true);
+
+      setTimeout(() => {
+      setShowToast(false);
+      }, 5000);
+   };
+
    useEffect(()=>{
         if(!token || !id) return ;
         async function getProfiledetails(){
@@ -69,11 +79,11 @@ function Settings() {
                       "Content-Type": "application/json"
                   }
               });
-              alert(resp.data.message);
+              showtoast(resp.data.message);
       }
       catch(err)
       {
-         alert(err.message);
+         showtoast(err.response?.data?.message||err.message);
       }
    }
 
@@ -359,6 +369,20 @@ function Settings() {
                               Save Changes
                            </button>
                         </div>
+                        {showToast && (
+                           <div className="toast-overlay">
+                              <div id="liveToast" className="toast show custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                 <div className="toast-header">
+                                    <strong className="me-auto">Leave Application</strong>
+                                    <button type="button" className="btn-close" onClick={() => setShowToast(false)}></button>
+                                 </div>
+
+                                 <div className="toast-body">
+                                    {message}
+                                 </div>
+                              </div>
+                           </div> 
+                        )}
                      </div>  
                           
                   </div>
