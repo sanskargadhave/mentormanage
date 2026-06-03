@@ -43,9 +43,8 @@ import { use } from "react";
           <Route path="/register-student" element={<AddStudent />} />
           {/* For Only login */}
           <Route path="/login" element={<Login />} />
-          
-          <Route path="/warning-logout" element={<LogoutWarning/>}/>
           <Route path="/settings" element={<Settings/>}/>
+          <Route path="/warning-logout" element={<LogoutWarning/>}/>
 
           {/* Admin */}
           <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
@@ -93,6 +92,7 @@ import { use } from "react";
             <Route path="/student" element={<SidebarLayout/>}>
               <Route index element={<StudentDashbord/>}/>
               <Route path="leave-application-to-mentor" element={<LeaveApplication/>}/>
+              
 
             
             </Route>

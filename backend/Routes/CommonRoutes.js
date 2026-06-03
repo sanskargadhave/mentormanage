@@ -19,4 +19,5 @@ router.get("/get-attendance/:lectureid",GetAttendanceByLectureId);
 router.get("/User-Counts",Counts);
 router.post("/add-student",StoreStudentDetails);
 router.post("/store-attendance",StoreAttendances);
+
 module.exports = router;

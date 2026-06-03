@@ -13,7 +13,7 @@ const CommonRoutes=require("./Routes/CommonRoutes");
 const MentorRoutes=require("./Routes/MentorRoutes");
 const StudentRoutes=require("./Routes/StudentRoutes");
 const TeacherRoutes=require("./Routes/TeacherRoutes");
-
+const ProfileRoutes=require("./Routes/ProfileRoutes");
 
 
 const app = express();
@@ -40,7 +40,7 @@ app.use("/api/common",CommonRoutes);
 app.use("/api/mentor",MentorRoutes);
 app.use("/api/student",StudentRoutes);
 app.use("/api/teacher",TeacherRoutes);
-
+app.use("/api/profile",ProfileRoutes);
 
 
 const PORT = process.env.PORT || 5000;

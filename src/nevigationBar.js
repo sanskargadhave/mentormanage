@@ -46,11 +46,14 @@ function NevigationBar() {
               </a>
             </li>
 
+          
             <li className="nav-item">
               <a className="nav-link" href="/settings">
                 <i className="bi bi-gear"></i>   settings
               </a>
             </li>
+            
+
             <li className="nav-item">
               { role ==="Guest" && (
               <div className="col-12">

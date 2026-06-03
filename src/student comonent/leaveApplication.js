@@ -24,7 +24,7 @@ function LeaveApplication() {
 
   setTimeout(() => {
     setShowToast(false);
-  }, 5000);
+  }, 8000);
 };
 
   useEffect(()=>{
@@ -215,7 +215,10 @@ function LeaveApplication() {
               
             </button>
           </div>
-          {showToast && (
+          
+        </form>
+      </div>
+              {showToast && (
   <div className="toast-overlay">
     <div
       id="liveToast"
@@ -239,10 +242,6 @@ function LeaveApplication() {
     </div>
   </div>
 )}
-        </form>
-      </div>
-      
-            
     </div>
   );
 }

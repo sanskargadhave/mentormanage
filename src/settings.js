@@ -3,10 +3,10 @@ import "./settings.css";
 import { AuthContext } from './Authintication';
 import axios from "axios";
 function Settings() {
-   const {id,token}=useContext(AuthContext);
+   const {id,token,role}=useContext(AuthContext);
    const [message,setmessage]=useState("");
    const [profiledetails,setprofiledetails]=useState([]);
-    const [showToast,setShowToast]=useState(false);
+   const [showToast,setShowToast]=useState(false);
    const [personalDetails,setpersonalDetails]=useState({
       aadharno:"",
       address:"",
@@ -26,14 +26,14 @@ function Settings() {
 
       setTimeout(() => {
       setShowToast(false);
-      }, 5000);
+      }, 8000);
    };
 
    useEffect(()=>{
         if(!token || !id) return ;
         async function getProfiledetails(){
             try{
-                const resp= await axios.get(`https://sangolacollage.onrender.com/api/student/get-profiledetails/${id}`,{
+                const resp= await axios.get(`https://sangolacollage.onrender.com/api/profile/get-profiledetails/${id}`,{
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -73,7 +73,7 @@ function Settings() {
    {
       if(!token || !id) return ;
       try{
-            const resp=await axios.put(`https://sangolacollage.onrender.com/api/student/updateprofile-details`,{personalDetails,id},{
+            const resp=await axios.put(`https://sangolacollage.onrender.com/api/profile/updateprofile-details`,{personalDetails,id},{
                    headers: {
                       Authorization: `Bearer ${token}`,
                       "Content-Type": "application/json"
@@ -113,7 +113,7 @@ function Settings() {
                            </label>
                         </div>
                         <h3>{personalDetails?.name}</h3>
-                        <p className="role-text">Student</p>
+                        <p className="role-text">{role}</p>
 
                         <div className="profile-info">
                            <div>
@@ -137,11 +137,11 @@ function Settings() {
                      <div className="settings-content">
                         <div className="settings-section">
                            <div className="profile-update-info">
-                           <h4>Profile Update Policy</h4>
+                              <h4>Profile Update Policy</h4>
                               <p>
-                                  You can update your details only once every 7 days.
+                                  <i className="bi bi-megaphone-fill me-2"></i>You can update your details only once every 7 days.
                               </p>
-                        </div> 
+                           </div> 
                            <div className="section-header">
                               <h3>Personal Details</h3>
                               <p>Update your personal information and contact details.</p>
@@ -226,9 +226,12 @@ function Settings() {
                               <h3>
                                  College Details
                               </h3>
-                              <p className="mentor-note">
-                                 Only Mentor can change your college details.
+                              <div className="profile-update-info">
+                              <h4>Profile Update Policy</h4>
+                              <p>
+                                 <i className="bi bi-megaphone-fill me-2"></i> Only Mentor Can Change Your College Details .
                               </p>
+                           </div> 
                            </div>
                            <div className="row">
                               <div className="col-md-6">
@@ -282,7 +285,7 @@ function Settings() {
                            </div>
                         </div>
                         <div className="section-header">
-                              <h3>Your Mentor Details</h3>
+                              <h3>Mentor Details</h3>
                               
                            </div>
                         <div className="mentor-header">
@@ -373,11 +376,14 @@ function Settings() {
                            <div className="toast-overlay">
                               <div id="liveToast" className="toast show custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
                                  <div className="toast-header">
-                                    <strong className="me-auto">Leave Application</strong>
+                                    <strong className="me-auto">Profile Info</strong>
                                     <button type="button" className="btn-close" onClick={() => setShowToast(false)}></button>
                                  </div>
 
                                  <div className="toast-body">
+                                    <p>
+                                       update your details only once every 7 days.
+                                    </p>
                                     {message}
                                  </div>
                               </div>
