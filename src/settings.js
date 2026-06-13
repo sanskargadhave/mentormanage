@@ -165,6 +165,8 @@ function Settings() {
                                     <input type="text" name="address" value={personalDetails.address} className="underline-input" onChange={handleChange}/>
                                  </div>
                               </div>
+                              {role === "Student" && (
+                              <>
                               <div className="col-md-6">
                                  <div className="input-group-custom">
                                     <label> Pincode </label>
@@ -174,24 +176,12 @@ function Settings() {
                               <div className="col-md-6">
                                  <div className="input-group-custom">
                                     <label>
-                                       DOB
-                                    </label>
-                                    <input type="text" value={ new Date(personalDetails.dob).toLocaleDateString("en-IN",{
-                                                    day:"numeric",
-                                                    month:"short",
-                                                    year:"numeric"
-                                                })} disabled className="underline-input disabled-input"/>
-                                 </div>
-                              </div>
-                              <div className="col-md-6">
-                                 <div className="input-group-custom">
-                                    <label>
                                        Aadhar No
                                     </label>
                                     <input type="text" name="aadharno" value={personalDetails.aadharno} className="underline-input" onChange={handleChange}/>
                                  </div>
-                              </div>
-                              <div className="col-md-6">
+                              </div>  
+                               <div className="col-md-6">
                                  <div className="input-group-custom">
                                     <label>
                                       Father Name
@@ -210,21 +200,41 @@ function Settings() {
                               <div className="col-md-6">
                                  <div className="input-group-custom">
                                     <label>
+                                      Parent Mobile No.
+                                    </label>
+                                    <input type="text" value={personalDetails.parentno} disabled className="disabled-input underline-input"/>
+                                 </div>
+                              </div>                      
+                              </>
+                           )}
+                              <div className="col-md-6">
+                                 <div className="input-group-custom">
+                                    <label>
+                                       DOB
+                                    </label>
+                                    <input type="text" value={ new Date(personalDetails.dob).toLocaleDateString("en-IN",{
+                                                    day:"numeric",
+                                                    month:"short",
+                                                    year:"numeric"
+                                                })} disabled className="underline-input disabled-input"/>
+                                 </div>
+                              </div>
+                              
+                              
+                             
+                              <div className="col-md-6">
+                                 <div className="input-group-custom">
+                                    <label>
                                       Mobile No
                                     </label>
                                     <input type="text" name="mobileno" value={personalDetails.mobileno} className="underline-input" onChange={handleChange}/>
                                  </div>
                               </div>
-                              <div className="col-md-6">
-                                 <div className="input-group-custom">
-                                    <label>
-                                      Parent Mobile No.
-                                    </label>
-                                    <input type="text" value={personalDetails.parentno} disabled className="disabled-input underline-input"/>
-                                 </div>
-                              </div>
+                              
                            </div>
                         </div>
+                        {role === "Student" && (
+                           <>
                         <div className="settings-section">
                            <div className="section-header">
                               <h3>
@@ -334,6 +344,8 @@ function Settings() {
                               </div>
                            </div>
                         </div>
+                        </>
+                     )}
                      <div className="settings-section">
                            <div className="section-header">
                               <h3>

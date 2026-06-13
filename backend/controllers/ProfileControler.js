@@ -17,12 +17,45 @@ const getProfiledetails = async (req, resp) => {
                 });
         }
         else if (role === "Mentor") {
-            profileDetails = await StoreMentor.findOne({ mentorId: id })
+            const mentor = await StoreMentor.findOne({ mentorId: id })
                 .select("-password -__v");
+
+            profileDetails = {
+                personaldetails:{
+                    name:mentor.personaldetails.name,
+                    dob:mentor.personaldetails.dob,
+                    mobileno:mentor.contactdetails.mobileno,
+                    
+                    address:mentor.contactdetails.address,
+                },
+                collagedetails:{
+                    department:mentor.professionaldetails.department,
+                    qualification:mentor.professionaldetails.qualification,
+                    exprience:mentor.professionaldetails.exprience,
+                    joiningdate:mentor.professionaldetails.joiningdate,
+                },
+                emailid:mentor.contactdetails.emailid
+            }
         }
         else if (role === "Teacher") {
-            profileDetails = await StoreTeacher.findOne({ TeacherId: id })
+            const teacher = await StoreTeacher.findOne({ TeacherId: id })
                 .select("-password -__v");
+            profileDetails = {
+                personaldetails:{
+                    name:teacher.personaldetails.name,
+                    dob:teacher.personaldetails.dob,
+                    mobileno:teacher.contactdetails.mobileno,
+                    emailid:teacher.contactdetails.emailid,
+                    address:teacher.contactdetails.address,
+                },
+                collagedetails:{
+                    department:teacher.professionaldetails.department,
+                    qualification:teacher.professionaldetails.qualification,
+                    exprience:teacher.professionaldetails.exprience,
+                    joiningdate:teacher.professionaldetails.joiningdate,
+                },
+                emailid:teacher.contactdetails.emailid,
+            }
         }
         else if (role === "Admin") {
             profileDetails = await StoreAdmin.findOne({ adminId: id })
