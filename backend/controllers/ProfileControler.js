@@ -1,16 +1,33 @@
-const {StoreStudent}= require("../model/studentSchema");
+const {StoreStudent,StoreMentor,StoreTeacher}= require("../model/studentSchema");
+const {StoreAdmin}=require("../model/adminSchema");
 const mongoose = require("mongoose");
 const getProfiledetails = async (req,resp)=>{
   try{
     const {id} =  req.params;
     const {role} =req.user;
    
-    
+    if(role==="Student")
+    {
     const profileDetails = await StoreStudent.findOne({studentid:id}).select("-password -__v").populate({path:"collagedetails.mentor",select:"personaldetails.name professionaldetails.department professionaldetails.exprience contactdetails.mobileno contactdetails.emailid"});
+    }
+    if(role==="Mentor")
+    {
+    const profileDetails = await StoreMentor.findOne({mentorId:id}).select("-password -__v");
+    }
+    if(role==="Teacher")
+    {
+    const profileDetails = await StoreTeacher.findOne({TeacherId:id}).select("-password -__v");
+    }
+    if(role==="Admin")
+    {
+      const profileDetails =await StoreAdmin.findOne({adminId:id}).select("-password -__v");
+    }
+
     if(!profileDetails)
     {
-      resp.status(401).json({message:"Student Not Found "});
+      return resp.status(401).json({message:`${role} Not Found `});
     }
+    
     resp.status(200).json({profileDetails});
   }
   catch(err)  

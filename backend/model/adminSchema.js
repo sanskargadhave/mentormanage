@@ -2,7 +2,10 @@ const mongoose=require("mongoose");
 
 const adminSchema=new mongoose.Schema({
     emailid:{type:String,required:true},
-    password:{type:String,required:true}
+    password:{type:String,required:true},
+    name:{type:String},
+    adminId:{type:String}
 });
+StoreAdmin= mongoose.model("Admin", adminSchema,"AdminDetails");
 
-module.exports = mongoose.model("Admin", adminSchema,"AdminDetails");
+module.exports ={StoreAdmin};
