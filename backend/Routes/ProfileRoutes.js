@@ -3,6 +3,7 @@ const verifyToken =require("../middleware/authmiddleware");
 const router=express.Router();
 const {getProfiledetails,updateProfiledetails}=require("../controllers/ProfileControler");
 
+router.use(verifyToken);
 
 router.get("/get-profiledetails/:id",getProfiledetails);
 router.put("/updateprofile-details",updateProfiledetails);
