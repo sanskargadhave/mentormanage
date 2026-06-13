@@ -33,7 +33,11 @@ function Settings() {
         if(!token || !id) return ;
         async function getProfiledetails(){
             try{
-                const resp= await axios.get(`https://sangolacollage.onrender.com/api/profile/get-profiledetails/${id}`);
+                const resp= await axios.get(`https://sangolacollage.onrender.com/api/profile/get-profiledetails/${id}`,{
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
                 setprofiledetails(resp.data.profileDetails);
                 const data=resp.data.profileDetails.personaldetails;
                 if(data)
@@ -44,7 +48,11 @@ function Settings() {
             }
             catch(err)
             {
-               alert(err.message);
+               console.log(err.response);
+               console.log(err.response?.data);
+               console.log(err.response?.status);
+
+                  alert(err.response?.data?.message || err.message);
             }
         }
         getProfiledetails();
@@ -69,7 +77,12 @@ function Settings() {
    {
       if(!token || !id) return ;
       try{
-            const resp=await axios.put(`https://sangolacollage.onrender.com/api/profile/updateprofile-details`,{personalDetails,id});
+            const resp=await axios.put(`https://sangolacollage.onrender.com/api/profile/updateprofile-details`,{personalDetails,id},{
+                   headers: {
+                      Authorization: `Bearer ${token}`,
+                      "Content-Type": "application/json"
+                  }
+              });
               showtoast(resp.data.message);
       }
       catch(err)
