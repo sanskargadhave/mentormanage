@@ -341,7 +341,67 @@
   padding: 20px;
   font-size: 16px;
 }
+.students-section{
+    margin-top: 30px;
+}
 
+.students-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.students-title{
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.students-subtitle{
+    margin: 4px 0 0;
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+.student-count-badge{
+    min-width: 50px;
+    height: 50px;
+    background: #eef2ff;
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(79,70,229,0.15);
+}
+
+.students-toolbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.student-search{
+    width: 300px;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.student-search:focus{
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
+}
 @keyframes popup {
   from {
     transform: scale(0.8);

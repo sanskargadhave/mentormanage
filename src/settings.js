@@ -137,6 +137,7 @@ function Settings() {
                         </div>
                      </div>
                   </div>
+
                   <div className="col-lg-8">
                      <div className="settings-content">
                         <div className="settings-section">
@@ -346,6 +347,26 @@ function Settings() {
                         </div>
                         </>
                      )}
+                     <div className="students-section">
+    
+                        <div className="students-header">
+                           <div>
+                              <h3 className="students-title">
+                                 👨‍🎓 Assigned Students
+                              </h3>
+                              <p className="students-subtitle"> Students assigned under your mentorship </p>
+                           </div>
+
+                           <div className="student-count-badge">
+                              20
+                           </div>
+                        </div>
+
+                        <div className="students-toolbar">
+                           <input  type="text" placeholder="Search student..." className="student-search"/>
+                        </div>
+
+                     </div>
                      <div className="settings-section">
                            <div className="section-header">
                               <h3>

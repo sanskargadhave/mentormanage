@@ -19,6 +19,8 @@ const getProfiledetails = async (req, resp) => {
         else if (role === "Mentor") {
             const mentor = await StoreMentor.findOne({ mentorId: id })
                 .select("-password -__v");
+          
+            const studentdetails = await StoreStudent.find({"collagedetails.mentorId":id}).select("-password -__v");
 
             profileDetails = {
                 personaldetails:{
@@ -34,7 +36,8 @@ const getProfiledetails = async (req, resp) => {
                     exprience:mentor.professionaldetails.exprience,
                     joiningdate:mentor.professionaldetails.joiningdate,
                 },
-                emailid:mentor.contactdetails.emailid
+                emailid:mentor.contactdetails.emailid,
+                studentdetails:studentdetails
             }
         }
         else if (role === "Teacher") {
