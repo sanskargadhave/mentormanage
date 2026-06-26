@@ -8,6 +8,12 @@ export default function LogoutWarning()
 {
     const { logout,role } = useContext(AuthContext);
     const nevigate=useNavigate();
+    const getHomeRoute = () => {
+    if (role === "Admin") return "/admin";
+    if (role === "Mentor") return "/mentor";
+    if (role === "Student") return "/student";
+    if(role==="Teacher") return "/teacher";
+  };
     return(
         <div className="logout-overlay admin-content">
             <div className="logout-modal  animate__animated animate__zoomIn">
@@ -24,7 +30,7 @@ export default function LogoutWarning()
                 </p>
 
                 <div className="logout-actions">
-                    <button className="cancel-btn" onClick={()=>{role==="Admin"? nevigate("/admin") : nevigate("/mentor")}}>
+                    <button className="cancel-btn" onClick={()=>nevigate(getHomeRoute())}>
                         <i className="bi bi-x-circle"></i>
                         Cancel
                     </button>

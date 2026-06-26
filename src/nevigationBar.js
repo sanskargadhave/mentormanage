@@ -14,9 +14,9 @@ function NevigationBar() {
       <div className="container mentor-nevbar">
 
         {/* Brand */}
-        <a className="navbar-brand d-flex align-items-center" href="/dashboard">
+        <a className="navbar-brand d-flex align-items-center" href="https://sangolacollege.org/">
           <img src={logo} alt="Logo" className="logo-img"/>
-          <span className="brand-text ms-2"> Sangola college Sangola</span>
+          <span className="brand-text ms-2"> Sangola College Sangola</span>
         </a>
 
         {/* Toggle button */}
@@ -69,19 +69,28 @@ function NevigationBar() {
 
                   <div className="profile-menu">
                     <div className="profile-header">
-                      <img src={profilepic || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"} alt="profile" className="navbar-profile-img"/>
-                      <h6 className="mb-2">Prof. {name}</h6>
-                      <hr/>
-                      <small className="text-muted">Role: {role}</small>
-                      <br/>
-                      <small className="text-muted">Id: {id}</small><br/>
-                      <small className="text-muted">EmailId: {email}</small><br/>
+                      <div className="position-relative">
+                        <img src={profilepic || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"} alt="profile" className="navbar-profile-img"/>
+                      </div>
+
+                      <div className="profile-info">
+                        
+                        <p><i className="bi bi-calendar-event set-icon"></i>   Date : {new Date().toLocaleDateString("en-IN",{
+                                                    day:"numeric",
+                                                    month:"short",
+                                                    year:"numeric"
+                                                })}</p>
+                        <p><i className="bi bi-person-badge set-icon"></i>   Role : {role}</p>
+                        <p><i className="bi bi-credit-card set-icon"></i>   {role} id : {id}</p>
+                        <p><i className="bi bi-envelope set-icon"></i>  {email}</p>
+                      </div>
                     </div>
                     <hr/>
-                    <button className="logout" onClick={()=>{nevigate("/admin/warning-logout")}}>
+                    <button className="logout" onClick={()=>{nevigate("/warning-logout")}}>
                       <i className="bi bi-box-arrow-right"></i>
                       Logout
                     </button>
+                    
                     <br/>
                   </div>
                 </li>
