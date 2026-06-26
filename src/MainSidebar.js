@@ -5,16 +5,26 @@ import { AuthContext } from "./Authintication";
 import { useContext } from "react";
 
 function MainSidebar({collapsed}){
-
-  const navigate = useNavigate();
-  
   const {role} = useContext(AuthContext);
+  const navigate = useNavigate();
+  const getHomeRoute = () => {
+    if (role === "Admin") return "/admin";
+    if (role === "Mentor") return "/mentor";
+    if (role === "Student") return "/student";
+  };
+  
   return(
 
     <div className={`mentor-sidebar ${collapsed ? "collapsed" : ""}`}>
     
       <div className="mentor-logo">
         {`Welcome ${role} 👋`}
+        <ul>
+        <li onClick={() => navigate(getHomeRoute())}>
+          <i className="bi bi-house-door set-icon"></i>
+          Home
+        </li>
+        </ul>
       </div>
       {role==="Admin" && (
         <ul>

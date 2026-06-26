@@ -530,7 +530,7 @@ const getstudentsummery = async (req,resp)=>{
         }
       ])
       
-
+      
 
   }
   catch(err)
