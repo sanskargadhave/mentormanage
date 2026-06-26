@@ -379,7 +379,7 @@ const sendApplication = async (req, resp) => {
       },
     };
     
-    const storeapplication=await storeApplication.create(notificationData);
+    const storeapplication=await StoreApplication.create(notificationData);
     const storedNotification=await NotificationSchema.create(notificationData)
     io.to("user_" +receiverid)
       .emit("notification", storedNotification);
