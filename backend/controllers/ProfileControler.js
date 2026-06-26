@@ -82,7 +82,7 @@ const getProfiledetails = async (req, resp) => {
 };
 const updateProfiledetails = async (req,resp)=>{
     try{
-      const {personalDetails,id}=req.body;
+      const {personalDetails,id,role}=req.body;
 
       const student = await StoreStudent.findOne({ studentid: id },"updatedAt" );
 
@@ -111,7 +111,7 @@ const updateProfiledetails = async (req,resp)=>{
           "personaldetails.parentno":personalDetails.parentno,
           "personaldetails.pincode":personalDetails.pincode
         }})
-        resp.status(200).json({message:"Profile info updated After 7 Days You can Updated "})
+        resp.status(200).json({message:"Profile info updated ...  After 7 Days You can Updated "})
     }
     catch(err)
     {

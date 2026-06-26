@@ -52,8 +52,9 @@ const addMentor=new mongoose.Schema({
         emailid:{type:String,required:true,unique:true},
         address:{type:String,required:true}
     },
-    password:{type:String,required:true}
-});
+    password:{type:String,required:true},
+    
+}, {timestamps:true});
 
 const addTeacher=new mongoose.Schema({
     TeacherId:{type:String,unique:true},
@@ -74,7 +75,7 @@ const addTeacher=new mongoose.Schema({
         address:{type:String,required:true}
     },
     password:{type:String,required:true}
-});
+},{timestamps:true});
 
 addMentor.pre("save", async function () {
   if (!this.isNew) return;

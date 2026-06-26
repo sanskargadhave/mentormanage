@@ -79,7 +79,7 @@ function Settings() {
    {
       if(!token || !id) return ;
       try{
-            const resp=await axios.put(`https://sangolacollage.onrender.com/api/profile/updateprofile-details`,{personalDetails,id},{
+            const resp=await axios.put(`https://sangolacollage.onrender.com/api/profile/updateprofile-details`,{personalDetails,id,role},{
                    headers: {
                       Authorization: `Bearer ${token}`,
                       "Content-Type": "application/json"
