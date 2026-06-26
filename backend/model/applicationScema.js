@@ -1,5 +1,5 @@
 const mongoose=require("mongoose");
-const StoreApplication = mongoose.Schema({
+const StoreApplication = new mongoose.Schema({
         senderId:{type: mongoose.Schema.Types.ObjectId,required: true},
         receiver_Id:{type: mongoose.Schema.Types.ObjectId,required: true},
         receiverid:{type:String,required:true},
