@@ -1,7 +1,9 @@
 const {StoreStudent}= require("../model/studentSchema");
 const mongoose = require("mongoose");
 const {StoreLecture,StoreAttendance}=require("../model/AttendanceSchema");
+const StoreApplication =require("../model/applicationScema")
 const bcrypt = require("bcryptjs");
+const {StoreTestResult}=require("../model/testSchema");
 const {getIO}=require("../socket");
 const adduser=require("../model/userSchema");
 const NotificationSchema=require("../model/notificationsScema");
@@ -340,7 +342,7 @@ const sendApplication = async (req, resp) => {
     const {leaveType,fromDate,toDate,reason,senderId,receiver_Id,
       receiverid,receiverRole,type,message,certificateUrl}=req.body;
 
-    const existingApplication = await NotificationSchema.findOne({ senderId: senderId, type: "Leave_application",
+    const existingApplication = await StoreApplication.findOne({ senderId: senderId, type: "Leave_application",
 
       $or: [
         { "data.fromDate": { $lte: toDate }, "data.toDate": { $gte: fromDate }}
@@ -349,7 +351,7 @@ const sendApplication = async (req, resp) => {
 
     if(existingApplication)
     {
-      console.log(existingApplication);
+    
       return resp.status(400).json({message:`you have already applied from ${fromDate} To ${toDate}`});
     }
   
@@ -376,6 +378,8 @@ const sendApplication = async (req, resp) => {
         totalDays:totalDays
       },
     };
+    
+    const storeApplication=await storeApplication.create(notificationData);
     const storedNotification=await NotificationSchema.create(notificationData)
     io.to("user_" +receiverid)
       .emit("notification", storedNotification);
@@ -458,6 +462,82 @@ const getapplication = async (req,resp)=>{
   }
 }
 
+const getstudentsummery = async (req,resp)=>{
+  try{
+      const {id}=req.params;
+      const studentdetails = await StoreStudent.findOne({studentid:id}).select("-password -__v");
+
+      const testdetails=await StoreTestResult.aggregate([
+        {
+          $unwind: "$students"
+        },
+        {
+          $match: {
+            department: "ComputerScience",
+            course: "BSC [ECS]",
+            year: "second",
+            division: "A",
+            "students.studentid": ObjectId("698b1f107e521be9b91147f5"),
+            date: {
+                $gte: new Date(new Date().setDate(new Date().getDate() - 30)),
+                $lte: new Date()
+            }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            date: 1,
+            totalmarks: 1,
+            passingmarks: 1,
+            marks: "$students.marks",
+            status: "$students.status"
+          }
+        }
+      ]);
+
+      const testsummery =await StoreTestResult.aggregate([
+        {
+          $unwind: "$students"
+        },
+        {
+          $match: {
+            department: "ComputerScience",
+            course: "BSC [ECS]",
+            year: "second",
+            division: "A",
+            "students.studentid": ObjectId("698b1f107e521be9b91147f5"),
+            date: {
+              $gte: new Date(new Date().setDate(new Date().getDate() - 30)),
+              $lte: new Date()
+            }
+          }
+        },  
+        {
+          $group: {
+            _id: null,
+            totalTests: { $sum: 1 },
+            averageMarks: { $avg: "$students.marks" },
+            passedTests: {
+              $sum: {
+                $cond: [
+                  { $eq: ["$students.status", "Pass"] },
+                  1,0
+                ]
+              }
+            }
+          }
+        }
+      ])
+      
+
+
+  }
+  catch(err)
+  {
+
+  }
+}
 
 module.exports={GetStudentDetailsByRoll,SearchStudent,StudentCounts,
   StoreStudentDetails,GetStudent,giveApprove,giveReject,

@@ -5,6 +5,8 @@ import axios from "axios";
 function Settings() {
    const {id,token,role}=useContext(AuthContext);
    const [message,setmessage]=useState("");
+   const [search,setsearch]=useState("");
+   const [loading, setLoading] = useState(false);
    const [profiledetails,setprofiledetails]=useState([]);
    const [showToast,setShowToast]=useState(false);
    const [personalDetails,setpersonalDetails]=useState({
@@ -100,8 +102,25 @@ function Settings() {
       [name]: value
    }));
 
-};
+   };
+   const handleSearch = (e) => {
+   setLoading(true);
+   setsearch(e.target.value);
 
+   setTimeout(() => {
+      setLoading(false);
+   }, 500);
+};
+   const filterstudent=profiledetails?.studentdetails?.filter((student)=>{
+      const name=student.personaldetails?.name?.toLowerCase()||"";
+      const rollno=String(student.collagedetails?.rollno )||""
+      return (
+         name.includes(search.toLowerCase())||rollno.includes(search.toLowerCase())
+      );
+   })||[];
+   const fetchdetails =(studentid)=>{
+
+   }
    return (
       <div className="settings-page">
          <div className="container py-5">
@@ -347,26 +366,96 @@ function Settings() {
                         </div>
                         </>
                      )}
-                     <div className="students-section">
+                     {role==="Mentor" && (
+                        <div className="students-section">
     
-                        <div className="students-header">
-                           <div>
-                              <h3 className="students-title">
+                           <div className="students-header">
+                              <div>
+                                 <h3 className="students-title">
                                  👨‍🎓 Assigned Students
-                              </h3>
-                              <p className="students-subtitle"> Students assigned under your mentorship </p>
+                                 </h3>
+                                 <p className="students-subtitle"> Students assigned under your mentorship </p>
+                              </div>
+
+                              <div className="student-count-badge">
+                                 {filterstudent?.length || 0} 
+                              </div>
                            </div>
 
-                           <div className="student-count-badge">
-                              20
+                           <div className="students-toolbar">
+                              <input
+   type="text"
+   placeholder="Search by name or roll no..."
+   value={search}
+   onChange={handleSearch}
+   className="student-search"
+/>
                            </div>
-                        </div>
+                        
+                           {
+                              loading ? (
+                                 <div className="search-loader">
+                                    <div className="spinner"></div>
+                                    <p>Searching students...</p>
+                                 </div>
+                              ) : (
+                                 <>
+                                 {filterstudent.map((student)=>(
+                              <div key={student._id}>
+                                 <div className="student-card">
+                                    <div className="student-header">
+                                       <div className="student-avatar">
+                                          {student.personaldetails.name.charAt(0)}
+                                       </div>
 
-                        <div className="students-toolbar">
-                           <input  type="text" placeholder="Search student..." className="student-search"/>
-                        </div>
+                                       <div>
+                                          <h5>{student.personaldetails.name}</h5>
+                                          <p>{student.studentid}</p>
+                                       </div>
+                                    </div>
 
-                     </div>
+                                    <div className="student-info">
+                                       <span> 🎓 {student.collagedetails.course}</span>
+                                       <span> 📚 {student.collagedetails.year} Year </span>
+
+                                       <span>📝 Roll No: {student.collagedetails.rollno}</span>
+
+                                       <span> 📱 {student.personaldetails.mobileno} </span>
+                                    </div>
+
+                                    <button className="view-profile-btn" onClick={fetchdetails(student.studentid)}>
+                                       View Profile
+                                    </button>
+                                 </div>
+                              </div>
+                           ))}
+                           </>
+                              )
+                           }
+                           
+                           {
+                              search && filterstudent.length === 0 && (
+                                 <div className="empty-state">
+                                 <div className="empty-icon">🔍</div>
+                                    <h4>No Students Found</h4>
+                                    <p>
+                                       <b>403</b> No student matches for {search}
+                                    </p>
+                                 </div>
+                           )
+                        }
+                        {profiledetails?.studentdetails?.length === 0 && (
+                           <div className="empty-state">
+                              <div className="empty-icon">👨‍🎓</div>
+                                 <h4>No Students Assigned</h4>
+                                 <p>
+                                    You don't have any assigned students yet.
+                                 </p>
+                              </div>
+                           )
+                        }
+                     </div>)}
+
                      <div className="settings-section">
                            <div className="section-header">
                               <h3>

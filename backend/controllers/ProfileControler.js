@@ -37,7 +37,8 @@ const getProfiledetails = async (req, resp) => {
                     joiningdate:mentor.professionaldetails.joiningdate,
                 },
                 emailid:mentor.contactdetails.emailid,
-                studentdetails:studentdetails
+                studentdetails:studentdetails,
+                
             }
         }
         else if (role === "Teacher") {
