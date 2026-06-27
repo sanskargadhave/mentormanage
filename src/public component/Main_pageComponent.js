@@ -3,9 +3,9 @@ import { useEffect,useState,useContext} from "react";
 import { Link } from "react-router-dom";
 import { PersonPlusFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom"; 
-import collagephoto from "./collageassets/collagephoto.jpeg";
-import { DashbordContext } from "./DashbordAuthContext";
-import { AuthContext } from "./Authintication";
+import collagephoto from "../collageassets/collagephoto.jpeg";
+import { DashbordContext } from "../DashbordAuthContext";
+import { AuthContext } from "../Authintication";
 function StudentDashboardContent()
 {
  

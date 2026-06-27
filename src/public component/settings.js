@@ -1,6 +1,6 @@
 import React, { useState,useEffect,useContext} from "react";
 import "./settings.css";
-import { AuthContext } from './Authintication';
+import { AuthContext } from '../Authintication';
 import axios from "axios";
 function Settings() {
    const {id,token,role}=useContext(AuthContext);

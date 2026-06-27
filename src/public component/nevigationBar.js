@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { AuthContext } from "./Authintication";
-import logo from "./collageassets/logo-college.png";
+import { AuthContext } from "../Authintication";
+import logo from "../collageassets/logo-college.png";
 
 import "./Nevigation_Bar.css";
 

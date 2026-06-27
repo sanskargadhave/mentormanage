@@ -1,10 +1,12 @@
 import { useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import "animate.css";
-import './admin.css';
+import '../admin component/admin.css';
 function AddTeacher()
 {
     const navigate=useNavigate();
+    const [profile,setProfile]=useState(null);
+    const [preview,setPreview]=useState("");
     const [teacherId,setTeacherId]=useState("");
     const token=localStorage.getItem("token");
     const [loding,setloding]=useState(false);
@@ -132,7 +134,7 @@ function AddTeacher()
         else{
             setloding(true);
             
-                fetch("https://sangolacollage.onrender.com/api/admin/add-teacher",{
+                fetch("https://sangolacollage.onrender.com/api/common/add-teacher",{
                 method:"POST",
                 headers:{
                         "Content-Type":"application/json",
@@ -155,6 +157,7 @@ function AddTeacher()
                         emailid:FormData.EmailId,
                         address:FormData.Address
                     },
+                    profileImage:profile,
                     password:FormData.Password
                 })
             }).then(res=>res.json())
@@ -274,7 +277,39 @@ function AddTeacher()
                         {errors.Address && <small className="showError">{errors.Address}</small>}
                     </div>
                 </div>
-                
+                <div className="row">
+                    <div className="col-12 col-md-6 mb-3">
+                        <div className="profile-upload-card">
+                            <div className="profile-preview-wrapper">
+      
+                                {
+                                    preview ? (
+                                        <img src={preview} alt="profile" className="profile-preview"/>
+                                    ) : 
+                                    (
+                                        <div className="profile-placeholder">
+                                            <i className="bi bi-person-fill"></i>
+                                        </div>
+                                    )
+                                }
+                                <label className="upload-btn">
+                                    <i className="bi bi-camera-fill"></i>
+
+                                    <input type="file" accept="image/*" hidden onChange={(e)=>{ const file = e.target.files[0]; setProfile(file);
+                                        if(file){
+                                            setPreview(URL.createObjectURL(file));
+                                        }
+                                        }}
+                                    />
+                                </label>
+                            </div>
+                            <div className="upload-content">
+                                <h5>Upload  Profile Picture</h5>
+                                <p>Choose a clear profile picture </p>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
                 <div className="row">
                     <div className="col-12 col-md-12 d-flex justify-content-center">
                         {loding ? (

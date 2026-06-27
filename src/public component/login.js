@@ -3,7 +3,7 @@ import "animate.css";
 import {useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { useContext} from "react";
-import { AuthContext } from "../src/Authintication";
+import { AuthContext } from "../Authintication";
 
 function Login() {
 

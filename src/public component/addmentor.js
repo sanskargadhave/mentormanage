@@ -2,12 +2,14 @@ import { useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 import "animate.css";
-import './admin.css';
+import '../admin component/admin.css';
 function AddMentor()
 {
     const navigate=useNavigate();
     const token = localStorage.getItem("token");
     const [MentorId,setMentorId]=useState("");
+     const [preview,setPreview]=useState("");
+     const [profile,setProfile]=useState(null);
     const [loding,setloding]=useState(false);
     const [FormData,setFormData]=useState(
     {
@@ -133,7 +135,7 @@ function AddMentor()
         else{
             setloding(true);
             try {
-                const res = await axios.post("https://sangolacollage.onrender.com/api/admin/add-mentor",
+                const res = await axios.post("https://sangolacollage.onrender.com/api/common/add-mentor",
                     {
                         personaldetails: {
                             name: FormData.Name,
@@ -151,6 +153,7 @@ function AddMentor()
                             emailid: FormData.EmailId,
                             address: FormData.Address
                         },
+                        profileImage:profile,
                         password: FormData.Password
                     },
                     {
@@ -184,7 +187,7 @@ function AddMentor()
                     return;
                 } 
                 console.error(err);
-                seterr("Something went wrong");
+                seterr(err);
                 setshowerror(true);
             }
             setloding(false);
@@ -281,7 +284,39 @@ function AddMentor()
                         {errors.Address && (<label className="showError">{errors.Address}</label>)}
                     </div>
                 </div>
-                
+                <div className="row">
+                    <div className="col-12 col-md-6 mb-3">
+                        <div className="profile-upload-card">
+                            <div className="profile-preview-wrapper">
+      
+                                {
+                                    preview ? (
+                                        <img src={preview} alt="profile" className="profile-preview"/>
+                                    ) : 
+                                    (
+                                        <div className="profile-placeholder">
+                                            <i className="bi bi-person-fill"></i>
+                                        </div>
+                                    )
+                                }
+                                <label className="upload-btn">
+                                    <i className="bi bi-camera-fill"></i>
+
+                                    <input type="file" accept="image/*" hidden onChange={(e)=>{ const file = e.target.files[0]; setProfile(file);
+                                        if(file){
+                                            setPreview(URL.createObjectURL(file));
+                                        }
+                                        }}
+                                    />
+                                </label>
+                            </div>
+                            <div className="upload-content">
+                                <h5>Upload  Profile Picture</h5>
+                                <p>Choose a clear profile picture </p>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
                 <div className="row">
                     <div className="col-md-12 d-flex justify-content-center">
                         {loding ? (

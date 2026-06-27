@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import {useContext } from "react";
-import { AuthContext } from "./Authintication";
-import "./admin component/admin.css";
-import "./admin component/adminNevbar.css";
+import { AuthContext } from "../Authintication";
+import "../admin component/admin.css";
+import "../admin component/adminNevbar.css";
 
 export default function LogoutWarning()
 {

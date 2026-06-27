@@ -1,4 +1,4 @@
-import { NevigationBar } from "./nevigationBar";
+import { NevigationBar } from "./public component/nevigationBar";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 

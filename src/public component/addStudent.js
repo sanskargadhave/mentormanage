@@ -3,7 +3,7 @@ import { supabase}  from "../supabase";
 import { Form, useNavigate } from "react-router-dom";
 import { AuthContext } from '../Authintication';
 import Select from 'react-select';
-import './admin.css';
+import '../admin component/admin.css';
 import "animate.css";
 import axios from "axios";
 
@@ -91,27 +91,7 @@ function AddStudent()
         Password:"",
         RePassword:""
     });
-    const uploadImage = async () => {
-
-       
-        if(!profile){ return ""}
-        const filename = `${Date.now()}-${FormData.RollNo}-${FormData.Name}`;
-
-        const { error } = await supabase.storage
-            .from("Profile Picture")
-            .upload(filename, profile);
-
-        if(error){
-            console.log(error);
-            console.log(error.message);
-            return "";
-        }
-
-        const { data } = supabase.storage
-            .from("Profile Picture")
-            .getPublicUrl(filename);
-            return data.publicUrl;
-    }
+    
     function handleChange(e) {
 
         const isEmpty= (v) => v.trim() === "";
@@ -234,7 +214,7 @@ function AddStudent()
         }
 
         setloding(true);
-        const imageUrl = await uploadImage();
+        
         fetch("https://sangolacollage.onrender.com/api/common/add-student",{
 
             method:"POST",
@@ -275,7 +255,7 @@ function AddStudent()
                 },
                 password:FormData.RePassword,
                 emailid:FormData.EmailId,
-                imageurl:imageUrl
+                profileImage:profile
             })
 
         })

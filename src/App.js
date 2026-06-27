@@ -3,19 +3,19 @@
   import "bootstrap-icons/font/bootstrap-icons.css";
   import { Routes, Route } from "react-router-dom";
   import { useNavigate } from "react-router-dom";
-  import { StudentDashboardContent } from "./Main_pageComponent";
-  import {  Login } from "./login";
+  import { StudentDashboardContent } from "./public component/Main_pageComponent";
+  import {  Login } from "./public component/login";
   import { AdminSidebar} from "./admin component/AdminNevbar.js";
   import StudentDashbord from "./student comonent/StudentDashbord.js";
-  import { AddMentor } from "./admin component/addmentor.js";
+  import { AddMentor } from "./public component/addmentor.js";
   import { DeleteUser } from "./admin component/deleteUser";
   import { ViewUser } from "./admin component/viewUser";
-  import { AddStudent } from "./admin component/addStudent";
+  import { AddStudent } from "./public component/addStudent.js";
   import {MentorDashboardContent} from "./mentor component/MentorDashbord.js";
-  import LogoutWarning from "./Logout.js";
+  import LogoutWarning from "./public component/Logout.js";
   import SidebarLayout from "./SidebarLayout.js";
   import { AdminDashbord } from "./admin component/AdminDashbord.js";
-  import { AddTeacher } from "./admin component/addteacher.js";
+  import { AddTeacher } from "./public component/addteacher.js";
   import {AddLecture} from "./admin component/addLecture.js";
   import { AddAttendance } from "./mentor component/addAttendance.js";
   import { ViewStudent } from "./mentor component/viewstudent.js"; 
@@ -24,7 +24,7 @@
   import AddAdmissionDetails from "./admin component/addAdmissionDetails.js"
   import ProtectedRoute from "./protectedRoute.js"; 
   import LeaveApplication from "./student comonent/leaveApplication.js";
-  import Settings from "./settings.js";
+  import Settings from "./public component/settings.js";
 import { use } from "react";
   function App() {
     const navigate=useNavigate();
@@ -39,8 +39,12 @@ import { use } from "react";
           </div>} />
         
         <Route element={<Layout/>}>
+          {/* Public */}
           <Route path="/" element={<StudentDashboardContent />} />
           <Route path="/register-student" element={<AddStudent />} />
+          <Route path="/register-mentor" element={<AddMentor />} />
+          <Route path="/register-teacher" element={<AddTeacher/>}/>
+
           {/* For Only login */}
           <Route path="/login" element={<Login />} />
           <Route path="/settings" element={<Settings/>}/>
