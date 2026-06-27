@@ -28,7 +28,8 @@ const StoreStudentScema=new mongoose.Schema({
     emailid:{type:String,required:true,unique:true},
     password:{type:String,default:null},
     studentid:{type:String},
-    isactive:{type:Boolean,default:false}
+    isactive:{type:Boolean,default:false},
+    profileurl:{type:String}
     },
     
     {timestamps:true}
@@ -53,7 +54,7 @@ const addMentor=new mongoose.Schema({
         address:{type:String,required:true}
     },
     password:{type:String,required:true},
-    
+    profileurl:{type:String}
 }, {timestamps:true});
 
 const addTeacher=new mongoose.Schema({
@@ -74,7 +75,8 @@ const addTeacher=new mongoose.Schema({
         emailid:{type:String,required:true,unique:true},
         address:{type:String,required:true}
     },
-    password:{type:String,required:true}
+    password:{type:String,required:true},
+    profileurl:{type:String}
 },{timestamps:true});
 
 addMentor.pre("save", async function () {

@@ -1,6 +1,8 @@
 const express =require("express");
 const router=express.Router();
-
+const {AddMentor}=require("../controllers/MentorControler");
+const {AddTeacher}=require("../controllers/TeacherControler");
+const {uploadProfile,upload}=require("../middleware/uplodemiddleware");              
 const {GetStudent,StudentCounts,StoreStudentDetails}=require("../controllers/StudentControler");
 const {MentorCount,GetMentors}=require("../controllers/MentorControler");
 const {GetLectures} =require("../controllers/LectureControler");
@@ -17,7 +19,11 @@ router.get("/Mentor/count",MentorCount);
 router.get("/students/count",StudentCounts);
 router.get("/get-attendance/:lectureid",GetAttendanceByLectureId);
 router.get("/User-Counts",Counts);
-router.post("/add-student",StoreStudentDetails);
+
+
 router.post("/store-attendance",StoreAttendances);
+router.post("/add-student",upload.single("profileImage"),uploadProfile,StoreStudentDetails);
+router.post("/add-mentor",upload.single("profileImage"),uploadProfile,AddMentor);
+router.post("/add-teacher",upload.single("profileImage"),uploadProfile,AddTeacher);
 
 module.exports = router;

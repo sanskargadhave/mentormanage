@@ -18,6 +18,7 @@ const AddMentor= async (req,res)=>{
   try{
     const {emailid}=req.body.contactdetails;
     const {mobileno}=req.body.contactdetails;
+    const {imageurl}=req.body;
 
     const emailidexist=await StoreMentor.findOne({"contactdetails.emailid":emailid});
     const mobilenoexist=await StoreMentor.findOne({"contactdetails.mobileno":mobileno});
@@ -39,6 +40,7 @@ const AddMentor= async (req,res)=>{
       password: req.body.password,
       emailid: emailid,
       role: "Mentor",
+      profileurl:imageurl,
       active: true
     });
 

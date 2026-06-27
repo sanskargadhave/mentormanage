@@ -31,6 +31,7 @@ const AddTeacher = async(req,res)=>{
       password: req.body.password,
       emailid: emailid,
       role: "Teacher",
+      profileurl:imageurl,
       active: true
     });
     res.status(201).json({message:"Teacher Add Sucessfully",teacherId:teacher.TeacherId});
