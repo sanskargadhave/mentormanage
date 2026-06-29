@@ -68,6 +68,7 @@ function MentorDashboardContent() {
 
   getNotifications();
 }, [id, token]);
+
   useEffect(() => {
   if (id) {
     socket.emit("join_room", {
@@ -372,7 +373,9 @@ function MentorDashboardContent() {
                     <strong>Division:</strong>
                     {notif.data.division}
                   </h6>
-
+                 
+                  <img src={notif.data.profileurl || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"} alt="Student" className="student-image-top-right"/>
+                  
                   <div className="verify-parent-number">
 
                     <span className="badge rounded-pill bg-warning text-dark">

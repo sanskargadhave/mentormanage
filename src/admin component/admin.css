@@ -161,7 +161,24 @@
     color:rgba(171, 106, 106, 0.7);
     font-size:14px;
 }
+.profile-security-card{
+    background: linear-gradient(135deg,#eef7ff,#f7fbff);
+    border-left: 5px solid #0d6efd;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
 
+.profile-security-card h5{
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.profile-security-card p{
+    margin-bottom: 8px;
+    color: #555;
+}
 
 
 @media(max-width:768px){

@@ -10,7 +10,7 @@ function AddTeacher()
     const [teacherId,setTeacherId]=useState("");
     const token=localStorage.getItem("token");
     const [loding,setloding]=useState(false);
-    const [FormData,setFormData]=useState(
+    const [formdata,setformdata]=useState(
     {
         Name:"",
         Gender:"",
@@ -51,7 +51,7 @@ function AddTeacher()
         const isNumber= (v) => /^\d+$/.test(v);
 
         const { name, value } = e.target;
-        setFormData({ ...FormData, [name]: value });
+        setformdata({ ...formdata, [name]: value });
         let error = "";
 
         switch(name)
@@ -97,7 +97,7 @@ function AddTeacher()
                 break;
             case "RePassword":
                 if (isEmpty(value)) error = "Selection required";
-                else if(FormData.Password!==value) error = "Password Not Match";
+                else if(formdata.Password!==value) error = "Password Not Match";
                 else error = "";
                 break;
 
@@ -107,7 +107,7 @@ function AddTeacher()
     }
     function isAllvalid() 
     {
-        const { Password, RePassword, ...rest } = FormData;
+        const { Password, RePassword, ...rest } = formdata;
         const hasEmptyField = Object.values(rest).some(v => v === "");
         const isFormValid = Object.entries(errors)
             .filter(([key]) => key !== "Password" && key !== "RePassword")
@@ -125,7 +125,7 @@ function AddTeacher()
     function submitdata()
     {
         const isFormValid = Object.values(errors).every((msg) => msg === "");
-        const hasEmptyField = Object.values(FormData).some((v) => v === "");
+        const hasEmptyField = Object.values(formdata).some((v) => v === "");
 
          if (hasEmptyField||!isFormValid) {
             alert("Please fill all fields or check Validaton");
@@ -133,33 +133,42 @@ function AddTeacher()
         }
         else{
             setloding(true);
-            
-                fetch("https://sangolacollage.onrender.com/api/common/add-teacher",{
+                const datas = new FormData();
+                datas.append("profileImage", profile);
+                
+                datas.append(
+                    "personaldetails",
+                    JSON.stringify({
+                        name: formdata.Name,
+                        gender: formdata.Gender,
+                        dob: formdata.DOB
+                    })
+                );
+                datas.append(
+                    "professionaldetails",
+                    JSON.stringify({
+                        department: formdata.Department,
+                        qualification: formdata.Qualification,
+                        exprience: formdata.Exprience,
+                        joiningdate: formdata.JoinDate
+                    })
+                );
+                datas.append(
+                    "contactdetails",
+                    JSON.stringify({
+                        mobileno: formdata.MobileNo,
+                        emailid: formdata.EmailId,
+                        address: formdata.Address
+                    })
+                );
+                datas.append("password", formdata.Password);//sangolacollage.onrender.com
+                
+                fetch("http://localhost:5000/api/common/add-teacher",{
                 method:"POST",
                 headers:{
-                        "Content-Type":"application/json",
                         Authorization: `Bearer ${token}`
                     },
-                body:JSON.stringify({
-                    personaldetails:{
-                        name:FormData.Name,
-                        gender:FormData.Gender,
-                        dob:FormData.DOB,
-                    },
-                    professionaldetails:{
-                        department:FormData.Department,
-                        qualification:FormData.Qualification,
-                        exprience:FormData.Exprience,
-                        joiningdate:FormData.JoinDate,
-                    },
-                    contactdetails:{
-                        mobileno:FormData.MobileNo,
-                        emailid:FormData.EmailId,
-                        address:FormData.Address
-                    },
-                    profileImage:profile,
-                    password:FormData.Password
-                })
+                body:datas
             }).then(res=>res.json())
            .then(data=>{
             if(data.message==="Teacher Add Sucessfully")
@@ -329,7 +338,7 @@ function AddTeacher()
                     <div className="success-card animate__animated animate__fadeInDown">
                         <h3>Teacher Added Successfully 🎉</h3>
                         <div className="success-info">
-                            <p><strong>Name:</strong> {FormData.Name}</p>
+                            <p><strong>Name:</strong> {formdata.Name}</p>
                             <p><strong>ID:</strong> {teacherId}</p>
                         </div>
                         <button className="btn btn-primary w-100" onClick={() => navigate("/admin")}>

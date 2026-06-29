@@ -11,7 +11,7 @@ function AddMentor()
      const [preview,setPreview]=useState("");
      const [profile,setProfile]=useState(null);
     const [loding,setloding]=useState(false);
-    const [FormData,setFormData]=useState(
+    const [formdata,setFormData]=useState(
     {
         Name:"",
         Gender:"",
@@ -52,7 +52,7 @@ function AddMentor()
         const isNumber= (v) => /^\d+$/.test(v);
 
         const { name, value } = e.target;
-        setFormData({ ...FormData, [name]: value });
+        setFormData({ ...formdata, [name]: value });
         let error = "";
 
         switch(name)
@@ -98,7 +98,7 @@ function AddMentor()
                 break;
             case "RePassword":
                 if (isEmpty(value)) error = "Selection required";
-                else if(FormData.Password!==value) error = "Password Not Match";
+                else if(formdata.Password!==value) error = "Password Not Match";
                 else error = "";
                 break;
 
@@ -108,7 +108,7 @@ function AddMentor()
     }
     function isAllvalid() 
     {
-        const { Password, RePassword, ...rest } = FormData;
+        const { Password, RePassword, ...rest } = formdata;
         const hasEmptyField = Object.values(rest).some(v => v === "");
         const isFormValid = Object.entries(errors)
             .filter(([key]) => key !== "Password" && key !== "RePassword")
@@ -126,7 +126,7 @@ function AddMentor()
     const  submitdata= async ()=>
     {
         const isFormValid = Object.values(errors).every((msg) => msg === "");
-        const hasEmptyField = Object.values(FormData).some((v) => v === "");
+        const hasEmptyField = Object.values(formdata).some((v) => v === "");
 
          if (hasEmptyField||!isFormValid) {
             alert("Please fill all fields or check Validaton");
@@ -135,34 +135,43 @@ function AddMentor()
         else{
             setloding(true);
             try {
-                const res = await axios.post("https://sangolacollage.onrender.com/api/common/add-mentor",
-                    {
-                        personaldetails: {
-                            name: FormData.Name,
-                            gender: FormData.Gender,
-                            dob: FormData.DOB,
-                        },
-                        professionaldetails: {
-                            department: FormData.Department,
-                            qualification: FormData.Qualification,
-                            exprience: FormData.Exprience,
-                            joiningdate: FormData.JoinDate,
-                        },
-                        contactdetails: {
-                            mobileno: FormData.MobileNo,
-                            emailid: FormData.EmailId,
-                            address: FormData.Address
-                        },
-                        profileImage:profile,
-                        password: FormData.Password
-                    },
+                const datas = new FormData();
+                datas.append("profileImage", profile);
+                datas.append(
+                    "personaldetails",
+                    JSON.stringify({
+                        name: formdata.Name,
+                        gender: formdata.Gender,
+                        dob: formdata.DOB
+                    })
+                );
+                datas.append(
+                    "professionaldetails",
+                    JSON.stringify({
+                        department: formdata.Department,
+                        qualification: formdata.Qualification,
+                        exprience: formdata.Exprience,
+                        joiningdate: formdata.JoinDate
+                    })
+                );
+                datas.append(
+                    "contactdetails",
+                    JSON.stringify({
+                        mobileno: formdata.MobileNo,
+                        emailid: formdata.EmailId,
+                        address: formdata.Address
+                    })
+                );
+                datas.append("password", formdata.Password);
+                const res = await axios.post( "http://sangolacollage.onrender.com/api/common/add-mentor",datas,
                     {
                         headers: {
-                            Authorization: `Bearer ${token}`, 
-                            "Content-Type": "application/json"
+                            Authorization: `Bearer ${token}`
                         }
                     }
                 );
+
+
 
                 const data = res.data;
 
@@ -180,16 +189,19 @@ function AddMentor()
                 }
 
             }
-            catch (err) {
-                if(err.response?.status === 401){
-                    localStorage.clear();
-                    navigate("/unauthorized");
-                    return;
-                } 
-                console.error(err);
-                seterr(err);
-                setshowerror(true);
-            }
+            catch (errs) {
+    console.log("Status:", errs.response?.status);
+    console.log("Response Data:", errs.response?.data);
+    console.log("Message:", errs.message);
+
+    seterr(
+        errs.response?.data?.message ||
+        errs.response?.data?.error ||
+        errs.message
+    );
+
+    setshowerror(true);
+}
             setloding(false);
         }
     }
@@ -334,7 +346,7 @@ function AddMentor()
                     <div className="success-card animate__animated animate__fadeInDown">
                         <h3>Mentor Added Successfully 🎉</h3>
                         <div className="success-info">
-                            <p><strong>Name:</strong> {FormData.Name}</p>
+                            <p><strong>Name:</strong> {formdata.Name}</p>
                             <p><strong>ID:</strong> {MentorId}</p>
                         </div>
                         <button className="btn btn-primary w-100" onClick={() => navigate("/admin")}>

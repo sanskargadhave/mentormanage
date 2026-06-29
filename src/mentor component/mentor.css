@@ -1175,7 +1175,21 @@ body {
     transform:translateY(0);
   }
 }
+.notification-card{
+    position: relative;
+}
 
+.student-image-top-right{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #4dabf7;
+}
 .title-left{
   display:flex;
   align-items:center;
