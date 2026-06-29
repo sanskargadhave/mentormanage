@@ -14,9 +14,10 @@ const upload = multer({
     }
 });
 
-const uploadProfile = async (req, res,next) => {
+const uploadProfile = async (req, res ,next) => {
     try {
         const file = req.file;
+        console.log("at uploadProfile ",file);
        if (!file) {
             req.body.imageurl   = "";
             return next();
@@ -45,7 +46,7 @@ const uploadProfile = async (req, res,next) => {
             .getPublicUrl(fileName);
 
         req.body.imageurl=data.publicUrl;
-        
+        console.log(req.body.imageurl);
         next();
     } catch (err) {
          console.log(err)

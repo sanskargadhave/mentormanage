@@ -18,7 +18,7 @@ router.get("/get-studentdetails/:rollno",GetStudentDetailsByRoll);
 
 router.get("/make-attendance-report",MakeAttendanceReport);
 router.get("/get-today-attendance",GetTodayAttendance);
-router.get("/get-notifications/:mentorid",getNotification);
+router.get("/get-notifications/:id",getNotification);
 
 
 router.post("/store-excel-data",uplode.single("file"),iscorrectdata,getexcelsheet);

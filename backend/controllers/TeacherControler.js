@@ -7,8 +7,12 @@ const adduser=require("../model/userSchema");
 //  /api/add-teacher  POST
 const AddTeacher = async(req,res)=>{
   try{
-    const {emailid}=req.body.contactdetails;
-    const {mobileno}=req.body.contactdetails;
+    const personaldetails = JSON.parse(req.body.personaldetails);
+    const professionaldetails = JSON.parse(req.body.professionaldetails);
+    const contactdetails = JSON.parse(req.body.contactdetails);
+
+    const {emailid,mobileno}=contactdetails;
+   const imageurl = req.body.imageurl || "";
 
     const emailidexist=await StoreMentor.findOne({"contactdetails.emailid":emailid});
     const mobilenoexist=await StoreMentor.findOne({"contactdetails.mobileno":mobileno});
@@ -23,7 +27,12 @@ const AddTeacher = async(req,res)=>{
 
 
     req.body.password = await bcrypt.hash(req.body.password, 10);
-    const teacher=new StoreTeacher(req.body);
+    const teacher=new StoreTeacher({personaldetails,
+        professionaldetails,
+        contactdetails,
+        password: req.body.password,
+        profileurl:imageurl});
+
     await teacher.save();
 
     await adduser.create({

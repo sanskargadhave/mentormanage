@@ -10,9 +10,13 @@ const NotificationSchema=require("../model/notificationsScema");
 // /add-student  URL
 const StoreStudentDetails=async (req, res) => {
   try {
-    const { aadharno } = req.body.personaldetails;
-    const { rollno,mentorId } = req.body.collagedetails;
-    const {emailid,imageurl} = req.body;
+    const personaldetails = JSON.parse(req.body.personaldetails);
+    const collagedetails = JSON.parse(req.body.collagedetails);
+    const { aadharno } = personaldetails;
+    const { rollno,mentorId } = collagedetails;
+    const {emailid} = req.body;
+    const imageurl = req.body.imageurl || "";
+
     const aadharnoexist = await StoreStudent.findOne({"personaldetails.aadharno": aadharno});
     const rollnoexist = await StoreStudent.findOne({ "collagedetails.rollno": rollno });
     const emailidexist= await StoreStudent.findOne({"emailid":emailid});
@@ -36,7 +40,15 @@ const StoreStudentDetails=async (req, res) => {
     }
 
     req.body.password = await bcrypt.hash(req.body.password, 10);
-    const student = new StoreStudent(req.body);
+    const student = new StoreStudent({
+      personaldetails,
+      collagedetails,
+      emailid:emailid,
+      password: req.body.password,
+      profileurl:imageurl,
+      studentid:req.body.studentid,
+      isactive:true
+    });
     await student.save();
 
 
@@ -66,7 +78,8 @@ const StoreStudentDetails=async (req, res) => {
         year:student.collagedetails.year,
         division:student.collagedetails.division,
         parentno:student.personaldetails.parentno,
-        mobileno:student.personaldetails.mobileno
+        mobileno:student.personaldetails.mobileno,
+        profileurl:imageurl,
       }
     })
 
@@ -90,7 +103,8 @@ const StoreStudentDetails=async (req, res) => {
         year:student.collagedetails.year,
         division:student.collagedetails.division,
         parentno:student.personaldetails.parentno,
-        mobileno:student.personaldetails.mobileno
+        mobileno:student.personaldetails.mobileno,
+        profileurl:imageurl,
       }
 });
 
