@@ -83,28 +83,29 @@ const getProfiledetails = async (req, resp) => {
 const updateProfiledetails = async (req,resp)=>{
     try{
       const {personalDetails,id,role}=req.body;
-        if(role==="Student")
-        {
-            const user = await StoreStudent.findOne({ studentid: id },"updatedAt" );
+        let user;
+
+        if(role === "Student") {
+            user = await StoreStudent.findOne({ studentid: id },"updatedAt");
         }
-        else if(role==="Mentor")
-        {
-            const user = await StoreMentor.findOne({ mentorId: id },"updatedAt" );
+        else if(role === "Mentor") { 
+            user = await StoreMentor.findOne({ mentorId: id },"updatedAt");
         }
-        else if(role==="Teacher")
-        {
-            const user = await StoreTeacher.findOne({ TeacherId: id },"updatedAt" );
+        else if(role === "Teacher") {
+            user = await StoreTeacher.findOne({ TeacherId: id },"updatedAt");
         }
-        else if (role==="Admin")
-        {
-            const user = await StoreAdmin.findOne({ adminId: id },"updatedAt" );
+        else if(role === "Admin") {
+            user = await StoreAdmin.findOne({ adminId: id },"updatedAt");
         }
         else {
-            return resp.status(403).json({message:"Unauthorised User"})
+            return resp.status(403).json({message: "Unauthorised User"});
         }
 
       
-
+        if(!user){
+            return resp.status(404).json({ message: "User not found"});
+        }
+        
       const updatedAt = new Date(user.updatedAt);
       const today = new Date();
 
