@@ -208,17 +208,17 @@ function AddTeacher()
                 <div className="row">
                     <div className="col-12 col-md-4">
                         <label className="form-label"><i className="bi bi-person-vcard"></i>  Teacher Full Name </label>  
-                        <input type="text" className={`form-control ${errors.Name ? "is-invalid" : ""}`} name="Name" placeholder="Enter Full Name" onChange={handleChange}/>
+                        <input type="text" value={formdata.Name} className={`form-control ${errors.Name ? "is-invalid" : ""}`} name="Name" placeholder="Enter Full Name" onChange={handleChange}/>
                         {errors.Name && <small className="showError">{errors.Name}</small>}
                     </div>
                     <div className="col-12 col-md-4">
                         <label className="form-label"> <i className="bi bi-gender-ambiguous"></i>  Gender</label>
-                        <input type="text" className={`form-control ${errors.Gender ? "is-invalid" : ""}`} name="Gender" placeholder="Enter Gender" onChange={handleChange}/>
+                        <input type="text" value={formdata.Gender} className={`form-control ${errors.Gender ? "is-invalid" : ""}`} name="Gender" placeholder="Enter Gender" onChange={handleChange}/>
                         {errors.Gender && <small className="showError">{errors.Gender}</small>}
                     </div>
                     <div className="col-12 col-md-4">
                         <label className="form-label"><i className="bi bi-calendar-heart"></i>  DOB</label>
-                        <input type="date" className={`form-control ${errors.DOB ? "is-invalid" : ""}`} name="DOB" placeholder="Enter DOB" onChange={handleChange}/>
+                        <input type="date" value={formdata.DOB} className={`form-control ${errors.DOB ? "is-invalid" : ""}`} name="DOB" placeholder="Enter DOB" onChange={handleChange}/>
                         {errors.DOB && <small className="showError">{errors.DOB}</small>}
                     </div>
                 </div>
@@ -234,7 +234,7 @@ function AddTeacher()
                 <div className="row">
                     <div className="col-12 col-md-4">
                         <label className="form-label"><i className="bi bi-building"></i> select Department Name</label>
-                        <select className={`form-select form-select-sm ${errors.Department ? "is-invalid" : ""}`} aria-label="Small select example" name="Department" onChange={handleChange}>
+                        <select value={formdata.Department} className={`form-select form-select-sm ${errors.Department ? "is-invalid" : ""}`} aria-label="Small select example" name="Department" onChange={handleChange}>
                             <option value=""> Select Department </option>
                             <option value="ComputerScience">Computer Science</option>  
                             <option value="Science">Science</option>  
@@ -244,12 +244,12 @@ function AddTeacher()
                     </div>
                     <div className="col-12 col-md-4 ">
                         <label className="form-label"><i className="bi bi-award"></i> Qualification</label>  
-                        <input type="text" className={`form-control ${errors.Qualification ? "is-invalid" : ""}`} name="Qualification" placeholder="Enter Teacher Qualification" onChange={handleChange}/>
+                        <input type="text" value={formdata.Qualification} className={`form-control ${errors.Qualification ? "is-invalid" : ""}`} name="Qualification" placeholder="Enter Teacher Qualification" onChange={handleChange}/>
                         {errors.Qualification && <small className="showError">{errors.Qualification}</small>}
                     </div>
                     <div className="col-12 col-md-4 ">
                         <label className="form-label"><i className="bi bi-clock-history"></i>  Teacher Exprience</label>  
-                        <input type="text" className={`form-control ${errors.Exprience ? "is-invalid" : ""}`} name="Exprience" placeholder="Enter Teacher Expreience" onChange={handleChange}/>
+                        <input type="text" value={formdata.Exprience} className={`form-control ${errors.Exprience ? "is-invalid" : ""}`} name="Exprience" placeholder="Enter Teacher Expreience" onChange={handleChange}/>
                         {errors.Exprience && <small className="showError">{errors.Exprience}</small>}
                     </div>
                 </div>
@@ -257,7 +257,7 @@ function AddTeacher()
                 <div className="row">
                     <div className="col-12 col-md-4">
                         <label className="form-label"><i className="bi bi-calendar-heart"></i>  Joining Date </label>
-                        <input type="date" className={`form-control ${errors.JoinDate ? "is-invalid" : ""}`} name="JoinDate" placeholder="Enter Joining Date" onChange={handleChange}/>
+                        <input type="date" value={formdata.JoinDate} className={`form-control ${errors.JoinDate ? "is-invalid" : ""}`} name="JoinDate" placeholder="Enter Joining Date" onChange={handleChange}/>
                         {errors.JoinDate && <small className="showError">{errors.JoinDate}</small>}
                     </div>
                 </div>
@@ -272,17 +272,17 @@ function AddTeacher()
                 <div className="row">
                     <div className="col-12 col-md-4">
                         <label className="form-label"><i className="bi bi-phone"></i>  Teacher Mobile No. </label>  
-                        <input type="text" className={`form-control ${errors.MobileNo ? "is-invalid" : ""}`} name="MobileNo" placeholder="Enter Mobile No." onChange={handleChange}/>
+                        <input type="text" value={formdata.MobileNo} className={`form-control ${errors.MobileNo ? "is-invalid" : ""}`} name="MobileNo" placeholder="Enter Mobile No." onChange={handleChange}/>
                         {errors.MobileNo && <small className="showError">{errors.MobileNo}</small>}
                     </div>
                     <div className="col-12 col-md-4">
                         <label className="form-label"> <i className="bi bi-envelope"></i>  Email Id</label>
-                        <input type="email" className={`form-control ${errors.EmailId ? "is-invalid" : ""}`} name="EmailId" placeholder="Enter Email Id" onChange={handleChange}/>
+                        <input type="email" value={formdata.EmailId} className={`form-control ${errors.EmailId ? "is-invalid" : ""}`} name="EmailId" placeholder="Enter Email Id" onChange={handleChange}/>
                         {errors.EmailId && <small className="showError">{errors.EmailId}</small>}
                     </div>
                     <div className="col-12 col-md-4">
                         <label className="form-label"><i className="bi bi-geo-alt"></i>  Address</label>
-                        <input type="text" className={`form-control ${errors.Address ? "is-invalid" : ""}`} name="Address" placeholder="Enter Address" onChange={handleChange}/>
+                        <input type="text" value={formdata.Address} className={`form-control ${errors.Address ? "is-invalid" : ""}`} name="Address" placeholder="Enter Address" onChange={handleChange}/>
                         {errors.Address && <small className="showError">{errors.Address}</small>}
                     </div>
                 </div>
@@ -328,78 +328,86 @@ function AddTeacher()
                         ):(
                         <button className="btn btn-primary" type="button" onClick={isAllvalid}><i className="bi bi-file-plus-fill"></i>   Add Teacher</button>
                         )}
+                        
                     </div>
                 </div>
             </div>)}
             { showconfirm && (
-                <div className="add-student-form animate__animated animate__slow animate__fadeInDown ">
-                    
-                    <div className="password-wrapper">
-                    <div className="success-card animate__animated animate__fadeInDown">
-                        <h3>Teacher Added Successfully 🎉</h3>
-                        <div className="success-info">
-                            <p><strong>Name:</strong> {formdata.Name}</p>
-                            <p><strong>ID:</strong> {teacherId}</p>
-                        </div>
-                        <button className="btn btn-primary w-100" onClick={() => navigate("/admin")}>
-                            <i className="bi bi-box-arrow-right"></i> Go to Dashboard
-                        </button>
+                <div className="toast-overlay">
+                            <div id="liveToast" className="toast show custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div className="toast-header">
+                                    <strong className="me-auto">Registration successfully.</strong>
+                                    <button type="button" className="btn-close" onClick={() => {setshowconfirm(false);setshowpassword(false);setshowform(true)}}></button>
+                                </div>
+
+                                <div className="toast-body">
+                                    <h3>Your Application Has Send To Admin  🎉</h3>
+                                    <h5>Please Wait For Your Verification </h5>
+                                    <p><strong>Name:</strong> {formdata.Name}</p>
+                                    <p><strong>ID:</strong> {teacherId}</p>
+                                    <button className="btn btn-primary w-100"
+                                        onClick={() => navigate("/")}>
+                                        Go to Dashboard
+                                    </button>
+                                </div>
+                            </div>
                     </div>
-                </div>
-                </div>
                 
             )}
 
             { showpassword &&(
                     
-            <div className="password-wrapper">
-                <div className="set-password-card animate__animated animate__fadeInDown">
+            <div className="toast-overlay">
+                              <div id="liveToast" className="toast show custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div className="toast-header">
+                                    <strong className="me-auto">Do Not Share Password</strong>
+                                    <button type="button" className="btn-close" onClick={() => {setshowpassword(false);setshowform(true)}}></button>
+                                </div>
 
-                    <h5 className="title">
-                        <i className="bi bi-shield-lock"></i> Set Password
-                    </h5>
+                                <div className="toast-body">
+                                    <h5 className="title">
+                                        <i className="bi bi-shield-lock"></i> Set Password
+                                    </h5>
+                    
 
-                    <div className="form-group">
-                        <label>Enter Password</label>
-                        <input type="password" name="Password" placeholder="Set password" onChange={handleChange} className={`form-control ${errors.Password ? "is-invalid" : ""}`}/>
-                        {errors.Password && <small className="showError">{errors.Password}</small>}
-                    </div>
+                                    <div className="form-group">
+                                        <label>Enter Password</label>
+                                        <input type="password" name="Password" placeholder="Set password" onChange={handleChange} className={`form-control ${errors.Password ? "is-invalid" : ""}`}/>
+                                        {errors.Password && <small className="showError">{errors.Password}</small>}
+                                    </div>
 
-                    <div className="form-group">
-                        <label>Confirm Password</label>
-                        <input type="password" name="RePassword" placeholder="Confirm password" onChange={handleChange}  className={`form-control ${errors.RePassword ? "is-invalid" : ""}`} />
-                        {errors.RePassword && <small className="showError">{errors.RePassword}</small>}
-                    </div>
-                    {loding ? (
-                            <div class="spinner-border" role="status">
-                               <span class="visually-hidden">Loading...</span>
+                                    <div className="form-group">
+                                        <label>Confirm Password</label>
+                                        <input type="password" name="RePassword" placeholder="Confirm password" onChange={handleChange}  className={`form-control ${errors.RePassword ? "is-invalid" : ""}`} />
+                                        {errors.RePassword && <small className="showError">{errors.RePassword}</small>}
+                                    </div>
+                                    {loding ? (
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    ):(
+                                        <button className="set-btn" onClick={submitdata}>
+                                            <i className="bi bi-check-circle"></i> Set Password
+                                        </button>
+                                     )}
+                                </div>
+                                </div>
                             </div>
-                        ):(
-                        <button className="set-btn" onClick={submitdata}>
-                            <i className="bi bi-check-circle"></i> Set Password
-                        </button>)}
-                </div>
-            </div>
             )}
             {showerror && (
-            <div className="login-card admin-content animate__animated animate__fadeInDown">
-                <h2 className="title">{err}</h2>
-                <div className="action-buttons">
-                    <button className="retry-btn" onClick={()=>{
-                        setshowpassword(false);
-                        setshowerror(false);
-                        setshowform(true);
-                    }}>
-                        <i className="bi bi-arrow-repeat"></i>
-                            Try Again
-                        </button>
+            <div className="toast-overlay">
+                            <div id="liveToast" className="toast show custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div className="toast-header">
+                                    <strong className="me-auto">Something Went Worng !</strong>
+                                    <button type="button" className="btn-close" onClick={() => {setshowerror(false);setshowform(true)}}></button>
+                                </div>
+                                
+                                <div className="toast-body">
+                                    <h5 className="title">{err}</h5>
 
-                    <button className="exit-btn" onClick={()=>{navigate("/")}}>
-                        <i className="bi bi-door-open"></i>
-                        Exit
-                    </button>
-                </div>
-            </div>)}
+                                </div>
+                            </div>
+                        </div> )}
         </div>
     );  
 }

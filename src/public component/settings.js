@@ -32,7 +32,7 @@ function Settings() {
    };
 
    useEffect(()=>{
-        if(!token || !id) return ;
+        if(!token || !id) return ;//https://sangolacollage.onrender.com
         async function getProfiledetails(){
             try{
                 const resp= await axios.get(`https://sangolacollage.onrender.com/api/profile/get-profiledetails/${id}`,{
@@ -77,7 +77,7 @@ function Settings() {
 
    async function updateinfo()
    {
-      if(!token || !id) return ;
+      if(!token || !id) return ;//https://sangolacollage.onrender.com
       try{
             const resp=await axios.put(`https://sangolacollage.onrender.com/api/profile/updateprofile-details`,{personalDetails,id,role},{
                    headers: {

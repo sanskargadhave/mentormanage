@@ -63,7 +63,7 @@ function AdminDashbord()
             }
         };
         socket.on("notification", handleNotification);
-
+        console.log(notifications);
         return () => socket.off("notification", handleNotification);
     }, [id]);
 
@@ -72,9 +72,9 @@ function AdminDashbord()
             <div className="mentor-dashboard-hero">
 
                 <div>
-                    <h1>Mentor Control Panel</h1>
+                    <h1>Admin Control Panel</h1>
                     <p>
-                        Manage student verifications,
+                        Manage Mentor , Teacher  verifications,
                         leave approvals and attendance reports.
                     </p>
                     <div className="live-status">
@@ -82,8 +82,84 @@ function AdminDashbord()
                     </div>
                 </div>
             </div>
-      
+            <div className="notifications-list">
+                {notifications.map((notif) => {
+                    return (
+                    <div key={notif._id} className="verification-card mentor-card">
+
+                        
+
+    <div className="request-top">
+        <span className="mentor-badge">
+            Mentor Registration Request
+        </span>
+
+        <span className="request-date">
+            {new Date(notif.createdAt).toLocaleString()}
+        </span>
+    </div>
+
+    <div className="mentor-main">
+
+        <img
+            src={notif.data.profileurl}
+            className="mentor-avatar"
+            alt=""
+        />
+
+        <div className="mentor-details">
+
+            <h3>{notif.data.name}</h3>
+
+            <p>{notif.data.id}</p>
+
+            <p>
+                <i className="bi bi-building"></i>
+                {notif.data.department}
+            </p>
+
+            <p>
+                <i className="bi bi-award"></i>
+                {notif.data.qualification}
+            </p>
+
+            <p>
+                <i className="bi bi-clock-history"></i>
+                {notif.data.exprience} Years Experience
+            </p>
+
+            <p>
+                <i className="bi bi-phone"></i>
+                {notif.data.mobileno}
+            </p>
+
+        </div>
+
+    </div>
+
+    <div className="status-bar">
+        ⏳ Awaiting Verification
+    </div>
+
+    <div className="request-actions">
+        <button className="view-btn">
+            View Profile
+        </button>
+
+        <button className="approve-btn">
+            Approve
+        </button>
+
+        <button className="reject-btn">
+            Reject
+        </button>
+    </div>
+
+
+                    </div>
+                )})}
+            </div>
         </div>
     );
 }
-export {AdminDashbord}
+export {AdminDashbord};

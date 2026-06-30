@@ -83,14 +83,29 @@ const getProfiledetails = async (req, resp) => {
 const updateProfiledetails = async (req,resp)=>{
     try{
       const {personalDetails,id,role}=req.body;
+        if(role==="Student")
+        {
+            const user = await StoreStudent.findOne({ studentid: id },"updatedAt" );
+        }
+        else if(role==="Mentor")
+        {
+            const user = await StoreMentor.findOne({ mentorId: id },"updatedAt" );
+        }
+        else if(role==="Teacher")
+        {
+            const user = await StoreTeacher.findOne({ TeacherId: id },"updatedAt" );
+        }
+        else if (role==="Admin")
+        {
+            const user = await StoreAdmin.findOne({ adminId: id },"updatedAt" );
+        }
+        else {
+            return resp.status(403).json({message:"Unauthorised User"})
+        }
 
-      const student = await StoreStudent.findOne({ studentid: id },"updatedAt" );
+      
 
-      if (!student) {
-        return resp.status(404).json({ message: "Student Not Found"});
-      }
-
-      const updatedAt = new Date(student.updatedAt);
+      const updatedAt = new Date(user.updatedAt);
       const today = new Date();
 
       const differenceInDays = Math.floor((today - updatedAt) / (1000 * 60 * 60 * 24));
@@ -98,8 +113,9 @@ const updateProfiledetails = async (req,resp)=>{
       if (differenceInDays < 7) {
        return resp.status(400).json({ message: `You can update after ${7 - differenceInDays} more days`});
       }
-      
-      await StoreStudent.updateOne({studentid:id},
+      if(role==="Student")
+      {
+        await StoreStudent.updateOne({studentid:id},
         {$set:{
           "personaldetails.name":personalDetails.name,
           "personaldetails.address":personalDetails.address,
@@ -111,6 +127,39 @@ const updateProfiledetails = async (req,resp)=>{
           "personaldetails.parentno":personalDetails.parentno,
           "personaldetails.pincode":personalDetails.pincode
         }})
+      }
+        else if(role==="Mentor")
+        {
+            await StoreMentor.updateOne({mentorId:id},
+                {$set:{
+                   "personaldetails.name":personalDetails.name,  
+                    "personaldetails.address":personalDetails.address,
+                    "contactdetails.mobileno":personalDetails.mobileno
+                }}
+            )
+        }
+        else if(role==="Teacher")
+        {
+            await StoreTeacher.updateOne({TeacherId:id},
+                {$set:{
+                     "personaldetails.name":personalDetails.name,
+                    "personaldetails.address":personalDetails.address,
+                    "contactdetails.mobileno":personalDetails.mobileno
+
+                }}
+            )
+        }
+
+        else if(role==="Admin")
+        {
+            await StoreAdmin.updateOne({adminId:id},
+                {$set:{
+                   "name":personalDetails.name 
+                    
+                }}
+            )
+        }
+      
         resp.status(200).json({message:"Profile info updated ...  After 7 Days You can Updated "})
     }
     catch(err)
