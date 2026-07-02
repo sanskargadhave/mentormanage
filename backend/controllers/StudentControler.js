@@ -558,7 +558,13 @@ const getstudentsummery = async (req,resp)=>{
 
   }
 }
+const getStudentDetails = async(req,res)=>{
 
+    const student = await StoreStudent.findById(req.params.id)
+        .populate("collagedetails.mentor");
+
+    res.json(student);
+}
 module.exports={GetStudentDetailsByRoll,SearchStudent,StudentCounts,
   StoreStudentDetails,GetStudent,giveApprove,giveReject,
-  getMentordetails,sendApplication,givePermission,getapplication};
+  getMentordetails,sendApplication,givePermission,getapplication,getStudentDetails };

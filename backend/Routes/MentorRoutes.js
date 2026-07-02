@@ -1,7 +1,7 @@
 const express =require("express");
 const router=express.Router();
 
-const {GetStudentDetailsByRoll,SearchStudent, givePermission}=require("../controllers/StudentControler"); 
+const {GetStudentDetailsByRoll,SearchStudent, givePermission,getStudentDetails}=require("../controllers/StudentControler"); 
 const {MakeAttendanceReport,GetTodayAttendance}=require("../controllers/AttendanceControler");
 const getNotification =require("../controllers/notificationControler");
 const {sendMessage}=require("../controllers/messagecontroler");
@@ -15,7 +15,7 @@ router.use(verifyToken,isMentor);
 
 router.get("/serach-student/:lectureid",SearchStudent);
 router.get("/get-studentdetails/:rollno",GetStudentDetailsByRoll);
-
+router.get("/student/:id",getStudentDetails); 
 router.get("/make-attendance-report",MakeAttendanceReport);
 router.get("/get-today-attendance",GetTodayAttendance);
 router.get("/get-notifications/:id",getNotification);
