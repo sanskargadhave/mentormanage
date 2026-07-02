@@ -70,7 +70,7 @@ const StoreStudentDetails=async (req, res) => {
       senderId:student._id,
       senderRole:"Student",
       receiver_Id:student.collagedetails.mentor,
-      receiverid:student.studentid,
+      receiverid:student.collagedetails.mentorId,
       receiverRole:"Mentor",
       type:"student_added",
       message: `${student.personaldetails.name} has completed the registration process and is awaiting verification.`,
