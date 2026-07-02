@@ -1,17 +1,17 @@
 /* ===== MAIN LAYOUT ===== */
 
 .mentor-layout-wrapper{
-  display:flex;
-  min-height:100vh;
+    display:flex;
+    min-height:100vh;
+    background:#000;
 }
-
 /* ===== SIDEBAR ===== */
 
 .mentor-sidebar{
   width:240px;
-  background:#1f2937;
+  background:black;
   color:white;
-
+  border-right: #fb0202;
   position:fixed;
   top:70px;                  /* below navbar */
   left:0;
@@ -93,20 +93,19 @@
 
 /* ===== PAGE CONTENT ===== */
 
-.mentor-page-content{ 
-  margin-left:240px;
-  margin-top:70px;
-  padding:25px;
-  flex:1;
-  background:#f5f7fb;
-  min-height:calc(100vh - 70px);
+.mentor-page-content{
+    margin-left:170px;
+    margin-top:70px;
+    padding:25px;
+    flex:1;
+    background:#000;
+    min-height:calc(100vh - 70px);
 }
 
 /* Adjust when collapsed */
 .mentor-sidebar.collapsed + .mentor-page-content{
-  margin-left:70px;
+  margin-left:170px;
 }
-
 /* ===== COLLAPSE BUTTON ===== */
 
 .collapse-btn{

@@ -29,6 +29,10 @@ const StoreStudentScema=new mongoose.Schema({
     password:{type:String,default:null},
     studentid:{type:String},
     isactive:{type:Boolean,default:false},
+    registrationStatus: { 
+      type: String,enum: ["Pending", "Approved", "Rejected"],
+      default: "Pending"
+    },
     profileurl:{type:String}
     },
     
@@ -54,6 +58,11 @@ const addMentor=new mongoose.Schema({
         address:{type:String,required:true}
     },
     password:{type:String,required:true},
+    isactive:{type:Boolean,default:false},
+    registrationStatus: { 
+      type: String,enum: ["Pending", "Approved", "Rejected"],
+      default: "Pending"
+    },
     profileurl:{type:String}
 }, {timestamps:true});
 
@@ -76,6 +85,11 @@ const addTeacher=new mongoose.Schema({
         address:{type:String,required:true}
     },
     password:{type:String,required:true},
+    isactive:{type:Boolean,default:false},
+    registrationStatus: { 
+      type: String,enum: ["Pending", "Approved", "Rejected"],
+      default: "Pending"
+    },
     profileurl:{type:String}
 },{timestamps:true});
 

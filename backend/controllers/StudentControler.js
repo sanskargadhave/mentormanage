@@ -17,9 +17,12 @@ const StoreStudentDetails=async (req, res) => {
     const {emailid} = req.body;
     const imageurl = req.body.imageurl || "";
 
-    const aadharnoexist = await StoreStudent.findOne({"personaldetails.aadharno": aadharno});
-    const rollnoexist = await StoreStudent.findOne({ "collagedetails.rollno": rollno });
-    const emailidexist= await StoreStudent.findOne({"emailid":emailid});
+    const [ aadharnoexist, rollnoexist, emailidexist] = await Promise.all([
+      StoreStudent.findOne({"personaldetails.aadharno":aadharno}),
+      StoreStudent.findOne({"collagedetails.rollno":rollno}),
+      StoreStudent.findOne({emailid})
+    ]);
+    
     if (aadharnoexist) {
       return res.status(400).json({
         message: "Aadhar No Already exists"
@@ -39,22 +42,22 @@ const StoreStudentDetails=async (req, res) => {
       });
     }
 
-    req.body.password = await bcrypt.hash(req.body.password, 10);
+    const hashedPassword = await bcrypt.hash(req.body.password,10);
     const student = new StoreStudent({
       personaldetails,
       collagedetails,
       emailid:emailid,
-      password: req.body.password,
+      password: hashedPassword,
       profileurl:imageurl,
       studentid:req.body.studentid,
-      isactive:true
+      isactive:false
     });
     await student.save();
 
 
     await adduser.create({
       userid: student.studentid,
-      password: req.body.password,
+      password: hashedPassword,
       emailid: req.body.emailid,
       profileurl:imageurl,
       role: "Student",
@@ -62,51 +65,32 @@ const StoreStudentDetails=async (req, res) => {
     });
 
 
-    await NotificationSchema.create({
+    const notification=await NotificationSchema.create({
       senderId:student._id,
+      senderRole:"Student",
       receiver_Id:student.collagedetails.mentor,
-      receiverid:student.collagedetails.mentorId,
       receiverRole:"Mentor",
       type:"student_added",
-      message:`${student.personaldetails.name}  Registered`,
-      data:{
-        id:student.studentid,
+      message: `${student.personaldetails.name} has completed the registration process and is awaiting verification.`,
+      title:"New Student Registration",
+      entityType:"Student",
+      entityId:student._id,
+      priority:"normal",
+      actionUrl:`/mentor/student/${student._id}`,
+      metadata:{
         name:student.personaldetails.name,
-        rollno:student.collagedetails.rollno,
         department:student.collagedetails.department,
         course:student.collagedetails.course,
         year:student.collagedetails.year,
         division:student.collagedetails.division,
-        parentno:student.personaldetails.parentno,
-        mobileno:student.personaldetails.mobileno,
-        profileurl:imageurl,
-      }
+        profileurl:imageurl,  
+      },
     })
-
-
-
 
     const io=getIO();
     console.log("Sending notification");
 
-    io.to("user_"+mentorId).emit("notification",{
-      receiverid: mentorId,
-      type:"student_added",
-      message:`${student.personaldetails.name} Registered`,
-      createdAt:new Date(),
-      data:{
-        id:student.studentid,
-        name:student.personaldetails.name,
-        rollno:student.collagedetails.rollno,
-        department:student.collagedetails.department,
-        course:student.collagedetails.course,
-        year:student.collagedetails.year,
-        division:student.collagedetails.division,
-        parentno:student.personaldetails.parentno,
-        mobileno:student.personaldetails.mobileno,
-        profileurl:imageurl,
-      }
-});
+    io.to("user_"+mentorId).emit("notification",notification);
 
     res.status(201).json({
       message: "Student added successfully"
@@ -356,11 +340,11 @@ const sendApplication = async (req, resp) => {
     const {leaveType,fromDate,toDate,reason,senderId,receiver_Id,
       receiverid,receiverRole,type,message,certificateUrl}=req.body;
 
-    const existingApplication = await StoreApplication.findOne({ senderId: senderId, type: "Leave_application",
-
-      $or: [
-        { "data.fromDate": { $lte: toDate }, "data.toDate": { $gte: fromDate }}
-      ]
+    const existingApplication = await StoreApplication.findOne({
+        senderId,
+        type:"leave_request",
+        "data.fromDate": { $lte: toDate },
+        "data.toDate": { $gte: fromDate }
     });
 
     if(existingApplication)
@@ -368,35 +352,51 @@ const sendApplication = async (req, resp) => {
     
       return resp.status(400).json({message:`you have already applied from ${fromDate} To ${toDate}`});
     }
-  
     const totalDays =
       Math.ceil((new Date(toDate) - new Date(fromDate)) / (1000 * 60 * 60 * 24) ) + 1;
-    
-      const applicationid = new mongoose.Types.ObjectId();
-    
-      const notificationData = {
-      senderId:senderId,
-      receiver_Id:receiver_Id,
-      receiverid:receiverid,
-      receiverRole:"Mentor",
-      type:"Leave_application",
-      message:message,
-      data: {
-        applicationid:applicationid,
+
+    const storeapplication=await StoreApplication.create({
+        senderId:senderId,
+        receiver_Id:receiver_Id,
+        receiverRole:"Mentor",
+        type:"leave_request",
+        message:`Requested For ${leaveType} Leave Wait For Approval .`,
+        data:{
+          leaveType:leaveType,
+          fromDate:fromDate,
+          toDate:toDate,
+          reason:reason,
+          certificateUrl:certificateUrl,
+          totalDays:totalDays
+        },
+      });
+
+    const notification=await NotificationSchema.create({
+        senderId:senderId,
+        senderRole:"Student",
+        receiver_Id:receiver_Id,
+        receiverRole:"Mentor",
+        type:"leave_request",
+      message: `Requested For ${leaveType} Leave Wait For Approval .`,
+      title:"New Leave Request",
+      entityType:"Leave",
+      entityId:storeapplication._id,
+      priority:"high",
+      actionUrl:`/mentor/leave/${storeapplication._id}`,
+      metadata:{
+        applicationid:storeapplication._id,
+         studentId:senderId,
         leaveType:leaveType,
         fromDate:fromDate,
         toDate:toDate,
         reason:reason,
         certificateUrl:certificateUrl,
-        status:"Pending",
         totalDays:totalDays
       },
-    };
-    
-    const storeapplication=await StoreApplication.create(notificationData);
-    const storedNotification=await NotificationSchema.create(notificationData)
-    io.to("user_" +receiverid)
-      .emit("notification", storedNotification);
+    })
+
+    io.to("user_" +receiverid).emit("notification", notification);
+
     resp.status(200).json({message:"Your Application Has been Send For Your Mentor"});
 
   } catch (err) {

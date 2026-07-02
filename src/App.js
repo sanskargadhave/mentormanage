@@ -25,6 +25,7 @@
   import ProtectedRoute from "./protectedRoute.js"; 
   import LeaveApplication from "./student comonent/leaveApplication.js";
   import Settings from "./public component/settings.js";
+  import Notification from "./public component/notification.js";
 import { use } from "react";
   function App() {
     const navigate=useNavigate();
@@ -71,8 +72,8 @@ import { use } from "react";
           {/* Mentor Layout */}
          <Route element={<ProtectedRoute allowedRoles={["Mentor"]} />}>
             <Route path="/mentor" element={<SidebarLayout />}>
-              <Route index element={<MentorDashboardContent />} />
-              <Route path="dashboard" element={<MentorDashboardContent />} />
+              <Route index element={<Notification />} />
+              <Route path="dashboard" element={<Notification />} />
     
               <Route path="add-student" element={<AddStudent />} />
               <Route path="view-users" element={<ViewUser />} />

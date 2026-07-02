@@ -3,13 +3,22 @@ const mongoose = require("mongoose");
 const NotificationSchema = new mongoose.Schema({
 
   senderId:{type: mongoose.Schema.Types.ObjectId,required: true},
-  receiver_Id:{type: mongoose.Schema.Types.ObjectId,required: true},
+  senderRole:{type:String ,enum:["Student","Mentor","Teacher","Admin"],required:true},
+  receiver_Id:{type: mongoose.Schema.Types.ObjectId,required: true,index:true},
   receiverid:{type:String,required:true},
   receiverRole:{type:String,enum:["Student","Mentor","Teacher","Admin"],required:true},
   type:{type:String,required:true},
   message:{type:String,required:true},
+  title:{ type:String,required:true}, 
+  entityType:{type:String,required:true},
+  entityId:{type: mongoose.Schema.Types.ObjectId,required: true},
+  priority: {type:String,enum:["normal","medium","high"],required:true},
+  actionUrl:{type:String},
   data: mongoose.Schema.Types.Mixed,
-  read:{type:Boolean,default:false}
+  metadata: mongoose.Schema.Types.Mixed,
+  readAt:{type:Date},
+  status:{type:String,enum:["sent","delivered","read"],default:"sent"},
+  isRead:{type:Boolean,default:false,index:true}
 },{timestamps:true});
 
 NotificationSchema.index({receiverId:1});
