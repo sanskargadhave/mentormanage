@@ -53,7 +53,7 @@ const StoreStudentDetails=async (req, res) => {
       isactive:false
     });
     await student.save();
-
+    console.log("Store student record in studentDetails")
 
     await adduser.create({
       userid: student.studentid,
@@ -64,6 +64,7 @@ const StoreStudentDetails=async (req, res) => {
       active: false
     });
 
+    console.log("Store student record in user")
 
     const notification=await NotificationSchema.create({
       senderId:student._id,
@@ -86,6 +87,7 @@ const StoreStudentDetails=async (req, res) => {
         profileurl:imageurl,  
       },
     })
+    console.log("Store student record in notificationDetails")
 
     const io=getIO();
     console.log("Sending notification");
@@ -97,6 +99,8 @@ const StoreStudentDetails=async (req, res) => {
     });
 
   } catch (err) {
+    console.error("ERROR OCCURRED:");
+    console.error(err);
     res.status(500).json({
       message: "Failed to add student",
       error: err.message
