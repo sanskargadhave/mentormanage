@@ -4,6 +4,7 @@ const NotificationSchema = new mongoose.Schema({
 
   senderId:{type: mongoose.Schema.Types.ObjectId,required: true},
   senderRole:{type:String ,enum:["Student","Mentor","Teacher","Admin"],required:true},
+  receiverid:{type:String},
   receiver_Id:{type: mongoose.Schema.Types.ObjectId,required: true,index:true},
   receiverRole:{type:String,enum:["Student","Mentor","Teacher","Admin"],required:true},
   type:{type:String,required:true},

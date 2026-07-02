@@ -70,6 +70,7 @@ const StoreStudentDetails=async (req, res) => {
       senderId:student._id,
       senderRole:"Student",
       receiver_Id:student.collagedetails.mentor,
+      receiverid:student.studentid,
       receiverRole:"Mentor",
       type:"student_added",
       message: `${student.personaldetails.name} has completed the registration process and is awaiting verification.`,
@@ -379,6 +380,7 @@ const sendApplication = async (req, resp) => {
         senderId:senderId,
         senderRole:"Student",
         receiver_Id:receiver_Id,
+       
         receiverRole:"Mentor",
         type:"leave_request",
       message: `Requested For ${leaveType} Leave Wait For Approval .`,
