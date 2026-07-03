@@ -233,8 +233,11 @@ function LeaveDetails()
 {
     const {token} = useContext(AuthContext);   
      const { id } = useParams();
+
      const [leaveinfo,setleaveinfo]=useState([]);
+     const [studentinfo,setstudentinfo]=useState([]);
      const navigate=useNavigate();
+
     useEffect(() => {
          const getdetails = async () =>{
           try{
@@ -244,7 +247,8 @@ function LeaveDetails()
                 Authorization: `Bearer ${token}`,
               }
             });
-            setleaveinfo(resp.data);
+            setleaveinfo(resp.data.application);
+            setstudentinfo(resp.data.student);
           }
           catch(err)
           {
@@ -257,75 +261,47 @@ function LeaveDetails()
 
   return (
     <div>
-      <div className="leave-alert-card">
+     <div className="student-details-container">
 
-    <div className="leave-alert-top">
+      <div className="student-header">
+
+        <button className="back-btn" onClick={()=>navigate("/mentor")}>
+            <i className="bi bi-arrow-left"></i>
+        </button>
+
+        <h2>Student Verification</h2>
+
+    </div>
+
+    <div className="student-profile-card">
 
         <img
-            src={leaveinfo.metadata?.profileurl}
+            src={studentinfo?.profileurl || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"}
             alt="profile"
-            className="leave-alert-avatar"
+            className="student-profile-image"
         />
 
-        <div className="leave-alert-user-info">
-            <h4>{leaveinfo.metadata?.name}</h4>
-            <span>{leaveinfo.metadata?.department}</span>
-        </div>
+        <h3>{studentinfo?.personaldetails?.name}</h3>
 
-        <div className="leave-alert-time">
-            {new Date(leaveinfo.createdAt).toLocaleString("en-IN",{
-                day:"numeric",
-                month:"short",
-                hour:"2-digit",
-                minute:"2-digit"
-            })}
-        </div>
+        <p>{studentinfo?.studentid}</p>
 
-    </div>
+        <span className="student-course">
+            {studentinfo?.collagedetails?.course}  • 
+              {studentinfo?.collagedetails?.year} Year  •
+            Division {studentinfo?.collagedetails?.division}
+        </span>
 
-    <div className="leave-alert-body">
-
-        <div className="leave-alert-type">
-            🌿 {leaveinfo.metadata?.leaveType}
-        </div>
-
-        <p className="leave-alert-message">
-            {leaveinfo.message}
-        </p>
-
-        <div className="leave-alert-dates">
-
-            <div className="leave-date-box">
-                <span>From</span>
-                <h5>{leaveinfo.metadata?.fromDate}</h5>
-            </div>
-
-            <div className="leave-arrow">
-                →
-            </div>
-
-            <div className="leave-date-box">
-                <span>To</span>
-                <h5>{leaveinfo.metadata?.toDate}</h5>
-            </div>
-
-        </div>
-
-        <div className="leave-alert-footer">
-
-            <div className="leave-total-days">
-                {leaveinfo.metadata?.totalDays} Days
-            </div>
-
-            <div className="leave-status-chip pending-chip">
-                Pending
-            </div>
-
-        </div>
+        <div className={`status-badge ${studentinfo?.registrationStatus}`}>
+          {
+            studentinfo?.registrationStatus === "Approved" ? "Approved"
+              : studentinfo?.registrationStatus === "Rejected" ? "Rejected"
+              : "Pending Verification"
+            }
+        </div>  
+        
 
     </div>
-
-</div>
+        </div>
     </div>
 
 
