@@ -393,7 +393,7 @@ const sendApplication = async (req, resp) => {
         senderId:senderId,
         senderRole:"Student",
         receiver_Id:receiver_Id,
-       
+        receiverid:receiverid,
         receiverRole:"Mentor",
         type:"leave_request",
       message: `Requested For ${leaveType} Leave Wait For Approval .`,
