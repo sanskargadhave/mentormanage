@@ -46,6 +46,7 @@ const AddTeacher = async(req,res)=>{
 
     const notification=await NotificationSchema.create({
           senderId:teacher._id,
+          senderRole:"Teacher",
           receiver_Id:"697f16cd19432806852e9a24",
           receiverid:"AD-02012006-001",
           receiverRole:"Admin",
