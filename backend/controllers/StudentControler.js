@@ -356,7 +356,7 @@ const sendApplication = async (req, resp) => {
   try {
     const io = getIO();
     const {leaveType,fromDate,toDate,reason,senderId,receiver_Id,
-      receiverid,receiverRole,type,message,certificateUrl,studentName}=req.body;
+      receiverid,receiverRole,type,certificateUrl,studentName}=req.body;
 
     const existingApplication = await StoreApplication.findOne({
         senderId,
@@ -380,6 +380,7 @@ const sendApplication = async (req, resp) => {
         type:"leave_request",
         message: `${studentName} requested ${leaveType} leave from ${fromDate} to ${toDate}.`,
         data:{
+          name:studentName,
           leaveType:leaveType,
           fromDate:fromDate,
           toDate:toDate,
