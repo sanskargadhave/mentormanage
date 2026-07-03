@@ -281,7 +281,9 @@ function AddStudent()
         })
         .catch(()=>{
             setshowerror(true);
-            seterr("Server Error");
+            seterr(err.response?.data?.message ||
+        err.message ||  
+        "Something went wrong");
         })
         .finally(()=>{
             setloding(false);

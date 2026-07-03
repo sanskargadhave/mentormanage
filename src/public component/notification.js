@@ -13,14 +13,14 @@ function Notification() {
     const [loding,setloding]=useState({});
 
 
-  useEffect(() => {
-  if (id) {
-    socket.emit("join_room", {
-      userid: id,
-      role: role
-    });
-  }
-}, [id]);
+    useEffect(() => {
+        if (id) {
+            socket.emit("join_room", {
+                userid: id,
+                role: role
+            });
+        }
+    }, [id]);
 
 
   
@@ -28,42 +28,37 @@ function Notification() {
  
 
 
-    const handleNotificationClick = async(notification) => {
-
-    try{
-
-        if(!notification.isRead){
-
+ const handleNotificationClick = async (notification) => {
+    try {
+        if (!notification.isRead) {
             await axios.put(
-                `https://sangolacollage.onrender.com/api/notification/read/${notification._id}`,
+                `https://sangolacollage.onrender.com/api/mentor/notification-isread/${notification._id}`,
                 {},
                 {
-                    headers:{
-                        Authorization:`Bearer ${token}`
-                    }
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 }
             );
 
+            // Update frontend instantly
             setNotifications(prev =>
                 prev.map(item =>
                     item._id === notification._id
-                    ? {
-                        ...item,
-                        isRead:true,
-                        readAt:new Date()
-                    }
-                    : item
+                        ? { ...item, isRead: true, readAt: new Date() }
+                        : item
                 )
             );
         }
-
-        navigate(notification.actionUrl);
-
     }
-    catch(err){
-        console.log(err.message);
+    catch (err) {
+        console.log(err.response?.data);
+        console.log(err.response?.status);
     }
-}
+
+    // Navigate even if marking read fails
+    navigate(notification.actionUrl);
+};
     return (
         <div className="notification-container">
             <div className="notification-filter">
