@@ -1,7 +1,7 @@
 const express =require("express");
 const router=express.Router();
 
-const {GetStudentDetailsByRoll,SearchStudent, givePermission,getStudentDetails}=require("../controllers/StudentControler"); 
+const {GetStudentDetailsByRoll,SearchStudent, givePermission,getStudentDetails,giveread}=require("../controllers/StudentControler"); 
 const {MakeAttendanceReport,GetTodayAttendance}=require("../controllers/AttendanceControler");
 const getNotification =require("../controllers/notificationControler");
 const {sendMessage}=require("../controllers/messagecontroler");
@@ -24,7 +24,8 @@ router.get("/get-notifications/:id",getNotification);
 router.post("/store-excel-data",uplode.single("file"),iscorrectdata,getexcelsheet);
 router.post("/sendMessage", sendMessage);
 
-router.put("/give-approve/:studentid",giveApprove);
-router.put("/give-reject/:studentid",giveReject);
+router.put("/give-approve/:studentid/:id",giveApprove);
+router.put("/give-reject/:id",giveReject);
 router.put("/give-permission/:permission/:applicationid",givePermission);
+router.put("/notification-isread/:id",giveread);
 module.exports = router;

@@ -285,8 +285,9 @@ const GetStudent= async (req,resp)=>{
 
 const giveApprove = async (req,resp)=>{
       try{
-          const {studentid}=req.params;
-          await StoreStudent.updateOne({studentid:studentid},{$set:{isactive:true}});
+          
+          await StoreStudent.findByIdAndUpdate(req.params.id,{registrationStatus:"Approved"});
+          await adduser.updateOne({userid:req.params.studentid},{$set:{active:true}});
           resp.status(200).json({message:"Student Approved"});
       }
       catch(err)
@@ -298,9 +299,9 @@ const giveApprove = async (req,resp)=>{
 
 const giveReject = async (req,resp)=>{
       try{
-          const {studentid}=req.params;
-          await StoreStudent.updateOne({studentid:studentid},{$set:{isactive:false}});
-          await adduser.updateOne({userid:studentid},{$set:{active:false}});
+          
+          await StoreStudent.findByIdAndUpdate(req.params.id,{registrationStatus:"Rejected",});
+
           resp.status(200).json({message:"Student Rejected "});
       }
       catch(err)
@@ -309,7 +310,19 @@ const giveReject = async (req,resp)=>{
         console.log(err.message);
       }
 }
-
+const giveread = async (req,resp)=>{
+  try{
+      await NotificationSchema.findByIdAndUpdate(req.params.id,{
+        isRead:true,
+        readAt:new Date()
+      });
+      resp.status(200).json({message:"Update Successfuly"})
+  }
+  catch(err)
+  {
+    return resp.status(500).json({message:err.message});
+  }
+}
 const getMentordetails = async (req, resp) => {
   try {
 
@@ -567,4 +580,4 @@ const getStudentDetails = async(req,res)=>{
 }
 module.exports={GetStudentDetailsByRoll,SearchStudent,StudentCounts,
   StoreStudentDetails,GetStudent,giveApprove,giveReject,
-  getMentordetails,sendApplication,givePermission,getapplication,getStudentDetails };
+  getMentordetails,sendApplication,givePermission,getapplication,getStudentDetails,giveread };
