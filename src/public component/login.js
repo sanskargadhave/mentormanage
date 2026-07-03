@@ -4,7 +4,8 @@ import {useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { useContext} from "react";
 import { AuthContext } from "../Authintication";
-
+import { NotificationContext } from "../notificationAuthContext";
+import axios from "axios";
 function Login() {
 
     const [email,setEmail]=useState("");
@@ -14,6 +15,7 @@ function Login() {
     const nevigate=useNavigate();
     const [loading,setLoading]=useState(false);
     const { login,token} = useContext(AuthContext);
+    const {setNotifications}=useContext(NotificationContext);
     const handleSubmit=async (e)=>{
         e.preventDefault();
         await verifyData();
@@ -44,6 +46,19 @@ function Login() {
                     token: data.token,
                     profilepic:data.user.profileurl
                 }); 
+                
+                const notificationResp = await fetch(`https://sangolacollage.onrender.com/api/common/get-notifications/${data.user.id}`,
+                    {
+                        headers:{
+                            Authorization:`Bearer ${data.token}`
+                        }
+                    }
+                );
+
+                const notificationData = await notificationResp.json();
+
+                setNotifications(notificationData);
+                localStorage.setItem("notifications",JSON.stringify(notificationData));
                 
                 const role=data.user.role;
                 if(role==="Admin")

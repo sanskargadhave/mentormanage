@@ -38,6 +38,8 @@ function StudentDetails(){
             }
           }
         )
+        setstudentinfo((prev)=>({...prev,registrationStatus:"Rejected"}));
+
         alert(resp.data.message);
       }
       catch(err)
@@ -54,7 +56,8 @@ function StudentDetails(){
             }
           }
         )
-        alert(resp.data.message);
+        setstudentinfo((prev)=>({...prev,registrationStatus:"Approved"}));
+       
       }
       catch(err)
       {
@@ -200,8 +203,8 @@ function StudentDetails(){
     </div>
 
   
-
-    <div className="action-buttons">
+    {studentinfo?.registrationStatus==="Pending" && (
+      <div className="action-buttons">
 
         <button className="reject-btn" onClick={()=>Reject()}>
             Reject Registration
@@ -211,7 +214,9 @@ function StudentDetails(){
             Approve Registration
         </button>
 
-    </div>
+      </div>
+    )}
+    
 
 </div>
 

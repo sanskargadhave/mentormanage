@@ -4,92 +4,66 @@ import socket from "../socket";
 import axios from "axios";
 import { AuthContext } from "../Authintication";
 import { useNavigate } from "react-router-dom";
+import { NotificationContext } from "../notificationAuthContext";
+
 function Notification() {
-    const { id,token} = useContext(AuthContext);
-  const navigate=useNavigate();
-  const [notifications, setNotifications] = useState([]);
-  const [loding,setloding]=useState({});
-  const [show,setshow]=useState(true);
-  const [event,setevent]=useState("");
-  const [subjects,setSubjects]=useState([]);
-  const [message,setmessage]=useState("");
-  const [url,seturl]=useState("");
+    const { id,token,role} = useContext(AuthContext);
+    const navigate=useNavigate();
+    const {notifications,setNotifications}=useContext(NotificationContext);
+    const [loding,setloding]=useState({});
+
 
   useEffect(() => {
   if (id) {
     socket.emit("join_room", {
       userid: id,
-      role: "Mentor"
+      role: role
     });
   }
 }, [id]);
 
 
-    useEffect(() => {
-  if (!token || !id) return; 
+  
+  
+ 
 
-  async function getNotifications() {
-    try {
-      setloding((prev)=>({...prev,getNotifications:true}));//https://sangolacollage.onrender.com
 
-      const resp = await axios.get(
-        `https://sangolacollage.onrender.com/api/mentor/get-notifications/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+    const handleNotificationClick = async(notification) => {
+
+    try{
+
+        if(!notification.isRead){
+
+            await axios.put(
+                `https://sangolacollage.onrender.com/api/notification/read/${notification._id}`,
+                {},
+                {
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                }
+            );
+
+            setNotifications(prev =>
+                prev.map(item =>
+                    item._id === notification._id
+                    ? {
+                        ...item,
+                        isRead:true,
+                        readAt:new Date()
+                    }
+                    : item
+                )
+            );
         }
-      );
 
-      const sorted = resp.data.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
+        navigate(notification.actionUrl);
 
-      setNotifications(sorted);
-    } 
-    catch (err) 
-    {
-      if(err.response?.status === 401){
-        localStorage.clear();
-        navigate("/unauthorized");
-        return;
-      }
-      
-    } 
-    finally {
-     setloding((prev)=>({...prev,getNotifications:false}));
     }
-  }
-
-  getNotifications();
-}, [id, token]);
-
- useEffect(() => {
-    const handleNotification = (data) => {
-      if (data.receiverid === id) {
-        
-        setNotifications((prev) => [data, ...prev]);
-      }
-    };
-    socket.on("notification", handleNotification);
-
-    return () => socket.off("notification", handleNotification);
-  }, [id]);
-
-
-    const handleNotificationClick = (notification) => {
-      if(!notification.isRead)
-      {
-        axios.put(`https://sangolacollage.onrender.com/api/mentor/notification-isread/${notification._id}`,{},
-          {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-        )
-      }
-      navigate(notification.actionUrl);
+    catch(err){
+        console.log(err.message);
     }
+}
     return (
         <div className="notification-container">
             <div className="notification-filter">
@@ -117,7 +91,7 @@ function Notification() {
             </div>
         ) : (
                     notifications.map((item) => (
-                        <div key={item._id} className={`notificationss-card ${!item.isread ? "unread" : ""}`} onClick={()=>handleNotificationClick(item)}> 
+                        <div key={item._id} className={`notificationss-card ${!item.isRead ? "unread" : ""}`} onClick={()=>handleNotificationClick(item)}> 
                            <div className="notification-avatar">
                                 <img src={ item.metadata?.profileurl || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"} alt={item.metadata?.name} className="notification-profile-pic"/>
                             </div>
@@ -127,7 +101,8 @@ function Notification() {
                                     <span>{new Date(item.createdAt).toLocaleDateString("en-IN",{
                                                     day:"numeric",
                                                     month:"short",
-                                                    year:"numeric"
+                                                    hour:"2-digit",
+                                                    minute:"2-digit"
                                                 })}</span>
                                 </div>
                                 <div className="notification-bottom">

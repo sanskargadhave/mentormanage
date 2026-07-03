@@ -3,7 +3,6 @@ const router=express.Router();
 
 const {GetStudentDetailsByRoll,SearchStudent, givePermission,getStudentDetails,giveread}=require("../controllers/StudentControler"); 
 const {MakeAttendanceReport,GetTodayAttendance}=require("../controllers/AttendanceControler");
-const getNotification =require("../controllers/notificationControler");
 const {sendMessage}=require("../controllers/messagecontroler");
 const {getexcelsheet}=require("../controllers/getexceldata");
 const {uplode,iscorrectdata}=require("../middleware/exceldataMiddleware");
@@ -18,7 +17,7 @@ router.get("/get-studentdetails/:rollno",GetStudentDetailsByRoll);
 router.get("/student/:id",getStudentDetails); 
 router.get("/make-attendance-report",MakeAttendanceReport);
 router.get("/get-today-attendance",GetTodayAttendance);
-router.get("/get-notifications/:id",getNotification);
+
 
 
 router.post("/store-excel-data",uplode.single("file"),iscorrectdata,getexcelsheet);
