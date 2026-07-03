@@ -498,7 +498,7 @@ const getapplicationById = async (req,resp)=>{
   try{
       
       const application = await StoreApplication.findById(req.params.id);
-      const student = await StoreStudent.findById(senderId);
+      const student = await StoreStudent.findById(application.senderId);
 
       resp.status(200).json({application,student});
   }
