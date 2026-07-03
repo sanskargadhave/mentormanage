@@ -517,3 +517,138 @@ html,
         font-size:20px;
     }
 }
+.leave-alert-card{
+    width:100%;
+    background:#111B21;
+    border-radius:18px;
+    padding:16px;
+    margin-bottom:15px;
+    transition:0.3s;
+    cursor:pointer;
+    border-left:4px solid #25D366;
+}
+
+.leave-alert-card:hover{
+    background:#1C2A31;
+}
+
+.leave-alert-top{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:15px;
+}
+
+.leave-alert-avatar{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #25D366;
+}
+
+.leave-alert-user-info{
+    flex:1;
+}
+
+.leave-alert-user-info h4{
+    margin:0;
+    color:#E9EDEF;
+    font-size:16px;
+    font-weight:600;
+}
+
+.leave-alert-user-info span{
+    color:#8696A0;
+    font-size:13px;
+}
+
+.leave-alert-time{
+    color:#8696A0;
+    font-size:11px;
+    text-align:right;
+}
+
+.leave-alert-body{
+    background:#0B141A;
+    padding:14px;
+    border-radius:14px;
+}
+
+.leave-alert-type{
+    display:inline-block;
+    background:#103529;
+    color:#25D366;
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:13px;
+    margin-bottom:12px;
+    font-weight:600;
+}
+
+.leave-alert-message{
+    color:#D1D7DB;
+    font-size:14px;
+    line-height:1.6;
+    margin-bottom:15px;
+}
+
+.leave-alert-dates{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.leave-date-box{
+    flex:1;
+    background:#1C2A31;
+    padding:12px;
+    border-radius:12px;
+    text-align:center;
+}
+
+.leave-date-box span{
+    color:#8696A0;
+    font-size:12px;
+}
+
+.leave-date-box h5{
+    color:#25D366;
+    margin-top:6px;
+    margin-bottom:0;
+    font-size:15px;
+}
+
+.leave-arrow{
+    color:#25D366;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.leave-alert-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.leave-total-days{
+    background:#202C33;
+    color:#E9EDEF;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+}
+
+.leave-status-chip{
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.pending-chip{
+    background:#2A1F00;
+    color:#FFC107;
+}

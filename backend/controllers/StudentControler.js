@@ -356,7 +356,7 @@ const sendApplication = async (req, resp) => {
   try {
     const io = getIO();
     const {leaveType,fromDate,toDate,reason,senderId,receiver_Id,
-      receiverid,receiverRole,type,message,certificateUrl}=req.body;
+      receiverid,receiverRole,type,message,certificateUrl,studentName}=req.body;
 
     const existingApplication = await StoreApplication.findOne({
         senderId,
@@ -378,7 +378,7 @@ const sendApplication = async (req, resp) => {
         receiver_Id:receiver_Id,
         receiverRole:"Mentor",
         type:"leave_request",
-        message:`Requested For ${leaveType} Leave Wait For Approval .`,
+        message: `${studentName} requested ${leaveType} leave from ${fromDate} to ${toDate}.`,
         data:{
           leaveType:leaveType,
           fromDate:fromDate,
@@ -396,7 +396,7 @@ const sendApplication = async (req, resp) => {
         receiverid:receiverid,
         receiverRole:"Mentor",
         type:"leave_request",
-      message: `Requested For ${leaveType} Leave Wait For Approval .`,
+      message: `${studentName} requested ${leaveType} leave from ${fromDate} to ${toDate}.`,
       title:"New Leave Request",
       entityType:"Leave",
       entityId:storeapplication._id,
@@ -494,6 +494,19 @@ const getapplication = async (req,resp)=>{
     resp.status(500).json({message:err.message});
   }
 }
+const getapplicationById = async (req,resp)=>{
+  try{
+      
+      const application = await StoreApplication.findById(req.params.id);
+      
+      resp.status(200).json(application);
+  }
+  catch(err)
+  {
+    console.log(err.message);
+    resp.status(500).json({message:err.message});
+  }
+}
 
 const getstudentsummery = async (req,resp)=>{
   try{
@@ -580,4 +593,4 @@ const getStudentDetails = async(req,res)=>{
 }
 module.exports={GetStudentDetailsByRoll,SearchStudent,StudentCounts,
   StoreStudentDetails,GetStudent,giveApprove,giveReject,
-  getMentordetails,sendApplication,givePermission,getapplication,getStudentDetails,giveread };
+  getMentordetails,sendApplication,givePermission,getapplication,getapplicationById,getStudentDetails,giveread };

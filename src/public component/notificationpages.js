@@ -229,4 +229,106 @@ function StudentDetails(){
 
     </div>);
 }
-export {StudentDetails};
+function LeaveDetails()
+{
+    const {token} = useContext(AuthContext);   
+     const { id } = useParams();
+     const [leaveinfo,setleaveinfo]=useState([]);
+     const navigate=useNavigate();
+    useEffect(() => {
+         const getdetails = async () =>{
+          try{
+            const resp = await axios.get(`https://sangolacollage.onrender.com/api/mentor/get-student-application/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              }
+            });
+            setleaveinfo(resp.data);
+          }
+          catch(err)
+          {
+            alert(err.message);
+          }
+            
+          }
+          getdetails();
+    }, [id]);
+
+  return (
+    <div>
+      <div className="leave-alert-card">
+
+    <div className="leave-alert-top">
+
+        <img
+            src={leaveinfo.metadata?.profileurl}
+            alt="profile"
+            className="leave-alert-avatar"
+        />
+
+        <div className="leave-alert-user-info">
+            <h4>{leaveinfo.metadata?.name}</h4>
+            <span>{leaveinfo.metadata?.department}</span>
+        </div>
+
+        <div className="leave-alert-time">
+            {new Date(leaveinfo.createdAt).toLocaleString("en-IN",{
+                day:"numeric",
+                month:"short",
+                hour:"2-digit",
+                minute:"2-digit"
+            })}
+        </div>
+
+    </div>
+
+    <div className="leave-alert-body">
+
+        <div className="leave-alert-type">
+            🌿 {leaveinfo.metadata?.leaveType}
+        </div>
+
+        <p className="leave-alert-message">
+            {leaveinfo.message}
+        </p>
+
+        <div className="leave-alert-dates">
+
+            <div className="leave-date-box">
+                <span>From</span>
+                <h5>{leaveinfo.metadata?.fromDate}</h5>
+            </div>
+
+            <div className="leave-arrow">
+                →
+            </div>
+
+            <div className="leave-date-box">
+                <span>To</span>
+                <h5>{leaveinfo.metadata?.toDate}</h5>
+            </div>
+
+        </div>
+
+        <div className="leave-alert-footer">
+
+            <div className="leave-total-days">
+                {leaveinfo.metadata?.totalDays} Days
+            </div>
+
+            <div className="leave-status-chip pending-chip">
+                Pending
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+    </div>
+
+
+  )
+}
+export {StudentDetails,LeaveDetails};

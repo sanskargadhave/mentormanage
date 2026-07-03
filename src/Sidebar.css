@@ -14,7 +14,7 @@
   border-right: #fb0202;
   position:fixed;
   top:70px;                  /* below navbar */
-  left:0;
+  
   height:calc(100vh - 70px);
 
   transition:width 0.3s ease;

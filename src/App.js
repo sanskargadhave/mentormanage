@@ -26,7 +26,7 @@
   import LeaveApplication from "./student comonent/leaveApplication.js";
   import Settings from "./public component/settings.js";
   import Notification from "./public component/notification.js";
-  import { StudentDetails } from "./public component/notificationpages.js";
+  import { StudentDetails,LeaveDetails } from "./public component/notificationpages.js";
 import { use } from "react";
   function App() {
     const navigate=useNavigate();
@@ -83,8 +83,8 @@ import { use } from "react";
               <Route path="view-student" element={<ViewStudent/>}/>
               <Route path="add-test-result" element={<AddTestResult/>}/>
               <Route path="student/:id" element={<StudentDetails />} />
-              {/*<Route path="leave/:id" element={<LeaveDetails />} />
-              <Route path="test/:id" element={<TestDetails />} />*/}
+              <Route path="leave/:id" element={<LeaveDetails />} />
+              {/*<Route path="test/:id" element={<TestDetails />} />*/}
             </Route>
           </Route>
 
