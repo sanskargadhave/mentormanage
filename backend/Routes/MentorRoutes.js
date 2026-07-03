@@ -26,5 +26,5 @@ router.post("/sendMessage", sendMessage);
 router.put("/give-approve/:studentid/:id",giveApprove);
 router.put("/give-reject/:id",giveReject);
 router.put("/give-permission/:permission/:applicationid",givePermission);
-router.put("/notification-isread/:id",giveread);
+
 module.exports = router;

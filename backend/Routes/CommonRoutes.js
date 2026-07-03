@@ -3,7 +3,7 @@ const router=express.Router();
 const {AddMentor}=require("../controllers/MentorControler");
 const {AddTeacher}=require("../controllers/TeacherControler");
 const {uploadProfile,upload}=require("../middleware/uplodemiddleware");              
-const {GetStudent,StudentCounts,StoreStudentDetails}=require("../controllers/StudentControler");
+const {GetStudent,StudentCounts,StoreStudentDetails,giveread}=require("../controllers/StudentControler");
 const {MentorCount,GetMentors}=require("../controllers/MentorControler");
 const {GetLectures} =require("../controllers/LectureControler");
 const {GetTeacher}=require("../controllers/TeacherControler");
@@ -28,5 +28,5 @@ router.post("/store-attendance",StoreAttendances);
 router.post("/add-student",upload.single("profileImage"),uploadProfile,StoreStudentDetails);
 router.post("/add-mentor",upload.single("profileImage"),uploadProfile,AddMentor);
 router.post("/add-teacher",upload.single("profileImage"),uploadProfile,AddTeacher);
-
+router.put("/notification-isread/:id",giveread);
 module.exports = router;
