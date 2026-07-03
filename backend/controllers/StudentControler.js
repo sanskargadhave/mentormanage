@@ -47,13 +47,12 @@ const StoreStudentDetails=async (req, res) => {
       personaldetails,
       collagedetails,
       emailid:emailid,
-      password: hashedPassword,
       profileurl:imageurl,
       studentid:req.body.studentid,
       isactive:false
     });
     await student.save();
-    console.log("Store student record in studentDetails")
+    
 
     await adduser.create({
       userid: student.studentid,
@@ -64,8 +63,7 @@ const StoreStudentDetails=async (req, res) => {
       active: false
     });
 
-    console.log("Store student record in user")
-
+    
     const notification=await NotificationSchema.create({
       senderId:student._id,
       senderRole:"Student",
@@ -88,10 +86,10 @@ const StoreStudentDetails=async (req, res) => {
         profileurl:imageurl,  
       },
     })
-    console.log("Store student record in notificationDetails")
+  
 
     const io=getIO();
-    console.log("Sending notification");
+    
 
     io.to("user_"+mentorId).emit("notification",notification);
 
@@ -378,7 +376,7 @@ const sendApplication = async (req, resp) => {
         receiver_Id:receiver_Id,
         receiverRole:"Mentor",
         type:"leave_request",
-        message: `${studentName} requested ${leaveType} leave from ${fromDate} to ${toDate}.`,
+        message: `${studentName} requested ${leaveType}  from ${fromDate} to ${toDate}.`,
         data:{
           name:studentName,
           leaveType:leaveType,

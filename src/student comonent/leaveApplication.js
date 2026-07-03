@@ -82,7 +82,7 @@ function LeaveApplication() {
         senderId: studentDetails._id,
         receiver_Id: MentorDetails._id,
         receiverid: MentorDetails.mentorId,
-        message: `${studentDetails?.personaldetails?.name} has Requested For Leave`,
+        studentName:studentDetails?.personaldetails?.name,
         certificateUrl: ""
       };
 

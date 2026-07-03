@@ -22,7 +22,7 @@ const AddMentor= async (req,res)=>{
     const professionaldetails = JSON.parse(req.body.professionaldetails);
     const contactdetails = JSON.parse(req.body.contactdetails);
 
-    console.log("in Add Mentor Controler :",req.body);
+    
     const {emailid}=contactdetails;
     const {mobileno}=contactdetails;
    const imageurl = req.body.imageurl || "";
@@ -38,12 +38,11 @@ const AddMentor= async (req,res)=>{
       return res.status(400).json({message:"Your Mobile No Is Already Exists"})
     }
 
-    req.body.password = await bcrypt.hash(req.body.password, 10);
+    const hashedPassword = await bcrypt.hash(req.body.password,10);
       const mentor = new StoreMentor({
         personaldetails,
         professionaldetails,
         contactdetails,
-        password: req.body.password,
         profileurl:imageurl
       });
       
@@ -51,21 +50,26 @@ const AddMentor= async (req,res)=>{
 
     await adduser.create({
       userid: mentor.mentorId,
-      password: req.body.password,
+      password: hashedPassword,
       emailid: emailid,
       role: "Mentor",
       profileurl:imageurl,
-      active: true
+    
     });
 
-    await NotificationSchema.create({
+    const notification=await NotificationSchema.create({
       senderId:mentor._id,
       receiver_Id:"697f16cd19432806852e9a24",
       receiverid:"AD-02012006-001",
       receiverRole:"Admin",
       type:"mentor_added",
-      message:`${mentor.personaldetails.name}  Registered`,
-      data:{
+      message:`${mentor.personaldetails.name} has completed the registration process and is awaiting verification.`,
+      title:"New Mentor Registration",
+      entityType:"Mentor",
+      entityId:mentor._id,
+      priority:"normal",
+      actionUrl:`/admin/mentor/${mentor._id}`,
+      metadata:{
         id:mentor.mentorId,
         name:mentor.personaldetails.name,
         department:mentor.professionaldetails.department,
@@ -78,24 +82,8 @@ const AddMentor= async (req,res)=>{
     const io=getIO();
     console.log("Sending notification");
 
-    io.to("user_AD-02012006-001").emit("notification",{
-      senderId:mentor._id,
-      receiver_Id:"697f16cd19432806852e9a24",
-      receiverid:"AD-02012006-001",
-      receiverRole:"Admin",
-      type:"mentor_added",
-      createdAt:new Date(),
-      message:`${mentor.personaldetails.name}  Registered`,
-      data:{
-        id:mentor.mentorId,
-        name:mentor.personaldetails.name,
-        department:mentor.professionaldetails.department,
-        qualification:mentor.professionaldetails.qualification,
-        exprience:mentor.professionaldetails.exprience,
-        mobileno:mentor.contactdetails.mobileno,
-        profileurl:imageurl,
-      }
-    })
+    io.to("user_AD-02012006-001").emit("notification",notification);
+
     res.status(201).json({message:"Mentor Add Sucessfully",mentorId:mentor.mentorId});
   }
   catch(err)

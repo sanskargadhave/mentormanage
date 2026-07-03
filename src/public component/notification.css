@@ -517,138 +517,147 @@ html,
         font-size:20px;
     }
 }
-.leave-alert-card{
-    width:100%;
+.leave-details-section{
+    margin-top:25px;
     background:#111B21;
+    padding:20px;
     border-radius:18px;
-    padding:16px;
-    margin-bottom:15px;
-    transition:0.3s;
-    cursor:pointer;
-    border-left:4px solid #25D366;
 }
 
-.leave-alert-card:hover{
-    background:#1C2A31;
+.leave-details-section h3{
+    color:#25D366;
+    margin-bottom:20px;
 }
 
-.leave-alert-top{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:15px;
+.leave-details-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
 }
 
-.leave-alert-avatar{
-    width:55px;
-    height:55px;
-    border-radius:50%;
-    object-fit:cover;
-    border:2px solid #25D366;
-}
-
-.leave-alert-user-info{
-    flex:1;
-}
-
-.leave-alert-user-info h4{
-    margin:0;
-    color:#E9EDEF;
-    font-size:16px;
-    font-weight:600;
-}
-
-.leave-alert-user-info span{
-    color:#8696A0;
-    font-size:13px;
-}
-
-.leave-alert-time{
-    color:#8696A0;
-    font-size:11px;
-    text-align:right;
-}
-
-.leave-alert-body{
-    background:#0B141A;
-    padding:14px;
+.leave-detail-card{
+    background:#202C33;
+    padding:15px;
     border-radius:14px;
 }
 
-.leave-alert-type{
-    display:inline-block;
-    background:#103529;
-    color:#25D366;
-    padding:6px 14px;
-    border-radius:20px;
+.leave-detail-card span{
+    color:#8696A0;
     font-size:13px;
-    margin-bottom:12px;
-    font-weight:600;
 }
 
-.leave-alert-message{
-    color:#D1D7DB;
-    font-size:14px;
+.leave-detail-card h4{
+    color:#E9EDEF;
+    margin-top:8px;
+    font-size:16px;
+}
+
+.leave-detail-card p{
+    color:#E9EDEF;
+    margin-top:10px;
     line-height:1.6;
-    margin-bottom:15px;
 }
 
-.leave-alert-dates{
+.full-width{
+    grid-column:1/-1;
+}
+
+.certificate-btn{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 16px;
+    background:#25D366;
+    color:#fff;
+    border-radius:10px;
+    text-decoration:none;
+}
+
+.leave-action-buttons{
+    margin-top:25px;
+    display:flex;
+    gap:15px;
+}
+
+.approve-leave-btn{
+    flex:1;
+    background:#25D366;
+    color:white;
+    border:none;
+    padding:14px;
+    border-radius:12px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.reject-leave-btn{
+    flex:1;
+    background:#dc3545;
+    color:white;
+    border:none;
+    padding:14px;
+    border-radius:12px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+@media(max-width:768px){
+
+    .leave-action-buttons{
+        flex-direction:column;
+    }
+
+    .leave-details-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+.certificate-card{
+    background:#202C33;
+    border-radius:14px;
+    padding:14px 18px;
+
     display:flex;
     justify-content:space-between;
     align-items:center;
-    gap:10px;
-    margin-bottom:15px;
+
+    margin-top:12px;
 }
 
-.leave-date-box{
-    flex:1;
-    background:#1C2A31;
-    padding:12px;
-    border-radius:12px;
-    text-align:center;
+.certificate-info{
+    display:flex;
+    align-items:center;
+    gap:14px;
 }
 
-.leave-date-box span{
+.certificate-info i{
+    font-size:30px;
+    color:#25D366;
+}
+
+.certificate-info h5{
+    color:#E9EDEF;
+    margin:0;
+    font-size:15px;
+}
+
+.certificate-info span{
     color:#8696A0;
     font-size:12px;
 }
 
-.leave-date-box h5{
-    color:#25D366;
-    margin-top:6px;
-    margin-bottom:0;
-    font-size:15px;
-}
+.certificate-view-btn{
+    background:#25D366;
+    color:white;
+    text-decoration:none;
 
-.leave-arrow{
-    color:#25D366;
-    font-size:22px;
-    font-weight:bold;
-}
-
-.leave-alert-footer{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.leave-total-days{
-    background:#202C33;
-    color:#E9EDEF;
-    padding:6px 12px;
+    padding:10px 18px;
     border-radius:20px;
-    font-size:13px;
-}
 
-.leave-status-chip{
-    padding:6px 14px;
-    border-radius:20px;
-    font-size:12px;
     font-weight:600;
+    transition:0.3s;
 }
 
-.pending-chip{
-    background:#2A1F00;
-    color:#FFC107;
+.certificate-view-btn:hover{
+    background:#20ba5a;
+    transform:scale(1.05);
 }

@@ -57,7 +57,7 @@ const addMentor=new mongoose.Schema({
         emailid:{type:String,required:true,unique:true},
         address:{type:String,required:true}
     },
-    password:{type:String,required:true},
+    
     isactive:{type:Boolean,default:false},
     registrationStatus: { 
       type: String,enum: ["Pending", "Approved", "Rejected"],
@@ -84,7 +84,6 @@ const addTeacher=new mongoose.Schema({
         emailid:{type:String,required:true,unique:true},
         address:{type:String,required:true}
     },
-    password:{type:String,required:true},
     isactive:{type:Boolean,default:false},
     registrationStatus: { 
       type: String,enum: ["Pending", "Approved", "Rejected"],

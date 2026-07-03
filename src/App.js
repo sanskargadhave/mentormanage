@@ -55,7 +55,7 @@ import { use } from "react";
           {/* Admin */}
           <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
             <Route path="/admin" element={<SidebarLayout/>}>
-              <Route index element={<AdminDashbord/>} />
+              <Route index element={<Notification/>} />
               <Route path="add-mentor" element={<AddMentor />} />
               <Route path="add-student" element={<AddStudent />} />
               <Route path="admin-dashboard" element={<  AdminSidebar />} />

@@ -1,8 +1,10 @@
 const {StoreLecture,StoreAttendance}=require("../model/AttendanceSchema");
 const {StoreStudent,StoreMentor,StoreTeacher}= require("../model/studentSchema");
+const NotificationSchema=require("../model/notificationsScema");
+ 
 const bcrypt = require("bcryptjs");
 const adduser=require("../model/userSchema");
-
+const {getIO}=require("../socket");
 
 //  /api/add-teacher  POST
 const AddTeacher = async(req,res)=>{
@@ -30,7 +32,6 @@ const AddTeacher = async(req,res)=>{
     const teacher=new StoreTeacher({personaldetails,
         professionaldetails,
         contactdetails,
-        password: req.body.password,
         profileurl:imageurl});
 
     await teacher.save();
@@ -41,8 +42,34 @@ const AddTeacher = async(req,res)=>{
       emailid: emailid,
       role: "Teacher",
       profileurl:imageurl,
-      active: true
     });
+
+    const notification=await NotificationSchema.create({
+          senderId:teacher._id,
+          receiver_Id:"697f16cd19432806852e9a24",
+          receiverid:"AD-02012006-001",
+          receiverRole:"Admin",
+          type:"teacher_added",
+          message:`${teacher.personaldetails.name} has completed the registration process and is awaiting verification.`,
+          title:"New Teacher Registration",
+          entityType:"Teacher",
+          entityId:teacher._id,
+          priority:"normal",
+          actionUrl:`/admin/teacher/${teacher._id}`,
+          metadata:{
+            id:teacher.TeacherId,
+            name:teacher.personaldetails.name,
+            department:teacher.professionaldetails.department,
+            qualification:teacher.professionaldetails.qualification,
+            exprience:teacher.professionaldetails.exprience,
+            mobileno:teacher.contactdetails.mobileno,
+            profileurl:imageurl,
+          }
+        })
+        const io=getIO();
+        console.log("Sending notification");
+    
+        io.to("user_AD-02012006-001").emit("notification",notification);
     res.status(201).json({message:"Teacher Add Sucessfully",teacherId:teacher.TeacherId});
   }
   catch(err)
