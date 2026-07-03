@@ -3,15 +3,15 @@ import App from "./App";
 import { AuthProvider } from './Authintication';
 import {BrowserRouter} from 'react-router-dom';
 import {DashbordProvider} from './DashbordAuthContext';
-import { Notificationprovider } from './notificationAuthContext';
+import { NotificationProvider } from './notificationAuthContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <AuthProvider>
       <DashbordProvider>
-        <Notificationprovider>
+        <NotificationProvider>
         <App/>  
-        </Notificationprovider>
+        </NotificationProvider>
       </DashbordProvider>
     </AuthProvider>
   </BrowserRouter>

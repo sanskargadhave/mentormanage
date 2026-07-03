@@ -251,7 +251,7 @@ function AddStudent()
         datas.append("emailid",formdata.EmailId);
         datas.append("profileImage",profile); //https://sangolacollage.onrender.com
         
-        fetch("http://localhost:5000/api/common/add-student",{
+        fetch("https://sangolacollage.onrender.com/api/common/add-student",{
 
             method:"POST",
 
