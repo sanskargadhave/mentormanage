@@ -166,5 +166,12 @@ const AssignMentor = async (req, resp) => {
     resp.status(500).json({ message: err.message });
   }
 };
-module.exports={MentorCount,AddMentor,MentorLogin,GetMentors,AssignMentor};
+
+
+const getMentorDetails = async(req,res)=>{
+
+    const mentor = await StoreMentor.findById(req.params.id);
+    res.json(mentor);
+}
+module.exports={MentorCount,AddMentor,MentorLogin,GetMentors,AssignMentor,getMentorDetails};
 

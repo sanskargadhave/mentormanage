@@ -92,5 +92,10 @@ const GetTeacher = async (req,resp)=>{
   }
 };
 
+const getTeacherDetails = async(req,res)=>{
 
-module.exports={AddTeacher,GetTeacher};
+    const teacher = await StoreTeacher.findById(req.params.id)
+    res.json(teacher);
+}
+
+module.exports={AddTeacher,GetTeacher,getTeacherDetails};
