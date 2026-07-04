@@ -50,7 +50,7 @@ function StudentDetails(){
     }
     const Approve = async ()=> {
       try{
-        const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-approve/${studentinfo._id}}/${id}`,{},
+        const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-approve/${studentinfo._id}/${id}`,{},
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -250,7 +250,7 @@ function MentorDetails(){
 
     const Reject = async ()=> {
       try{
-        const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/give-reject/${id}`,{},
+        const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/mentor/give-reject/${id}`,{},
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -268,7 +268,7 @@ function MentorDetails(){
     }
     const Approve = async ()=> {
       try{
-        const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/give-approve/${mentorinfo._id}}/${id}`,{},
+        const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/mentor/give-approve/${mentorinfo._id}/${id}`,{},
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -436,7 +436,7 @@ function TeacherDetails(){
 
     const Reject = async ()=> {
       try{
-        const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/give-reject/${id}`,{},
+        const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/teacher/give-reject/${id}`,{},
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -454,7 +454,7 @@ function TeacherDetails(){
     }
     const Approve = async ()=> {
       try{
-        const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/give-approve/${teacherinfo._id}}/${id}`,{},
+        const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/teacher/give-approve/${teacherinfo._id}/${id}`,{},
           {
             headers: {
               Authorization: `Bearer ${token}`,

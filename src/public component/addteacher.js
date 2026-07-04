@@ -163,7 +163,7 @@ function AddTeacher()
                 );
                 datas.append("password", formdata.Password);//sangolacollage.onrender.com
                 
-                fetch("http://localhost:5000/api/common/add-teacher",{
+                fetch("https://sangolacollage.onrender.com/api/common/add-teacher",{
                 method:"POST",
                 headers:{
                         Authorization: `Bearer ${token}`

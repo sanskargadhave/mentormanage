@@ -98,4 +98,32 @@ const getTeacherDetails = async(req,res)=>{
     res.json(teacher);
 }
 
-module.exports={AddTeacher,GetTeacher,getTeacherDetails};
+const giveApproveTeacher = async (req,resp)=>{
+      try{
+          
+          await StoreTeacher.findByIdAndUpdate(req.params.id,{registrationStatus:"Approved"});
+          await adduser.updateOne({userid:req.params.TeacherId},{$set:{active:true}});
+          resp.status(200).json({message:"Teacher Approved"});
+      }
+      catch(err)
+      {
+        resp.status(500).json({message:err.message});
+        console.log(err.message);
+      }
+}
+
+const giveRejectTeacher = async (req,resp)=>{
+      try{
+          
+          await StoreMentor.findByIdAndUpdate(req.params.id,{registrationStatus:"Rejected"});
+
+          resp.status(200).json({message:"Teacher Rejected "});
+      }
+      catch(err)
+      {
+        resp.status(500).json({message:err.message});
+        console.log(err.message);
+      }
+}
+
+module.exports={AddTeacher,GetTeacher,getTeacherDetails,giveApproveTeacher,giveRejectTeacher};

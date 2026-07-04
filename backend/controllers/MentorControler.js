@@ -173,5 +173,31 @@ const getMentorDetails = async(req,res)=>{
     const mentor = await StoreMentor.findById(req.params.id);
     res.json(mentor);
 }
-module.exports={MentorCount,AddMentor,MentorLogin,GetMentors,AssignMentor,getMentorDetails};
+
+const giveApproveMentor = async (req,resp)=>{
+      try{
+          
+          await StoreMentor.findByIdAndUpdate(req.params.id,{registrationStatus:"Approved"});
+          await adduser.updateOne({userid:req.params.mentorId},{$set:{active:true}});
+          resp.status(200).json({message:"Mentor Approved"});
+      }
+      catch(err)
+      {
+        resp.status(500).json({message:err.message});
+        console.log(err.message);
+      }
+}
+
+const giveRejectMentor = async (req,resp)=>{
+      try{
+          await StoreMentor.findByIdAndUpdate(req.params.id,{registrationStatus:"Rejected"});
+          resp.status(200).json({message:"Mentor Rejected "});
+      }
+      catch(err)
+      {
+        resp.status(500).json({message:err.message});
+        console.log(err.message);
+      }
+}
+module.exports={MentorCount,AddMentor,MentorLogin,GetMentors,AssignMentor,getMentorDetails,giveApproveMentor,giveRejectMentor};
 

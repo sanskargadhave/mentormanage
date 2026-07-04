@@ -32,7 +32,7 @@ function Notification() {
     try {
         if (!notification.isRead) {
             await axios.put(
-                `https://sangolacollage.onrender.com/api/mentor/notification-isread/${notification._id}`,
+                `https://sangolacollage.onrender.com/api/common/notification-isread/${notification._id}`,
                 {},
                 {
                     headers: {
@@ -41,7 +41,7 @@ function Notification() {
                 }
             );
 
-            // Update frontend instantly
+            
             setNotifications(prev =>
                 prev.map(item =>
                     item._id === notification._id
@@ -56,7 +56,7 @@ function Notification() {
         console.log(err.response?.status);
     }
 
-    // Navigate even if marking read fails
+
     navigate(notification.actionUrl);
 };
     return (
