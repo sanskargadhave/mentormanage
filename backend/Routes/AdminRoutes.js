@@ -23,9 +23,9 @@ router.post("/store-lecture",StoreLectures);
 
 router.put("/assign-mentors",AssignMentor);
 
-router.put("mentor/give-approve/:mentorId/:id",giveApproveMentor);
-router.put("mentor/give-reject/:id",giveRejectMentor);
+router.put("/mentor/give-approve/:mentorId/:id",giveApproveMentor);
+router.put("/mentor/give-reject/:id",giveRejectMentor);
 
-router.put("teacher/give-approve/:TeacherId/:id",giveApproveTeacher);
-router.put("teacher/give-reject/:id",giveRejectTeacher);
+router.put("/teacher/give-approve/:TeacherId/:id",giveApproveTeacher);
+router.put("/teacher/give-reject/:id",giveRejectTeacher);
 module.exports = router;
