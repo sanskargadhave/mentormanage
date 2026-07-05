@@ -142,6 +142,22 @@ function ViewStudent() {
                                     <i className="bi bi-tag-fill set-icon"></i>
                                     <TypingEffect key={data.personaldetails.name.split(" ")[1].toLowerCase()} text={`😎Lets See  How Loyal Was ${data.personaldetails.name.split(" ")[1].toLowerCase()} to the Classroom Attendance 🤔? `}/>
                                 </h5>
+                                {attendance?.length === 0 && (
+
+                                    <div className="attendance-missing-card">
+    <div className="attendance-missing-icon">
+        <i className="bi bi-calendar-x-fill"></i>
+    </div>
+
+    <div className="attendance-missing-content">
+        <h4>Attendance Not Marked</h4>
+        <p>
+            No attendance record was found for This Dates .
+        </p>
+    </div>
+</div>
+
+                                )}
                                 {
                                     attendance.map((data, index) => (
                                       <div key={data._id || index} className={`attendance-card premium-card ${data.absentcount > 0 ? "danger" : "success"}`}>

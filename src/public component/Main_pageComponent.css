@@ -922,10 +922,6 @@ margin-bottom:25px;
     transition: all 0.3s ease;
 }
 
-.launch-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(255,255,255,0.3);
-}
 
 .launch-btn:active {
     transform: translateY(-1px);

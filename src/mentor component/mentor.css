@@ -258,7 +258,7 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
-    margin-left: 20px;
+    margin-left: 0px;
 }
 .close-panel-btn{
   border:none;
@@ -280,7 +280,44 @@
     cursor: pointer;
     transition: 0.3s;
 }
+.attendance-missing-card{
+    display:flex;
+    align-items:center;
+    gap:15px;
 
+    padding:18px;
+
+    background:#202C33;
+    border-radius:16px;
+
+    border-left:4px solid #ff9800;
+}
+
+.attendance-missing-icon{
+    width:55px;
+    height:55px;
+
+    border-radius:50%;
+
+    background:#ff9800;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:white;
+    font-size:24px;
+}
+
+.attendance-missing-content h4{
+    margin:0;
+    color:#E9EDEF;
+}
+
+.attendance-missing-content p{
+    margin-top:5px;
+    color:#8696A0;
+}
 .close-panel-btn:hover{
   color:red;
 }

@@ -622,7 +622,26 @@ html,
 
     margin-top:12px;
 }
+.notification-filter button{
+    padding: 8px 18px;
+    border: none;
+    border-radius: 20px;
+    background: #202c33;
+    color: #8696A0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
+.notification-filter button:hover{
+    background: #2a3942;
+    color: white;
+}
+
+.active-filter-btn{
+    background: #25D366 !important;
+    color: #111B21 !important;
+    font-weight: 600;
+}
 .certificate-info{
     display:flex;
     align-items:center;

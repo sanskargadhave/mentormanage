@@ -18,6 +18,7 @@ function Layout() {
       <div className="page-content">
         <Outlet context={{ collapsed, setCollapsed }} />
       </div>
+      
     </>
   );
 }

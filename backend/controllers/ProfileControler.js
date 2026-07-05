@@ -13,7 +13,7 @@ const getProfiledetails = async (req, resp) => {
                 .select("-password -__v")
                 .populate({
                     path: "collagedetails.mentor",
-                    select: "personaldetails.name professionaldetails.department professionaldetails.exprience contactdetails.mobileno contactdetails.emailid"
+                    select: "personaldetails.name professionaldetails.department professionaldetails.exprience contactdetails.mobileno contactdetails.emailid profileurl"
                 });
         }
         else if (role === "Mentor") {

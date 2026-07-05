@@ -1,13 +1,13 @@
 @media (max-width: 768px) {
   .add-student-form {
-    padding: 15px;
+    padding: 20px;
   }
 
   .form-label {
     font-size: 16px;
   }
   .admin-content {
-     width:100%;
+        width:100%;
         padding:10px;
         margin:0;
   }
@@ -42,10 +42,10 @@
 }
 
 .add-student-form {
-  max-width: 900px;   
+ 
   width: 100%;
   margin: auto;
-  padding: 20px;
+  padding: 30px;
 }
 
 .add-student-form h4 {
@@ -56,7 +56,7 @@
   font-size: 18px;
 }
 .admin-content {
-  margin-left: 70px;
+
   margin-top: 80px;
   padding: 30px;
 }
@@ -125,21 +125,15 @@
     position:absolute;
     right:0;
     bottom:5px;
-
     width:38px;
     height:38px;
     border-radius:50%;
-
     background:#0d6efd;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
     cursor:pointer;
-
     box-shadow:0 5px 15px rgba(13,110,253,0.4);
-
     transition:0.3s;
 }
 
@@ -359,6 +353,10 @@
 .form-label i{
   color: #0d6efd;
   margin-right: 6px;
+}
+.form-label {
+  color: white;
+  
 }
 .btn-student{
 background-color: blueviolet;
@@ -737,21 +735,7 @@ margin-right: 20px;
 }
 
 /* Button */
-.upload-btn {
-    margin-top: 20px;
-    width: 100%;
-    padding: 12px;
-    border: none;
-    background-color: #4CAF50;
-    color: rgb(253, 44, 44);
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-}
 
-.upload-btn:hover {
-    background-color: #45a049;
-}
 
 /* 📱 Mobile Responsive */
 @media (max-width: 480px) {

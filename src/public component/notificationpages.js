@@ -268,7 +268,7 @@ function MentorDetails(){
     }
     const Approve = async ()=> {
       try{
-        const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/mentor/give-approve/${mentorinfo._id}/${id}`,{},
+        const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/mentor/give-approve/${mentorinfo.mentorId}/${id}`,{},
           {
             headers: {
               Authorization: `Bearer ${token}`,

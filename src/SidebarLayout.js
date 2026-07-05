@@ -2,7 +2,7 @@ import MainSidebar from "./MainSidebar";
 import { Outlet,useOutletContext} from "react-router-dom";
 import "./Sidebar.css";
 import "./mentor component/mentor.css";
-
+import Footer from "./footer"; 
 function SidebarLayout() {
   const { collapsed, setCollapsed } = useOutletContext();
   
@@ -32,9 +32,9 @@ function SidebarLayout() {
         </button>
 
         <Outlet />
-
+        <Footer/>
       </div>
-
+      
     </div>
   );
 }

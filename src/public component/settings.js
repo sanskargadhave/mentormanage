@@ -2,8 +2,10 @@ import React, { useState,useEffect,useContext} from "react";
 import "./settings.css";
 import { AuthContext } from '../Authintication';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function Settings() {
-   const {id,token,role}=useContext(AuthContext);
+   const {id,token,role,profilepic}=useContext(AuthContext);
+   const navigate=useNavigate();
    const [message,setmessage]=useState("");
    const [search,setsearch]=useState("");
    const [loading, setLoading] = useState(false);
@@ -21,7 +23,7 @@ function Settings() {
       name:"",
 
    })
-   const [profileImage, setProfileImage] = useState("https://i.pravatar.cc/300");
+   const [profileImage, setProfileImage] = useState(profilepic ||"https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png");
    const showtoast = (msg) => {
       setmessage(msg);
       setShowToast(true);
@@ -41,6 +43,7 @@ function Settings() {
                     },
                 });
                 setprofiledetails(resp.data.profileDetails);
+               
                 const data=resp.data.profileDetails.personaldetails;
                 if(data)
                 {
@@ -112,10 +115,15 @@ function Settings() {
    }, 500);
 };
    const filterstudent=profiledetails?.studentdetails?.filter((student)=>{
-      const name=student.personaldetails?.name?.toLowerCase()||"";
-      const rollno=String(student.collagedetails?.rollno )||""
+        const query = search.toLowerCase().trim();
       return (
-         name.includes(search.toLowerCase())||rollno.includes(search.toLowerCase())
+          student.personaldetails.name.toLowerCase().includes(query) ||
+            student.studentid.toLowerCase().includes(query) ||
+        student.collagedetails.rollno.toString().includes(query) ||
+        student.collagedetails.course.toLowerCase().includes(query) ||
+        student.collagedetails.department.toLowerCase().includes(query) ||
+        student.collagedetails.year.toLowerCase().includes(query) ||
+        student.collagedetails.division.includes(query)
       );
    })||[];
    const fetchdetails =(studentid)=>{
@@ -129,13 +137,13 @@ function Settings() {
                   <div className="col-lg-4">
                      <div className="profile-section">
                         <div className="profile-image-wrapper">
-                           <img src={profileImage} alt="" className="profile-image"/>
-                           <label className="upload-btn">
+                           <img src={profileImage}  className="profile-image"/>
+                           <label className="upload-profile-btn">
                               Change Photo
                               <input type="file" hidden onChange={handleImage}/>
                            </label>
                         </div>
-                        <h3>{personalDetails?.name}</h3>
+                        <h3>{personalDetails?.name || profiledetails?.name }</h3>
                         <p className="role-text">{role}</p>
 
                         <div className="profile-info">
@@ -174,9 +182,10 @@ function Settings() {
                               <div className="col-md-6">
                                  <div className="input-group-custom">
                                     <label>Full Name</label>
-                                    <input type="text" name="name" value={personalDetails.name} className="underline-input" onChange={handleChange}/>
+                                    <input type="text" name="name" value={personalDetails.name || profiledetails?.name} className="underline-input" onChange={handleChange}/>
                                  </div>
                               </div>
+                              {role !== "Admin" && (
                               <div className="col-md-6">
                                  <div className="input-group-custom">
                                     <label>
@@ -184,7 +193,7 @@ function Settings() {
                                     </label>
                                     <input type="text" name="address" value={personalDetails.address} className="underline-input" onChange={handleChange}/>
                                  </div>
-                              </div>
+                              </div>)}
                               {role === "Student" && (
                               <>
                               <div className="col-md-6">
@@ -227,6 +236,8 @@ function Settings() {
                               </div>                      
                               </>
                            )}
+                           {role !== "Admin" &&(
+                              <>
                               <div className="col-md-6">
                                  <div className="input-group-custom">
                                     <label>
@@ -240,8 +251,6 @@ function Settings() {
                                  </div>
                               </div>
                               
-                              
-                             
                               <div className="col-md-6">
                                  <div className="input-group-custom">
                                     <label>
@@ -250,7 +259,7 @@ function Settings() {
                                     <input type="text" name="mobileno" value={personalDetails.mobileno} className="underline-input" onChange={handleChange}/>
                                  </div>
                               </div>
-                              
+                              </>)}
                            </div>
                         </div>
                         {role === "Student" && (
@@ -324,7 +333,7 @@ function Settings() {
                            </div>
                         <div className="mentor-header">
 
-                           <img  alt="" className="mentor-image" />
+                           <img  src={profiledetails?.collagedetails?.mentor?.profileurl || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"} className="mentor-image" />
                            <div>
                               <h5> Prof. {profiledetails?.collagedetails?.mentor?.personaldetails?.name} </h5>
                               <p>Mentor </p>
@@ -371,7 +380,7 @@ function Settings() {
     
                            <div className="students-header">
                               <div>
-                                 <h3 className="students-title">
+                                 <h3>
                                  👨‍🎓 Assigned Students
                                  </h3>
                                  <p className="students-subtitle"> Students assigned under your mentorship </p>
@@ -384,7 +393,7 @@ function Settings() {
 
                            <div className="students-toolbar">
                               <input
-   type="text"
+   type="text" 
    placeholder="Search by name or roll no..."
    value={search}
    onChange={handleSearch}
@@ -402,31 +411,63 @@ function Settings() {
                                  <>
                                  {filterstudent.map((student)=>(
                               <div key={student._id}>
-                                 <div className="student-card">
-                                    <div className="student-header">
-                                       <div className="student-avatar">
-                                          {student.personaldetails.name.charAt(0)}
-                                       </div>
+                                 <div className="wa-student-card">
 
-                                       <div>
-                                          <h5>{student.personaldetails.name}</h5>
-                                          <p>{student.studentid}</p>
-                                       </div>
-                                    </div>
+    <div className="wa-student-left">
 
-                                    <div className="student-info">
-                                       <span> 🎓 {student.collagedetails.course}</span>
-                                       <span> 📚 {student.collagedetails.year} Year </span>
+        <div className="wa-student-avatar">
+            {
+                student.profileurl ? (
+                    <img
+                        src={student.profileurl}
+                        alt={student.personaldetails.name}
+                        className="wa-avatar-img"
+                    />
+                ) : (
+                    student.personaldetails.name
+                        ?.split(" ")
+                        .map(word => word[0])
+                        .slice(0,2)
+                        .join("")
+                        .toUpperCase()
+                )
+            }
+        </div>
 
-                                       <span>📝 Roll No: {student.collagedetails.rollno}</span>
+        <div className="wa-student-content">
 
-                                       <span> 📱 {student.personaldetails.mobileno} </span>
-                                    </div>
+            <div className="wa-student-top">
+                <h5>{student.personaldetails.name}</h5>
 
-                                    <button className="view-profile-btn" onClick={fetchdetails(student.studentid)}>
-                                       View Profile
-                                    </button>
-                                 </div>
+                <span className="wa-student-id">
+                    {student.studentid}
+                </span>
+            </div>
+
+            <p className="wa-course">
+                🎓 {student.collagedetails.course}
+            </p>
+
+            <p className="wa-course">
+                 🎗️ {student.collagedetails.rollno}
+            </p>
+            <p className="wa-course">
+                💼  {student.collagedetails.year} Year
+            </p>
+
+            <p className="wa-course">
+                 📝  { student.collagedetails.division}
+            </p>
+
+        </div>
+
+    </div>
+
+    <button className="wa-view-btn" onClick={()=>navigate(`/mentor/student/${student._id}`)}>
+        View
+    </button>
+
+</div>
                               </div>
                            ))}
                            </>
@@ -434,16 +475,26 @@ function Settings() {
                            }
                            
                            {
-                              search && filterstudent.length === 0 && (
-                                 <div className="empty-state">
-                                 <div className="empty-icon">🔍</div>
-                                    <h4>No Students Found</h4>
-                                    <p>
-                                       <b>403</b> No student matches for {search}
-                                    </p>
-                                 </div>
-                           )
-                        }
+    search && filterstudent.length === 0 && (
+        <div className="wa-empty-state">
+
+            <div className="wa-empty-icon">
+                <i className="bi bi-search"></i>
+            </div>
+
+            <h4>No students found</h4>
+
+            <p>
+                No results for <span>"{search}"</span>
+            </p>
+
+            <small>
+                Try searching with name, roll number or student ID.
+            </small>
+
+        </div>
+    )
+}
                         {profiledetails?.studentdetails?.length === 0 && (
                            <div className="empty-state">
                               <div className="empty-icon">👨‍🎓</div>

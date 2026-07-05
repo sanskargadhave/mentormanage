@@ -98,13 +98,13 @@
   margin-top:70px;
   padding:25px;
   flex:1;
-  background:#f5f7fb;
+  background:black;
   min-height:calc(100vh - 70px);
 }
 
 /* Adjust when collapsed */
 .mentor-sidebar.collapsed + .mentor-page-content{
-  margin-left:70px;
+  margin-left:0px;
 }
 
 /* ===== COLLAPSE BUTTON ===== */

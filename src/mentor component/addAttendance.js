@@ -344,7 +344,7 @@ function AddAttendance() {
 
                     </div>
                 </div>
-                {isMobile ? (
+                
                 <div className="mobile-attendance">
                     {studentdata.map((student) => (
                         <div key={student._id} className="student-card">
@@ -367,52 +367,8 @@ function AddAttendance() {
                         </div>
                         ))}
                     </div>
-                ) : (
+                
     
-                    <table className="attendance-table">
-                    <thead>
-                        <tr>
-                            <th>Roll No</th>
-                            <th>Student Name</th>
-                            <th>Click For P/A</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {studentdata.map((student) => (
-                        <tr
-                            key={student._id}
-                            className={
-                            attendance[student.collagedetails.rollno] === "Absent"
-                            ? "absent-row"
-                            : "present-row"
-                        }
-            >
-              <td>{student.collagedetails.rollno}</td>
-              <td>{student.personaldetails.name}</td>
-              <td>
-                <label className="attendance-check">
-                  <input
-                    type="checkbox"
-                    checked={
-                      attendance[student.collagedetails.rollno] === "Present"
-                    }
-                    onChange={(e) =>
-                      setStudentAttendance(
-                        student.collagedetails.rollno,
-                        e.target.checked
-                      )
-                    }
-                  />
-                  <span className="box"></span>
-                </label>
-              </td>
-              <td>{attendance[student.collagedetails.rollno]}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    )}
 
    
     <br />

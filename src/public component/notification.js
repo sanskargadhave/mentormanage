@@ -10,6 +10,7 @@ function Notification() {
     const { id,token,role} = useContext(AuthContext);
     const navigate=useNavigate();
     const {notifications,setNotifications}=useContext(NotificationContext);
+    const [filter,setfilter]=useState("all");
     const [loding,setloding]=useState({});
 
 
@@ -59,18 +60,34 @@ function Notification() {
 
     navigate(notification.actionUrl);
 };
+
+    const filteredNotification = notifications.filter((notification)=>{
+        switch(filter)
+        {
+            case "unread":
+                return !notification.isRead;
+            case "registration":
+                return ["student_added","teacher_added","mentor_added"].includes(notification.type);
+            case "leave":
+                return notification.type==="leave_request";
+            default :
+                return true;
+        }
+
+    })
     return (
         <div className="notification-container">
             <div className="notification-filter">
-                <button>All</button>
-                <button>Unread</button>
-                <button>Message</button>
+                <button className={filter === "all" ? "active-filter-btn" : ""} onClick={() => setfilter("all")} > All </button>
+                <button className={filter === "unread" ? "active-filter-btn" : ""} onClick={() => setfilter("unread")}> Unread </button>
+                <button className={filter === "registration" ? "active-filter-btn" : ""} onClick={()=>  setfilter("registration")}> Registrations </button>
+                <button className={filter === "leave" ? "active-filter-btn" : ""} onClick={()=>  setfilter("leave")}> Leave </button>
             </div>
 
             <div className="notification-list">
 
                  {
-                  notifications.length === 0 ? (
+                  filteredNotification.length === 0 ? (
             <div className="empty-notification">
 
                 <div className="empty-icon">
@@ -85,7 +102,7 @@ function Notification() {
 
             </div>
         ) : (
-                    notifications.map((item) => (
+                    filteredNotification.map((item) => (
                         <div key={item._id} className={`notificationss-card ${!item.isRead ? "unread" : ""}`} onClick={()=>handleNotificationClick(item)}> 
                            <div className="notification-avatar">
                                 <img src={ item.metadata?.profileurl || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"} alt={item.metadata?.name} className="notification-profile-pic"/>
