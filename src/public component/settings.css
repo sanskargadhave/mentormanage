@@ -1,8 +1,8 @@
 .settings-page{
 
    min-height:100vh;
-
-   background:#f8fafc;
+    margin-top: 90px;
+   background:#000;
 }
 *{
     margin:0;
@@ -19,11 +19,11 @@ html,
 }
 .settings-card{
 
-   background:white;
+   background:#000;
 
    border-radius:30px;
 
-   padding:40px;
+   padding:20px;
 
    box-shadow:0 10px 40px rgba(0,0,0,0.06);
 }
@@ -50,7 +50,7 @@ html,
 
    object-fit:cover;
 
-   border:5px solid #6366f1;
+   border:5px solid #0bcb2b;
 }
 
 
@@ -504,7 +504,7 @@ mentor-header h4{
 
     padding:14px 16px;
 
-    background:#202C33;
+    background:#000;
 
     border-bottom:1px solid #2A3942;
 
@@ -685,4 +685,13 @@ mentor-header h4{
    background:#4f46e5;
 
    transform:translateY(-2px);
+}
+
+@media(max-width:768px){
+
+.settings-card{
+    padding:18px;
+    border-radius:18px;
+}
+
 }

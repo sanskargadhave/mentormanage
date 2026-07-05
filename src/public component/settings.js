@@ -131,7 +131,7 @@ function Settings() {
    }
    return (
       <div className="settings-page">
-         <div className="container py-5">
+         <div className="container-fluid px-2 px-md-4 py-4">
             <div className="settings-card">
                <div className="row">
                   <div className="col-lg-4">
@@ -506,7 +506,7 @@ function Settings() {
                            )
                         }
                      </div>)}
-
+                     <br/><br/>
                      <div className="settings-section">
                            <div className="section-header">
                               <h3>

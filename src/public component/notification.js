@@ -104,7 +104,7 @@ function Notification() {
         ) : (
                     filteredNotification.map((item) => (
                         <div key={item._id} className={`notificationss-card ${!item.isRead ? "unread" : ""}`} onClick={()=>handleNotificationClick(item)}> 
-                           <div className="notification-avatar">
+                            <div className="notification-avatar">
                                 <img src={ item.metadata?.profileurl || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"} alt={item.metadata?.name} className="notification-profile-pic"/>
                             </div>
                             <div className="notification-details">
