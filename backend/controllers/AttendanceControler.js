@@ -159,9 +159,9 @@ const MakeAttendanceReport= async (req,resp)=>{
     }
     
 
-    const dd = String(dob.getDate()).padStart(2, "0");
-    const mm = String(dob.getMonth() + 1).padStart(2, "0");
-    const yyyy = dob.getFullYear();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const yyyy = today.getFullYear();
     const reportid = `RT-${department}-${course}-${year}-${division}-${dd}${mm}${yyyy}`;
     const start = new Date(
       today.getFullYear(),
