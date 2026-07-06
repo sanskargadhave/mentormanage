@@ -392,12 +392,14 @@ const MakeAttendanceReport= async (req,resp)=>{
           </div>
 
           <div class="info">
-            <div><b>Date:</b> ${new Date().toLocaleDateString("en-IN",{
-                                                    day:"numeric",
-                                                    month:"short",
-                                                    hour:"2-digit",
-                                                    minute:"2-digit"
-                                                })}</div>
+            <div><b>Date:</b> ${new Date().toLocaleString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true 
+})}</div>
             <div><b>Submited By: <b> Prof. ${mentor.personaldetails.name}  </div>
           </div>
 

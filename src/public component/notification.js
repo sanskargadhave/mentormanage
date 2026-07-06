@@ -86,7 +86,7 @@ function Notification() {
 
             <div className="notification-list">
 
-                 {
+                {
                   filteredNotification.length === 0 ? (
             <div className="empty-notification">
 
