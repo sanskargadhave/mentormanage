@@ -10,6 +10,7 @@ const {AssignMentor,giveRejectMentor,giveApproveMentor}=require("../controllers/
 const verifyToken=require("../middleware/authmiddleware");
 const isAdmin=require("../middleware/isadminmiddleware");
 const getNotification =require("../controllers/notificationControler");
+const { getreportDetails } = require("../controllers/AttendanceControler");
 
 
 router.use(verifyToken,isAdmin);
@@ -18,6 +19,7 @@ router.get("/mentor/:id",getMentorDetails);
 router.get("/teacher/:id",getTeacherDetails);
 router.get("/get-usercounts",UserCounts);
 router.get("/get-notifications/:id",getNotification);
+router.get("/get-report-details/:id",getreportDetails);
 router.post("/store-lecture",StoreLectures);
 
 

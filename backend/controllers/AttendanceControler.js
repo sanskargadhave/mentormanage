@@ -582,4 +582,16 @@ const GetTodayAttendance=async(req,resp)=>{
     resp.status(500).json({message:err.message});
   }
 }
-module.exports={StoreAttendances,GetAttendanceByLectureId,MakeAttendanceReport,GetTodayAttendance}
+
+const getreportDetails= async (req,resp)=>{
+  try{
+    const report = await ReportdetailsSchema.findById(req.params.id).populate("uplodeBy"); ;
+    resp.status(200).json(report);
+  }
+  catch(err)
+  {
+    return resp.status(500).json({message:err.message});
+  }
+}
+
+module.exports={StoreAttendances,GetAttendanceByLectureId,MakeAttendanceReport,GetTodayAttendance,getreportDetails}

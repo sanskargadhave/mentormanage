@@ -284,128 +284,125 @@ function MentorDetails(){
       }
     }
     return (
-    <div >
-      <div className="student-details-container">
+    <div>
+        <div className="student-details-container">
 
-      <div className="student-header">
+            <div className="student-header">
 
-        <button className="back-btn" onClick={()=>navigate("/admin")}>
-            <i className="bi bi-arrow-left"></i>
-        </button>
+                <button className="back-btn" onClick={()=>navigate("/admin")}>
+                    <i className="bi bi-arrow-left"></i>
+                </button>
 
-        <h2>Mentor Verification</h2>
+                <h2>Mentor Verification</h2>
 
-    </div>
+            </div>
 
-    <div className="student-profile-card">
+            <div className="student-profile-card">
 
-        <img
-            src={mentorinfo?.profileurl || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"}
-            alt="profile"
-            className="student-profile-image"
-        />
+                <img
+                    src={mentorinfo?.profileurl || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"}
+                    alt="profile"
+                    className="student-profile-image"
+                />
 
-        <h3>{mentorinfo?.personaldetails?.name}</h3>
+                <h3>{mentorinfo?.personaldetails?.name}</h3>
 
-        <p>{mentorinfo?.mentorId}</p>
+                <p>{mentorinfo?.mentorId}</p>
 
-        <span className="student-course">
-            {mentorinfo?.professionaldetails?.department}  
-              
-        </span>
+                <span className="student-course">
+                    {mentorinfo?.professionaldetails?.department}  
+                    
+                </span>
 
-        <div className={`status-badge ${mentorinfo?.registrationStatus}`}>
-          {
-            mentorinfo?.registrationStatus === "Approved" ? "Approved"
-              : mentorinfo?.registrationStatus === "Rejected" ? "Rejected"
-              : "Pending Verification"
-            }
-        </div>  
+                <div className={`status-badge ${mentorinfo?.registrationStatus}`}>
+                {
+                    mentorinfo?.registrationStatus === "Approved" ? "Approved"
+                    : mentorinfo?.registrationStatus === "Rejected" ? "Rejected"
+                    : "Pending Verification"
+                    }
+                </div>  
+                
+
+            </div>
+
+
+            <div className="details-section">
+
+                <h3>Personal Information</h3>
+
+                <div className="details-grid">
+
+                    <div className="detail-card">
+                        <span>Mobile Number</span>
+
+                        <div className="contact-row">
+                            <h4>{mentorinfo?.contactdetails?.mobileno}</h4>
+
+                            <a href={`tel:${mentorinfo?.contactdetails?.mobileno}`} className="call-btn-circle">
+                                <i className="bi bi-telephone-fill"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div className="detail-card">
+                        <span>Email</span>
+                        <h4>{mentorinfo?.contactdetails?.emailid}</h4>
+                    </div>
+
+                    <div className="detail-card">   
+                        <span>Qualification</span>
+                        <h4>{mentorinfo?.professionaldetails?.qualification}</h4>
+                    </div>
+                    <div className="detail-card">
+                        <span>Address</span>
+                        <h4>{mentorinfo?.contactdetails?.address}</h4>
+                    </div>
+
+                </div>
+
+            </div>
+
         
 
-    </div>
+            <div className="details-section">
 
+                <h3>Academic Information</h3>
 
-    <div className="details-section">
+                <div className="details-grid">
 
-        <h3>Personal Information</h3>
+                    <div className="detail-card">
+                        <span>Department</span>
+                        <h4>{mentorinfo?.professionaldetails?.department}</h4>
+                    </div>
 
-        <div className="details-grid">
+                    
+                    <div className="detail-card">
+                        <span>Exprience</span>
+                        <h4>{mentorinfo?.professionaldetails?.exprience}</h4>
+                    </div>
 
-            <div className="detail-card">
-               <span>Mobile Number</span>
+        
+                </div>
 
-    <div className="contact-row">
-        <h4>{mentorinfo?.contactdetails?.mobileno}</h4>
-
-        <a
-            href={`tel:${mentorinfo?.contactdetails?.mobileno}`}
-            className="call-btn-circle"
-        >
-            <i className="bi bi-telephone-fill"></i>
-        </a>
-    </div>
-</div>
-                
-            <div className="detail-card">
-                <span>Email</span>
-                <h4>{mentorinfo?.contactdetails?.emailid}</h4>
             </div>
-
-            <div className="detail-card">   
-                <span>Qualification</span>
-                <h4>{mentorinfo?.professionaldetails?.qualification}</h4>
-            </div>
-            <div className="detail-card">
-                <span>Address</span>
-                <h4>{mentorinfo?.contactdetails?.address}</h4>
-            </div>
-
-        </div>
-
-    </div>
 
     
+            {mentorinfo?.registrationStatus==="Pending" && (
+            <div className="action-buttons">
 
-    <div className="details-section">
+                <button className="reject-btn" onClick={()=>Reject()}>
+                    Reject Registration
+                </button>
 
-        <h3>Academic Information</h3>
+                <button className="approve-btn" onClick={()=>Approve()}>
+                    Approve Registration
+                </button>
 
-        <div className="details-grid">
-
-            <div className="detail-card">
-                <span>Department</span>
-                <h4>{mentorinfo?.professionaldetails?.department}</h4>
             </div>
+            )}
+        
 
-            
-            <div className="detail-card">
-                <span>Exprience</span>
-                <h4>{mentorinfo?.professionaldetails?.exprience}</h4>
-            </div>
-
- 
         </div>
-
-    </div>
-
-  
-    {mentorinfo?.registrationStatus==="Pending" && (
-      <div className="action-buttons">
-
-        <button className="reject-btn" onClick={()=>Reject()}>
-            Reject Registration
-        </button>
-
-        <button className="approve-btn" onClick={()=>Approve()}>
-            Approve Registration
-        </button>
-
-      </div>
-    )}
-    
-
-</div>
     </div>);
 }
 function TeacherDetails(){
@@ -838,11 +835,188 @@ function LeaveDetails()
 
 function ReportDetails()
 {
-    return(
-        <div>
+    const {token} = useContext(AuthContext);   
+     const { id } = useParams();
 
+     const [reportinfo,setreportinfo]=useState([]);
+     const [mentorinfo,setmentorinfo]=useState([]);
+
+     const navigate=useNavigate();
+
+    useEffect(() => {
+         const getdetails = async () =>{
+          try{
+            const resp = await axios.get(`https://sangolacollage.onrender.com/api/admin/get-report-details/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              }
+            });
+            setreportinfo(resp.data);
+            setmentorinfo(resp.data?.uplodeBy);
+          }
+          catch(err)
+          {
+            alert(err.message);
+          }
+            
+          }
+          getdetails();
+    }, [id]);
+
+  return (
+    <div>
+        <div className="student-details-container">
+
+            <div className="student-header">
+
+                <button className="back-btn" onClick={()=>navigate("/admin")}>
+                    <i className="bi bi-arrow-left"></i>
+                </button>
+
+                <h2>Report Details</h2>
+
+            </div>
+
+            <div className="student-profile-card">
+
+                <img
+                    src={mentorinfo?.profileurl || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"}
+                    alt="profile"
+                    className="student-profile-image"
+                />
+
+                <h3>{mentorinfo?.personaldetails?.name}</h3>
+
+                <p>{mentorinfo?.mentorId}</p>
+
+                <span className="student-course">
+                    {mentorinfo?.professionaldetails?.department}   
+                </span>
+
+                <div className={`status-badge ${mentorinfo?.registrationStatus}`}>
+                {
+                    mentorinfo?.registrationStatus === "Approved" ? "Approved"
+                    : mentorinfo?.registrationStatus === "Rejected" ? "Rejected"
+                    : "Pending Verification"
+                    }
+                </div>   
+            </div>
+            <div className="details-section">
+
+                <h3>Personal Information</h3>
+
+                <div className="details-grid">
+
+                    <div className="detail-card">
+                        <span>Mobile Number</span>
+
+                        <div className="contact-row">
+                            <h4>{mentorinfo?.contactdetails?.mobileno}</h4>
+
+                            <a href={`tel:${mentorinfo?.contactdetails?.mobileno}`} className="call-btn-circle">
+                                <i className="bi bi-telephone-fill"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div className="detail-card">
+                        <span>Email</span>
+                        <h4>{mentorinfo?.contactdetails?.emailid}</h4>
+                    </div>
+
+                    <div className="detail-card">   
+                        <span>Qualification</span>
+                        <h4>{mentorinfo?.professionaldetails?.qualification}</h4>
+                    </div>
+                    <div className="detail-card">
+                        <span>Address</span>
+                        <h4>{mentorinfo?.contactdetails?.address}</h4>
+                    </div>
+
+                </div>
+
+            </div>
+
+        
+
+            <div className="details-section">
+
+                <h3>Academic Information</h3>
+
+                <div className="details-grid">
+
+                    <div className="detail-card">
+                        <span>Department</span>
+                        <h4>{mentorinfo?.professionaldetails?.department}</h4>
+                    </div>
+
+                    
+                    <div className="detail-card">
+                        <span>Exprience</span>
+                        <h4>{mentorinfo?.professionaldetails?.exprience}</h4>
+                    </div>
+
+                </div>
+            </div>
+            <div className="whatsapp-report-card">
+
+    <div className="report-file-icon">
+        <i className="bi bi-file-earmark-pdf-fill"></i>
+    </div>
+
+    <div className="report-info">
+
+        <h5>{reportinfo?.ReportType} Report</h5>
+
+        <p className="report-meta">
+            {reportinfo?.department} • {reportinfo?.course}
+        </p>
+
+        <p className="report-meta">
+            {reportinfo?.class} Year • Division {reportinfo?.division}
+        </p>
+
+        <small>
+            {reportinfo?.uplodeDate &&
+                new Date(reportinfo.uplodeDate).toLocaleString("en-IN", {
+                    timeZone: "Asia/Kolkata",
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit"
+                })}
+        </small>
+
+    </div>
+
+    <div className="report-buttons">
+
+        <a
+            href={reportinfo?.ReportUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="view-btn"
+        >
+            <i className="bi bi-eye-fill"></i>
+        </a>
+
+        <a
+            href={reportinfo?.ReportUrl}
+            download
+            className="download-btn"
+        >
+            <i className="bi bi-download"></i>
+        </a>
+
+    </div>
+
+</div>
+            
         </div>
+    </div>
 
-    );
+  )
 }
 export {StudentDetails,MentorDetails,TeacherDetails,LeaveDetails,ReportDetails};
