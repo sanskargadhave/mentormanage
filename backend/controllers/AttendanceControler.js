@@ -137,7 +137,17 @@ const MakeAttendanceReport= async (req,resp)=>{
     const {department,course,year,division}=req.query;
     const {userid}=req.user;
     console.log(userid);
-    const reports = await ReportdetailsSchema.find({department:department,course:course,class:year,division:division})
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const reports = await ReportdetailsSchema.find({department:department,course:course,class:year,division:division,uploadDate: {
+        $gte: today,
+        $lt: tomorrow
+    }})
     const mentor = await StoreMentor.findOne({mentorId:userid});
     if(!mentor)
     {
