@@ -29,117 +29,6 @@ function MentorDashboardContent() {
     Commerce:["Commerce"],
   }
 
-
-  useEffect(() => {
-  if (!token || !id) return; 
-
-  async function getNotifications() {
-    try {
-      setloding((prev)=>({...prev,getNotifications:true}));
-
-      const resp = await axios.get(
-        `https://sangolacollage.onrender.com/api/mentor/get-notifications/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const sorted = resp.data.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
-
-      setNotifications(sorted);
-    } 
-    catch (err) 
-    {
-      if(err.response?.status === 401){
-        localStorage.clear();
-        navigate("/unauthorized");
-        return;
-      }
-      console.error("Error fetching stored notifications", err);
-    } 
-    finally {
-     setloding((prev)=>({...prev,getNotifications:false}));
-    }
-  }
-
-  getNotifications();
-}, [id, token]);
-
-  useEffect(() => {
-  if (id) {
-    socket.emit("join_room", {
-      userid: id,
-      role: "Mentor"
-    });
-  }
-}, [id]);
-
-  useEffect(() => {
-    const handleNotification = (data) => {
-      if (data.receiverid === id) {
-        
-        setNotifications((prev) => [data, ...prev]);
-      }
-    };
-    socket.on("notification", handleNotification);
-
-    return () => socket.off("notification", handleNotification);
-  }, [id]);
-
-  async function giveapprove(studentid)
-  {
-    
-    try{
-      setloding((prev)=>({...prev,[studentid]:true}));
-      const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-approve/${studentid}`,{},{
-             headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        });
-      
-      setNotifications((prev)=>prev.filter((notif)=> notif.data.id !== studentid));
-    }
-    catch(err){
-      if(err.response?.status === 401){
-        localStorage.clear();
-        navigate("/unauthorized");
-        return;
-      }
-      console.log("error at Give Approve",err);
-    }
-    finally{
-      setloding((prev)=>({...prev,[studentid]:true}));    
-    }
-  }
-  async function givereject(studentid)
-  {
-    try{
-      setloding((prev)=>({...prev,[studentid]:true}));
-      const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-reject/${studentid}`,{},{
-             headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        });
-      setNotifications((prev)=>prev.filter((notif)=> notif.data.id !== studentid));
-    }
-    catch(err){
-      if(err.response?.status === 401){
-        localStorage.clear();
-        navigate("/unauthorized");
-        return;
-      }
-      console.log("error at Give reject",err);
-    }
-    finally{
-      setloding((prev)=>({...prev,[studentid]:false}));
-    }
-  }
   const fetchTodayAttendance = async () => {
     try {
       setloding((prev)=>({...prev,fetchTodayAttendance:true}));
@@ -154,8 +43,7 @@ function MentorDashboardContent() {
             }
         });
       const data = await res.json();
-
-      setSubjects(data.completeLecture);
+      setSubjects(data.completeLecture || []);
       setevent("showsubmitedattendance");
       
     } 
@@ -170,6 +58,7 @@ function MentorDashboardContent() {
     finally{
       setloding((prev)=>({...prev,fetchTodayAttendance:false}));    }
   };
+
   const generateReport=async ()=>{
     try{
       setloding((prev)=>({...prev,generateReport:true}));
@@ -200,41 +89,7 @@ function MentorDashboardContent() {
     }
 
   }
-  async function givePermission(permission, applicationid)
-  {
-    const key=`${permission}-${applicationid}`;
-    try{
-      setloding((prev)=>({...prev,[key]:true}));
-      const resp = await axios.put(
-        `https://sangolacollage.onrender.com/api/mentor/give-permission/${permission}/${applicationid}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          }
-        }
-      );
-
-      console.log(resp.data);
-
-      setNotifications((prev)=>
-        prev.map((notif)=>
-          notif.data.applicationid === applicationid
-            ? { ...notif, data: {...notif.data, status: permission} }
-            : notif
-      )
-    );
-
-  }
-  catch(err)
-  {
-    console.log(err);
-  }
-  finally{
-    setloding((prev)=>({...prev,[key]:false}));
-  }
-}
+  
   return (
     <div className="admin-content">   
     {event === "" && (
@@ -367,6 +222,7 @@ function MentorDashboardContent() {
                       <div className="spinner-grow text-danger" role="status">
                         <span className="visually-hidden">loding...</span>
                       </div>
+                      
                     ):(
                       <h6>📄 Generate Report</h6>  
                     )}

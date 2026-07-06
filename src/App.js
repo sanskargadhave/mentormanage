@@ -26,7 +26,8 @@
   import LeaveApplication from "./student comonent/leaveApplication.js";
   import Settings from "./public component/settings.js";
   import Notification from "./public component/notification.js";
-  import { StudentDetails,LeaveDetails,MentorDetails,TeacherDetails } from "./public component/notificationpages.js";
+  import { StudentDetails,LeaveDetails,MentorDetails,TeacherDetails,ReportDetails } from "./public component/notificationpages.js";
+
 import { use } from "react";
   function App() {
     const navigate=useNavigate();
@@ -68,6 +69,7 @@ import { use } from "react";
               <Route path="mentor/:id" element={<MentorDetails />} />
               <Route path="teacher/:id" element={<TeacherDetails />} />
               <Route path="leave/:id" element={<LeaveDetails />} />
+              <Route path="report/:id" element={<ReportDetails />} />
               <Route path="add-admission-details" element={<AddAdmissionDetails/>}/>
             </Route>
           </Route>
@@ -77,8 +79,8 @@ import { use } from "react";
          <Route element={<ProtectedRoute allowedRoles={["Mentor"]} />}>
             <Route path="/mentor" element={<SidebarLayout />}>
               <Route index element={<Notification />} />
-              <Route path="dashboard" element={<Notification />} />
-    
+              <Route path="dashboard" element={<MentorDashboardContent />} />
+            
               <Route path="add-student" element={<AddStudent />} />
               <Route path="view-users" element={<ViewUser />} />
               <Route path="delete-user" element={<DeleteUser />} />
@@ -87,7 +89,6 @@ import { use } from "react";
               <Route path="add-test-result" element={<AddTestResult/>}/>
               <Route path="student/:id" element={<StudentDetails />} />
               <Route path="leave/:id" element={<LeaveDetails />} />
-              {/*<Route path="test/:id" element={<TestDetails />} />*/}
             </Route>
           </Route>
 

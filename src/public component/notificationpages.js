@@ -835,4 +835,14 @@ function LeaveDetails()
 
   )
 }
-export {StudentDetails,MentorDetails,TeacherDetails,LeaveDetails};
+
+function ReportDetails()
+{
+    return(
+        <div>
+
+        </div>
+
+    );
+}
+export {StudentDetails,MentorDetails,TeacherDetails,LeaveDetails,ReportDetails};

@@ -80,7 +80,7 @@ function Settings() {
 
    async function updateinfo()
    {
-      if(!token || !id) return ;//https://sangolacollage.onrender.com
+      if(!token || !id) return ; 
       try{
             const resp=await axios.put(`https://sangolacollage.onrender.com/api/profile/updateprofile-details`,{personalDetails,id,role},{
                    headers: {

@@ -3,6 +3,10 @@ const ReportdetailsSchema =require("../model/reportSchema");
 const puppeteer = require("puppeteer-core");
 const chromium = require("@sparticuz/chromium");
 const supabase =require("../config/supabase");
+const {getIO}=require("../socket.js");
+const NotificationSchema=require("../model/notificationsScema");
+const { StoreMentor } = require("../model/studentSchema.js");
+
 //   /api/store-attendance URL
 const StoreAttendances=async (req,resp)=>{
   try{    
@@ -131,8 +135,24 @@ const GetAttendanceByLectureId= async (req,resp)=>{
 const MakeAttendanceReport= async (req,resp)=>{
     try{
     const {department,course,year,division}=req.query;
+    const {userid}=req.user;
+    console.log(userid);
+    const report = await ReportdetailsSchema.find({department:department,course:course,class:year,division:division})
+    const mentor = await StoreMentor.findOne({mentorId:userid});
+    if(!mentor)
+    {
+      return resp.status(404).json({message:"Sorrry Your Details Not Found"});
+    }
+    if(report.length>0)
+    {
+      return resp.status(404).json({message:"Report Is Already Submited"});
+    }
     const today = new Date();
 
+    const dd = String(dob.getDate()).padStart(2, "0");
+    const mm = String(dob.getMonth() + 1).padStart(2, "0");
+    const yyyy = dob.getFullYear();
+    const reportid = `RT-${department}-${course}-${year}-${division}-${dd}${mm}${yyyy}`;
     const start = new Date(
       today.getFullYear(),
       today.getMonth(),
@@ -358,10 +378,17 @@ const MakeAttendanceReport= async (req,resp)=>{
             <div><b>Course:</b> ${course}</div>
             <div><b>Year:</b> ${year}</div>
             <div><b>Division:</b> ${division}</div>
+            <div><b>Report Id: </b> ${reportid} </div>
           </div>
 
           <div class="info">
-            <div><b>Date:</b> ${new Date().toLocaleDateString()}</div>
+            <div><b>Date:</b> ${new Date().toLocaleDateString("en-IN",{
+                                                    day:"numeric",
+                                                    month:"short",
+                                                    hour:"2-digit",
+                                                    minute:"2-digit"
+                                                })}</div>
+            <div><b>Submited By: <b> Prof. ${mentor.personaldetails.name}  </div>
           </div>
 
           <table>
@@ -443,7 +470,7 @@ const MakeAttendanceReport= async (req,resp)=>{
 
     const pdfurl = `${process.env.SUPABASE_URL}/storage/v1/object/public/Attendance Report/${fileName}`;
     
-    await ReportdetailsSchema.create({
+    const report = await ReportdetailsSchema.create({
       ReportType:"Attendance",
       ReportUrl:pdfurl,
       class:year,
@@ -451,8 +478,36 @@ const MakeAttendanceReport= async (req,resp)=>{
       course:course,
       department:department,
       uplodeDate:today,
+      uplodeBy:mentor._id,
+      reportid:reportid
     })
 
+        const notification=await NotificationSchema.create({
+              senderId:mentor._id,
+              senderRole:"Mentor",
+              receiver_Id:"697f16cd19432806852e9a24",
+              receiverid:"AD-02012006-001",
+              receiverRole:"Admin",
+              type:"report_submited",
+              message:`${mentor.personaldetails.name} has Submited Todays Report.`,
+              title:"New Report Submited",
+              entityType:"Report",
+              entityId:report._id,
+              priority:"normal",
+              actionUrl:`/admin/report/${report._id}`,
+              metadata:{
+                id:mentor.mentorId,
+                name:mentor.personaldetails.name,
+                department:department,
+                course:course,
+                year:year,
+                division:division
+              }
+            })
+            const io=getIO();
+            console.log("Sending notification");
+            io.to("user_AD-02012006-001").emit("notification",notification);
+            
     resp.status(200).json({message:"Report Uplode Succeessfuly",url:pdfurl}); 
 
     }

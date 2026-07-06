@@ -7,6 +7,9 @@ const ReportdetailsSchema=new mongoose.Schema({
     class:{type:String,required:true},
     department:{type:String,required:true},
     uplodeDate:{type:Date,required:true},
-
+    uplodeBy:{type:mongoose.Schema.Types.ObjectId,ref:"mentor",default:null},
+    reportid:{type:String,unique:true}
 })
+
+
 module.exports=mongoose.model("ReportDetail",ReportdetailsSchema,"ReportDetails")

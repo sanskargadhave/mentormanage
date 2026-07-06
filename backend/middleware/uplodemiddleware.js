@@ -54,4 +54,7 @@ const uploadProfile = async (req, res ,next) => {
     }
     
 };
+
+
+
 module.exports={uploadProfile,upload};
