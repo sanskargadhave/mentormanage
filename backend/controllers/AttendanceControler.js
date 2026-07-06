@@ -157,7 +157,7 @@ const MakeAttendanceReport= async (req,resp)=>{
     {
       return resp.status(404).json({message:"Report Is Already Submited"});
     }
-    const today = new Date();
+    
 
     const dd = String(dob.getDate()).padStart(2, "0");
     const mm = String(dob.getMonth() + 1).padStart(2, "0");
