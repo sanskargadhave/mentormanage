@@ -284,7 +284,7 @@ const GetStudent= async (req,resp)=>{
 const giveApprove = async (req,resp)=>{
       try{
           
-          await StoreStudent.findByIdAndUpdate(req.params.id,{registrationStatus:"Approved"});
+          await StoreStudent.findByIdAndUpdate(req.params.id,{registrationStatus:"Approved",isactive:true});
           await adduser.updateOne({userid:req.params.studentid},{$set:{active:true}});
           resp.status(200).json({message:"Student Approved"});
       }
@@ -298,7 +298,7 @@ const giveApprove = async (req,resp)=>{
 const giveReject = async (req,resp)=>{
       try{
           
-          await StoreStudent.findByIdAndUpdate(req.params.id,{registrationStatus:"Rejected",});
+          await StoreStudent.findByIdAndUpdate(req.params.id,{registrationStatus:"Rejected"});
 
           resp.status(200).json({message:"Student Rejected "});
       }
