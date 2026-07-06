@@ -137,13 +137,13 @@ const MakeAttendanceReport= async (req,resp)=>{
     const {department,course,year,division}=req.query;
     const {userid}=req.user;
     console.log(userid);
-    const report = await ReportdetailsSchema.find({department:department,course:course,class:year,division:division})
+    const reports = await ReportdetailsSchema.find({department:department,course:course,class:year,division:division})
     const mentor = await StoreMentor.findOne({mentorId:userid});
     if(!mentor)
     {
       return resp.status(404).json({message:"Sorrry Your Details Not Found"});
     }
-    if(report.length>0)
+    if(reports.length>0)
     {
       return resp.status(404).json({message:"Report Is Already Submited"});
     }
