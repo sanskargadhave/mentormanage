@@ -10,7 +10,7 @@ const {GetTeacher}=require("../controllers/TeacherControler");
 const {GetAttendanceByLectureId}=require("../controllers/AttendanceControler");
 const {StoreAttendances}=require("../controllers/AttendanceControler");
 const {Counts}=require("../controllers/commoncontroler");
-const getNotification =require("../controllers/notificationControler");
+const {getNotification,getLetestNotification} =require("../controllers/notificationControler");
 const verifyToken=require("../middleware/authmiddleware");
 
 
@@ -23,6 +23,7 @@ router.get("/students/count",StudentCounts);
 router.get("/get-attendance/:lectureid",GetAttendanceByLectureId);
 router.get("/User-Counts",Counts);
 router.get("/get-notifications/:id",verifyToken,getNotification);
+router.get("/get-latestnotification/:id",verifyToken,getLetestNotification);
 
 router.post("/store-attendance",StoreAttendances);
 router.post("/add-student",upload.single("profileImage"),uploadProfile,StoreStudentDetails);

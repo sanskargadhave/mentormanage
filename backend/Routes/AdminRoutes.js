@@ -9,7 +9,7 @@ const {getTeacherDetails,giveRejectTeacher,giveApproveTeacher}=require("../contr
 const {AssignMentor,giveRejectMentor,giveApproveMentor}=require("../controllers/MentorControler");
 const verifyToken=require("../middleware/authmiddleware");
 const isAdmin=require("../middleware/isadminmiddleware");
-const getNotification =require("../controllers/notificationControler");
+const {getNotification} =require("../controllers/notificationControler");
 const { getreportDetails } = require("../controllers/AttendanceControler");
 
 
