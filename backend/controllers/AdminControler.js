@@ -67,7 +67,7 @@ const DashboardAnalysis =async (req,resp)=>{
               StoreStudent.countDocuments({isactive:false}),
               StoreAttendance.countDocuments({date: semesterFilter}),
               StoreTestResult.countDocuments({date: semesterFilter}),
-              StoreApplication.countDocuments({date: semesterFilter, type:"leave_request" }),
+              StoreApplication.countDocuments({createdAt: semesterFilter, type:"leave_request" }),
           ]);
 
           const data={ 
