@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import collagephoto from "../collageassets/collagephoto.jpeg";
 import { DashbordContext } from "../DashbordAuthContext";
 import { AuthContext } from "../Authintication";
+import Footer from "../footer"; 
 function StudentDashboardContent()
 {
  
@@ -266,7 +267,7 @@ This helps parents stay informed in real time and encourages better attendance a
     </div>
 </div>
       
-          
+      <Footer/>  
       </div> 
     );
   }

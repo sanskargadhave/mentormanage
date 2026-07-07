@@ -43,6 +43,7 @@ import { use } from "react";
         
         <Route element={<Layout/>}>
           {/* Public */}
+          
           <Route path="/" element={<StudentDashboardContent />} />
           <Route path="/register-student" element={<AddStudent />} />
           <Route path="/register-mentor" element={<AddMentor />} />
@@ -57,6 +58,7 @@ import { use } from "react";
           <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
             <Route path="/admin" element={<SidebarLayout/>}>
               <Route index element={<Notification/>} />
+              <Route path="admin-dashboard" element={<AdminDashbord/>} />
               <Route path="add-mentor" element={<AddMentor />} />
               <Route path="add-student" element={<AddStudent />} />
               <Route path="admin-dashboard" element={<  AdminSidebar />} />

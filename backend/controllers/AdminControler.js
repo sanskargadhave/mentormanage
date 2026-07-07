@@ -1,5 +1,12 @@
 const readadmin = require("../model/adminSchema");
 const {StoreStudent, StoreMentor, StoreTeacher}= require("../model/studentSchema");
+const semesterSchema=require("../model/SemesterScema");
+const StoreApplication=require("../model/applicationScema");
+const {StoreLecture,StoreAttendance}=require("../model/AttendanceSchema");
+const NotificationSchema=require("../model/notificationsScema");
+const ReportdetailsSchema=require("../model/reportSchema");
+const {StoreTestResult}=require("../model/testSchema");
+
 const bcrypt = require("bcryptjs");
 //  /api/admin-login  URL POST 
 const AdminLogin=async (req, resp) => {
@@ -36,4 +43,60 @@ const UserCounts=async (req,resp)=>{
     resp.status(500).json({message:err.message});
   }
 }
-module.exports={AdminLogin,UserCounts};
+const DashboardAnalysis =async (req,resp)=>{
+  try{
+     const semester = await semesterSchema.findOne({
+        isCurrent: true
+    }).lean();
+
+    
+    if (!semester) return resp.status(404).json({ message: "No active semester found."});
+    const semesterFilter = {
+      $gte: semester.startDate,
+      $lte: semester.endDate
+    };
+
+    const [activeStudents,activeMentors,activeTeachers,inactiveTeachers,inactiveMentors,
+            inactiveStudents,totalLectures,totalTests,leaveRequests
+          ]=await Promise.all([
+              StoreStudent.countDocuments({isactive:true,registrationStatus:"Approved"}),
+              StoreMentor.countDocuments({isactive:true,registrationStatus:"Approved"}),
+              StoreTeacher.countDocuments({isactive:true,registrationStatus:"Approved"}),
+              StoreTeacher.countDocuments({isactive:false}),
+              StoreMentor.countDocuments({isactive:false}),
+              StoreStudent.countDocuments({isactive:false}),
+              StoreAttendance.countDocuments({date: semesterFilter}),
+              StoreTestResult.countDocuments({date: semesterFilter}),
+              StoreApplication.countDocuments({date: semesterFilter, type:"leave_request" }),
+          ]);
+
+          const data={ 
+            users:{
+              activeStudents,
+              activeMentors,
+              activeTeachers,
+              inactiveStudents,
+              inactiveMentors,
+              inactiveTeachers
+            },
+            academic:{
+              totalLectures,
+              totalTests,
+              leaveRequests
+            },
+            semester: {
+              name: semester.name,
+              academicYear: semester.academicYear,
+              startDate: semester.startDate,
+              endDate: semester.endDate
+            },
+          }
+
+          resp.status(200).json(data)
+  }
+  catch(err)
+  {
+    resp.status(500).json({message:err.message});
+  }
+}
+module.exports={AdminLogin,UserCounts,DashboardAnalysis};

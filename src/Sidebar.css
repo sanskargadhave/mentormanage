@@ -8,17 +8,44 @@
 /* ===== SIDEBAR ===== */
 
 .mentor-sidebar{
-  width:240px;
-  background:black;
-  color:white;
-  border-right: #fb0202;
-  position:fixed;
-  top:70px;                  /* below navbar */
-  
-  height:calc(100vh - 70px);
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 240px;
+    height: calc(100vh - 70px);
 
-  transition:width 0.3s ease;
-  z-index:1000;
+    background: black;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+.sidebar-menu{
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.sidebar-menu::-webkit-scrollbar{
+    width:6px;
+}
+
+.sidebar-menu::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb{
+    background:#3b4a54;
+    border-radius:20px;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb:hover{
+    background:#25d366;
+}
+.sidebar-menu{
+    scrollbar-width: thin;
+    scrollbar-color: #25d366 transparent;
 }
 
 /* Collapse (Desktop) */
@@ -224,13 +251,14 @@
     flex: 1;
 }
 .footer {
-    background: #111b21;
+    background: #000;
     color: #d1d7db;
     padding: 50px 30px 20px;
-    margin-top: 40px;
+    margin-top: 70px;
 }
 
 .footer-container {
+  
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 40px;

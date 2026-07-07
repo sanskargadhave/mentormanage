@@ -50,7 +50,7 @@ function StudentDetails(){
     }
     const Approve = async ()=> {
       try{
-        const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-approve/${studentinfo._id}/${id}`,{},
+        const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-approve/${studentinfo.studentid}/${id}`,{},
           {
             headers: {
               Authorization: `Bearer ${token}`,

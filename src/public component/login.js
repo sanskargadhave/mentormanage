@@ -129,8 +129,55 @@ function Login() {
 }
 
 
+function LiveNotification({ notification, onClose }) {
+    const navigate =useNavigate();
+    return (
+        <div className="live-notification">
+            <div className="live-notification-header">
+
+                <img
+                    src={
+                        notification.metadata?.profileurl ||
+                        "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"
+                    }
+                    alt=""
+                    className="live-avatar"
+                />
+
+                <div className="live-title">
+                    <h5>{notification.metadata?.name || notification.title}</h5>
+                    <span>Now</span>
+                </div>
+
+                <button
+                    className="live-close"
+                    onClick={onClose}
+                >
+                    <i className="bi bi-x"></i>
+                </button>
+
+            </div>
+
+            <div className="live-body">
+
+                <p>{notification.message}</p>
+
+            </div>
+
+            <div className="live-footer">
+
+                <button
+                    className="view-btn"
+                    onClick={()=>navigate(notification.actionUrl)}
+                >
+                    View
+                </button>
+
+            </div>
+        </div>
+    );
+}
 
 
 
-
-export {Login};
+export {Login,LiveNotification};

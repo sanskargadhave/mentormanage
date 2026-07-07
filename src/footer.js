@@ -14,7 +14,7 @@ function Footer() {
 
                 <div className="footer-section">
                     <h4>Quick Links</h4>
-                    <a href="/dashboard">Dashboard</a>
+                    <a href="/">Dashboard</a>
                     <a href="/students">Students</a>
                     <a href="/mentors">Mentors</a>
                 </div>

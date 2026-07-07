@@ -513,7 +513,131 @@ color:white;
 .registration-link-box{
   margin-top: 20px;
 }
+.live-notification{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 360px;
+    background: #202c33;
+    border-radius: 14px;
+    border-left: 5px solid #25D366;
+    box-shadow: 0 10px 30px rgba(0,0,0,.45);
+    padding: 16px;
+    z-index: 999999;
+    animation: notificationSlide .35s ease;
+    color: #ffffff;
+    overflow: hidden;
+}
 
+/* Header */
+
+.live-notification-header{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.live-avatar{
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #25D366;
+}
+
+.live-title{
+    flex: 1;
+}
+
+.live-title h5{
+    margin: 0;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.live-title span{
+    display: block;
+    margin-top: 3px;
+    color: #25D366;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Close Button */
+
+.live-close{
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #25D366;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.live-close:hover{
+    background: rgba(37,211,102,.15);
+    transform: rotate(90deg);
+}
+
+/* Body */
+
+.live-body{
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.live-body p{
+    margin: 0;
+    color: #f5f5f5;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Footer */
+
+.live-footer{
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.view-btn{
+    border: none;
+    outline: none;
+    background: #25D366;
+    color: #111b21;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.view-btn:hover{
+    background: #20ba5a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(37,211,102,.35);
+}
+
+/* Animation */
+
+@keyframes notificationSlide{
+
+    from{
+        opacity: 0;
+        transform: translateX(120%);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}
 .registration-link-label{
   display: flex;
   align-items: center;
@@ -1005,17 +1129,18 @@ margin-bottom:25px;
 }
 
 .portal-item{
-    background: #f8f9fa;
-    border-left: 4px solid #0d6efd;
+    background: #000;
+    border-left: 4px solid #25d366;
     padding: 12px 15px;
     margin-bottom: 10px;
     border-radius: 8px;
     transition: all 0.3s ease;
+    color:whitesmoke;
 }
 
 .portal-item:hover{
     transform: translateX(8px);
-    background: #eef5ff;
+    background: #576f91;
 }
 
 .whatsapp-feature{
@@ -1023,7 +1148,7 @@ margin-bottom:25px;
     align-items: center;
     gap: 15px;
 
-    background: #f8f9fa;
+    background: #000;
     border-left: 4px solid #25D366;
 
     padding: 15px;
@@ -1035,7 +1160,7 @@ margin-bottom:25px;
 
 .whatsapp-feature:hover{
     transform: translateX(8px);
-    background: #f1fff5;
+    background: #576f91;
 }
 
 .whatsapp-icon{

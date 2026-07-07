@@ -1,6 +1,7 @@
 import { NevigationBar } from "./public component/nevigationBar";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
+import Footer from "./footer"; 
 
 function Layout() {
 
@@ -17,7 +18,9 @@ function Layout() {
       {/* Page Content */}
       <div className="page-content">
         <Outlet context={{ collapsed, setCollapsed }} />
+        
       </div>
+      
       
     </>
   );

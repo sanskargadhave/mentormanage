@@ -3,6 +3,7 @@ import "./settings.css";
 import { AuthContext } from '../Authintication';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Footer from "../footer";
 function Settings() {
    const {id,token,role,profilepic}=useContext(AuthContext);
    const navigate=useNavigate();
@@ -572,6 +573,7 @@ function Settings() {
                </div>
             </div>
          </div>
+         <Footer/>
       </div>
    );
 }

@@ -1,20 +1,20 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { AuthContext } from "./Authintication";
 import socket from "./socket";
-import axios from "axios";
-
+import { LiveNotification } from "./public component/login";
+import { useNavigate } from "react-router-dom";
 export const NotificationContext = createContext();
 
 export function NotificationProvider({ children }) {
 
     const { id, role,token} = useContext(AuthContext);
-
+    const [popup,setpopup]=useState(null);
+    const navigate=useNavigate();
     const [notifications, setNotifications] = useState(() => {
         const stored = localStorage.getItem("notifications");
         return stored ? JSON.parse(stored) : [];
     });
 
-    // Save to localStorage
     useEffect(() => {
         localStorage.setItem(
             "notifications",
@@ -73,7 +73,7 @@ export function NotificationProvider({ children }) {
 
 }, [id, token]);
 
-    // Join socket room
+   
     useEffect(() => {
         if (id) {
             socket.emit("join_room", {
@@ -83,11 +83,13 @@ export function NotificationProvider({ children }) {
         }
     }, [id, role]);
 
-    // Listen for notifications
     useEffect(() => {
 
         const handleNotification = (data) => {
-
+            setpopup(data);
+            setTimeout(() => {
+                setpopup(null);
+            }, 20000);
             setNotifications(prev => {
 
                 const exists = prev.some(
@@ -116,6 +118,13 @@ export function NotificationProvider({ children }) {
             }}
         >
             {children}
+            {
+    popup && (
+        <LiveNotification
+            notification={popup}
+            onClose={() => setpopup(null)}/>
+    )
+}
         </NotificationContext.Provider>
     );
 }
