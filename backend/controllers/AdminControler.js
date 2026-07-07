@@ -99,4 +99,42 @@ const DashboardAnalysis =async (req,resp)=>{
     resp.status(500).json({message:err.message});
   }
 }
-module.exports={AdminLogin,UserCounts,DashboardAnalysis};
+const fetchdata = async (req,resp)=>{
+  try{
+    const {page,limit,search,department,course,year,division,role}=req.query;
+    const currentPage = parseInt(page) || 1;
+    const pageLimit = parseInt(limit) || 10;
+    
+    const filter={};
+    if(search) filter["personaldetails.name"]={$regex:search,$options:"i"};
+    if(department) filter["collagedetails.department"]=department;
+    if(course) filter["collagedetails.course"]=course;
+    if(year) filter["collagedetails.year"]=year;
+    if(division) filter["collagedetails.division"]=division;
+
+    const skip = (currentPage - 1) * pageLimit;
+    const totalRecords = await StoreStudent.countDocuments(filter);
+    const totalPages = Math.ceil(totalRecords / pageLimit);
+
+    const students = await StoreStudent.find(filter).sort({ "collagedetails.rollno": 1 }).skip(skip).limit(pageLimit);
+
+
+    const data = {
+      students,
+      pagination: {
+        currentPage: currentPage,
+        totalPages,
+        totalRecords,
+        limit,
+        hasNext: currentPage < totalPages,
+        hasPrevious: currentPage > 1
+    }
+    }
+    resp.status(200).json(data);
+  }
+  catch(err)
+  {
+    resp.status(500).json({message:err.message});
+  }
+}
+module.exports={AdminLogin,UserCounts,DashboardAnalysis,fetchdata};

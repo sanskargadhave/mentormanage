@@ -1,7 +1,7 @@
 const express =require("express");
 const router=express.Router();
 
-const {UserCounts,DashboardAnalysis}=require("../controllers/AdminControler");
+const {UserCounts,DashboardAnalysis, fetchdata}=require("../controllers/AdminControler");
 
 const {StoreLectures} =require("../controllers/LectureControler");
 const {getMentorDetails}=require("../controllers/MentorControler");
@@ -20,7 +20,8 @@ router.get("/teacher/:id",getTeacherDetails);
 router.get("/get-usercounts",UserCounts);
 router.get("/get-notifications/:id",getNotification);
 router.get("/get-report-details/:id",getreportDetails);
-router.get("/dashboard-analysis",DashboardAnalysis)
+router.get("/dashboard-analysis",DashboardAnalysis);
+router.get("/fetch-details",fetchdata);
 router.post("/store-lecture",StoreLectures);
 
 
