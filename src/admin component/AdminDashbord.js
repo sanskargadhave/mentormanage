@@ -1,15 +1,25 @@
 import { AuthContext } from "../Authintication";
 import { useEffect, useState, useContext } from "react";
-import socket from "../socket";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./admin.css"
+import "./admin.css";
+
 function AdminDashbord()
 {
-    const [analysis,setanalysis]=useState([]);
-    const [filter,setfilter]=useState("");
+    const [analysis,setanalysis]=useState({});
+    const [students,setstudents]=useState([]);
+    const [loading,setloading]=useState(false);
+    const [pagininfo,setpagininfo]=useState({});
+    const [filters,setFilters]=useState({
+        search:"",
+        department:"",
+        year:"",
+        division:""
+    });
     const {token}=useContext(AuthContext);  
     const [page,setpage]=useState(1);
+    
     useEffect(()=>{
         async function fetchanalysis() {
             try{
@@ -37,23 +47,60 @@ function AdminDashbord()
         async function fetchdata()
         {
             try{
-                const resp=await axios.get(`https://sangolacollage.onrender.com/api/admin/fetchstudent-details?page=${page}&limit=${10}`,{
+                setloading(true);
+                const resp=await axios.get(`https://sangolacollage.onrender.com/api/admin/fetch-details`,{
+                    params:{
+                        page,
+                        limit:10,
+                        ...filters
+                    },
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json"
                     }
                 })
-                console.log(resp.data)
+                
+                setstudents(resp.data.students);
+                setpagininfo(resp.data.pagination)
             }
             catch(err)
             {
                 alert(err.message);
             }
+            finally{
+                setloading(false);
+            }
                 
         }
-    },[token]);
+        const timer = setTimeout(() => {
+            fetchdata();
+        }, 2000);
 
+        return () => clearTimeout(timer);
+    },[token,page,filters]);
 
+    const handleChange = (e) =>{
+       
+
+            if (e.target.name === "reset") {
+                setpage(1);
+                setFilters({
+                    search: "",
+                    department: "",
+                    year: "",
+                    division: ""
+                });
+                return;
+            }
+
+            setpage(1);
+
+            setFilters(prev => ({
+                ...prev,
+                [e.target.name]: e.target.value
+            }));
+        
+    }
     return (
         <div>
             <div className="container-fluid mt-4">
@@ -301,6 +348,8 @@ function AdminDashbord()
                     <input
                         className="form-control"
                         placeholder="Search student..."
+                        name="search" value={filters.search}
+                        onChange={(e)=>handleChange(e)}  disabled={loading}                 
                     />
 
                 </div>
@@ -309,19 +358,13 @@ function AdminDashbord()
 
             <div className="col-lg-2">
 
-                <select className="form-select">
+                <select name="department" className="form-select" value={filters.department} onChange={(e)=>handleChange(e)} disabled={loading} >
 
-                    <option>Department</option>
-
-                </select>
-
-            </div>
-
-            <div className="col-lg-2">
-
-                <select className="form-select">
-
-                    <option>Year</option>
+                    <option value="">Select Department</option>
+                    <option value="Science">Science</option>
+                    <option value="ComputerScience"> Computer Science</option>
+                    <option value="Art">Art</option>
+                    <option value="Commerce">Commerce</option>
 
                 </select>
 
@@ -329,9 +372,13 @@ function AdminDashbord()
 
             <div className="col-lg-2">
 
-                <select className="form-select">
+                <select className="form-select" name="year"  value={filters.year} onChange={(e)=>handleChange(e)} disabled={loading}>
 
-                    <option>Division</option>
+                    <option value="">Year</option>
+                    <option value="first">First</option>
+                    <option value="second"> Second</option>
+                    <option value="third">Third</option>
+                 
 
                 </select>
 
@@ -339,7 +386,20 @@ function AdminDashbord()
 
             <div className="col-lg-2">
 
-                <button className="btn btn-outline-secondary w-100">
+                <select className="form-select" name="division" value={filters.division} onChange={(e)=>handleChange(e)} disabled={loading}>
+
+                    <option value="">Division</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+
+            </div>
+
+            <div className="col-lg-2">
+
+                <button type="button" name="reset" className="btn btn-outline-secondary w-100" onClick={(e)=>handleChange(e)} disabled={loading}>
 
                     Reset
 
@@ -354,20 +414,143 @@ function AdminDashbord()
 
     <div className="table-responsive">
 
-        <table className="table table-hover align-middle">
+    <table className="table student-table align-middle">
 
-            ....
+        <thead>
 
-        </table>
+            <tr>
 
-    </div>
+                <th>Profile</th>
+                <th>Roll No</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Course</th>
+                <th>Year</th>
+                <th>Division</th>
+
+            </tr>
+
+        </thead>
+        <tbody>
+
+{loading ? (
+
+    [...Array(10)].map((_, index) => (
+        <tr key={index}>
+
+            <td>
+                <div className="skeleton skeleton-circle"></div>
+            </td>
+
+            <td>
+                <div className="skeleton skeleton-text short"></div>
+            </td>
+
+            <td>
+                <div className="skeleton skeleton-text"></div>
+            </td>
+
+            <td>
+                <div className="skeleton skeleton-text"></div>
+            </td>
+
+            <td>
+                <div className="skeleton skeleton-text"></div>
+            </td>
+
+            <td>
+                <div className="skeleton skeleton-text short"></div>
+            </td>
+
+            <td>
+                <div className="skeleton skeleton-badge"></div>
+            </td>
+
+        </tr>
+    ))
+
+) : students.length > 0 ? (
+
+    students.map((student) => (
+       <tr key={student?._id}>
+
+                        <td>
+
+                            <img
+                                src={student?.personaldetails?.profileImage || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"}
+                                alt="profile"
+                                className="student-profile"
+                            />
+
+                        </td>
+
+                        <td>
+
+                            <strong>
+                                {student?.collagedetails?.rollno}
+                            </strong>
+
+                        </td>
+
+                        <td>
+
+                            {student?.personaldetails?.name}
+
+                        </td>
+
+                        <td>
+
+                            {student?.collagedetails?.department}
+
+                        </td>
+
+                        <td>
+
+                            {student?.collagedetails?.course}
+
+                        </td>
+
+                        <td>
+
+                            {student?.collagedetails?.year}
+
+                        </td>
+
+                        <td>
+
+                            <span className="division-badge">
+
+                                {student?.collagedetails?.division}
+
+                            </span>
+
+                        </td>
+
+                    </tr>
 
 
+    ))
+
+) : (
+
+    <tr>
+        <td colSpan="7" className="text-center py-5">
+            No Students Found
+        </td>
+    </tr>
+
+)}
+
+</tbody>
+
+    </table>
+
+</div>
     <div className="pagination-box">
 
         <span>
 
-            Showing 1 - 10 of 245 Students
+            Showing {pagininfo.currentPage} - {pagininfo.currentPage+9} of {pagininfo.totalRecords} Students
 
         </span>
 
