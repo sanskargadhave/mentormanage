@@ -101,7 +101,7 @@ const DashboardAnalysis =async (req,resp)=>{
 }
 const fetchdata = async (req,resp)=>{
   try{
-    const {page,limit,search,department,course,year,division,role}=req.query;
+    const {page,limit,search,department,course,year,division,role}=req.params;
     const currentPage = parseInt(page) || 1;
     const pageLimit = parseInt(limit) || 10;
     
