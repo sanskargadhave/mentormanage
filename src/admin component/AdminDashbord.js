@@ -11,6 +11,7 @@ function AdminDashbord()
     const [students,setstudents]=useState([]);
     const [loading,setloading]=useState(false);
     const [pagininfo,setpagininfo]=useState({});
+    const navigate=useNavigate();
     const [filters,setFilters]=useState({
         search:"",
         department:"",
@@ -74,7 +75,7 @@ function AdminDashbord()
         }
         const timer = setTimeout(() => {
             fetchdata();
-        }, 2000);
+        }, 1000);
 
         return () => clearTimeout(timer);
     },[token,page,filters]);
@@ -99,6 +100,38 @@ function AdminDashbord()
                 ...prev,
                 [e.target.name]: e.target.value
             }));
+        
+        };
+            const getPages = () => {
+                const pages = [];
+            const total = pagininfo.totalPages;
+            const current = pagininfo.currentPage;
+
+            if (!total) return pages;
+
+            pages.push(1);
+
+            if (current > 4) {
+                pages.push("...");
+            }
+
+            for (
+                let i = Math.max(2, current - 2);
+                i <= Math.min(total - 1, current + 2);
+                i++
+            ) {
+                pages.push(i);
+            }
+
+            if (current < total - 3) {
+                pages.push("...");
+            }
+
+            if (total > 1) {
+                pages.push(total);
+            }
+
+            return [...new Set(pages)];
         
     }
     return (
@@ -327,7 +360,7 @@ function AdminDashbord()
 
         </div>
 
-        <button className="btn btn-success">
+        <button className="btn btn-success" onClick={()=>{navigate("/register-student")}}>
             <i className="bi bi-plus-circle me-2"></i>
             Add Student
         </button>
@@ -349,7 +382,7 @@ function AdminDashbord()
                         className="form-control"
                         placeholder="Search student..."
                         name="search" value={filters.search}
-                        onChange={(e)=>handleChange(e)}  disabled={loading}                 
+                        onChange={(e)=>handleChange(e)}                 
                     />
 
                 </div>
@@ -427,7 +460,9 @@ function AdminDashbord()
                 <th>Course</th>
                 <th>Year</th>
                 <th>Division</th>
-
+                <th>Parent No</th>
+                <th>Active Status</th>
+                <th>Registration Status</th>
             </tr>
 
         </thead>
@@ -466,6 +501,17 @@ function AdminDashbord()
                 <div className="skeleton skeleton-badge"></div>
             </td>
 
+            <td>
+                <div className="skeleton skeleton-badge"></div>
+            </td>
+
+            <td>
+                <div className="skeleton skeleton-badge"></div>
+            </td>
+
+            <td>
+                <div className="skeleton skeleton-badge"></div>
+            </td>
         </tr>
     ))
 
@@ -525,6 +571,15 @@ function AdminDashbord()
                             </span>
 
                         </td>
+                        <td>
+                            {student?.personaldetails?.parentno}
+                        </td>
+                        <td>
+                            {student?.isactive || "--"}
+                        </td>
+                        <td>
+                            {student?.registrationStatus}
+                        </td>
 
                     </tr>
 
@@ -534,7 +589,7 @@ function AdminDashbord()
 ) : (
 
     <tr>
-        <td colSpan="7" className="text-center py-5">
+        <td colSpan="10" className="text-center py-5">
             No Students Found
         </td>
     </tr>
@@ -556,59 +611,59 @@ function AdminDashbord()
 
         <nav>
 
-            <ul className="pagination mb-0">
+            <ul className="pagination">
 
-                <li className="page-item">
+    <li className="page-item">
+        <button
+            className="page-link"
+            disabled={!pagininfo.hasPrevious}
+            onClick={() => setpage(page - 1)}
+        >
+            &lt;
+        </button>
+    </li>
 
-                    <button className="page-link">
+    {getPages().map((item, index) => (
 
-                        <i className="bi bi-chevron-left"></i>
+        item === "..." ? (
 
-                    </button>
+            <li key={index} className="page-item disabled">
+                <span className="page-link">...</span>
+            </li>
 
-                </li>
+        ) : (
 
-                <li className="page-item active">
+            <li
+                key={index}
+                className={`page-item ${
+                    item === pagininfo.currentPage
+                        ? "active"
+                        : ""
+                }`}
+            >
+                <button
+                    className="page-link"
+                    onClick={() => setpage(item)}
+                >
+                    {item}
+                </button>
+            </li>
 
-                    <button className="page-link">
+        )
 
-                        1
+    ))}
 
-                    </button>
+    <li className="page-item">
+        <button
+            className="page-link"
+            disabled={!pagininfo.hasNext}
+            onClick={() => setpage(page + 1)}
+        >
+            &gt;
+        </button>
+    </li>
 
-                </li>
-
-                <li className="page-item">
-
-                    <button className="page-link">
-
-                        2
-
-                    </button>
-
-                </li>
-
-                <li className="page-item">
-
-                    <button className="page-link">
-
-                        3
-
-                    </button>
-
-                </li>
-
-                <li className="page-item">
-
-                    <button className="page-link">
-
-                        <i className="bi bi-chevron-right"></i>
-
-                    </button>
-
-                </li>
-
-            </ul>
+</ul>
 
         </nav>
 
