@@ -371,7 +371,183 @@ html,
     margin-top:20px;
     box-shadow:0 2px 12px rgba(0,0,0,.08);
 }
+/* Container */
 
+.profile-skeleton{
+    background:#0b141a;
+    border-radius:18px;
+    padding:25px;
+    width:100%;
+    animation:fadeIn .3s ease;
+}
+
+/* Top Section */
+
+.profile-top{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.profile-info{
+    flex:1;
+}
+
+/* Circle */
+
+.sk-circle{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:linear-gradient(
+        90deg,
+        #2d2d2d 25%,
+        #ffffff 50%,
+        #2d2d2d 75%
+    );
+    background-size:300% 100%;
+    animation:shimmer 1.5s infinite linear;
+}
+
+/* Lines */
+
+.sk-line{
+    height:15px;
+    border-radius:20px;
+    margin-bottom:12px;
+
+    background:linear-gradient(
+        90deg,
+        #2d2d2d 25%,
+        #ffffff 50%,
+        #2d2d2d 75%
+    );
+
+    background-size:300% 100%;
+    animation:shimmer 1.5s infinite linear;
+}
+
+/* Widths */
+
+.sk-title{
+    width:40%;
+    height:22px;
+}
+
+.sk-subtitle{
+    width:25%;
+}
+
+.sk-full{
+    width:100%;
+}
+
+.sk-half{
+    width:60%;
+}
+
+.sk-label{
+    width:35%;
+}
+
+.sk-value{
+    width:80%;
+    height:18px;
+}
+
+/* Cards */
+
+.profile-details{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:18px;
+    margin-top:25px;
+}
+
+.detail-card{
+    background:#111b21;
+    border-radius:14px;
+    padding:18px;
+    border:1px solid #1f2c33;
+}
+.profile-myskeleton{
+    background:linear-gradient(
+        90deg,
+        #2d2d2d 25%,
+        #ffffff 50%,
+        #2d2d2d 75%
+    );
+    height: 70px;
+    width:70px;
+    border-radius: 50%;
+    margin-top: 30px;
+    animation:shimmer 1.5s infinite linear;
+    background-size:300% 100%;
+}
+
+.skeleton-mytitle{
+    background:linear-gradient(
+        90deg,
+        #2d2d2d 25%,
+        #ffffff 50%,
+        #2d2d2d 75%
+    );
+    height: 20px;
+    width:90%;
+    border-radius: 14px;
+   
+    animation:shimmer 1.5s infinite linear;
+    background-size:300% 100%;
+    
+}
+.notification-details-skeleton{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    flex: 1;
+}
+.skeleton-bottom{
+    background:linear-gradient(
+        90deg,
+        #2d2d2d 25%,
+        #ffffff 50%,
+        #2d2d2d 75%
+    );
+    display: flex;
+    justify-content: space-between;
+    height: 20px;
+    width:50%;
+    border-radius: 14px;
+    animation:shimmer 1.5s infinite linear;
+    background-size:300% 100%;  
+ 
+}
+/* Animation */
+
+@keyframes shimmer{
+
+    0%{
+        background-position:100% 0;
+    }
+
+    100%{
+        background-position:-100% 0;
+    }
+
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+
+}
 .report-file-icon{
     font-size:55px;
     color:#e53935;

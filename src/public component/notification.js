@@ -11,7 +11,7 @@ function Notification() {
     const navigate=useNavigate();
     const {notifications,setNotifications}=useContext(NotificationContext);
     const [filter,setfilter]=useState("all");
-    const [loding,setloding]=useState({});
+    const [loding,setloding]=useState(true);
 
 
     useEffect(() => {
@@ -23,7 +23,15 @@ function Notification() {
         }
     }, [id]);
 
+   
 
+    useEffect(() => {
+    const timer = setTimeout(() => {
+        setloding(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+    }, []);
   
   
  
@@ -76,61 +84,124 @@ function Notification() {
 
     })
     return (
+        
         <div className="notification-container">
-            <div className="notification-filter">
-                <button className={filter === "all" ? "active-filter-btn" : ""} onClick={() => setfilter("all")} > All </button>
-                <button className={filter === "unread" ? "active-filter-btn" : ""} onClick={() => setfilter("unread")}> Unread </button>
-                <button className={filter === "registration" ? "active-filter-btn" : ""} onClick={()=>  setfilter("registration")}> Registrations </button>
-                <button className={filter === "leave" ? "active-filter-btn" : ""} onClick={()=>  setfilter("leave")}> Leave </button>
-            </div>
-
-            <div className="notification-list">
-
-                {
-                  filteredNotification.length === 0 ? (
-            <div className="empty-notification">
-
-                <div className="empty-icon">
-                    <i className="bi bi-bell-slash-fill"></i>
-                </div>
-
-                <h3>No Notifications Yet</h3>
-
-                <p>
-                    You're all caught up! New notifications will appear here.
-                </p>
-
-            </div>
-        ) : (
-                    filteredNotification.map((item) => (
-                        <div key={item._id} className={`notificationss-card ${!item.isRead ? "unread" : ""}`} onClick={()=>handleNotificationClick(item)}> 
-                            <div className="notification-avatar">
-                                <img src={ item.metadata?.profileurl || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"} alt={item.metadata?.name} className="notification-profile-pic"/>
-                            </div>
-                            <div className="notification-details">
-                                <div className="notification-top">
-                                    <h4>{item.metadata?.name || item.title}</h4>
-                                    <span>{new Date(item.createdAt).toLocaleDateString("en-IN",{
-                                                    day:"numeric",
-                                                    month:"short",
-                                                    hour:"2-digit",
-                                                    minute:"2-digit"
-                                                })}</span>
-                                </div>
-                                <div className="notification-bottom">
-                                    <p>{item.message}</p>
-                                    {!item.isRead &&<div className="unread-dot"></div>}
-                                </div>
-                            </div>
-
+            {loding && (
+                <div className="notification-container">
+                    {Array.from({length:7}).map((_,i)=>(
+                    <div key={i} className="notificationss-card">
+                        <div className="profile-myskeleton"></div> 
+                        <div className="notification-details-skeleton">
+                            <div className="skeleton-mytitle"></div> 
+                            <div className="skeleton-bottom"></div>
                         </div>
-                    ))
-                )}
+                        
+                    </div>
+                    
+                    
+                    ))}
 
-            </div>  
+                </div>
+            )}
 
+            {!loding && (
+                <>
+                    <div className="notification-filter">
+                        <button className={filter === "all" ? "active-filter-btn" : ""} onClick={() => setfilter("all")} > All </button>
+                        <button className={filter === "unread" ? "active-filter-btn" : ""} onClick={() => setfilter("unread")}> Unread </button>
+                        <button className={filter === "registration" ? "active-filter-btn" : ""} onClick={()=>  setfilter("registration")}> Registrations </button>
+                        <button className={filter === "leave" ? "active-filter-btn" : ""} onClick={()=>  setfilter("leave")}> Leave </button>
+                    </div>
+
+                    <div className="notification-list">
+
+                        {
+                            filteredNotification.length === 0 ? (
+                                <div className="empty-notification">
+
+                                    <div className="empty-icon">
+                                        <i className="bi bi-bell-slash-fill"></i>
+                                    </div>
+
+                                    <h3>No Notifications Yet</h3>
+                                    <p>
+                                        You're all caught up! New notifications will appear here.
+                                    </p>
+                                </div>
+                            ):(
+                                filteredNotification.map((item) => (
+                                    <div key={item._id} className={`notificationss-card ${!item.isRead ? "unread" : ""}`} onClick={()=>handleNotificationClick(item)}> 
+                                        <div className="notification-avatar">
+                                            <img src={ item.metadata?.profileurl || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"} alt={item.metadata?.name} className="notification-profile-pic"/>
+                                        </div>
+                                        <div className="notification-details">
+                                            <div className="notification-top">
+                                                <h4>{item.metadata?.name || item.title}</h4>
+                                                <span>{new Date(item.createdAt).toLocaleDateString("en-IN",{
+                                                                day:"numeric",
+                                                                month:"short",                                                                        hour:"2-digit",
+                                                                minute:"2-digit"
+                                                            })}</span>
+                                            </div>
+                                            <div className="notification-bottom">
+                                                <p>{item.message}</p>
+                                                {!item.isRead &&<div className="unread-dot"></div>}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                            )
+                        }
+
+                    </div>
+                </>
+            )} 
+                                    
         </div>
     );
 }
 
 export default Notification;
+
+
+
+/*            <div className="profile-skeleton">
+
+    <div className="profile-top">
+        <div className="sk-circle"></div>
+
+        <div className="profile-info">
+            <div className="sk-line sk-title"></div>
+            <div className="sk-line sk-subtitle"></div>
+        </div>
+    </div>
+
+    <div className="sk-line sk-full"></div>
+    <div className="sk-line sk-full"></div>
+    <div className="sk-line sk-half"></div>
+
+    <div className="profile-details">
+
+        <div className="detail-card">
+            <div className="sk-line sk-label"></div>
+            <div className="sk-line sk-value"></div>
+        </div>
+
+        <div className="detail-card">
+            <div className="sk-line sk-label"></div>
+            <div className="sk-line sk-value"></div>
+        </div>
+
+        <div className="detail-card">
+            <div className="sk-line sk-label"></div>
+            <div className="sk-line sk-value"></div>
+        </div>
+
+        <div className="detail-card">
+            <div className="sk-line sk-label"></div>
+            <div className="sk-line sk-value"></div>
+        </div>
+
+    </div>
+
+</div> */

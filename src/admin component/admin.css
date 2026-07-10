@@ -120,7 +120,7 @@
 }
 .semester-card{
 
-    background:#fff;
+    background:#111b21;
 
     border-radius:18px;
 
@@ -174,7 +174,7 @@
 
     font-weight:700;
 
-    color:#222;
+    color:#eae7e7;
 
 }
 
@@ -182,7 +182,7 @@
 
     margin-bottom:4px;
 
-    color:#666;
+    color:#f7f3f3;
 
     font-size:15px;
 
@@ -213,6 +213,7 @@
     gap:15px;
 
 }
+
 
 .semester-info{
 
@@ -490,11 +491,11 @@
 }
 .dashboard-card{
 
-    background:#202c33;
+    background:white;
 
     border-radius:18px;
 
-    color:white;
+    color:#000;
 
     transition:.3s;
 
@@ -639,7 +640,7 @@
 }
 .card-content h6{
     margin:0;
-    color:white;
+    color:#000;
     font-size:12px;
     font-weight:600;
 }
@@ -648,29 +649,52 @@
     margin:6px 0;
     font-size:30px;
     font-weight:700;
-    color:white;
+    color:#000;
 }
 .skeleton{
-    background: linear-gradient(
+     background:linear-gradient(
         90deg,
-        #e9ecef 25%,
-        #f5f5f5 50%,
-        #e9ecef 75%
+        #2d2d2d 25%,
+        #ffffff 50%,
+        #2d2d2d 75%
     );
     background-size: 200% 100%;
     animation: shimmer 1.3s infinite linear;
     border-radius: 8px;
 }
-
-@keyframes shimmer{
-    0%{
-        background-position:200% 0;
-    }
-    100%{
-        background-position:-200% 0;
-    }
+.skeleton-icon{
+    width:60px;
+    height:60px;
+    border-radius:16px;
 }
 
+.skeleton-title{
+    width:120px;
+    height:14px;
+    margin-bottom:12px;
+}
+
+.skeleton-number{
+    width:70px;
+    height:28px;
+    margin-bottom:12px;
+}
+
+.skeleton-status{
+    width:100px;
+    height:14px;
+}
+@keyframes shimmer{
+
+    0%{
+        background-position:100% 0;
+    }
+
+    100%{
+        background-position:-100% 0;
+    }
+
+}
 .skeleton-circle{
     width:48px;
     height:48px;
@@ -692,7 +716,7 @@
     border-radius:20px;
 }
 .card-content span{
-    color:#777;
+    color:#432929;
     font-size:13px;
 }
 
