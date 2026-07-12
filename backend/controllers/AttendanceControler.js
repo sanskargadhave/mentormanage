@@ -229,18 +229,18 @@ const MakeAttendanceReport= async (req,resp)=>{
 
 const givepreview=async (req,resp)=>{
   try{
-    const {department,year,division,course,fromdate,todate}=req.body;
+    const {Department,Year,Division,Class,FromDate,ToDate}=req.body;
 
     const report=await StoreAttendance.aggregate([
       {$match: {
         date: {
-          $gte: new Date(fromdate),
-          $lte: new Date(todate)
+          $gte: new Date(FromDate),
+          $lte: new Date(ToDate)
         },
-        department:department,
-        class:year,
-        division:division,
-        course:course
+        department:Department,
+        class:Year,
+        division:Division,
+        course:Class
       }},
 
       {$unwind: "$attendance" },

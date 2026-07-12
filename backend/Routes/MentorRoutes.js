@@ -15,11 +15,10 @@ router.use(verifyToken,isMentor);
 router.get("/serach-student/:lectureid",SearchStudent);
 router.get("/get-studentdetails/:rollno",GetStudentDetailsByRoll);
 router.get("/student/:id",getStudentDetails); 
-router.get("/give-preview-report",givepreview);
 router.get("/get-today-attendance",GetTodayAttendance);
 router.get("/get-student-application/:id",getapplicationById);
 
-
+router.post("/give-preview-report",givepreview);
 router.post("/store-excel-data",uplode.single("file"),iscorrectdata,getexcelsheet);
 router.post("/sendMessage", sendMessage);
 router.post("/make-attendance-report",generateReport);
