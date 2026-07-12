@@ -6,6 +6,8 @@ const supabase =require("../config/supabase");
 const {getIO}=require("../socket.js");
 const NotificationSchema=require("../model/notificationsScema");
 const { StoreMentor } = require("../model/studentSchema.js");
+const crypto = require("crypto");
+const reportCache = require("../utils/reportCache");
 
 //   /api/store-attendance URL
 const StoreAttendances=async (req,resp)=>{
@@ -39,7 +41,12 @@ const StoreAttendances=async (req,resp)=>{
         id:lecture._id,
         lectureid:lectureid,
         attendance:attendance,
-        submitedby:submitedby
+        submitedby:submitedby,
+        department:lecture.department,
+        class:lecture.Class,
+        division:lecture.division,
+        course:lecture.course
+
       });
       await att.save();
       resp.status(201).json({message: "✅ Attendance stored successfully",exist:false});
@@ -133,318 +140,7 @@ const GetAttendanceByLectureId= async (req,resp)=>{
 }
 
 const MakeAttendanceReport= async (req,resp)=>{
-    try{
-    const {department,course,year,division}=req.query;
-    const {userid}=req.user;
-    console.log(userid);
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
-    const reports = await ReportdetailsSchema.find({department:department,course:course,class:year,division:division,uploadDate: {
-        $gte: today,
-        $lt: tomorrow
-    }})
-    const mentor = await StoreMentor.findOne({mentorId:userid});
-    if(!mentor)
-    {
-      return resp.status(404).json({message:"Sorrry Your Details Not Found"});
-    }
-    if(reports.length>0)
-    {
-      return resp.status(404).json({message:"Report Is Already Submited"});
-    }
-    
-
-    const dd = String(today.getDate()).padStart(2, "0");
-    const mm = String(today.getMonth() + 1).padStart(2, "0");
-    const yyyy = today.getFullYear();
-    const reportid = `RT-${department}-${course}-${year}-${division}-${dd}${mm}${yyyy}`;
-    const start = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate()
-    );
-
-    const end = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate() + 1
-    );
-
-
-
-      const attendanceCounts=await StoreAttendance.aggregate([
-        {
-          $match: {
-            date: {
-              $gte: start,
-              $lt: end
-            }
-          }
-      },
-        {$lookup: {
-            from: "LectureDetails",  
-            localField: "lectureid",
-            foreignField: "lectureid",
-            as: "lectureInfo"
-          }
-        },
-        { $unwind: "$lectureInfo" },
-        { $unwind: "$attendance" },
-				{$match:{
-        	$and:[
-						{"lectureInfo.department":department},
-						{"lectureInfo.course":course},
-						{"lectureInfo.Class":year},
-						{"lectureInfo.division":division},
-					]
-				}},
-   			{
-          $group: {
-            _id: "$attendance.rollno",
-
-            totalLectures: { $sum: 1 },
-
-            presentCount: {
-              $sum: {
-                $cond: [{ $eq: ["$attendance.status", "Present"] }, 1, 0]
-              }
-            },
-
-            absentCount: {
-              $sum: {
-                $cond: [{ $eq: ["$attendance.status", "Absent"] }, 1, 0]
-              }
-            },
-
-            absentSubjects: {
-              $push: {
-                $cond: [
-                  { $eq: ["$attendance.status", "Absent"] },
-                    "$lectureInfo.subject",
-                  null   
-                ]
-              } 
-            }
-          }
-        },
-        {$sort:{_id:1}},
-        {
-          $project: {
-            rollno: "$_id",
-            _id: 0,
-            totalLectures: 1,
-            presentCount: 1,
-            absentCount: 1,
-
-            absentSubjects: {
-              $filter: {
-                input: "$absentSubjects",
-                as: "sub",
-                cond: { $ne: ["$$sub", null] }
-              }
-            }
-          }
-        }
-      ])
-      
-     
-
-      const rows = attendanceCounts.map((data) => `
-        <tr>
-          <td>${data.rollno}</td>
-          <td>${data.totalLectures}</td>
-          <td class="present">${data.presentCount}</td>
-          <td class="absent">${data.absentCount}</td>
-          <td>${data.absentSubjects.length === 0 ? "--" : data.absentSubjects.join(", ")}</td>
-        </tr>
-      `).join("");
-
-      const html=`
-      <html>
-        <head>
-          <style>
-            body {
-              font-family: "Segoe UI", Arial, sans-serif;
-              padding: 40px;
-              color: #333;
-            }
-            .project-desc{ font-style:italic; margin-bottom:4px; }
-            .header {
-              text-align: center;
-              border-bottom: 2px solid #444;
-              padding-bottom: 10px;
-              margin-bottom: 20px;
-            }
-
-            .header h1 {
-              margin: 0;
-              font-size: 24px;
-              letter-spacing: 1px;
-            }
-
-            .header h2 {
-              margin: 5px 0;
-              font-size: 18px;
-              font-weight: normal;
-            }
-
-            .report-title {
-              margin-top: 10px;
-              font-size: 16px;
-              font-weight: bold;
-              color: #2c3e50;
-            }
-
-            .info {
-              display: flex;
-              justify-content: space-between;
-              margin-top: 20px;
-              font-size: 14px;
-            }
-
-            .info div {
-              width: 30%;
-            }
-
-            .info b {
-              display: inline-block;
-              width: 80px;
-            } 
-      
-            table {
-              width: 100%;
-              border-collapse: collapse;
-              margin-top: 25px;
-              font-size: 14px;
-            }
-
-            th {
-              background: #2c3e50;
-              color: white;
-              padding: 10px;
-              text-transform: uppercase;
-              letter-spacing: 0.5px;
-            }
-
-            td {
-              padding: 8px;
-              border-bottom: 1px solid #ddd;
-            }
-
-            tr:nth-child(even) {
-              background: #f9f9f9;
-            }
-
-            .present {
-              color: green;
-              font-weight: bold;
-            }
-
-            .absent {
-              color: red;
-              font-weight: bold;
-            }
-
-            .footer {
-              margin-top: 40px;
-              font-size: 12px;
-              text-align: center;
-              color: #666;
-            }
-
-            .signatures {
-              display: flex;
-              justify-content: space-between;
-              margin-top: 60px;
-            }
-
-            .sign-box {
-              width: 200px;
-              text-align: center;
-            }
-
-            .sign-line {
-              border-top: 1px solid #000;
-              margin-top: 40px;
-              padding-top: 5px;
-            }
-          </style>        
-        </head>
-
-        <body>
-
-          <div class="header">
-            <h1>Sangola Mahavidyalaya, Sangola</h1>
-            <h2>Department of ${department}</h2>
-            <div class="report-title">Daily Attendance Report</div>
-          </div>
-
-          <div class="info">
-            <div><b>Course:</b> ${course}</div>
-            <div><b>Year:</b> ${year}</div>
-            <div><b>Division:</b> ${division}</div>
-            <div><b>Report Id: </b> ${reportid} </div>
-          </div>
-
-          <div class="info">
-            <div><b>Date:</b> ${new Date().toLocaleString("en-IN", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true 
-})}</div>
-            <div><b>Submited By: <b> Prof. ${mentor.personaldetails.name}  </div>
-          </div>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Roll No</th>
-                <th>Total</th>
-                <th>Present</th>
-                <th>Absent</th>
-                <th>Absent Subjects</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              ${rows}
-            </tbody>
-          </table>
-
-          <div class="footer"> 
-            <div class="system-info"> 
-              Generated by <b>EduMentor @SangolaCollege Platform</b> 
-            </div> 
-            <div class="project-desc">
-             🎓 EduMentor Platform – Automated Student Test And Attendance Analysis and Reporting Platform 
-            </div>
-          </div>
-          <div class="signatures">
-            <div class="sign-box">
-              <div class="sign-line">Class Teacher</div>
-            </div>
-
-            <div class="sign-box">
-              <div class="sign-line">HOD</div>
-            </div>
-
-            <div class="sign-box">
-              <div class="sign-line">Principal</div>
-            </div>
-          </div>
-
-        </body>
-      </html>
-    `;
-      
+    try{ 
     const browser = await puppeteer.launch({
       args: [...chromium.args, "--no-sandbox", "--disable-setuid-sandbox"],
       executablePath: await chromium.executablePath(),
@@ -530,6 +226,141 @@ const MakeAttendanceReport= async (req,resp)=>{
     }
   }
 
+
+const givepreview=async (req,resp)=>{
+  try{
+    const {department,year,division,course,fromdate,todate}=req.body;
+
+    const report=await StoreAttendance.aggregate([
+      {$match: {
+        date: {
+          $gte: new Date(fromdate),
+          $lte: new Date(todate)
+        },
+        department:department,
+        class:year,
+        division:division,
+        course:course
+      }},
+
+      {$unwind: "$attendance" },
+      { $lookup: {
+          from: "StudentDetails",
+          localField: "attendance.rollno",
+          foreignField: "collagedetails.rollno",
+          as: "studentdetails"
+        }
+      },
+
+      {$unwind: "$studentdetails"},
+      { $group: {
+          _id: {
+            student: "$attendance.rollno",
+            date: "$date"
+          },
+          name: { $first: "$studentdetails.personaldetails.name" },
+          rollno: { $first: "$attendance.rollno" },
+          totalLecture: { $sum: 1},
+          presentCount: {
+            $sum: {
+              $cond: [
+                { $eq: ["$attendance.status", "Present"] },
+                1,
+                0
+              ]
+            }
+          },
+          absentCount: {
+            $sum: {
+              $cond: [
+                { $eq: ["$attendance.status", "Absent"] },
+                1,
+                0
+              ]
+            }
+          }
+        }
+      },
+
+
+      {
+        $group: {
+          _id: "$rollno",
+          name: { $first: "$name" },
+
+          overallLecture: { $sum: "$totalLecture" },
+
+          overallPresent: { $sum: "$presentCount"},
+
+          overallAbsent: { $sum: "$absentCount" },
+
+          attendance: {
+            $push: {
+              date: "$_id.date",
+              totalLecture: "$totalLecture",
+              present: "$presentCount",
+              absent: "$absentCount",
+              status: {
+                $cond: [
+                  { $gt: ["$absentCount", 0] },"Absent","Present"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {$set: {
+          attendance: {
+            $sortArray: {
+              input: "$attendance",
+              sortBy: {
+                date: 1
+              }
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          rollno: "$_id",
+          name: 1,
+          overallLecture: 1,
+          overallPresent: 1,
+          overallAbsent: 1,
+          attendance: 1
+        }
+      }
+    ])
+    const cacheId=crypto.randomUUID();
+    reportCache.set(cacheId,{
+      report,createdAt:Date.now()
+    });
+    resp.status(200).json({success:true,cacheId,report})
+  } 
+  catch(err)
+  {
+    resp.status(500).json({message:err.message});
+  }
+}
+
+const generateReport=async (req,resp)=>{
+  try{
+      const cached = reportCache.get(req.body.cacheId);
+      if (!cached) {
+        return res.status(404).json({success: false, message: "Preview expired. Please generate the preview again."});
+      }
+      const report = cached.report;
+
+  }
+  catch(err)
+  {
+    console.log(err.message);
+    resp.status(500).json({message:err.message});
+  }
+}
+
+
 const GetTodayAttendance=async(req,resp)=>{
   try{
     const {department,course,year,division}=req.query;
@@ -594,4 +425,4 @@ const getreportDetails= async (req,resp)=>{
   }
 }
 
-module.exports={StoreAttendances,GetAttendanceByLectureId,MakeAttendanceReport,GetTodayAttendance,getreportDetails}
+module.exports={StoreAttendances,GetAttendanceByLectureId,MakeAttendanceReport,GetTodayAttendance,getreportDetails,givepreview,generateReport}

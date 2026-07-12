@@ -17,7 +17,10 @@ const addattendance = new mongoose.Schema({
     status: {type:String,enum: ["Present", "Absent", "Leave", "Late"],required: true},
     application:{type:String}
   }],
-
+  department:{type:String,required:true},
+  course:{type:String,required:true},
+  class:{type:String,required:true},
+  division:{type:String,required:true},
   submitedby:{type:String,required:true}
 });
 
