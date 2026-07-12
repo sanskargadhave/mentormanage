@@ -232,9 +232,9 @@ const givepreview=async (req,resp)=>{
     const {Department,Year,Division,Class,FromDate,ToDate}=req.body;
     console.log("department:",Department);
     console.log("Class",Class);
-    console.log("year",year);
+    console.log("year",Year);
     console.log("division",Division);
-    
+
     const report=await StoreAttendance.aggregate([
       {$match: {
         date: {
