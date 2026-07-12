@@ -230,7 +230,11 @@ const MakeAttendanceReport= async (req,resp)=>{
 const givepreview=async (req,resp)=>{
   try{
     const {Department,Year,Division,Class,FromDate,ToDate}=req.body;
-
+    console.log("department:",Department);
+    console.log("Class",Class);
+    console.log("year",year);
+    console.log("division",Division);
+    
     const report=await StoreAttendance.aggregate([
       {$match: {
         date: {
@@ -321,7 +325,7 @@ const givepreview=async (req,resp)=>{
         }
       },
       {
-        $project: {
+        $project: { 
           _id: 0,
           rollno: "$_id",
           name: 1,
