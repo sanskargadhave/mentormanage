@@ -28,7 +28,7 @@ function Notification() {
     useEffect(() => {
     const timer = setTimeout(() => {
         setloding(false);
-    }, 1500);
+    }, 500);
 
     return () => clearTimeout(timer);
     }, []);

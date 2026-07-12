@@ -9,10 +9,11 @@ function StudentDetails(){
      const { id } = useParams();
      const [studentinfo,setstudentinfo]=useState([]);
      const navigate=useNavigate();
-
+     const [loading,setloading]=useState(true);
       useEffect(() => {
          const getdetails = async () =>{
           try{
+            setloading(true);
             const resp = await axios.get(`https://sangolacollage.onrender.com/api/mentor/student/${id}`,
             {
               headers: {
@@ -25,6 +26,9 @@ function StudentDetails(){
           {
             alert(err.message);
           }
+          finally{
+            setloading(false);
+          }
             
           }
           getdetails();
@@ -32,6 +36,7 @@ function StudentDetails(){
 
     const Reject = async ()=> {
       try{
+        setloading(true);
         const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-reject/${id}`,{},
           {
             headers: {
@@ -47,9 +52,13 @@ function StudentDetails(){
       {
         alert(err.message);
       }
+      finally{
+        setloading(false);
+      }
     }
     const Approve = async ()=> {
       try{
+        setloading(true);
         const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-approve/${studentinfo.studentid}/${id}`,{},
           {
             headers: {
@@ -63,6 +72,9 @@ function StudentDetails(){
       catch(err)
       {
         alert(err.message);
+      }
+      finally{
+        setloading(false);
       }
     }
     return (
@@ -78,7 +90,15 @@ function StudentDetails(){
         <h2>Student Verification</h2>
 
     </div>
-
+    {loading ? (
+            <div className="student-profile-card">
+                <div className="sk-circle-verification"></div>
+                <div className="sk-line sk-title"></div>
+                <div className="sk-line sk-subtitle"></div>
+                <div className="sk-line sk-subtitle"></div>
+                <div className="sk-line sk-label"></div>
+            </div>
+    ):(<>
     <div className="student-profile-card">
 
         <img
@@ -106,7 +126,7 @@ function StudentDetails(){
         </div>  
         
 
-    </div>
+    </div></>)}
 
 
     <div className="details-section">
@@ -114,7 +134,14 @@ function StudentDetails(){
         <h3>Personal Information</h3>
 
         <div className="details-grid">
-
+            {loading ? (
+                        Array.from({length:4}).map((_,i)=>(
+                        <div key={i} className="detail-card">
+                            <div className="sk-line sk-full"></div>
+                            <div className="sk-line sk-half"></div>
+                        </div>))
+                
+                    ):(<>
             <div className="detail-card">
                <span>Mobile Number</span>
 
@@ -155,7 +182,7 @@ function StudentDetails(){
             <div className="detail-card">
                 <span>Aadhar Number</span>
                 <h4>{studentinfo?.personaldetails?.aadharno}</h4>
-            </div>
+            </div></>)}
 
         </div>
 
@@ -168,7 +195,15 @@ function StudentDetails(){
         <h3>Academic Information</h3>
 
         <div className="details-grid">
-
+            
+            {loading ? (
+                        Array.from({length:6}).map((_,i)=>(
+                        <div key={i} className="detail-card">
+                            <div className="sk-line sk-full"></div>
+                            <div className="sk-line sk-half"></div>
+                        </div>))
+                
+                    ):(<>
             <div className="detail-card">
                 <span>Department</span>
                 <h4>{studentinfo?.collagedetails?.department}</h4>
@@ -197,14 +232,14 @@ function StudentDetails(){
             <div className="detail-card">
                 <span>Mentor ID</span>
                 <h4>{studentinfo?.collagedetails?.mentorId}</h4>
-            </div>
+            </div></>)}
 
         </div>
 
     </div>
 
   
-    {studentinfo?.registrationStatus==="Pending" && (
+    {loading || studentinfo?.registrationStatus==="Pending" && (
       <div className="action-buttons">
 
         <button className="reject-btn" onClick={()=>Reject()}>
@@ -227,10 +262,11 @@ function MentorDetails(){
      const { id } = useParams();
      const [mentorinfo,setmentorinfo]=useState([]);
      const navigate=useNavigate();
-
+     const [loading,setloading]=useState(true);
       useEffect(() => {
          const getdetails = async () =>{
           try{
+            setloading(true);
             const resp = await axios.get(`https://sangolacollage.onrender.com/api/admin/mentor/${id}`,
             {
               headers: {
@@ -243,13 +279,16 @@ function MentorDetails(){
           {
             alert(err.message);
           }
-            
+           finally{
+            setloading(false);
+           } 
           }
           getdetails();
     }, [id]);
 
     const Reject = async ()=> {
       try{
+        setloading(true);
         const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/mentor/give-reject/${id}`,{},
           {
             headers: {
@@ -265,9 +304,13 @@ function MentorDetails(){
       {
         alert(err.message);
       }
+      finally{
+        setloading(false);
+       } 
     }
     const Approve = async ()=> {
       try{
+        setloading(true);
         const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/mentor/give-approve/${mentorinfo.mentorId}/${id}`,{},
           {
             headers: {
@@ -282,6 +325,9 @@ function MentorDetails(){
       {
         alert(err.message);
       }
+      finally{
+        setloading(false);
+        } 
     }
     return (
     <div>
@@ -296,7 +342,15 @@ function MentorDetails(){
                 <h2>Mentor Verification</h2>
 
             </div>
-
+            {loading ? (
+            <div className="student-profile-card">
+                <div className="sk-circle-verification"></div>
+                <div className="sk-line sk-title"></div>
+                <div className="sk-line sk-subtitle"></div>
+                <div className="sk-line sk-subtitle"></div>
+                <div className="sk-line sk-label"></div>
+            </div>
+            ):(
             <div className="student-profile-card">
 
                 <img
@@ -323,7 +377,7 @@ function MentorDetails(){
                 </div>  
                 
 
-            </div>
+            </div>)}
 
 
             <div className="details-section">
@@ -331,7 +385,14 @@ function MentorDetails(){
                 <h3>Personal Information</h3>
 
                 <div className="details-grid">
-
+                    {loading ? (
+                        Array.from({length:4}).map((_,i)=>(
+                        <div key={i} className="detail-card">
+                            <div className="sk-line sk-full"></div>
+                            <div className="sk-line sk-half"></div>
+                        </div>))
+                
+                    ):(<>
                     <div className="detail-card">
                         <span>Mobile Number</span>
 
@@ -356,7 +417,7 @@ function MentorDetails(){
                     <div className="detail-card">
                         <span>Address</span>
                         <h4>{mentorinfo?.contactdetails?.address}</h4>
-                    </div>
+                    </div></>)}
 
                 </div>
 
@@ -369,7 +430,14 @@ function MentorDetails(){
                 <h3>Academic Information</h3>
 
                 <div className="details-grid">
-
+                    {loading ? (
+                        Array.from({length:4}).map((_,i)=>(
+                        <div key={i} className="detail-card">
+                            <div className="sk-line sk-full"></div>
+                            <div className="sk-line sk-half"></div>
+                        </div>))
+                
+                    ):(<>
                     <div className="detail-card">
                         <span>Department</span>
                         <h4>{mentorinfo?.professionaldetails?.department}</h4>
@@ -380,14 +448,14 @@ function MentorDetails(){
                         <span>Exprience</span>
                         <h4>{mentorinfo?.professionaldetails?.exprience}</h4>
                     </div>
-
+                    </>)}
         
                 </div>
 
             </div>
 
     
-            {mentorinfo?.registrationStatus==="Pending" && (
+            {loading || mentorinfo?.registrationStatus==="Pending" && (
             <div className="action-buttons">
 
                 <button className="reject-btn" onClick={()=>Reject()}>
@@ -410,10 +478,11 @@ function TeacherDetails(){
      const { id } = useParams();
      const [teacherinfo,setteacherinfo]=useState([]);
      const navigate=useNavigate();
-
+     const [loading,setloading]=useState(true);
       useEffect(() => {
          const getdetails = async () =>{
           try{
+            setloading(true);
             const resp = await axios.get(`https://sangolacollage.onrender.com/api/admin/teacher/${id}`,
             {
               headers: {
@@ -426,13 +495,16 @@ function TeacherDetails(){
           {
             alert(err.message);
           }
-            
+          finally{
+            setloading(false);
+          }
           }
           getdetails();
     }, [id]);
 
     const Reject = async ()=> {
       try{
+        setloading(true);
         const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/teacher/give-reject/${id}`,{},
           {
             headers: {
@@ -448,9 +520,13 @@ function TeacherDetails(){
       {
         alert(err.message);
       }
+      finally{
+            setloading(false);
+      }
     }
     const Approve = async ()=> {
       try{
+        setloading(true);
         const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/teacher/give-approve/${teacherinfo._id}/${id}`,{},
           {
             headers: {
@@ -464,6 +540,9 @@ function TeacherDetails(){
       catch(err)
       {
         alert(err.message);
+      }
+      finally{
+            setloading(false);
       }
     }
     return (
@@ -480,8 +559,17 @@ function TeacherDetails(){
 
     </div>
 
-    <div className="student-profile-card">
-
+    
+        {loading ? (
+            <div className="student-profile-card">
+                <div className="sk-circle-verification"></div>
+                <div className="sk-line sk-title"></div>
+                <div className="sk-line sk-subtitle"></div>
+                <div className="sk-line sk-subtitle"></div>
+                <div className="sk-line sk-label"></div>
+            </div>
+            ):(<>
+        <div className="student-profile-card">
         <img
             src={teacherinfo?.profileurl || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"}
             alt="profile"
@@ -506,7 +594,7 @@ function TeacherDetails(){
         </div>  
         
 
-    </div>
+    </div></>)}
 
 
     <div className="details-section">
@@ -514,36 +602,41 @@ function TeacherDetails(){
         <h3>Personal Information</h3>
 
         <div className="details-grid">
-
-            <div className="detail-card">
-               <span>Mobile Number</span>
-
-    <div className="contact-row">
-        <h4>{teacherinfo?.contactdetails?.mobileno}</h4>
-
-        <a
-            href={`tel:${teacherinfo?.contactdetails?.mobileno}`}
-            className="call-btn-circle"
-        >
-            <i className="bi bi-telephone-fill"></i>
-        </a>
-    </div>
-</div>
+            {loading ? (
+                Array.from({length:4}).map((_,i)=>(
+                <div key={i} className="detail-card">
+                    <div className="sk-line sk-full"></div>
+                    <div className="sk-line sk-half"></div>
+                </div>))
                 
-            <div className="detail-card">
-                <span>Email</span>
-                <h4>{teacherinfo?.contactdetails?.emailid}</h4>
-            </div>
+                ):(<>
+                    <div className="detail-card">
+                        <span>Mobile Number</span>
 
-            <div className="detail-card">   
-                <span>Qualification</span>
-                <h4>{teacherinfo?.professionaldetails?.qualification}</h4>
-            </div>
-            <div className="detail-card">
-                <span>Address</span>
-                <h4>{teacherinfo?.contactdetails?.address}</h4>
-            </div>
+                        <div className="contact-row">
+                            <h4>{teacherinfo?.contactdetails?.mobileno}</h4>
 
+                            <a href={`tel:${teacherinfo?.contactdetails?.mobileno}`} className="call-btn-circle">
+                                <i className="bi bi-telephone-fill"></i>
+                            </a>
+                        </div>
+                    </div>
+                                        
+                    <div className="detail-card">
+                        <span>Email</span>
+                        <h4>{teacherinfo?.contactdetails?.emailid}</h4>
+                    </div>
+
+                    <div className="detail-card">   
+                        <span>Qualification</span>
+                        <h4>{teacherinfo?.professionaldetails?.qualification}</h4>
+                    </div>
+                    <div className="detail-card">
+                        <span>Address</span>
+                        <h4>{teacherinfo?.contactdetails?.address}</h4>
+                    </div>
+                </>
+            )}                
         </div>
 
     </div>
@@ -555,7 +648,14 @@ function TeacherDetails(){
         <h3>Academic Information</h3>
 
         <div className="details-grid">
-
+            {loading ? (
+                        Array.from({length:4}).map((_,i)=>(
+                        <div key={i} className="detail-card">
+                            <div className="sk-line sk-full"></div>
+                            <div className="sk-line sk-half"></div>
+                        </div>))
+                
+                    ):(<>
             <div className="detail-card">
                 <span>Department</span>
                 <h4>{teacherinfo?.professionaldetails?.department}</h4>
@@ -565,7 +665,7 @@ function TeacherDetails(){
             <div className="detail-card">
                 <span>Exprience</span>
                 <h4>{teacherinfo?.professionaldetails?.exprience}</h4>
-            </div>
+            </div></>)}
 
  
         </div>
@@ -573,7 +673,7 @@ function TeacherDetails(){
     </div>
 
   
-    {teacherinfo?.registrationStatus==="Pending" && (
+    {loading || teacherinfo?.registrationStatus==="Pending" && (
       <div className="action-buttons">
 
         <button className="reject-btn" onClick={()=>Reject()}>
@@ -600,10 +700,11 @@ function LeaveDetails()
      const [leaveinfo,setleaveinfo]=useState([]);
      const [studentinfo,setstudentinfo]=useState([]);
      const navigate=useNavigate();
-
+    const [loading,setloading]=useState(true);
     useEffect(() => {
          const getdetails = async () =>{
           try{
+            setloading(true);
             const resp = await axios.get(`https://sangolacollage.onrender.com/api/mentor/get-student-application/${id}`,
             {
               headers: {
@@ -616,6 +717,9 @@ function LeaveDetails()
           catch(err)
           {
             alert(err.message);
+          }
+          finally{
+            setloading(false);
           }
             
           }
@@ -635,9 +739,17 @@ function LeaveDetails()
         <h2>Leave Requested</h2>
 
       </div>
-
+    {loading ? (
+            <div className="student-profile-card">
+                <div className="sk-circle-verification"></div>
+                <div className="sk-line sk-title"></div>
+                <div className="sk-line sk-subtitle"></div>
+                <div className="sk-line sk-subtitle"></div>
+                <div className="sk-line sk-label"></div>
+            </div>
+    ):(<>
     <div className="student-profile-card">
-
+        
         <img
             src={studentinfo?.profileurl || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"}
             alt="profile"
@@ -653,46 +765,53 @@ function LeaveDetails()
               {studentinfo?.collagedetails?.year} Year  •
             Division {studentinfo?.collagedetails?.division}
         </span>
-
+    </div></>)}
          
         
 <div className="details-section">
 
         <h3>Personal Information</h3>
-
+        
         <div className="details-grid">
-
+            {loading ? (
+                Array.from({length:4}).map((_,i)=>(
+                <div key={i} className="detail-card">
+                    <div className="sk-line sk-full"></div>
+                    <div className="sk-line sk-half"></div>
+                </div>))
+                
+                ):(<>
             <div className="detail-card">
                <span>Mobile Number</span>
 
-    <div className="contact-row">
-        <h4>{studentinfo?.personaldetails?.mobileno}</h4>
+                <div className="contact-row">
+                    <h4>{studentinfo?.personaldetails?.mobileno}</h4>
 
-        <a
-            href={`tel:${studentinfo?.personaldetails?.mobileno}`}
-            className="call-btn-circle"
-        >
-            <i className="bi bi-telephone-fill"></i>
-        </a>
-    </div>
-</div>
+                    <a
+                        href={`tel:${studentinfo?.personaldetails?.mobileno}`}
+                        className="call-btn-circle"
+                    >
+                        <i className="bi bi-telephone-fill"></i>
+                    </a>
+                </div>
+            </div>
                 
             
 
             <div className="detail-card">
                <span>Parent Number</span>
 
-    <div className="contact-row">
-        <h4>{studentinfo?.personaldetails?.parentno}</h4>
+                <div className="contact-row">
+                    <h4>{studentinfo?.personaldetails?.parentno}</h4>
 
-        <a
-            href={`tel:${studentinfo?.personaldetails?.parentno}`}
-            className="call-btn-circle"
-        >
-            <i className="bi bi-telephone-fill"></i>
-        </a>
-    </div>
-</div>
+                    <a
+                    href={`tel:${studentinfo?.personaldetails?.parentno}`}
+                    className="call-btn-circle"
+                    >
+                        <i className="bi bi-telephone-fill"></i>
+                    </a>
+                </div>
+            </div>
 
             <div className="detail-card">
                 <span>Email</span>
@@ -702,7 +821,7 @@ function LeaveDetails()
             <div className="detail-card">
                 <span>Aadhar Number</span>
                 <h4>{studentinfo?.personaldetails?.aadharno}</h4>
-            </div>
+            </div></>)}
 
         </div>
 
@@ -715,6 +834,14 @@ function LeaveDetails()
         <h3>Academic Information</h3>
 
         <div className="details-grid">
+             {loading ? (
+                Array.from({length:6}).map((_,i)=>(
+                <div key={i} className="detail-card">
+                    <div className="sk-line sk-full"></div>
+                    <div className="sk-line sk-half"></div>
+                </div>))
+                
+                ):(<>
 
             <div className="detail-card">
                 <span>Department</span>
@@ -744,7 +871,7 @@ function LeaveDetails()
             <div className="detail-card">
                 <span>Mentor ID</span>
                 <h4>{studentinfo?.collagedetails?.mentorId}</h4>
-            </div>
+            </div></>)}
 
         </div>
 
@@ -755,6 +882,14 @@ function LeaveDetails()
     <h3>Leave Application Details</h3>
 
     <div className="leave-details-grid">
+        {loading ? (
+                Array.from({length:6}).map((_,i)=>(
+                <div key={i} className="detail-card">
+                    <div className="sk-line sk-full"></div>
+                    <div className="sk-line sk-half"></div>
+                </div>))
+                
+                ):(<>
 
         <div className="leave-detail-card">
             <span>Leave Type</span>
@@ -808,7 +943,7 @@ function LeaveDetails()
 </div>
             )
         }
-
+</>)}
     </div>
 
     <div className="leave-action-buttons">
@@ -827,7 +962,7 @@ function LeaveDetails()
 
 </div>  
         </div>
-    </div>
+   
 
 
   )

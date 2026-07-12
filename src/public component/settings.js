@@ -9,7 +9,7 @@ function Settings() {
    const navigate=useNavigate();
    const [message,setmessage]=useState("");
    const [search,setsearch]=useState("");
-   const [loading, setLoading] = useState(false);
+   const [loading, setLoading] = useState(true);
    const [profiledetails,setprofiledetails]=useState([]);
    const [showToast,setShowToast]=useState(false);
    const [personalDetails,setpersonalDetails]=useState({
@@ -38,6 +38,7 @@ function Settings() {
         if(!token || !id) return ;//https://sangolacollage.onrender.com
         async function getProfiledetails(){
             try{
+               setLoading(true);
                 const resp= await axios.get(`https://sangolacollage.onrender.com/api/profile/get-profiledetails/${id}`,{
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -59,6 +60,9 @@ function Settings() {
                console.log(err.response?.status);
 
                   alert(err.response?.data?.message || err.message);
+            }
+            finally{
+               setLoading(false);
             }
         }
         getProfiledetails();
@@ -83,6 +87,7 @@ function Settings() {
    {
       if(!token || !id) return ; 
       try{
+         setLoading(true);
             const resp=await axios.put(`https://sangolacollage.onrender.com/api/profile/updateprofile-details`,{personalDetails,id,role},{
                    headers: {
                       Authorization: `Bearer ${token}`,
@@ -94,6 +99,9 @@ function Settings() {
       catch(err)
       {
          showtoast(err.response?.data?.message||err.message);
+      }
+      finally{
+         setLoading(false);
       }
    }
 
@@ -113,7 +121,7 @@ function Settings() {
 
    setTimeout(() => {
       setLoading(false);
-   }, 500);
+   }, 1000);
 };
    const filterstudent=profiledetails?.studentdetails?.filter((student)=>{
         const query = search.toLowerCase().trim();
@@ -136,8 +144,45 @@ function Settings() {
             <div className="settings-card">
                <div className="row">
                   <div className="col-lg-4">
-                     <div className="profile-section">
+                        {loading  ? (<>
+                           <div className="profile-section">
+
+    <div className="profile-image-wrapper">
+        <div className="profile-image skeleton"></div>
+
+        <div className="upload-profile-btn skeleton"></div>
+    </div>
+
+    <div className="profile-name skeleton"></div>
+
+    <div className="profile-role skeleton"></div>
+
+    <div className="profile-info">
+
+        <div>
+            <div className="profile-label skeleton"></div>
+            <div className="profile-value skeleton"></div>
+        </div>
+
+        <div>
+            <div className="profile-label skeleton"></div>
+            <div className="profile-value skeleton"></div>
+        </div>
+
+        <div>
+            <div className="profile-label skeleton"></div>
+            <div className="profile-value skeleton"></div>
+        </div>
+
+    </div>
+
+</div>
+                           </>
+                        ):
+                        (<>
+                        <div className="profile-section">
                         <div className="profile-image-wrapper">
+
                            <img src={profileImage}  className="profile-image"/>
                            <label className="upload-profile-btn">
                               Change Photo
@@ -163,7 +208,7 @@ function Settings() {
                               </p>
                            </div>
                         </div>
-                     </div>
+                     </div></>)}
                   </div>
 
                   <div className="col-lg-8">
@@ -179,6 +224,24 @@ function Settings() {
                               <h3>Personal Details</h3>
                               <p>Update your personal information and contact details.</p>
                            </div>
+                           {loading ?(
+                           Array.from({length:2}).map((_,i)=>(
+                              <div key={i} className="row">
+
+    <div className="col-md-6 mb-3">
+
+        <div className="input-group-custom">
+
+            <div className="skeleton skeleton-label"></div>
+
+            <div className="skeleton skeleton-input"></div>
+
+        </div>
+
+    </div>
+
+</div>
+                           ))):(
                            <div className="row">
                               <div className="col-md-6">
                                  <div className="input-group-custom">
@@ -261,10 +324,59 @@ function Settings() {
                                  </div>
                               </div>
                               </>)}
-                           </div>
+                           </div>)}
                         </div>
                         {role === "Student" && (
                            <>
+                           {loading ?(<>{
+                              Array.from({length:2}).map((_,i)=>(
+                                 <div key={i} className="row">
+
+                                    <div className="col-md-6 mb-3">
+
+                                       <div className="input-group-custom">
+
+                                             <div className="skeleton skeleton-label"></div>
+
+                                             <div className="skeleton skeleton-input"></div>
+
+                                       </div>
+
+                                    </div>
+
+                                 </div>
+                              ))}
+                           
+                           <div className="notificationss-card">
+                              <div className="profile-myskeleton"></div> 
+                              <div className="notification-details-skeleton">
+                                 <div className="skeleton-mytitle"></div> 
+                                 <div className="skeleton-bottom"></div>
+                              </div>
+                           </div>
+                           {
+                              Array.from({length:2}).map((_,i)=>(
+                                 <div key={i} className="row">
+
+                                    <div className="col-md-6 mb-3">
+
+                                       <div className="input-group-custom">
+
+                                             <div className="skeleton skeleton-label"></div>
+
+                                             <div className="skeleton skeleton-input"></div>
+
+                                       </div>
+
+                                    </div>
+
+                                 </div>
+                              ))}
+                           
+                           
+                           </>
+                        ):(
+                        <>
                         <div className="settings-section">
                            <div className="section-header">
                               <h3>
@@ -373,7 +485,7 @@ function Settings() {
                                  <input type="email" value={profiledetails?.collagedetails?.mentor?.contactdetails?.emailid} disabled className="underline-input disabled-input"/>
                               </div>
                            </div>
-                        </div>
+                        </div></>)}
                         </>
                      )}
                      {role==="Mentor" && (
@@ -404,9 +516,12 @@ function Settings() {
                         
                            {
                               loading ? (
-                                 <div className="search-loader">
-                                    <div className="spinner"></div>
-                                    <p>Searching students...</p>
+                                 <div className="notificationss-card">
+                                    <div className="profile-myskeleton"></div> 
+                                    <div className="notification-details-skeleton">
+                                       <div className="skeleton-mytitle"></div> 
+                                       <div className="skeleton-bottom"></div>
+                                    </div>
                                  </div>
                               ) : (
                                  <>

@@ -6,15 +6,19 @@ import { useNavigate } from "react-router-dom";
 import "./mentor.css";
 
 function MentorDashboardContent() {
-  const { id,token} = useContext(AuthContext);
-  const navigate=useNavigate();
-  const [notifications, setNotifications] = useState([]);
-  const [loding,setloding]=useState({});
-  const [show,setshow]=useState(true);
-  const [event,setevent]=useState("");
-  const [subjects,setSubjects]=useState([]);
-  const [message,setmessage]=useState("");
-  const [url,seturl]=useState("");
+
+  const [reportType,setReportType]=useState("oneday");
+    const {token}=useContext(AuthContext);
+  const [formdata,setformdata]=useState({
+    Date: new Date().toISOString().split("T")[0],
+    Department:"",
+    FromDate:"",
+    ToDate:"",
+    Class:"",
+    Year:"",
+    Division:""
+  })
+
   const [filters, setFilters] = useState({
     department:"",
     course: "",
@@ -22,6 +26,7 @@ function MentorDashboardContent() {
     division: "",
     date: ""
   });
+   
   const courses={
     Science:["Physics","Zoology","Mathematics","Chemistry","Botany","BSC"],
     ComputerScience:["Data Science","BCA","BSC [ECS]"],
@@ -29,212 +34,522 @@ function MentorDashboardContent() {
     Commerce:["Commerce"],
   }
 
-  const fetchTodayAttendance = async () => {
-    try {
-      setloding((prev)=>({...prev,fetchTodayAttendance:true}));
-      if (!filters.department || !filters.course || !filters.year || !filters.division) {
-        alert("Please select all filters");
-        return;
-      }
-      const res = await fetch(`https://sangolacollage.onrender.com/api/mentor/get-today-attendance?department=${filters.department}&course=${filters.course}&year=${filters.year}&division=${filters.division}`,{
-             headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        });
-      const data = await res.json();
-      setSubjects(data.completeLecture || []);
-      setevent("showsubmitedattendance");
-      
-    } 
-    catch (err) {
-      if(err.response?.status === 401){
-        localStorage.clear();
-        navigate("/unauthorized");
-        return;
-      }
-      console.log(err);
-    }
-    finally{
-      setloding((prev)=>({...prev,fetchTodayAttendance:false}));    }
-  };
+  function handleChange(e)
+  {
+    
+    const { name, value } = e.target;
+    setformdata({ ...formdata, [name]: value });
+  }
 
-  const generateReport=async ()=>{
+  async function getpreview()
+  {
     try{
-      setloding((prev)=>({...prev,generateReport:true}));
-      const res=await fetch(`https://sangolacollage.onrender.com/api/mentor/make-attendance-report?department=${filters.department}&course=${filters.course}&year=${filters.year}&division=${filters.division}`,{
-             headers: {
+        
+        const resp=await axios.post("https://sangolacollage.onrender.com/api/mentor/give-preview-report",formdata,{
+            headers: {
                 Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        });
-      const result=await res.json();
-      setmessage(result.message);
-      seturl(result.url);
-      
-      setevent("showmessage");
+            }       
+        })
+        console.log(resp.data);
     }
     catch(err)
     {
-      if(err.response?.status === 401){
-        localStorage.clear();
-        navigate("/unauthorized");
-        return;
-      }
-      console.log(err);
-      setevent("showmessage");
+        console.log(err.message);
+        alert(err.message);
     }
-    finally{
-      setloding((prev)=>({...prev,generateReport:false}))
-    }
-
   }
-  
+
   return (
-    <div className="admin-content">   
-    {event === "" && (
-      <div className="attendance-report-section">
-        <div className="attendance-report-content">
-          <div className="attendance-report-icon">
-            <i className="bi bi-clipboard-data-fill"></i>
-          </div>
-          <div className="attendance-report-text">
-            <h3>Daily Attendance Management</h3>
-            <p>
-              Generate and upload today’s attendance report
-              to maintain accurate student records and lecture tracking.
-            </p>
-          </div>
-        </div>
-        <button className="attendance-upload-btn" onClick={() => setevent("showoptions")}>
-          <i className="bi bi-cloud-arrow-up-fill"></i>
-          Upload Today Attendance
-        </button>
-
-      </div>
-    )}
-
-    {event ==="showoptions" && (
-      <div className="report-filter-box ">
-
-        <h5>Uplode Attendance Report
-        <button className="close-btn" onClick={() => setevent("")}>
-          <i className="bi bi-x-lg"></i>
-        </button></h5>
-        <div className="filter-row">
-
-          <select  className="filter-input" id="department" value={filters.department} onChange={(e) => setFilters({...filters, department: e.target.value})}>
-            <option value="">Select Department</option>
-            <option value="Science">Science</option>
-            <option value="ComputerScience"> Computer Science</option>
-            <option value="Art">Art</option>
-            <option value="Commerce">Commerce</option>
-          </select>
-
-          {filters.department && 
-            (
-              <select className="filter-input" id="course" value={filters.course} onChange={(e) => setFilters({...filters, course: e.target.value})}> 
-                <option value="">select Course</option>
-                  {
-                    courses[filters.department].map((course,index)=>
-                    (
-                      <option key={index} value={course}>{course}</option>
-                    )
-                  )}
-              </select>
-            )
-          }
-
-          <select className="filter-input" id="year" value={filters.year} onChange={(e) => setFilters({...filters, year: e.target.value})}>
-            <option value="">Select Year</option>
-            <option value="first">First</option>
-            <option value="second">Second</option>
-            <option value="third">Third</option>
-          </select>
-
-          <select className="filter-input" id="division" value={filters.division} onChange={(e) => setFilters({...filters, division: e.target.value})}>
-            <option value="">Select Division</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-          </select>
-
-
-        </div>
-
-      <button className="report-btn" onClick={fetchTodayAttendance} disabled={loding["fetchTodayAttendance"]}>
-        {loding["fetchTodayAttendance"] ? (
-          <div className="spinner-grow text-danger" role="status">
-              <span className="visually-hidden">loding...</span>
-            </div>
-        ):(
-          <h6>📄 Generate Report</h6>  
-        )}
-      </button>
-      
-    </div>)}
-    {event === "showmessage" && (
-      <>
-      <button className="close-btn" onClick={() => setevent("")}>
-              <i className="bi bi-x-lg"></i>
-            </button>
-          <h4 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">
-            {message}
-               
-          </h4>
-          {url?.length > 0 && (
-            <>
-              <p className="text-sm text-gray-500 mb-2">Your Report Link:</p>
-              <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline break-words font-medium">
-                {url.length > 35 ? url.slice(0, 35) + "..." : url}
-              </a>
-            </>
-          )}
-          </>
+    <div>   
         
-    )}
+        <div className="report-page">
+            <div className="report-type">
 
-      {event === "showsubmitedattendance" && (
-        <>
-          <div className="attendance-header">
-            <h5>Today's Attendance</h5>
-            <button className="close-btn" onClick={() => setevent("showoptions")}>
-              <i className="bi bi-x-lg"></i>
-            </button>          
-          </div>
+    <button
+        className={`type-btn ${reportType==="oneday" ? "active" : ""}`}
+        onClick={()=>setReportType("oneday")}
+    >
+        <i className="bi bi-calendar-day me-2"></i>
 
-          {subjects.length === 0 ? (
-            <div className="empty-state">
-              No attendance submitted today
-            </div>
-            ) : (
-              <div className="card-grid">
-                {subjects.map((item, index) => (
-                  <div className="attendance-card" key={index}>
-                    <h3>{item.subject}</h3>
-                    <p className="status success">✔ Submitted</p>
-                  </div>
-                ))}
-                <div className="report-action-container">
-                  <button className="generate-report-btn" onClick={generateReport} disabled={loding["generateReport"]}>
-                    {loding["generateReport"] ? (
-                      <div className="spinner-grow text-danger" role="status">
-                        <span className="visually-hidden">loding...</span>
-                      </div>
-                      
-                    ):(
-                      <h6>📄 Generate Report</h6>  
-                    )}
-                  </button>
+       Daily Report
+    </button>
+
+    <button
+        className={`type-btn ${reportType==="multiday" ? "active" : ""}`}
+        onClick={()=>setReportType("multiday")}
+    >
+        <i className="bi bi-calendar-range me-2"></i>
+
+        Multi Day
+    </button>
+
+</div>
+
+            <div className="container-fluid">
+
+                {/* Header */}
+
+                <div className="report-header">
+
+                    <span className="report-tag">
+                        📄 Attendance Report
+                    </span>
+                  {reportType==="multiday" ? (
+                    <h2>Generate Multi-Day Attendance Report</h2>
+                  ):(
+                    <h2> Generate Daily Attendance Report</h2>
+                  )}
+
+                    <p>
+                        Select class details and date range to preview attendance
+                        before exporting PDF or Excel.
+                    </p>
+
                 </div>
-              </div>
-              
-            )
-          }
-        </>
-        )}
-    
+
+                {/* Filter Card */}
+
+                <div className="report-filter-card">
+
+                    <div className="filter-title">
+
+                        <i className="bi bi-funnel-fill"></i>
+
+                        Report Filters
+
+                    </div>
+
+                    <div className="row g-3">
+
+                        {/* Department */}
+
+                        <div className="col-12 col-md-6 col-lg-4">
+
+                            <div className="form-group">
+
+                                <label>
+                                    <i className="bi bi-building me-2"></i>
+                                    Department
+                                </label>
+
+                                <select className="form-control" value={formdata.Department} name="Department" onChange={handleChange}>
+
+                                    <option>Select Department</option>
+                                    <option>ComputerScience</option>
+                                    <option>Art</option>
+                                    <option>Science</option>
+                                    <option>Commerce</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        {/* Course */}
+
+                        <div className="col-12 col-md-6 col-lg-4">
+
+                            <div className="form-group">
+
+                                <label>
+                                    <i className="bi bi-book me-2"></i>
+                                    Course
+                                </label>
+
+                                {formdata.Department && 
+                        (
+                            <select value={formdata.Department} className="form-control" name="Class" value={formdata.Course} onChange={handleChange}>
+                                <option value="">select Course</option>
+                                {
+                                    courses[formdata.Department].map((course,index)=>
+                                    (
+                                    <option key={index}>{course}</option>
+                                    )
+                                )}
+                            </select>
+                        )}
+
+                            </div>
+
+                        </div>
+
+                        {/* Year */}
+
+                        <div className="col-12 col-md-6 col-lg-4">
+
+                            <div className="form-group">
+
+                                <label>
+                                    <i className="bi bi-calendar-event me-2"></i>
+                                    Year
+                                </label>
+
+                                <select className="form-control" value={formdata.Year} name="Year" onChange={handleChange}>
+
+                                    <option>Select Year</option>
+                                    <option value="first">First Year</option>
+                                    <option value="second">Second Year</option>
+                                    <option value="third">Third Year</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        {/* Division */}
+
+                        <div className="col-12 col-md-6 col-lg-4">
+
+                            <div className="form-group">
+
+                                <label>
+                                    <i className="bi bi-people-fill me-2"></i>
+                                    Division
+                                </label>
+
+                                <select className="form-control" value={formdata.Division} name="Division" onChange={handleChange}>
+
+                                    <option>Select Division</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        {/* From Date */}
+                        {reportType === "multiday" ? (<>
+                        <div className="col-12 col-md-6 col-lg-4">
+
+                            <div className="form-group">
+
+                                <label>
+                                    <i className="bi bi-calendar-check me-2"></i>
+                                    From Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    className="form-control" value={formdata.FromDate} name="FromDate" onChange={handleChange}
+                                />
+
+                            </div>
+
+                        </div>
+
+                       
+
+                        <div className="col-12 col-md-6 col-lg-4">
+
+                            <div className="form-group">
+
+                                <label>
+                                    <i className="bi bi-calendar2-week me-2"></i>
+                                    To Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    className="form-control" value={formdata.ToDate} name="ToDate" onChange={handleChange}
+                                />
+
+                            </div>
+
+                        </div></>):(
+                          <div className="col-12 col-md-6 col-lg-4">
+
+                            <div className="form-group">
+
+                                <label>
+                                    <i className="bi bi-calendar-check me-2"></i>
+                                   Select Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    className="form-control"  value={formdata.Date} name="Date" onChange={handleChange}
+                                />
+
+                            </div>
+
+                        </div>
+
+                        )}
+
+                    </div>
+
+                    {/* Buttons */}
+
+                    <div className="filter-buttons">
+
+                        <button className="btn-reset">
+
+                            <i className="bi bi-arrow-clockwise me-2"></i>
+
+                            Reset
+
+                        </button>
+
+                        <button className="btn-generate" onClick={()=>getpreview()}>
+
+                            <i className="bi bi-search me-2"></i>
+
+                            Preview Report
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                
+            </div>
+
+        </div>
+        {/* ================= Preview Section ================= */}
+
+<div className="report-preview">
+
+    {/* Top */}
+
+    <div className="preview-header">
+
+        <div>
+
+            <h3>
+                <i className="bi bi-bar-chart-fill"></i>
+                Attendance Report Preview
+            </h3>
+
+            <p>
+                Review attendance before generating PDF or Excel.
+            </p>
+
+        </div>
+
+        <div className="preview-actions">
+
+            <button className="btn-export excel">
+
+                <i className="bi bi-file-earmark-excel-fill"></i>
+
+                Excel
+
+            </button>
+
+            <button className="btn-export pdf">
+
+                <i className="bi bi-file-earmark-pdf-fill"></i>
+
+                PDF
+
+            </button>
+
+        </div>
+
+    </div>
+
+    {/* Summary */}
+
+    <div className="row g-3">
+
+        <div className="col-6 col-lg-3">
+
+            <div className="summary-cards">
+
+                <i className="bi bi-people-fill"></i>
+
+                <h2>100</h2>
+
+                <span>Total Students</span>
+
+            </div>
+
+        </div>
+
+        <div className="col-6 col-lg-3">
+
+            <div className="summary-cards">
+
+                <i className="bi bi-journal-bookmark-fill"></i>
+
+                <h2>24</h2>
+
+                <span>Total Lectures</span>
+
+            </div>
+
+        </div>
+
+        <div className="col-6 col-lg-3">
+
+            <div className="summary-cards">
+
+                <i className="bi bi-check-circle-fill"></i>
+
+                <h2>91%</h2>
+
+                <span>Attendance</span>
+
+            </div>
+
+        </div>
+
+        <div className="col-6 col-lg-3">
+
+            <div className="summary-cards">
+
+                <i className="bi bi-exclamation-triangle-fill"></i>
+
+                <h2>8</h2>
+
+                <span>Defaulters</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {/* Class Details */}
+
+    <div className="preview-info">
+
+        <div>
+
+            <span>Department</span>
+
+            <strong>Computer Science</strong>
+
+        </div>
+
+        <div>
+
+            <span>Course</span>
+
+            <strong>M.Sc</strong>
+
+        </div>
+
+        <div>
+
+            <span>Year</span>
+
+            <strong>Second</strong>
+
+        </div>
+
+        <div>
+
+            <span>Division</span>
+
+            <strong>A</strong>
+
+        </div>
+
+        <div>
+
+            <span>Date</span>
+
+            <strong>01 Jul - 30 Jul</strong>
+
+        </div>
+
+    </div>
+
+    {/* Search */}
+
+    <div className="preview-search">
+
+        <div className="search-box">
+
+            <i className="bi bi-search"></i>
+
+            <input
+                type="text"
+                placeholder="Search student..."
+            />
+
+        </div>
+
+    </div>
+
+    {/* Student Table */}
+
+    <div className="table-responsive">
+
+        <table className="table preview-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Roll</th>
+
+                    <th>Name</th>
+
+                    <th>Present</th>
+
+                    <th>Absent</th>
+
+                    <th>%</th>
+
+                    <th>Status</th>
+
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td>3102</td>
+
+                    <td>Rahul Patil</td>
+
+                    <td>22</td>
+
+                    <td>2</td>
+
+                    <td>91%</td>
+
+                    <td>
+
+                        <span className="badge bg-success">
+
+                            Present
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <button className="btn btn-sm btn-success">
+
+                            View
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
   </div>
   );
 }

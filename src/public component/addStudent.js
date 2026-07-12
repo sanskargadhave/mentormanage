@@ -432,7 +432,7 @@ function AddStudent()
                 <div className="row">
                     <div className="col-12 col-md-4 mb-3">
                         <label className="form-label"><i className="bi bi-claude"></i> select Department Name</label>
-                        <select value={formdata.Department} className={`form-select form-select-sm ${errors.Department ? "is-invalid" : ""}`} aria-label="Small select example" name="Department" value={formdata.Department} onChange={handleChange}>
+                        <select value={formdata.Department} className={`form-select form-select-sm ${errors.Department ? "is-invalid" : ""}`} aria-label="Small select example" name="Department" onChange={handleChange}>
                             <option value="">Select Department</option>
                             <option value="Science">Science</option>
                             <option value="ComputerScience"> Computer Science</option>
