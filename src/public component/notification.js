@@ -25,14 +25,7 @@ function Notification() {
 
    
 
-    useEffect(() => {
-    const timer = setTimeout(() => {
-        setloding(false);
-    }, 500);
-
-    return () => clearTimeout(timer);
-    }, []);
-  
+    
   
  
 
@@ -86,26 +79,7 @@ function Notification() {
     return (
         
         <div className="notification-container">
-            {loding && (
-                <div className="notification-container">
-                    {Array.from({length:7}).map((_,i)=>(
-                    <div key={i} className="notificationss-card">
-                        <div className="profile-myskeleton"></div> 
-                        <div className="notification-details-skeleton">
-                            <div className="skeleton-mytitle"></div> 
-                            <div className="skeleton-bottom"></div>
-                        </div>
-                        
-                    </div>
-                    
-                    
-                    ))}
-
-                </div>
-            )}
-
-            {!loding && (
-                <>
+            
                     <div className="notification-filter">
                         <button className={filter === "all" ? "active-filter-btn" : ""} onClick={() => setfilter("all")} > All </button>
                         <button className={filter === "unread" ? "active-filter-btn" : ""} onClick={() => setfilter("unread")}> Unread </button>
@@ -153,9 +127,7 @@ function Notification() {
                             )
                         }
 
-                    </div>
-                </>
-            )} 
+                    </div> 
                                     
         </div>
     );

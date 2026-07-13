@@ -5,15 +5,130 @@ import { AuthContext } from "../Authintication";
 import { useNavigate } from "react-router-dom";
 import "./mentor.css";
 import React, { Fragment } from "react";
+
+
+function ReportProcessingCard() {
+
+    const steps = [
+        "Fetching Attendance Records",
+        "Calculating Student Statistics",
+        "Preparing Attendance Summary",
+        "Rendering PDF Report",
+        "Uploading Report to Cloud",
+        "Finalizing Report"
+    ];
+
+    const [currentStep, setCurrentStep] = useState(0);
+
+    useEffect(() => {
+
+        const interval = setInterval(() => {
+
+            setCurrentStep((prev) => {
+
+                if (prev >= steps.length - 1) return prev;
+
+                return prev + 1;
+
+            });
+
+        }, 1800);
+
+        return () => clearInterval(interval);
+
+    }, []);
+
+    return (
+
+        <div className="processing-card">
+
+            <div className="processing-header">
+
+                <div className="pdf-icon">
+                    <i className="bi bi-file-earmark-pdf-fill"></i>
+                </div>
+
+                <div>
+
+                    <h2>Generating Attendance Report</h2>
+
+                    <p>Please wait while your report is being prepared.</p>
+
+                </div>
+
+            </div>
+
+            <div className="processing-list">
+
+                {steps.map((step, index) => (
+
+                    <div
+                        key={index}
+                        className={`processing-step
+                        ${
+                            index < currentStep
+                                ? "completed"
+                                : index === currentStep
+                                ? "active"
+                                : ""
+                        }`}
+                    >
+
+                        <span className="step-icon">
+
+                            {index < currentStep ? (
+                                <i className="bi bi-check-circle-fill"></i>
+                            ) : index === currentStep ? (
+                                <div className="loader-circle"></div>
+                            ) : (
+                                <i className="bi bi-circle"></i>
+                            )}
+
+                        </span>
+
+                        <span>{step}</span>
+
+                    </div>
+
+                ))}
+
+            </div>
+
+            <div className="progress-bar">
+
+                <div
+                    className="progress-fill"
+                    style={{
+                        width: `${((currentStep + 1) / steps.length) * 100}%`
+                    }}
+                ></div>
+
+            </div>
+
+            <p className="progress-text">
+
+                {Math.round(((currentStep + 1) / steps.length) * 100)}%
+
+            </p>
+
+        </div>
+
+    );
+
+}
+
+
 function MentorDashboardContent() {
 
     const [reportType,setReportType]=useState("oneday");
     const [expandedStudent, setExpandedStudent] = useState(null);
-    const [event,setevent]=useState("preview");
-    const {token}=useContext(AuthContext);
+    const [reportUrl,setreportUrl]=useState("");
+    const [loading,setloading]=useState(true);
+    const [event,setevent]=useState("");
+    const {token,id}=useContext(AuthContext);
     const [reports,setreports]=useState([]);
     const [formdata,setformdata]=useState({
-    Date: new Date().toISOString().split("T")[0],
+    Dates: "",
     Department:"",
     FromDate:"",
     ToDate:"",
@@ -22,13 +137,7 @@ function MentorDashboardContent() {
     Division:""
   })
 
-  const [filters, setFilters] = useState({
-    department:"",
-    course: "",
-    year: "",
-    division: "",
-    date: ""
-  });
+
    
   const courses={
     Science:["Physics","Zoology","Mathematics","Chemistry","Botany","BSC"],
@@ -37,17 +146,34 @@ function MentorDashboardContent() {
     Commerce:["Commerce"],
   }
 
-  function handleChange(e)
-  {
-    
-    const { name, value } = e.target;
-    setformdata({ ...formdata, [name]: value });
-  }
+  const handleChange = (e) => {
 
+    const { name, value } = e.target;
+
+    setformdata(prev => {
+
+        const updated = {
+            ...prev,
+            [name]: value
+        };
+
+        if (reportType === "oneday" && name === "Dates") {
+            updated.FromDate = value;
+            updated.ToDate = value;
+        }
+
+        return updated;
+
+    });
+
+};
   async function getpreview()
   {
+    if(!formdata.Department || !formdata.Class || !formdata.Year || !formdata.Division || !formdata.FromDate || !formdata.ToDate){
+        return alert("Please Fill All Required Fields");
+    }
     try{
-        
+        setevent("loadingpreview");
         const resp=await axios.post("https://sangolacollage.onrender.com/api/mentor/give-preview-report",formdata,{
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -61,17 +187,23 @@ function MentorDashboardContent() {
         console.log(err.message);
         alert(err.message);
     }
+    finally{
+        setevent("showpreview");
+    }
   }
   async function generateReport()
   {
     try{
-        
-        const resp=await axios.post("https://sangolacollage.onrender.com/api/mentor/make-attendance-report",reports.cacheId,{
+        setevent("generateloading");
+        const resp=await axios.post(`https://sangolacollage.onrender.com/api/mentor/make-attendance-report/${id}`,{
+        cacheId: reports.cacheId
+        },{
             headers: {
                 Authorization: `Bearer ${token}`,
             }       
         })
-        console.log(resp.data);
+        setreportUrl(resp?.data?.url);
+
         
     }
     catch(err)
@@ -79,7 +211,11 @@ function MentorDashboardContent() {
         console.log(err.message);
         alert(err.message);
     }
+    finally{
+        setevent("showreport");
+    }
   }
+
   const handleViewAttendance = (rollno) => {
 
     if (expandedStudent === rollno) {
@@ -90,46 +226,54 @@ function MentorDashboardContent() {
 
 };
 
+    const resetForm = () => {
+
+        setformdata({
+            Dates: "",
+            Department: "",
+            FromDate: "",
+            ToDate: "",
+            Class: "",
+            Year: "",
+            Division: ""
+        });
+
+        setreports([]);
+        setreportUrl("");
+        setevent("");
+        setReportType("oneday");
+
+    };
+
   return (
     <div>   
         
         <div className="report-page">
+           
             <div className="report-type">
 
-    <button
-        className={`type-btn ${reportType==="oneday" ? "active" : ""}`}
-        onClick={()=>setReportType("oneday")}
-    >
-        <i className="bi bi-calendar-day me-2"></i>
+                <button className={`type-btn ${reportType==="oneday" ? "active" : ""}`} onClick={()=>setReportType("oneday")}>
+                    <i className="bi bi-calendar-day me-2"></i>Daily Report
+                </button>
 
-       Daily Report
-    </button>
+                <button className={`type-btn ${reportType==="multiday" ? "active" : ""}`} onClick={()=>setReportType("multiday")}>
+                    <i className="bi bi-calendar-range me-2"></i>Multi Day
+                </button>
 
-    <button
-        className={`type-btn ${reportType==="multiday" ? "active" : ""}`}
-        onClick={()=>setReportType("multiday")}
-    >
-        <i className="bi bi-calendar-range me-2"></i>
-
-        Multi Day
-    </button>
-
-</div>
+            </div>
 
             <div className="container-fluid">
-
-                {/* Header */}
 
                 <div className="report-header">
 
                     <span className="report-tag">
                         📄 Attendance Report
                     </span>
-                  {reportType==="multiday" ? (
-                    <h2>Generate Multi-Day Attendance Report</h2>
-                  ):(
-                    <h2> Generate Daily Attendance Report</h2>
-                  )}
+                    {reportType==="multiday" ? (
+                        <h2>Generate Multi-Day Attendance Report</h2>
+                    ):(
+                        <h2> Generate Daily Attendance Report</h2>
+                    )}
 
                     <p>
                         Select class details and date range to preview attendance
@@ -190,10 +334,10 @@ function MentorDashboardContent() {
 
                                 {formdata.Department && 
                         (
-                            <select value={formdata.Department} className="form-control" name="Class" value={formdata.Course} onChange={handleChange}>
+                            <select className="form-control" name="Class" value={formdata.Course} onChange={handleChange}>
                                 <option value="">select Course</option>
                                 {
-                                    courses[formdata.Department].map((course,index)=>
+                                    courses[formdata.Department]?.map((course,index)=>
                                     (
                                     <option key={index}>{course}</option>
                                     )
@@ -303,7 +447,7 @@ function MentorDashboardContent() {
 
                                 <input
                                     type="date"
-                                    className="form-control"  value={formdata.Date} name="Date" onChange={handleChange}
+                                    className="form-control"  value={formdata.Dates} name="Dates" onChange={handleChange}
                                 />
 
                             </div>
@@ -316,23 +460,23 @@ function MentorDashboardContent() {
 
                     {/* Buttons */}
 
-                    <div className="filter-buttons">
+                    <div className="filter-buttons" >
 
-                        <button className="btn-reset">
+                        <button className="btn-reset" onClick={()=>resetForm()}>
 
                             <i className="bi bi-arrow-clockwise me-2"></i>
 
                             Reset
 
                         </button>
-
-                        <button className="btn-generate" onClick={()=>getpreview()}>
+                        {event!=="loadingpreview" && (
+                        <button className="btn-generate" onClick={()=>getpreview()} >
 
                             <i className="bi bi-search me-2"></i>
 
                             Preview Report
 
-                        </button>
+                        </button>)}
 
                     </div>
 
@@ -343,299 +487,326 @@ function MentorDashboardContent() {
 
         </div>
         {/* ================= Preview Section ================= */}
-    {event==="preview" && (
-    <div className="report-preview">
+        {event==="loadingpreview"&&(
+            <div className="preview-skeleton">
 
-    {/* Top */}
+                <div className="preview-title skeleton"></div>
 
-    <div className="preview-header">
+                <div className="summary-skeleton">
 
-        <div>
+                    <div className="summary-card skeleton"></div>
+                    <div className="summary-card skeleton"></div>
+                    <div className="summary-card skeleton"></div>
+                    <div className="summary-card skeleton"></div>
 
-            <h3>
-                <i className="bi bi-bar-chart-fill"></i>
-                Attendance Report Preview
-            </h3>
+                </div>
 
-            <p>
-                Review attendance before generating PDF or Excel.
-            </p>
+                <div className="table-skeleton">
 
-        </div>
+                    <div className="table-header">
 
-        <div className="preview-actions">
+                        <div className="cell roll skeleton"></div>
+                        <div className="cell name skeleton"></div>
 
-            <button className="btn-export excel">
+                        {Array.from({ length: 8 }).map((_, i) => (
+                            <div className="cell date skeleton" key={i}></div>
+                        ))}
 
-                <i className="bi bi-file-earmark-excel-fill"></i>
+                    </div>
 
-                Excel
+                    {Array.from({ length: 8 }).map((_, row) => (
 
-            </button>
+                        <div className="table-row" key={row}>
 
-            <button className="btn-export pdf" onClick={()=>generateReport()}>
+                            <div className="cell roll skeleton"></div>
 
-                <i className="bi bi-file-earmark-pdf-fill"></i>
+                            <div className="cell name skeleton"></div>
 
-                PDF
+                            {Array.from({ length: 8 }).map((_, col) => (
+                                <div className="cell status skeleton" key={col}></div>
+                            ))}
 
-            </button>
+                        </div>
 
-        </div>
+                    ))}
 
-    </div>
-
-    {/* Summary */}
-
-    <div className="row g-3">
-
-        <div className="col-6 col-lg-3">
-
-            <div className="summary-cards">
-
-                <i className="bi bi-people-fill"></i>
-
-                <h2>{reports?.report?.length}</h2>
-
-                <span>Total Students</span>
+                </div>
 
             </div>
+        )}
 
-        </div>
+        {event==="showpreview"   && (
+            <div className="report-preview">
+                {reports?.report?.length===0 ? (
+                    <div className="empty-preview">
 
-        <div className="col-6 col-lg-3">
+                        <div className="empty-icon">
+                            <i className="bi bi-calendar-x"></i>
+                        </div>
 
-            <div className="summary-cards">
+                        <h3>No Attendance Records Found</h3>
 
-                <i className="bi bi-journal-bookmark-fill"></i>
+                        <p>
+                            No attendance records were found for the selected
+                            filters. Try changing the date range, class, or
+                            department and preview again.
+                        </p>
 
-                <h2>24</h2>
+                    </div>
 
-                <span>Total Lectures</span>
+                    ):(<>
+                        <div className="preview-header">
 
-            </div>
+                            <div>
 
-        </div>
+                                <h3>
+                                    <i className="bi bi-bar-chart-fill"></i>
+                                    Attendance Report Preview
+                                </h3>
 
-        <div className="col-6 col-lg-3">
+                                <p>
+                                    Review attendance before generating PDF or Excel.
+                                </p>
 
-            <div className="summary-cards">
+                            </div>
 
-                <i className="bi bi-check-circle-fill"></i>
+                            <div className="preview-actions">
 
-                <h2>91%</h2>
+                                <button className="btn-export excel">
 
-                <span>Attendance</span>
+                                    <i className="bi bi-file-earmark-excel-fill"></i>
 
-            </div>
+                                    Excel
 
-        </div>
-
-        <div className="col-6 col-lg-3">
-
-            <div className="summary-cards">
-
-                <i className="bi bi-exclamation-triangle-fill"></i>
-
-                <h2>8</h2>
-
-                <span>Defaulters</span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    {/* Class Details */}
-
-    <div className="preview-info">
-
-        <div>
-
-            <span>Department</span>
-
-            <strong>{formdata.Department}</strong>
-
-        </div>
-
-        <div>
-
-            <span>Course</span>
-
-            <strong>{formdata.Class}</strong>
-
-        </div>
-
-        <div>
-
-            <span>Year</span>
-
-            <strong>{formdata.Year}</strong>
-
-        </div>
-
-        <div>
-
-            <span>Division</span>
-
-            <strong>{formdata.Division}</strong>
-
-        </div>
-
-        <div>
-
-            <span>Date</span>
-
-           <strong>
-                {new Date(formdata.FromDate).toLocaleDateString("en-IN", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric"
-                })}
-                {" - "}
-                {new Date(formdata.ToDate).toLocaleDateString("en-IN", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric"
-                })}
-            </strong>
-
-        </div>
-
-    </div>
-
-    {/* Search */}
-
-    <div className="preview-search">
-
-        <div className="search-box">
-
-            <i className="bi bi-search"></i>
-
-            <input
-                type="text"
-                placeholder="Search student..."
-            />
-
-        </div>
-
-    </div>
-
-    {/* Student Table */}
-
-    <div className="table-responsive">
-
-        <table className="table preview-table">
-
-            <thead>
-
-                <tr>
-
-                    <th>RollNo</th>
-
-                    <th>Student Name</th>
-           
-
-                    <th>Actions</th>
-
-                </tr>
-
-            </thead>
-
-           <tbody>
-
-                {reports?.report?.map((student) => (
-                    <React.Fragment key={student.rollno}>
-                        <tr>
-
-                            <td>{student.rollno}</td>
-
-                            <td>{student.name}</td>
-
-                            <td>
-
-                                <button
-                                    className="btn btn-success btn-sm"
-                                    onClick={() =>
-                                        handleViewAttendance(student.rollno)
-                                    }
-                                >
-                                    {expandedStudent === student.rollno
-                                        ? "Hide"
-                                        : "View"}
                                 </button>
 
-                            </td>
+                                <button className="btn-export pdf" onClick={()=>generateReport()}>
 
-                        </tr>
+                                    <i className="bi bi-file-earmark-pdf-fill"></i>
 
-                        {expandedStudent === student.rollno && (
+                                    PDF
 
-                            <tr>
+                                </button>
 
-                                <td colSpan={5}>
+                            </div>
 
-                                    <div className="attendance-preview">
+                        </div>
 
-                                        {student.attendance.map((day, index) => (
+                        {/* Summary */}
 
-                                            <div
-                                                className="attendance-day"
-                                                key={index}
-                                            >
+                        <div className="row g-3">
 
-                                                <span>
+                            <div className="col-6 col-lg-3">
 
-                                                    {new Date(day.date).toLocaleDateString(
-                                                        "en-IN",
-                                                        {
-                                                            day: "2-digit",
-                                                            month: "short"
-                                                        }
-                                                    )}
+                                <div className="summary-cards">
 
-                                                </span>
+                                    <i className="bi bi-people-fill"></i>
 
-                                                
+                                    <h2>{reports?.report?.length}</h2>
 
-                                                <span
-                                                    className={
-                                                        day.status === "Present"
-                                                            ? "text-success"
-                                                            : "text-danger"
-                                                    }
-                                                >
+                                    <span>Total Students</span>
 
-                                                    {day.status}
+                                </div>
 
-                                                </span>
+                            </div>
 
-                                            </div>
+                        </div>
 
-                                        ))}
+                        {/* Class Details */}
 
-                                    </div>
+                        <div className="preview-info">
 
-                                </td>
+                            <div>
 
-                            </tr>
+                                <span>Department</span>
 
-                        )}
+                                <strong>{formdata.Department}</strong>
 
-                    </React.Fragment>
+                            </div>
 
-                ))}
+                            <div>
 
-                </tbody>
+                                <span>Course</span>
 
-                        </table>
+                                <strong>{formdata.Class}</strong>
 
-    </div>
+                            </div>
 
-</div>)}
-  </div>
-  );
+                            <div>
+
+                                <span>Year</span>
+
+                                <strong>{formdata.Year}</strong>
+
+                            </div>
+
+                            <div>
+
+                                <span>Division</span>
+
+                                <strong>{formdata.Division}</strong>
+
+                            </div>
+
+                            <div>
+
+                                <span>Date</span>
+
+                            <strong>
+                                    {new Date(formdata.FromDate).toLocaleDateString("en-IN", {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric"
+                                    })}
+                                    {" - "}
+                                    {new Date(formdata.ToDate).toLocaleDateString("en-IN", {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric"
+                                    })}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        {/* Search */}
+
+                        <div className="preview-search">
+
+                            <div className="search-box">
+
+                                <i className="bi bi-search"></i>
+
+                                <input
+                                    type="text"
+                                    placeholder="Search student..."
+                                />
+
+                            </div>
+
+                        </div>
+
+                        {/* Student Table */}
+
+                        <div className="table-responsive">
+                            <table className="table preview-table">
+                                <thead>
+                                    <tr>
+                                        <th>RollNo</th>
+                                        <th>Student Name</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {reports?.report?.map((student) => (
+                                    <React.Fragment key={student.rollno}>
+                                        <tr>
+
+                                            <td>{student.rollno}</td>
+
+                                            <td>{student.name}</td>
+
+                                            <td>
+
+                                                <button className="btn btn-success btn-sm" onClick={() => handleViewAttendance(student.rollno)}>
+                                                    {expandedStudent === student.rollno ? "Hide" : "View"}
+                                                </button>
+
+                                            </td>
+
+                                        </tr>
+
+                                        {expandedStudent === student.rollno && (
+                                            <tr>
+                                                <td colSpan={5}>
+                                                    <div className="attendance-preview">
+                                                        {student.attendance.map((day, index) => (
+                                                            <div className="attendance-day" key={index}>
+                                                                <span>
+                                                                    {new Date(day.date).toLocaleDateString("en-IN",
+                                                                        {
+                                                                            day: "2-digit",
+                                                                            month: "short"
+                                                                        }
+                                                                    )}
+
+                                                                </span>                                                
+                                                                <span className={ day.status === "Present" ? "text-success" : "text-danger"}>
+
+                                                                    {day.status}
+
+                                                                </span>
+
+                                                            </div>
+
+                                                        ))}
+
+                                                    </div>
+
+                                                </td>
+
+                                            </tr>
+
+                                        )}
+
+                                    </React.Fragment>
+
+                                ))}
+
+                                </tbody>
+
+                            </table>
+
+                        </div></>)
+                    }
+
+            </div>)}
+
+            {event==="generateloading" && (
+                <ReportProcessingCard/>
+            )}
+
+            {event==="showreport" && (
+                <div className="report-success-card">
+
+                    <div className="success-icon">
+                        <i className="bi bi-check-circle-fill"></i>
+                    </div>
+
+                    <div className="success-content">
+
+                        <h3>Report Generated Successfully</h3>
+
+                        <p>
+                            Your attendance report has been securely generated
+                            and uploaded. Use the link below to view or download it.
+                        </p>
+
+                        <div className="report-url-box">
+
+                            <i className="bi bi-link-45deg"></i>
+
+                            <input
+                                type="text"
+                                value={reportUrl}
+                                readOnly
+                            />
+
+                            <button className="copy-btn">
+                                <i className="bi bi-copy"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            )
+
+            }
+        </div>
+    );
 }
 
 export { MentorDashboardContent };
