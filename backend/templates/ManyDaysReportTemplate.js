@@ -293,7 +293,7 @@ const manyAttendanceReport = (data)=>{
 
                 <div>
                     <span>Course</span>
-                    <strong>${data.filters.Course}</strong>
+                    <strong>${data.filters.Class}</strong>
                 </div>
 
                 <div>

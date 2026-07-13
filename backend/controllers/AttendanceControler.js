@@ -292,7 +292,12 @@ const givepreview=async (req,resp)=>{
         }
       },
 
-
+      {
+       $sort: {
+        rollno: 1,
+        "_id.date": 1
+        }
+      },
       {
         $group: {
           _id: "$rollno",
@@ -448,7 +453,7 @@ const generateReport=async (req,resp)=>{
       division:cached.filters.Division,
       course:cached.filters.Class,
       department:cached.filters.Department,
-      uplodeDate:new Date().toLocaleDateString("en-IN"),
+      uplodeDate:new Date(),
       uplodeBy:mentor._id,
       reportid:reportid
     })
