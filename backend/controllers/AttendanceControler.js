@@ -357,10 +357,9 @@ const givepreview=async (req,resp)=>{
 const generateReport=async (req,resp)=>{
   try{
       const mentor=await StoreMentor.findOne({mentorId:req.params.id});
-      console.log("Mentor :",mentor);
-      console.log("CacheId:",req.body.cacheId);
+     
       const cached = reportCache.get(req.body.cacheId);
-      console.log("Cached:",cached)
+   
       if (!cached) {
         return resp.status(404).json({success: false, message: "Preview expired. Please generate the preview again."});
       }
@@ -427,7 +426,7 @@ const generateReport=async (req,resp)=>{
 
     await browser.close();
     const reportid=`ATT-${cached.filters.Department}-${cached.filters.Class}-${cached.filters.Year}-${cached.filters.Division}-${date}-${time}-${random}`;
-    const fileName = `Attendance-report-${reportid}.pdf`;
+    const fileName =`${reportid.replace(/[^a-zA-Z0-9-_]/g, "")}.pdf`;
 
     const { data, error } = await supabase.storage
       .from("Attendance Report")
