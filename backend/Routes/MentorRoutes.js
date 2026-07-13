@@ -21,7 +21,7 @@ router.get("/get-student-application/:id",getapplicationById);
 router.post("/give-preview-report",givepreview);
 router.post("/store-excel-data",uplode.single("file"),iscorrectdata,getexcelsheet);
 router.post("/sendMessage", sendMessage);
-router.post("/make-attendance-report",generateReport);
+router.post("/make-attendance-report/:id",generateReport);
 router.put("/give-approve/:studentid/:id",giveApprove);
 router.put("/give-reject/:id",giveReject);
 router.put("/give-permission/:permission/:applicationid",givePermission);

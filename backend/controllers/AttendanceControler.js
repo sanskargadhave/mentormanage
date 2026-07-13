@@ -356,8 +356,7 @@ const givepreview=async (req,resp)=>{
 
 const generateReport=async (req,resp)=>{
   try{
-      console.log("ID:",req.user.id);
-      const mentor=await StoreMentor.findOne({mentorId:req.user.id});
+      const mentor=await StoreMentor.findOne({mentorId:req.params.id});
       console.log("Mentor :",mentor);
       console.log("CacheId:",req.body.cacheId);
       const cached = reportCache.get(req.body.cacheId);
