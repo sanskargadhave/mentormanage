@@ -425,3 +425,5 @@ const manyAttendanceReport = (data)=>{
     </html>
     `;
 }
+
+module.exports=manyAttendanceReport;
