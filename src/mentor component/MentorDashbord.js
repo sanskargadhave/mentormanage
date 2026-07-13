@@ -4,12 +4,15 @@ import axios from "axios";
 import { AuthContext } from "../Authintication";
 import { useNavigate } from "react-router-dom";
 import "./mentor.css";
-
+import React, { Fragment } from "react";
 function MentorDashboardContent() {
 
-  const [reportType,setReportType]=useState("oneday");
+    const [reportType,setReportType]=useState("oneday");
+    const [expandedStudent, setExpandedStudent] = useState(null);
+    const [event,setevent]=useState("preview");
     const {token}=useContext(AuthContext);
-  const [formdata,setformdata]=useState({
+    const [reports,setreports]=useState([]);
+    const [formdata,setformdata]=useState({
     Date: new Date().toISOString().split("T")[0],
     Department:"",
     FromDate:"",
@@ -51,6 +54,7 @@ function MentorDashboardContent() {
             }       
         })
         console.log(resp.data);
+        setreports(resp.data);
     }
     catch(err)
     {
@@ -58,6 +62,33 @@ function MentorDashboardContent() {
         alert(err.message);
     }
   }
+  async function generateReport()
+  {
+    try{
+        
+        const resp=await axios.post("https://sangolacollage.onrender.com/api/mentor/make-attendance-report",reports.cacheId,{
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }       
+        })
+        console.log(resp.data);
+        
+    }
+    catch(err)
+    {
+        console.log(err.message);
+        alert(err.message);
+    }
+  }
+  const handleViewAttendance = (rollno) => {
+
+    if (expandedStudent === rollno) {
+        setExpandedStudent(null);
+    } else {
+        setExpandedStudent(rollno);
+    }
+
+};
 
   return (
     <div>   
@@ -312,8 +343,8 @@ function MentorDashboardContent() {
 
         </div>
         {/* ================= Preview Section ================= */}
-
-<div className="report-preview">
+    {event==="preview" && (
+    <div className="report-preview">
 
     {/* Top */}
 
@@ -342,7 +373,7 @@ function MentorDashboardContent() {
 
             </button>
 
-            <button className="btn-export pdf">
+            <button className="btn-export pdf" onClick={()=>generateReport()}>
 
                 <i className="bi bi-file-earmark-pdf-fill"></i>
 
@@ -364,7 +395,7 @@ function MentorDashboardContent() {
 
                 <i className="bi bi-people-fill"></i>
 
-                <h2>100</h2>
+                <h2>{reports?.report?.length}</h2>
 
                 <span>Total Students</span>
 
@@ -424,7 +455,7 @@ function MentorDashboardContent() {
 
             <span>Department</span>
 
-            <strong>Computer Science</strong>
+            <strong>{formdata.Department}</strong>
 
         </div>
 
@@ -432,7 +463,7 @@ function MentorDashboardContent() {
 
             <span>Course</span>
 
-            <strong>M.Sc</strong>
+            <strong>{formdata.Class}</strong>
 
         </div>
 
@@ -440,7 +471,7 @@ function MentorDashboardContent() {
 
             <span>Year</span>
 
-            <strong>Second</strong>
+            <strong>{formdata.Year}</strong>
 
         </div>
 
@@ -448,7 +479,7 @@ function MentorDashboardContent() {
 
             <span>Division</span>
 
-            <strong>A</strong>
+            <strong>{formdata.Division}</strong>
 
         </div>
 
@@ -456,7 +487,19 @@ function MentorDashboardContent() {
 
             <span>Date</span>
 
-            <strong>01 Jul - 30 Jul</strong>
+           <strong>
+                {new Date(formdata.FromDate).toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                })}
+                {" - "}
+                {new Date(formdata.ToDate).toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                })}
+            </strong>
 
         </div>
 
@@ -489,67 +532,108 @@ function MentorDashboardContent() {
 
                 <tr>
 
-                    <th>Roll</th>
+                    <th>RollNo</th>
 
-                    <th>Name</th>
+                    <th>Student Name</th>
+           
 
-                    <th>Present</th>
-
-                    <th>Absent</th>
-
-                    <th>%</th>
-
-                    <th>Status</th>
-
-                    <th></th>
+                    <th>Actions</th>
 
                 </tr>
 
             </thead>
 
-            <tbody>
+           <tbody>
 
-                <tr>
+                {reports?.report?.map((student) => (
+                    <React.Fragment key={student.rollno}>
+                        <tr>
 
-                    <td>3102</td>
+                            <td>{student.rollno}</td>
 
-                    <td>Rahul Patil</td>
+                            <td>{student.name}</td>
 
-                    <td>22</td>
+                            <td>
 
-                    <td>2</td>
+                                <button
+                                    className="btn btn-success btn-sm"
+                                    onClick={() =>
+                                        handleViewAttendance(student.rollno)
+                                    }
+                                >
+                                    {expandedStudent === student.rollno
+                                        ? "Hide"
+                                        : "View"}
+                                </button>
 
-                    <td>91%</td>
+                            </td>
 
-                    <td>
+                        </tr>
 
-                        <span className="badge bg-success">
+                        {expandedStudent === student.rollno && (
 
-                            Present
+                            <tr>
 
-                        </span>
+                                <td colSpan={5}>
 
-                    </td>
+                                    <div className="attendance-preview">
 
-                    <td>
+                                        {student.attendance.map((day, index) => (
 
-                        <button className="btn btn-sm btn-success">
+                                            <div
+                                                className="attendance-day"
+                                                key={index}
+                                            >
 
-                            View
+                                                <span>
 
-                        </button>
+                                                    {new Date(day.date).toLocaleDateString(
+                                                        "en-IN",
+                                                        {
+                                                            day: "2-digit",
+                                                            month: "short"
+                                                        }
+                                                    )}
 
-                    </td>
+                                                </span>
 
-                </tr>
+                                                
 
-            </tbody>
+                                                <span
+                                                    className={
+                                                        day.status === "Present"
+                                                            ? "text-success"
+                                                            : "text-danger"
+                                                    }
+                                                >
 
-        </table>
+                                                    {day.status}
+
+                                                </span>
+
+                                            </div>
+
+                                        ))}
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        )}
+
+                    </React.Fragment>
+
+                ))}
+
+                </tbody>
+
+                        </table>
 
     </div>
 
-</div>
+</div>)}
   </div>
   );
 }

@@ -8,7 +8,7 @@ const NotificationSchema=require("../model/notificationsScema");
 const { StoreMentor } = require("../model/studentSchema.js");
 const crypto = require("crypto");
 const reportCache = require("../utils/reportCache");
-
+const manyAttendanceReport=require("../templates/ManyDaysReportTemplate.js")
 //   /api/store-attendance URL
 const StoreAttendances=async (req,resp)=>{
   try{    
@@ -178,6 +178,7 @@ const MakeAttendanceReport= async (req,resp)=>{
 
     const pdfurl = `${process.env.SUPABASE_URL}/storage/v1/object/public/Attendance Report/${fileName}`;
     
+    
     const report = await ReportdetailsSchema.create({
       ReportType:"Attendance",
       ReportUrl:pdfurl,
@@ -230,11 +231,16 @@ const MakeAttendanceReport= async (req,resp)=>{
 const givepreview=async (req,resp)=>{
   try{
     const {Department,Year,Division,Class,FromDate,ToDate}=req.body;
+    const toDate=new Date(ToDate);
+    toDate.setHours(23,59,59,999);
     console.log("department:",Department);
     console.log("Class",Class);
     console.log("year",Year);
     console.log("division",Division);
-
+    if(!Department || !Year || !Division || !Class || !FromDate ||!ToDate)
+    {
+      return resp.status(404).json({success:false,message:"Please Select All Filetrs"});
+    }
     const report=await StoreAttendance.aggregate([
       {$match: {
         date: {
@@ -338,7 +344,7 @@ const givepreview=async (req,resp)=>{
     ])
     const cacheId=crypto.randomUUID();
     reportCache.set(cacheId,{
-      report,createdAt:Date.now()
+      report,createdAt:Date.now(),filters:req.body,
     });
     resp.status(200).json({success:true,cacheId,report})
   } 
@@ -350,12 +356,127 @@ const givepreview=async (req,resp)=>{
 
 const generateReport=async (req,resp)=>{
   try{
+      const mentor=await StoreMentor.findOne({mentorId:req.user.id});
       const cached = reportCache.get(req.body.cacheId);
+      if(cached.report.length===0){
+
+        return resp.status(404).json({
+          success:false,
+          message:"No attendance found."
+        });
+
+      }
+      const now = new Date();
+    const date =
+        now.getFullYear() +
+        String(now.getMonth() + 1).padStart(2, "0") +
+        String(now.getDate()).padStart(2, "0");
+
+    const time =
+        String(now.getHours()).padStart(2, "0") +
+        String(now.getMinutes()).padStart(2, "0") +
+        String(now.getSeconds()).padStart(2, "0");
+
+    const random = crypto.randomInt(1000, 9999);
+
+      if(!mentor)
+      {
+        reportCache.delete(req.body.cacheId);
+        return resp.status(404).json({success: false,message:"Mentor Not Find"})
+      }
+     
       if (!cached) {
         return res.status(404).json({success: false, message: "Preview expired. Please generate the preview again."});
       }
       const report = cached.report;
+      const html=manyAttendanceReport({
+        report:cached.report,
+        filters:cached.filters,
+        today:new Date().toLocaleDateString("en-IN"),
+      })
 
+      const browser = await puppeteer.launch({
+      args: [...chromium.args, "--no-sandbox", "--disable-setuid-sandbox"],
+      executablePath: await chromium.executablePath(),
+      headless: true
+    });
+
+    const page = await browser.newPage();
+
+    await page.setContent(html, {
+      waitUntil: "networkidle0",
+      timeout: 0
+    });
+
+    const pdf = await page.pdf({
+      format: "A4",
+      landscape: true,
+      printBackground: true,
+      margin: {
+        top: "15mm",
+        bottom: "15mm",
+        left: "10mm",
+        right: "10mm"
+    }
+    });
+
+    await browser.close();
+    const reportid=`ATT-${cached.filters.Department}-${cached.filters.Class}-${cached.filters.Year}-${cached.filters.Division}-${date}-${time}-${random}`;
+    const fileName = `Attendance-report-${reportid}.pdf`;
+
+    const { data, error } = await supabase.storage
+      .from("Attendance Report")
+      .upload(fileName, pdf, {
+        contentType: "application/pdf"
+      });
+
+    if (error) throw new Error(error.message);
+    
+
+    const pdfurl = `${process.env.SUPABASE_URL}/storage/v1/object/public/Attendance Report/${fileName}`;
+    
+    
+    
+    const reports = await ReportdetailsSchema.create({
+      ReportType:"Attendance",
+      ReportUrl:pdfurl,
+      class:cached.filters.Year,
+      division:cached.filters.Division,
+      course:cached.filters.Class,
+      department:cached.filters.Department,
+      uplodeDate:new Date().toLocaleDateString("en-IN"),
+      uplodeBy:mentor._id,
+      reportid:reportid
+    })
+
+        const notification=await NotificationSchema.create({
+              senderId:mentor._id,
+              senderRole:"Mentor",
+              receiver_Id:"697f16cd19432806852e9a24",
+              receiverid:"AD-02012006-001",
+              receiverRole:"Admin",
+              type:"report_submited",
+              message:`${mentor.personaldetails.name} has Submited Many Days Report.`,
+              title:"New Report Submited",
+              entityType:"Report",
+              entityId:reports._id,
+              priority:"normal",
+              actionUrl:`/admin/report/${reports._id}`,
+              metadata:{
+                id:mentor.mentorId,
+                name:mentor.personaldetails.name,
+                department:cached.filters.Department,
+                course:cached.filters.Class,
+                year:cached.filters.Year,
+                division:cached.filters.Division,
+              }
+            })
+            const io=getIO();
+            console.log("Sending notification");
+            io.to("user_AD-02012006-001").emit("notification",notification);
+          
+    reportCache.delete(req.body.cacheId);
+    resp.status(200).json({message:"Report Uplode Succeessfuly",url:pdfurl});
   }
   catch(err)
   {
