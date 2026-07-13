@@ -358,6 +358,16 @@ const generateReport=async (req,resp)=>{
   try{
       const mentor=await StoreMentor.findOne({mentorId:req.user.id});
       const cached = reportCache.get(req.body.cacheId);
+       if (!cached) {
+        return resp.status(404).json({success: false, message: "Preview expired. Please generate the preview again."});
+      }
+      if(!mentor)
+      {
+        reportCache.delete(req.body.cacheId);
+        return resp.status(404).json({success: false,message:"Mentor Not Find"})
+      }
+     
+     
       if(cached.report.length===0){
 
         return resp.status(404).json({
@@ -379,15 +389,7 @@ const generateReport=async (req,resp)=>{
 
     const random = crypto.randomInt(1000, 9999);
 
-      if(!mentor)
-      {
-        reportCache.delete(req.body.cacheId);
-        return resp.status(404).json({success: false,message:"Mentor Not Find"})
-      }
-     
-      if (!cached) {
-        return res.status(404).json({success: false, message: "Preview expired. Please generate the preview again."});
-      }
+      
       const report = cached.report;
       const html=manyAttendanceReport({
         report:cached.report,
