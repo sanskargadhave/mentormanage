@@ -356,9 +356,13 @@ const givepreview=async (req,resp)=>{
 
 const generateReport=async (req,resp)=>{
   try{
+      console.log("ID:",req.user.id);
       const mentor=await StoreMentor.findOne({mentorId:req.user.id});
+      console.log("Mentor :",mentor);
+      console.log("CacheId:",req.body.cacheId);
       const cached = reportCache.get(req.body.cacheId);
-       if (!cached) {
+      console.log("Cached:",cached)
+      if (!cached) {
         return resp.status(404).json({success: false, message: "Preview expired. Please generate the preview again."});
       }
       if(!mentor)
