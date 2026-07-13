@@ -292,12 +292,7 @@ const givepreview=async (req,resp)=>{
         }
       },
 
-      {
-       $sort: {
-        rollno: 1,
-        "_id.date": 1
-        }
-      },
+      
       {
         $group: {
           _id: "$rollno",
@@ -344,7 +339,13 @@ const givepreview=async (req,resp)=>{
           overallPresent: 1,
           overallAbsent: 1,
           attendance: 1
-        }
+        },
+        
+      },
+      {
+      $sort: {
+        rollno: 1
+      }
       }
     ])
     const cacheId=crypto.randomUUID();
