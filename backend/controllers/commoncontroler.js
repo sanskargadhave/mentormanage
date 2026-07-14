@@ -64,7 +64,7 @@ const getspotlight=async (req,resp)=>{
 
     ...admindetails.map(admin => ({
         role: "Admin",
-        name: admin.personaldetails.name,
+        name: admin.name,
         profile: admin.profileurl,
         department: "Administration",
         email: admin.emailid,
