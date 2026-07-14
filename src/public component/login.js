@@ -1,11 +1,13 @@
 import "./Main_pageComponent.css";
 import "animate.css";
-import {useState } from "react";
+import {useState,useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import { useContext} from "react";
 import { AuthContext } from "../Authintication";
 import { NotificationContext } from "../notificationAuthContext";
 import axios from "axios";
+import logo from "../collageassets/logo-college.png";
+
 function Login() {
 
     const [email,setEmail]=useState("");
@@ -93,42 +95,122 @@ function Login() {
     return(
 
         <div className="login-page ">
-            <h2 className="login-title animate__animated animate__rotateInUpLeft">Welcome Back</h2>
-            <p className="login-sub animate__animated animate__rotateInUpLeft">Login to continue</p>
-            <form className="login-form animate__animated animate__fadeInDown" onSubmit={handleSubmit}>
-                <div className="input-box">
-                    <input type="email" placeholder=" " value={email} required onChange={(e)=>setEmail(e.target.value)}/>
-                    <label>Email ID</label>
-                </div>
+            {!loading ?(<>
+                <h2 className="login-title animate__animated animate__rotateInUpLeft">Welcome Back</h2>
+                <p className="login-sub animate__animated animate__rotateInUpLeft">Login to continue</p>
+                <form className="login-form animate__animated animate__fadeInDown" onSubmit={handleSubmit}>
+                    <div className="input-box">
+                        <input type="email" placeholder=" " value={email} required onChange={(e)=>setEmail(e.target.value)}/>
+                        <label>Email ID</label>
+                    </div>
 
-                <div className="input-box password-box">
-                    <input type={showPassword ? "text" : "password"} placeholder=" " value={password} required onChange={(e)=>setPassword(e.target.value)} />
-                    <label>Password</label>
+                    <div className="input-box password-box">
+                        <input type={showPassword ? "text" : "password"} placeholder=" " value={password} required onChange={(e)=>setPassword(e.target.value)} />
+                        <label>Password</label>
 
-                    <span className="toggle-pass animate__animated animate__fadeInLeftBig" onClick={()=>setShowPassword(!showPassword)}>
-                        {showPassword ? "🙈" : "🐵"}
-                    </span>
+                        <span className="toggle-pass animate__animated animate__fadeInLeftBig" onClick={()=>setShowPassword(!showPassword)}>
+                            {showPassword ? "🙈" : "🐵"}
+                        </span>
 
-                </div>
+                    </div>
 
-                {error && <p className="error">{error}</p>}
+                    {error && <p className="error">{error}</p>}
 
-                <button className={`login-btn ${loading ? "loading" : ""}`}  disabled={loading} >
-                    {loading ? (
-                        <div className="spinner-border text-danger" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                    ) : ("Login")}
-                </button>
+                    <button className={`login-btn ${loading ? "loading" : ""}`}  disabled={loading} >
+                        {loading ? (
+                            <div className="spinner-border text-danger" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        ) : ("Login")}
+                    </button>
 
 
-            </form>
-
+                </form>
+            </>):(<LoginLoader/>)}
+            
         </div>
     );
 }
 
 
+ function LoginLoader() {
+
+    const messages = [
+        "Authenticating User...",
+        "Loading Dashboard...",
+        "Fetching Attendance...",
+        "Preparing Reports...",
+        "Loading Faculty Spotlight...",
+        "Almost Ready..."
+    ];
+
+    const [index, setIndex] = useState(0);
+
+    useEffect(() => {
+
+        const timer = setInterval(() => {
+
+            setIndex((prev) => (prev + 1) % messages.length);
+
+        }, 1200);
+
+        return () => clearInterval(timer);
+
+    }, []);
+
+    return (
+
+
+            <div className="loader-card">
+
+                <div className="logo-wrapper">
+
+                    <div className="ring"></div>
+
+                    <img
+                        src={logo}
+                        className="college-logo"
+                        alt=""
+                    />
+
+                    <span className="particle p1"></span>
+                    <span className="particle p2"></span>
+                    <span className="particle p3"></span>
+                    <span className="particle p4"></span>
+
+                </div>
+
+                <h2>Sangola Mahavidyalaya</h2>
+
+                <p className="subtitle">
+                    Mentor Management System
+                </p>
+
+                <div className="status">
+
+                    🔐 {messages[index]}
+
+                </div>
+
+                <div className="progress">
+
+                    <div className="progress-fill"></div>
+
+                </div>
+
+                <p className="footer-text">
+
+                    AI Powered Attendance & Report Platform
+
+                </p>
+
+            </div>
+
+        
+
+    );
+
+}
 function LiveNotification({ notification, onClose }) {
     const navigate =useNavigate();
     return (

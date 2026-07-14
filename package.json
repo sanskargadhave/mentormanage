@@ -29,6 +29,7 @@
     "react-select": "^5.10.2",
     "react-typed": "^2.0.12",
     "socket.io-client": "^4.8.3",
+    "swiper": "^14.0.5",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },

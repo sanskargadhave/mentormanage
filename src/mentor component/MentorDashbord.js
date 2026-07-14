@@ -94,7 +94,7 @@ function ReportProcessingCard() {
 
             </div>
 
-            <div className="progress-bar">
+            <div className="progress-bars">
 
                 <div
                     className="progress-fill"
@@ -127,6 +127,7 @@ function MentorDashboardContent() {
     const [event,setevent]=useState("");
     const {token,id}=useContext(AuthContext);
     const [reports,setreports]=useState([]);
+    const [search,setsearch]=useState("");
     const [formdata,setformdata]=useState({
     Dates: "",
     Department:"",
@@ -244,7 +245,10 @@ function MentorDashboardContent() {
         setReportType("oneday");
 
     };
-
+    const filteredReports = reports?.report?.filter(student =>
+        student.name.toLowerCase().includes(search.toLowerCase()) ||
+        String(student.rollno).includes(search)
+    );
   return (
     <div>   
         
@@ -680,7 +684,7 @@ function MentorDashboardContent() {
 
                                 <input
                                     type="text"
-                                    placeholder="Search student..."
+                                    placeholder="Search student..." onChange={(e)=>setsearch(e.target.value)}
                                 />
 
                             </div>
@@ -699,7 +703,17 @@ function MentorDashboardContent() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {reports?.report?.map((student) => (
+
+                                {filteredReports.length === 0 ? (
+    <tr>
+        <td colSpan="4" className="text-center">
+            No student found.
+        </td>
+    </tr>
+) : (<>
+        
+   
+                                {filteredReports.map((student) => (
                                     <React.Fragment key={student.rollno}>
                                         <tr>
 
@@ -716,7 +730,7 @@ function MentorDashboardContent() {
                                             </td>
 
                                         </tr>
-
+                                        
                                         {expandedStudent === student.rollno && (
                                             <tr>
                                                 <td colSpan={5}>
@@ -752,7 +766,8 @@ function MentorDashboardContent() {
 
                                     </React.Fragment>
 
-                                ))}
+                                ))}</>
+)}
 
                                 </tbody>
 

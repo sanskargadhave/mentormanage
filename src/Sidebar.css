@@ -228,7 +228,263 @@
 .sidebar-top {
     flex: 1;
 }
+.developer-footer{
 
+    margin-top:40px;
+    padding-top:25px;
+
+    text-align:center;
+
+}
+
+.footer-line{
+
+    width:120px;
+    height:3px;
+
+    margin:auto;
+
+    border-radius:50px;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #25D366,
+        transparent
+    );
+
+    margin-bottom:20px;
+
+}
+
+.developer-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 18px;
+
+    border-radius:50px;
+
+    background:rgba(37,211,102,.08);
+
+    border:1px solid rgba(37,211,102,.25);
+
+    color:#25D366;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.developer-badge i{
+
+    font-size:18px;
+
+}
+
+.developer-footer h3{
+
+    margin-top:18px;
+
+    color:#ffffff;
+
+    font-size:24px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+}
+
+.developer-course{
+
+    margin-top:8px;
+
+    color:#c9d1d5;
+
+    font-size:15px;
+
+}
+.developer-connect{
+
+    margin-top:35px;
+    text-align:center;
+
+}
+
+.developer-connect h4{
+
+    color:#25D366;
+    font-size:18px;
+    margin-bottom:20px;
+    font-weight:600;
+
+}
+
+.social-links{
+
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+
+}
+
+.social-card{
+
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    width:260px;
+
+    padding:14px 18px;
+
+    text-decoration:none;
+
+    color:#fff;
+
+    background:#1f2c34;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:16px;
+
+    transition:.3s;
+
+}
+
+.social-card:hover{
+
+    transform:translateY(-5px);
+
+    border-color:#25D366;
+
+    box-shadow:
+    0 0 20px rgba(37,211,102,.18);
+
+}
+
+.social-card i{
+
+    font-size:28px;
+
+}
+
+.social-card span{
+
+    display:block;
+    font-weight:600;
+    font-size:16px;
+
+}
+
+.social-card small{
+
+    color:#9ea7ab;
+    font-size:13px;
+
+}
+
+/* Platform colors */
+
+.linkedin i{
+
+    color:#0A66C2;
+
+}
+
+.instagram i{
+
+    color:#E1306C;
+
+}
+.email small{
+
+    font-size:12px;
+
+}
+.social-card div{
+    flex:1;
+    min-width:0;
+}
+
+.social-card small{
+
+    display:block;
+
+    color:#9ea7ab;
+
+    font-size:13px;
+
+    overflow-wrap:break-word;
+    word-break:break-word;
+    white-space:normal;
+
+}
+.email i{
+
+    color:#25D366;
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .social-card{
+
+        width:100%;
+
+    }
+
+}
+.developer-tagline{
+
+    width:85%;
+
+    margin:18px auto 0;
+
+    color:#95a5a6;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+    font-style:italic;
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .developer-footer h3{
+
+        font-size:20px;
+
+    }
+
+    .developer-course{
+
+        font-size:14px;
+
+    }
+
+    .developer-tagline{
+
+        font-size:13px;
+
+        width:95%;
+
+    }
+
+}
 .sidebar-bottom {
     padding: 10px;
 }

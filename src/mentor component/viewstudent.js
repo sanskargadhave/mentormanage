@@ -198,9 +198,9 @@ function ViewStudent() {
                                                 : 0;
 
                                                 return (
-                                                    <div className="progress-container">
-                                                        <div className="progress-bar">
-                                                            <div className={`progress-fill ${percentage >= 75 ? "good" : "bad"}`} style={{ width: `${percentage}%` }}></div>
+                                                    <div className="progress-containers">
+                                                        <div className="progress-bars">
+                                                            <div className={`progress-fills ${percentage >= 75 ? "good" : "bad"}`} style={{ width: `${percentage}%` }}></div>
                                                         </div>
                                                         <small>{percentage}% Attendance</small>
                                                     </div>

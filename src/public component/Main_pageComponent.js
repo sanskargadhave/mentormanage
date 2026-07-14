@@ -7,6 +7,12 @@ import collagephoto from "../collageassets/collagephoto.jpeg";
 import { DashbordContext } from "../DashbordAuthContext";
 import { AuthContext } from "../Authintication";
 import Footer from "../footer"; 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 function StudentDashboardContent()
 {
  
@@ -21,7 +27,7 @@ function StudentDashboardContent()
   };
   return (
   <div className="container" style={{marginTop:"100px"}}>
-
+    
     {/* NOTICE */}
     <div className="noticeClass">
       <div className="notice-scroll">
@@ -29,7 +35,7 @@ function StudentDashboardContent()
         🔔 Result Soon: BSc ECS-II Sem 3
       </div>
     </div>
-    <div class="college-info-section animate__animated animate__backInUp">
+    <div className="college-info-section animate__animated animate__backInUp">
       <div className="dashboard-hero">
         <div className="dashboard-content">
           <h1>Welcome Back, {role} 👋</h1>
@@ -76,13 +82,13 @@ function StudentDashboardContent()
 
 
       
-      <div class="college-card">
-          <div class="college-image">
+      <div className="college-card">
+          <div className="college-image">
             <img src={collagephoto} alt="College Campus" />
           </div>
 
-          <div class="college-content">
-            <span class="college-tag">EduMentor @SangolaCollege</span>
+          <div className="college-content">
+            <span className="college-tag">EduMentor @SangolaCollege</span>
 
             <h2>Welcome to Sangola College EduMentor Management System</h2>
 
@@ -92,9 +98,9 @@ function StudentDashboardContent()
               for a smarter educational experience.
             </p>
 
-            <div class="college-buttons">
+            <div className="college-buttons">
               <button>Explore Dashboard</button>
-              <button class="outline-btn">Learn More</button>
+              <button className="outline-btn">Learn More</button>
             </div>
           </div>
         </div>
@@ -132,6 +138,7 @@ function StudentDashboardContent()
             <h3>00</h3>
           </div>
         </div>
+        <FacultySlider/>
         <div className="registration-card">
           <div className="blur-circle"></div>
           <div className="row align-items-center">
@@ -271,5 +278,132 @@ This helps parents stay informed in real time and encourages better attendance a
       </div> 
     );
   }
+
+
+
+const faculty = [
+  {
+    image: "https://sangolacollege.org/uploads/Bagwan.JPG ",
+    name: "Dr. Rahul Jadhav",
+    role: "Mentor",
+    department: "Computer Science",
+    email: "rahul@sangola.edu",
+    phone: "+91 9876543210",
+    quote: "Education is the passport to the future.",
+    students: 152,
+    reports: 98,
+  },
+  {
+    image: "/mentor2.jpg",
+    name: "Prof. Sneha Patil",
+    role: "Teacher",
+    department: "Science",
+    email: "sneha@sangola.edu",
+    phone: "+91 9876543211",
+    quote: "Learning never exhausts the mind.",
+    students: 140,
+    reports: 84,
+  },
+  {
+    image: "/admin.jpg",
+    name: "Mr. Pravin Patil",
+    role: "Administrator",
+    department: "Management",
+    email: "admin@sangola.edu",
+    phone: "+91 9876543212",
+    quote: "Technology makes education smarter.",
+    students: 0,
+    reports: 520,
+  },
+];
+
+function FacultySlider() {
+   const {facultySpotlight}=useContext(DashbordContext);
+  
+  return (
+    <div className="faculty-slider-wrapper">
+
+      <div className="slider-heading">
+
+        <h2>
+          <i className="bi bi-people-fill"></i>
+          Faculty Spotlight
+        </h2>
+
+        <p>
+          Meet the mentors, teachers and administrators leading student success.
+        </p>
+
+      </div>
+
+      <Swiper
+        modules={[Autoplay, Pagination, Navigation]}
+        spaceBetween={25}
+        slidesPerView={1}
+        loop={true}
+        navigation={true}
+        pagination={{
+          clickable: true,
+        }}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false,
+        }}
+        breakpoints={{
+          768: {
+            slidesPerView: 2,
+          },
+          1200: {
+            slidesPerView: 3,
+          },
+        }}
+      >
+        {facultySpotlight?.map((item, index) => (
+          <SwiperSlide key={index}>
+
+            <div className="faculty-card">
+
+              <div className="profile-top">
+
+                <img
+                  src={item?.profile}
+                  alt={item?.name}
+                  className="faculty-image"
+                />
+
+                <span className="online-dot"></span>
+
+              </div>
+
+              <h3>{item?.name}</h3>
+
+              <h5>{item?.role}</h5>
+
+              <span className="department">
+                {item?.department}
+              </span>
+
+              <div className="contact-info">
+
+                <div>
+                  <i className="bi bi-envelope-fill"></i>
+                  {item?.email}
+                </div>
+
+                <div>
+                  <i className="bi bi-telephone-fill"></i>
+                  {item?.mobile}
+                </div>
+
+              </div>
+            </div>
+
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+    </div>
+  );
+}
 
 export {StudentDashboardContent};

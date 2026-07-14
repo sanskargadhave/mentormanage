@@ -743,7 +743,557 @@ margin-bottom:25px;
     font-family: "Poppins", sans-serif;
 }
 
+/* ==========================
+   Faculty Slider
+========================== */
 
+.faculty-slider-wrapper{
+
+    width:100%;
+
+    margin:30px auto;
+
+    padding:25px;
+
+    background:#111B21;
+
+    border:1px solid #2A3942;
+
+    border-radius:20px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.35);
+
+}
+
+/* ==========================
+   Heading
+========================== */
+
+.slider-heading{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+.slider-heading h2{
+
+    color:#fff;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    margin-bottom:8px;
+
+}
+
+.slider-heading i{
+
+    color:#25D366;
+
+    margin-right:10px;
+
+}
+
+.slider-heading p{
+
+    color:#9aa5b1;
+
+    margin:0;
+
+}
+
+/* ==========================
+   Swiper
+========================== */
+
+.swiper{
+
+    padding:15px 5px 50px;
+
+}
+
+/* ==========================
+   Card
+========================== */
+
+.faculty-card{
+
+    background:#182229;
+
+    border:1px solid #2A3942;
+
+    border-radius:20px;
+
+    padding:30px 25px;
+
+    text-align:center;
+
+    transition:.4s;
+
+    overflow:hidden;
+
+    position:relative;
+
+}
+
+.faculty-card:hover{
+
+    transform:translateY(-10px);
+
+    border-color:#25D366;
+
+    box-shadow:0 15px 35px rgba(37,211,102,.18);
+
+}
+
+/* ==========================
+   Profile
+========================== */
+
+.profile-top{
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-bottom:18px;
+
+}
+
+.faculty-image{
+
+    width:120px;
+
+    height:120px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:5px solid #25D366;
+
+    box-shadow:0 0 25px rgba(37,211,102,.35);
+
+    transition:.4s;
+
+}
+
+.faculty-card:hover .faculty-image{
+
+    transform:scale(1.08);
+
+}
+
+/* Online Dot */
+
+.online-dot{
+
+    width:18px;
+
+    height:18px;
+
+    border-radius:50%;
+
+    background:#25D366;
+
+    position:absolute;
+
+    bottom:12px;
+
+    right:35%;
+
+    border:3px solid #182229;
+
+    animation:pulse 2s infinite;
+
+}
+
+@keyframes pulse{
+
+0%{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+50%{
+
+transform:scale(1.3);
+
+opacity:.7;
+
+}
+
+100%{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+}
+
+/* ==========================
+   Name
+========================== */
+
+.faculty-card h3{
+
+    color:white;
+
+    margin:10px 0 5px;
+
+    font-size:23px;
+
+    font-weight:700;
+
+}
+
+.faculty-card h5{
+
+    color:#25D366;
+
+    margin-bottom:8px;
+
+    font-size:17px;
+
+}
+
+.department{
+
+    display:inline-block;
+
+    background:#25D36622;
+
+    color:#25D366;
+
+    padding:7px 18px;
+
+    border-radius:50px;
+
+    font-size:13px;
+
+    margin-bottom:20px;
+
+}
+
+/* ==========================
+   Contact
+========================== */
+
+.contact-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+    margin-bottom:18px;
+
+}
+
+.contact-info div{
+
+    background:#111B21;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    color:#d6d6d6;
+
+    font-size:14px;
+
+}
+
+.contact-info i{
+
+    color:#25D366;
+
+    margin-right:10px;
+
+}
+
+/* ==========================
+   Quote
+========================== */
+
+.quote{
+
+    background:#111B21;
+
+    border-left:4px solid #25D366;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    color:#ddd;
+
+    font-style:italic;
+
+    margin-bottom:25px;
+
+    min-height:75px;
+
+}
+
+.quote i{
+
+    color:#25D366;
+
+    margin-right:8px;
+
+}
+
+/* ==========================
+   Stats
+========================== */
+
+.stats{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+}
+
+.stats div{
+
+    flex:1;
+
+    background:#111B21;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    transition:.3s;
+
+}
+
+.stats div:hover{
+
+    background:#25D366;
+
+    color:#111B21;
+
+}
+
+.stats h4{
+
+    margin:0;
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+.stats span{
+
+    font-size:13px;
+
+}
+
+/* ==========================
+   Swiper Buttons
+========================== */
+
+.swiper-button-next,
+.swiper-button-prev{
+
+    width:45px;
+
+    height:45px;
+
+    background:#25D366;
+
+    border-radius:50%;
+
+    color:#111B21;
+
+    transition:.3s;
+
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover{
+
+    transform:scale(1.1);
+
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after{
+
+    font-size:18px;
+
+    font-weight:bold;
+
+}
+
+/* ==========================
+   Pagination
+========================== */
+
+.swiper-pagination{
+
+    bottom:5px !important;
+
+}
+
+.swiper-pagination-bullet{
+
+    background:#777;
+
+    opacity:1;
+
+    width:10px;
+
+    height:10px;
+
+}
+
+.swiper-pagination-bullet-active{
+
+    width:28px;
+
+    border-radius:20px;
+
+    background:#25D366;
+
+}
+
+/* ==========================
+   Mobile
+========================== */
+
+@media(max-width:992px){
+
+.faculty-slider-wrapper{
+
+padding:18px;
+
+}
+
+.slider-heading h2{
+
+font-size:24px;
+
+}
+
+.faculty-card{
+
+padding:22px;
+
+}
+
+.faculty-image{
+
+width:100px;
+
+height:100px;
+
+}
+
+.faculty-card h3{
+
+font-size:20px;
+
+}
+
+.stats{
+
+gap:10px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.stats{
+
+flex-direction:column;
+
+}
+
+.contact-info div{
+
+font-size:13px;
+
+}
+
+.quote{
+
+font-size:14px;
+
+}
+
+.swiper-button-next,
+.swiper-button-prev{
+
+display:none;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.slider-heading h2{
+
+font-size:21px;
+
+}
+
+.slider-heading p{
+
+font-size:14px;
+
+}
+
+.faculty-image{
+
+width:85px;
+
+height:85px;
+
+}
+
+.faculty-card{
+
+padding:18px;
+
+}
+
+.faculty-card h3{
+
+font-size:18px;
+
+}
+
+.department{
+
+font-size:12px;
+
+padding:6px 14px;
+
+}
+
+}
 
 .college-info-section{
     width:100%;
@@ -833,7 +1383,352 @@ margin-bottom:25px;
     font-weight:600;
     transition:0.3s;
 }
+.login-loader{
 
+    width:100vw;
+    height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+    radial-gradient(circle at top,#1d2f24,#111b21 65%,#0b141a);
+
+    overflow:hidden;
+
+}
+
+/* Card */
+
+.loader-card{
+
+    width:420px;
+    max-width:90%;
+
+    text-align:center;
+
+    color:white;
+
+}
+
+/* Logo */
+
+.logo-wrapper{
+
+    width:150px;
+    height:150px;
+
+    margin:auto;
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+}
+
+/* Logo */
+
+.college-logo{
+
+    width:100px;
+    height:100px;
+
+    border-radius:50%;
+    object-fit:cover;
+
+    z-index:5;
+
+    animation:pulse 2s infinite;
+
+    box-shadow:
+    0 0 25px rgba(37,211,102,.35);
+
+}
+
+/* Rotating Ring */
+
+.ring{
+
+    position:absolute;
+
+    width:120px;
+    height:120px;
+
+    border-radius:50%;
+
+    border:2px solid rgba(37,211,102,.25);
+
+    border-top:2px solid #25D366;
+
+    animation:rotate 1.6s linear infinite;
+
+}
+
+/* Shine */
+
+.logo-wrapper::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:45px;
+    height:160px;
+
+    background:
+
+    linear-gradient(
+
+    90deg,
+
+    transparent,
+
+    rgba(255,255,255,.75),
+
+    transparent
+
+    );
+
+    transform:rotate(25deg);
+
+    left:-120px;
+
+    animation:shine 2.5s infinite;
+
+}
+
+/* Particles */
+
+.particle{
+
+    position:absolute;
+
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:#25D366;
+
+    box-shadow:0 0 10px #25D366;
+
+    animation:orbit 4s linear infinite;
+
+}
+
+.p2{animation-delay:1s;}
+.p3{animation-delay:2s;}
+.p4{animation-delay:3s;}
+
+h2{
+
+    margin-top:35px;
+
+    font-size:32px;
+
+    font-weight:700;
+
+}
+
+.subtitle{
+
+    color:#aebac1;
+
+    margin-top:8px;
+
+}
+
+/* Status */
+
+.status{
+
+    margin-top:30px;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    color:#25D366;
+
+}
+
+/* Progress */
+
+.progress{
+
+    width:100%;
+    height:10px;
+
+    background:#1f2c34;
+
+    border-radius:20px;
+
+    margin-top:25px;
+
+    overflow:hidden;
+
+}
+
+.progress-fill{
+
+    width:40%;
+
+    height:100%;
+
+    border-radius:20px;
+
+    background:linear-gradient(
+
+    90deg,
+
+    #128C7E,
+
+    #25D366,
+
+    #4EF08B
+
+    );
+
+    animation:loading 1.5s infinite;
+
+}
+
+.footer-text{
+
+    margin-top:25px;
+
+    color:#bfc7cb;
+
+    font-size:15px;
+
+}
+
+/* Animations */
+
+@keyframes rotate{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+@keyframes pulse{
+
+    0%,100%{
+
+        transform:scale(.96);
+
+    }
+
+    50%{
+
+        transform:scale(1);
+
+    }
+
+}
+
+@keyframes shine{
+
+    from{
+
+        left:-120px;
+
+    }
+
+    to{
+
+        left:170px;
+
+    }
+
+}
+
+@keyframes orbit{
+
+    from{
+
+        transform:
+        rotate(0deg)
+        translateX(65px)
+        rotate(0deg);
+
+    }
+
+    to{
+
+        transform:
+        rotate(360deg)
+        translateX(65px)
+        rotate(-360deg);
+
+    }
+
+}
+
+@keyframes loading{
+
+    0%{
+
+        transform:translateX(-100%);
+
+    }
+
+    100%{
+
+        transform:translateX(300%);
+
+    }
+
+}
+.security-note{
+
+    margin-top:18px;
+
+    color:#aebac1;
+
+    font-size:14px;
+
+    opacity:.9;
+
+    letter-spacing:.3px;
+
+}
+/* Mobile */
+
+@media(max-width:768px){
+
+    h2{
+
+        font-size:26px;
+
+    }
+
+    .subtitle{
+
+        font-size:15px;
+
+    }
+
+    .status{
+
+        font-size:16px;
+
+    }
+
+    .footer-text{
+
+        font-size:13px;
+
+    }
+
+}
 .college-buttons button:first-child{
     background:#4d4fe7;
     color:white;
