@@ -9,7 +9,7 @@ const {GetLectures} =require("../controllers/LectureControler");
 const {GetTeacher}=require("../controllers/TeacherControler");
 const {GetAttendanceByLectureId}=require("../controllers/AttendanceControler");
 const {StoreAttendances}=require("../controllers/AttendanceControler");
-const {Counts}=require("../controllers/commoncontroler");
+const {Counts,getspotlight}=require("../controllers/commoncontroler");
 const {getNotification,getLetestNotification} =require("../controllers/notificationControler");
 const verifyToken=require("../middleware/authmiddleware");
 
@@ -24,10 +24,12 @@ router.get("/get-attendance/:lectureid",GetAttendanceByLectureId);
 router.get("/User-Counts",Counts);
 router.get("/get-notifications/:id",verifyToken,getNotification);
 router.get("/get-latestnotification/:id",verifyToken,getLetestNotification);
+router.get("/get-spotlight-dashboard",getspotlight);
 
 router.post("/store-attendance",StoreAttendances);
 router.post("/add-student",upload.single("profileImage"),uploadProfile,StoreStudentDetails);
 router.post("/add-mentor",upload.single("profileImage"),uploadProfile,AddMentor);
 router.post("/add-teacher",upload.single("profileImage"),uploadProfile,AddTeacher);
 router.put("/notification-isread/:id",giveread);
+
 module.exports = router;
