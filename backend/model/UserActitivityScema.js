@@ -1,3 +1,5 @@
+const mongoose =require("mongoose");
+
 const UserActivitySchema = new mongoose.Schema({
         userId: {   type: mongoose.Schema.Types.ObjectId, ref: "Users", required: true },
 
