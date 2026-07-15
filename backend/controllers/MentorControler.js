@@ -2,6 +2,7 @@ const {StoreLecture,StoreAttendance}=require("../model/AttendanceSchema");
 const {StoreStudent,StoreMentor,StoreTeacher}= require("../model/studentSchema");
 const adduser=require("../model/userSchema");
 const NotificationSchema=require("../model/notificationsScema");
+const StoreApplication=require("../model/applicationScema");
 const bcrypt = require("bcryptjs");
 const {getIO}=require("../socket");
 //   /api/Mentor/count   URL  GET
@@ -199,5 +200,30 @@ const giveRejectMentor = async (req,resp)=>{
         console.log(err.message);
       }
 }
-module.exports={MentorCount,AddMentor,MentorLogin,GetMentors,AssignMentor,getMentorDetails,giveApproveMentor,giveRejectMentor};
+
+const giveApplicationApprove=async (req,resp)=>{
+  try{
+    await StoreApplication.findByIdAndUpdate(req.params.id,{status:"Approve",read:true});
+    resp.status(200).json({message:"Leave Are Approved By You"});
+  }
+  catch(err)
+  {
+    resp.status(500).json({message:err.message});
+  }
+
+}
+const giveApplicationReject=async (req,resp)=>{
+  try{
+    await StoreApplication.findByIdAndUpdate(req.params.id,{status:"Reject",read:true});
+    resp.status(200).json({message:"Leave Are Rejected By You"});
+  }
+  catch(err)
+  {
+    resp.status(500).json({message:err.message});
+  }
+
+}
+module.exports={MentorCount,AddMentor,MentorLogin,GetMentors,
+              AssignMentor,getMentorDetails,giveApproveMentor,
+              giveRejectMentor,giveApplicationApprove,giveApplicationReject};
 

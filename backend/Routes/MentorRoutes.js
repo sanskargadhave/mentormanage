@@ -8,6 +8,7 @@ const {getexcelsheet}=require("../controllers/getexceldata");
 const {uplode,iscorrectdata}=require("../middleware/exceldataMiddleware");
 const {giveApprove,giveReject,getapplicationById}=require("../controllers/StudentControler");
 const verifyToken=require("../middleware/authmiddleware");
+const {giveApplicationApprove,giveApplicationReject}=require("../controllers/MentorControler")
 const isMentor=require("../middleware/ismentormiddleware");
 
 router.use(verifyToken,isMentor);
@@ -25,5 +26,6 @@ router.post("/make-attendance-report/:id",generateReport);
 router.put("/give-approve/:studentid/:id",giveApprove);
 router.put("/give-reject/:id",giveReject);
 router.put("/give-permission/:permission/:applicationid",givePermission);
-
+router.put("/give-application-approve/:applicationid",giveApplicationApprove);
+router.put("/give-application-reject/:applicationid",giveApplicationReject);
 module.exports = router;
