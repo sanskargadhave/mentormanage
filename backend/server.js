@@ -4,7 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const http =require("http");
 const {initSocket} =require("./socket");
-
+const rateLimit =require("express-rate-limit");
 
 
 const AdminRoutes=require("./Routes/AdminRoutes");
@@ -33,9 +33,19 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 3,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: "Too many login attempts. Please try again after 15 minutes."
+  }
+});
 
 app.use("/api/admin",AdminRoutes);
-app.use("/api/authenticate",AuthenticateRoutes);
+app.use("/api/authenticate",loginLimiter,AuthenticateRoutes);
 app.use("/api/common",CommonRoutes);
 app.use("/api/mentor",MentorRoutes);
 app.use("/api/student",StudentRoutes);
