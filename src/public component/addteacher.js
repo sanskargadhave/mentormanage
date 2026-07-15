@@ -2,6 +2,8 @@ import { useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import "animate.css";
 import '../admin component/admin.css';
+import axiosInstance from "../axiosInstance";
+import { toast } from "react-toastify";
 function AddTeacher()
 {
     const navigate=useNavigate();
@@ -114,7 +116,7 @@ function AddTeacher()
             .every(([, msg]) => msg === "");
 
     if (hasEmptyField || !isFormValid) {
-        alert("Please fill all fields or check validation");
+         toast.warning("Please fill all fields or check validation");
         return;
     }
 
@@ -122,13 +124,13 @@ function AddTeacher()
     setshowpassword(true);
 }
 
-    function submitdata()
+    async function submitdata()
     {
         const isFormValid = Object.values(errors).every((msg) => msg === "");
         const hasEmptyField = Object.values(formdata).some((v) => v === "");
 
          if (hasEmptyField||!isFormValid) {
-            alert("Please fill all fields or check Validaton");
+             toast.warning("Please fill all fields or check Validaton");
             return;
         }
         else{
@@ -162,37 +164,25 @@ function AddTeacher()
                     })
                 );
                 datas.append("password", formdata.Password);//sangolacollage.onrender.com
-                
-                fetch("https://sangolacollage.onrender.com/api/common/add-teacher",{
-                method:"POST",
-                headers:{
-                        Authorization: `Bearer ${token}`
-                    },
-                body:datas
-            }).then(res=>res.json())
-           .then(data=>{
-            if(data.message==="Teacher Add Sucessfully")
-            {
-                setTeacherId(data.teacherId);
-                setshowerror(false);
-                setshowpassword(false);
-                setshowconfirm(true);
-            }
-            else{
-                seterr(data.message || data.error);
-                setshowerror(true);
-                setshowform(false);
-                setshowpassword(false);
-            }})
-            .catch((err)=>{
-                if(err.response?.status === 401){
-                    localStorage.clear();
-                    navigate("/unauthorized");
-                    return;
+                try{
+                    setloding(true);
+                    const resp=await axiosInstance.post("/common/add-teacher",datas);
+                    if(resp.data.message==="Teacher Add Sucessfully")
+                    {
+                        setTeacherId(resp.data.teacherId);
+                        setshowerror(false);
+                        setshowpassword(false);
+                        setshowconfirm(true);
+                    }
+
                 }
-            })
-            .finally(()=>{setloding(false);})
-            
+                catch(err)
+                {
+                    console.log(err.message);
+                }
+                finally{
+                    setloding(false);
+                }
         }
     }
     return(

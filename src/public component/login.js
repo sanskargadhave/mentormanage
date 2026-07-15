@@ -7,7 +7,8 @@ import { AuthContext } from "../Authintication";
 import { NotificationContext } from "../notificationAuthContext";
 import axios from "axios";
 import logo from "../collageassets/logo-college.png";
-
+import axiosInstance from "../axiosInstance";
+import { toast } from "react-toastify";
 function Login() {
 
     const [email,setEmail]=useState("");
@@ -26,18 +27,8 @@ function Login() {
     {
         try{
             setLoading(true);
-            const resp=await fetch("https://sangolacollage.onrender.com/api/authenticate/user-login",{
-                method:"POST",
-                headers:{
-                "Content-Type":"application/json",
-                Authorization: `Bearer ${token}`
-            },
-                body:JSON.stringify({
-                    emailid:email,
-                    password:password
-                })
-            })
-            const data=await resp.json();
+            const resp=await axiosInstance.post("/authenticate/user-login",{emailid:email,password:password});
+            const data=resp.data;
             if(data.islogin)
             {
                 login({
@@ -49,15 +40,9 @@ function Login() {
                     profilepic:data.user.profileurl
                 }); 
                 
-                const notificationResp = await fetch(`https://sangolacollage.onrender.com/api/common/get-notifications/${data.user.id}`,
-                    {
-                        headers:{
-                            Authorization:`Bearer ${data.token}`
-                        }
-                    }
-                );
+                const resp = await axiosInstance.get(`/common/get-notifications/${data.user.id}`);
 
-                const notificationData = await notificationResp.json();
+                const notificationData = await resp.data;
 
                 setNotifications(notificationData);
                 localStorage.setItem("notifications",JSON.stringify(notificationData));
@@ -88,9 +73,10 @@ function Login() {
         }
         catch(err)
         {
-            seterror(err.message);
+           console.log(err.message);
         }
-        setLoading(false);
+        finally{
+        setLoading(false);}
     }
     return(
 

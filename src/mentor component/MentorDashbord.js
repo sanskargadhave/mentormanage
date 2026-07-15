@@ -5,7 +5,7 @@ import { AuthContext } from "../Authintication";
 import { useNavigate } from "react-router-dom";
 import "./mentor.css";
 import React, { Fragment } from "react";
-
+import axiosInstance from "../axiosInstance"
 
 function ReportProcessingCard() {
 
@@ -175,18 +175,14 @@ function MentorDashboardContent() {
     }
     try{
         setevent("loadingpreview");
-        const resp=await axios.post("https://sangolacollage.onrender.com/api/mentor/give-preview-report",formdata,{
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }       
-        })
+        const resp=await axiosInstance.post("/mentor/give-preview-report",formdata)
         console.log(resp.data);
         setreports(resp.data);
     }
     catch(err)
     {
         console.log(err.message);
-        alert(err.message);
+       
     }
     finally{
         setevent("showpreview");
@@ -196,21 +192,12 @@ function MentorDashboardContent() {
   {
     try{
         setevent("generateloading");
-        const resp=await axios.post(`https://sangolacollage.onrender.com/api/mentor/make-attendance-report/${id}`,{
-        cacheId: reports.cacheId
-        },{
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }       
-        })
-        setreportUrl(resp?.data?.url);
-
-        
+        const resp=await axiosInstance.post(`/mentor/make-attendance-report/${id}`,{cacheId: reports.cacheId});
+        setreportUrl(resp?.data?.url);        
     }
     catch(err)
     {
         console.log(err.message);
-        alert(err.message);
     }
     finally{
         setevent("showreport");

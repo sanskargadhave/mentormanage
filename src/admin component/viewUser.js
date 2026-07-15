@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import axiosInstance from "../axiosInstance";
 function ViewUser() {
     const [counts, setcounts] = useState({
         totalStudents: 0,
@@ -8,19 +8,15 @@ function ViewUser() {
         totalteachers: 0
     });
     const token=localStorage.getItem("token");
+    
     useEffect(() => {
         if(!token) return;
         const fetchCounts = async () => {
             try {
-                const response = await axios.get("https://sangolacollage.onrender.com/api/admin/get-usercounts",{
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json"
-                    }
-                });
+                const response = await axiosInstance.get("/admin/get-usercounts");
                 setcounts(response.data);
             } catch (err) {
-                alert("Error fetching counts", err);
+                console.log("Error fetching counts", err.message);
             }
         };
         fetchCounts();

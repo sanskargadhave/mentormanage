@@ -3,6 +3,10 @@ import { AuthContext } from "./Authintication";
 import socket from "./socket";
 import { LiveNotification } from "./public component/login";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "./axiosInstance";
+
+
+
 export const NotificationContext = createContext();
 
 export function NotificationProvider({ children }) {
@@ -39,19 +43,9 @@ export function NotificationProvider({ children }) {
 
             if (!lastNotificationTime || !id || !token) return;
 
-            const response = await fetch(
-                `https://sangolacollage.onrender.com/api/common/get-latestnotification/${id}?after=${lastNotificationTime}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            );
+            const response = await axiosInstance.get(`/common/get-latestnotification/${id}?after=${lastNotificationTime}`);
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch notifications");
-            }
-
+            
             const fetchedNotifications = await response.json();
 
             setNotifications(prev => {

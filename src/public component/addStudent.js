@@ -6,7 +6,8 @@ import Select from 'react-select';
 import '../admin component/admin.css';
 import "animate.css";
 import axios from "axios";
-
+import axiosInstance from "../axiosInstance";
+import { toast } from "react-toastify";
 function AddStudent()
 {
     const [profile,setProfile]=useState(null);
@@ -30,15 +31,16 @@ function AddStudent()
        Commerce:["Commerce"],
     }
     useEffect(()=>{
-        
-            axios.get("https://sangolacollage.onrender.com/api/common/getmentor",{
-                        headers: {
-                            Authorization: `Bearer ${token}`, 
-                            "Content-Type": "application/json"
-                        }
-                    })
-            .then((resp)=>setmentor(resp.data))
-            .catch((err)=>console.log(err.message))
+            try{
+                async function getMentorDetails(){
+                    const resp= await axiosInstance.get("common/getmentor");
+                    setmentor(resp.data);
+                }
+                getMentorDetails();
+            }
+            catch(err){
+                console.log(err.message);
+            }
     },[token])
     const option=mentor.map((data)=>({
         value:data._id,
@@ -210,7 +212,7 @@ function AddStudent()
 
         if (hasEmptyField||!isFormValid)
         {
-            alert("Please fill all fields or check Validaton");
+            toast.warning("Please Fill All Require Fields")
             return;
         }
 
@@ -250,53 +252,31 @@ function AddStudent()
         datas.append("password",formdata.RePassword);
         datas.append("emailid",formdata.EmailId);
         datas.append("profileImage",profile); //https://sangolacollage.onrender.com
-        
-        fetch("https://sangolacollage.onrender.com/api/common/add-student",{
-
-            method:"POST",
-
-            headers:{
-                 Authorization: `Bearer ${token}`,
-                
-            },
-
-            body:datas
-        })
-        .then(res=>res.json())
-        .then(data=>{
-
-            if (data.message === "Student added successfully") {
+      
+            try{
+                setloding(true);
+                const resp=await axiosInstance.post("/common/add-student",datas);
+                if (resp.data.message === "Student added successfully") {
                     
                     setshowerror(false);
                     setshowpassword(false);
                     setshowconfirm(true);
                 }
-                else {
-                    seterr( data.error);
-                    setshowerror(true);
-                    setshowform(false);
-                    setshowpassword(false);
-                }
-
-        })
-        .catch(()=>{
-            setshowerror(true);
-            seterr(err.response?.data?.message ||
-        err.message ||  
-        "Something went wrong");
-        })
-        .finally(()=>{
-            setloding(false);
-        });
-
+            }
+            catch(err)
+            {
+            console.log("Status:", err.response?.status);
+            console.log("Data:", err.response?.data);
+            }
+            finally{
+                setloding(false);
+            }
+            
     }
 
     function isAllvalid()
     {
-        if(!selected)
-        {
-            alert("please select First Your Mentor");
-        }
+       
         const { Password, RePassword, ...rest } = formdata;
 
         const hasEmptyField = Object.values(rest).some(v => v === "");
@@ -307,10 +287,13 @@ function AddStudent()
 
         if (hasEmptyField || !isFormValid)
         {
-            alert("Please fill all fields or check validation");
+           toast.warning("Please fill all fields or check validation");
             return;
         }
-
+        if(!selected)
+        {
+            toast.warning("please select First Your Mentor");
+        }
         setshowerror(false);
         setshowform(false);
         setshowpassword(true);

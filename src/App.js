@@ -19,19 +19,20 @@
   import {AddLecture} from "./admin component/addLecture.js";
   import { AddAttendance } from "./mentor component/addAttendance.js";
   import { ViewStudent } from "./mentor component/viewstudent.js"; 
-  import { AssignMentor } from "./admin component/GiveMentor.js";
   import {AddTestResult} from "./mentor component/addTestResult.js";
-  import AddAdmissionDetails from "./admin component/addAdmissionDetails.js"
   import ProtectedRoute from "./protectedRoute.js"; 
   import LeaveApplication from "./student comonent/leaveApplication.js";
   import Settings from "./public component/settings.js";
   import Notification from "./public component/notification.js";
   import { StudentDetails,LeaveDetails,MentorDetails,TeacherDetails,ReportDetails } from "./public component/notificationpages.js";
+  import { ToastContainer } from "react-toastify";
+  import "react-toastify/dist/ReactToastify.css";
 
 import { use } from "react";
   function App() {
+    
     const navigate=useNavigate();
-    return (
+    return (<>
       <Routes>
         <Route path="/unauthorized" element={
           <div style={{ textAlign: "center", marginTop: "50px" }}>
@@ -67,12 +68,10 @@ import { use } from "react";
               <Route path="warning-logout" element={<LogoutWarning/>}/>
               <Route path="add-teacher" element={<AddTeacher/>}/>
               <Route path="add-lecture" element={<AddLecture/>}/>
-              <Route path="assign-mentor" element={<AssignMentor/>}/>
               <Route path="mentor/:id" element={<MentorDetails />} />
               <Route path="teacher/:id" element={<TeacherDetails />} />
               <Route path="leave/:id" element={<LeaveDetails />} />
               <Route path="report/:id" element={<ReportDetails />} />
-              <Route path="add-admission-details" element={<AddAdmissionDetails/>}/>
             </Route>
           </Route>
 
@@ -115,6 +114,16 @@ import { use } from "react";
            
         </Route>
       </Routes>
+      <ToastContainer
+        position="top-right"
+        autoClose={4000}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="light"
+      />
+    </>
     );
   }
 

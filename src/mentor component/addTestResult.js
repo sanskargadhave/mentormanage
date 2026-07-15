@@ -7,6 +7,8 @@ import { GiveError } from "../WarningOrSucess";
 import {ResultChart} from "../Visulaisation Charts/passvsfailchart";
 import logo from "../collageassets/logo-college.png";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../axiosInstance";
+import { showToast } from "../utils/showToast";
 export function DataSummery({testid,message})
 {
     const navigate =useNavigate();
@@ -17,54 +19,29 @@ export function DataSummery({testid,message})
     const [url,seturl]=useState("");
     useEffect(()=>{
         if(!token) return;
-        try{
-            
-            const getData = async ()=>{
-                const response=await axios.get(`https://sangolacollage.onrender.com/api/teacher/get-test-summery/${testid}`,{
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            });
+        const getData = async ()=>{
+            try{
+                const response=await axiosInstance.get(`/teacher/get-test-summery/${testid}`);
                 setcounts(response.data.testcounts[0]);
                 setTopStudents(response.data.topstudents)
             }
-            getData();
-            
+            catch(err)
+            {
+                console.log(err.message);
+            }
         }
-        catch(err)
-        {
-            if(err.response?.status === 401){
-                localStorage.clear();
-                navigate("/unauthorized");
-                return;
-            } 
-        }
+        getData();
           
     },[testid,token]);
     useEffect(()=>{
         if(!token) return;
         async function uploadReport() {
             try{    
-                const response = await axios.get(
-                    `https://sangolacollage.onrender.com/api/teacher/make-test-report/${testid}`,{
-             headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        }
-                );
-                seturl(response.data.url);
-               
+                const response = await axiosInstance.get(`/teacher/make-test-report/${testid}`);
+                seturl(response.data.url);  
             }
             catch(err){
-                if(err.response?.status === 401){
-                    localStorage.clear();
-                    navigate("/unauthorized");
-                    return;
-                } 
-                console.log(err);
-                alert("Failed to generate report");
+                console.log(err.message);
             }
         }
         uploadReport();
@@ -251,7 +228,7 @@ export  function AssignMarks({date,studentdata,lectureid,totalmarks,testname,pas
             [studentid]:error
         }));
     }
-    function storeresult(){
+    async function storeresult(){
         const resultarray=Object.entries(result).map(([studentid,marks])=>({
             studentid,
             marks: marks===null ? 0 : Number(marks),
@@ -261,17 +238,10 @@ export  function AssignMarks({date,studentdata,lectureid,totalmarks,testname,pas
         const isFormValid = Object.values(errors).every((msg) => msg === "");
         if(!isFormValid)
         {
-            alert("please Check Validations");
+            showToast("please Check Validations");
             return;
         }
-        fetch("https://sangolacollage.onrender.com/api/teacher/store-test-result",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json",
-                Authorization: `Bearer ${token}`
-
-            },
-            body:JSON.stringify({
+        const datas={
                     teacherid:teacherid,
                     subject:subject,
                     testName:testname,
@@ -283,19 +253,17 @@ export  function AssignMarks({date,studentdata,lectureid,totalmarks,testname,pas
                     year:firstob.collagedetails.year,
                     division:firstob.collagedetails.division, 
                     students:resultarray
-            })
-        }).then((resp)=>resp.json())
-        .then((data)=>{setmessage(data.message); settestid(data.testid); setstep("summery")})
-        .catch((err)=>{
-            if(err.response?.status === 401){
-                localStorage.clear();
-                navigate("/unauthorized");
-                return;
-            } 
-             alert(err.message);
-        }
-
-    )
+            }
+            try{
+                const resp=await axiosInstance.post("/teacher/store-test-result",datas);
+                setmessage(resp.data.message); 
+                settestid(resp.data.testid); 
+                setstep("summery")
+            }
+            catch(err)
+            {
+                console.log(err.message);
+            }
     }
     function handleKey(e, index) {
         if (e.key === "Enter" || e.key === "ArrowDown") {
@@ -476,36 +444,27 @@ function AddTestResult()
 
     useEffect(()=>{
         if(!token) return;
-        try{
+        
             const getsubjectdetails= async ()=>{
-                const resp=await axios.get("https://sangolacollage.onrender.com/api/common/getlecture",{
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json"
+                try{
+                    const resp=await axiosInstance.get("/common/getlecture");
+                    setsubjects(resp.data);
                 }
-                });
-                setsubjects(resp.data);
+                catch(err)
+                {
+                    console.log(err.message);
+                }
 
             }
-            getsubjectdetails();
-        }
-        catch(err)
-        {
-            if(err.response?.status === 401){
-                localStorage.clear();
-                navigate("/unauthorized");
-                return;
-            } 
-        }
-        
+            getsubjectdetails();   
     },[token]);
     
     function isAllvalid(){
         const isFormValid=Object.values(errors).every((msg) => msg === "")
         const isFillAll=Object.values(formdata).some((data)=>data==="")
          if (isFillAll||!isFormValid) {
-            alert("Please fill all fields or check Validaton");
-            return;
+             return showToast.warning("Please fill all fields or check Validaton");
+           
         }
         else{
             setstep("summery");
@@ -513,26 +472,17 @@ function AddTestResult()
     }
     useEffect(()=>{
         if(!token) return;
-        try{
             const getstudentdetails = async ()=>{
-                if(!formdata.selected) return;
-                const response=await axios.get(`https://sangolacollage.onrender.com/api/mentor/serach-student/${formdata.selected}`,{
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json"
+                try{
+                    if(!formdata.selected) return;
+                    const response=await axiosInstance.get(`/mentor/serach-student/${formdata.selected}`); 
+                    setstudentdata(response.data);
                 }
-            }); 
-                setstudentdata(response.data);
-            }
+                catch(err)
+                {
+                    console.log(err.message);
+                }
             getstudentdetails();
-        }
-        catch(err)
-        {
-            if(err.response?.status === 401){
-                localStorage.clear();
-                navigate("/unauthorized");
-                return;
-            } 
         }
             
     },[formdata.selected,token]);

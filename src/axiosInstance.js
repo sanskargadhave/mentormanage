@@ -1,0 +1,39 @@
+import axios from "axios";
+import { showToast } from "./utils/showToast";
+
+console.log("Axios Base URL:", process.env.REACT_APP_API_URL);
+const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+});
+
+axiosInstance.interceptors.request.use(
+    (config) => {
+        console.log("Request URL:", config.baseURL + config.url);
+        const token = localStorage.getItem("token");
+        if(token) config.headers.Authorization = `Bearer ${token}`;
+        
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
+
+
+axiosInstance.interceptors.response.use(
+    (response) => response,
+
+    (error) => {
+        console.log("✅ Response interceptor fired");
+        console.log(error.response?.data);
+
+        const message =
+            error.response?.data?.message ||
+            error.message ||
+            "Something went wrong";
+
+
+        showToast.error(message);
+
+        return Promise.reject(error);
+    }
+);
+export default axiosInstance;

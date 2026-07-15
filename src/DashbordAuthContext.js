@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { AuthContext } from "./Authintication";
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 export const DashbordContext = createContext();
 
@@ -17,28 +17,16 @@ export function DashbordProvider({ children }) {
         async function getContextData() {
 
             try {
-                const resp = await axios.get(
-                    "https://sangolacollage.onrender.com/api/common/get-spotlight-dashboard",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    }
-                );
+                const resp = await axiosInstance.get("/common/get-spotlight-dashboard");
 
                 setTotalStudent(resp.data.totalStudents);
                 setTotalMentor(resp.data.totalMentor);
                 setFacultySpotlight(resp.data.spotlight);
 
             } catch (err) {
-
                 console.log(err);
-                alert(err.response?.data?.message || err.message);
-
             }
-
         }
-
         getContextData();
 
     }, [token]);

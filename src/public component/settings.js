@@ -4,6 +4,7 @@ import { AuthContext } from '../Authintication';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Footer from "../footer";
+import axiosInstance from "../axiosInstance";
 function Settings() {
    const {id,token,role,profilepic}=useContext(AuthContext);
    const navigate=useNavigate();
@@ -39,11 +40,7 @@ function Settings() {
         async function getProfiledetails(){
             try{
                setLoading(true);
-                const resp= await axios.get(`https://sangolacollage.onrender.com/api/profile/get-profiledetails/${id}`,{
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const resp= await axiosInstance.get(`/profile/get-profiledetails/${id}`);
                 setprofiledetails(resp.data.profileDetails);
                
                 const data=resp.data.profileDetails.personaldetails;
@@ -58,8 +55,6 @@ function Settings() {
                console.log(err.response);
                console.log(err.response?.data);
                console.log(err.response?.status);
-
-                  alert(err.response?.data?.message || err.message);
             }
             finally{
                setLoading(false);
@@ -88,17 +83,12 @@ function Settings() {
       if(!token || !id) return ; 
       try{
          setLoading(true);
-            const resp=await axios.put(`https://sangolacollage.onrender.com/api/profile/updateprofile-details`,{personalDetails,id,role},{
-                   headers: {
-                      Authorization: `Bearer ${token}`,
-                      "Content-Type": "application/json"
-                  }
-              });
-              showtoast(resp.data.message);
+         const resp=await axiosInstance.put(`/profile/updateprofile-details`,{personalDetails,id,role});
+         showtoast(resp.data.message);
       }
       catch(err)
       {
-         showtoast(err.response?.data?.message||err.message);
+         console.log(err.message);
       }
       finally{
          setLoading(false);

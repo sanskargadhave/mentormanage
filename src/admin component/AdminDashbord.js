@@ -1,10 +1,10 @@
 import { AuthContext } from "../Authintication";
 import { useEffect, useState, useContext } from "react";
-
+import axiosInstance from "../axiosInstance";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./admin.css";
-
+import { showToast } from "../utils/showToast";
 function AdminDashbord()
 {
     const [analysis,setanalysis]=useState({});
@@ -25,18 +25,12 @@ function AdminDashbord()
     useEffect(()=>{
         async function fetchanalysis() {
             try{
-                const resp= await axios.get("https://sangolacollage.onrender.com/api/admin/dashboard-analysis",{
-                headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json"
-                    }
-                })
-                console.log(resp.data)
+                const resp= await axiosInstance.get("/admin/dashboard-analysis")
                 setanalysis(resp.data);
             }
             catch(err)
             {
-                alert(err.message);
+                console.log(err.message);
             }
         }
         fetchanalysis();
@@ -50,16 +44,12 @@ function AdminDashbord()
         {
             try{
                 setloading(true);
-                const resp=await axios.get(`https://sangolacollage.onrender.com/api/admin/fetch-details`,{
+                const resp=await axiosInstance.get(`/admin/fetch-details`,{
                     params:{
                         page,
                         limit:10,
                         ...filters
                     },
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json"
-                    }
                 })
                 
                 setstudents(resp.data.students);
@@ -67,7 +57,7 @@ function AdminDashbord()
             }
             catch(err)
             {
-                alert(err.message);
+                console.log(err.message);
             }
             finally{
                 setloading(false);

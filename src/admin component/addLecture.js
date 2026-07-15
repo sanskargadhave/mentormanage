@@ -5,6 +5,8 @@ import "./admin.css";
 import Select from 'react-select';
 import { GiveError } from "../WarningOrSucess";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../axiosInstance";
+import { showToast } from "../utils/showToast";
 function AddLecture(){
     const [teachers,setteachers]=useState([]);
     const navigate=useNavigate();
@@ -36,22 +38,19 @@ function AddLecture(){
     });
     useEffect(()=>{
         if(!token) return;
-        axios.get("https://sangolacollage.onrender.com/api/common/getteacher",{
-        headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
+        async function getteacher()
+        {
+            try{
+                const resp=await axiosInstance.get("/common/getteacher");
+                setteachers(resp.data)
+                console.log(resp.data);
+            }
+            catch(err)
+            {
+                console.log("at GetTeacher :",err.message);
+            }
         }
-        })
-        .then((resp)=>setteachers(resp.data))
-        .catch((err)=>{
-            if(err.response?.status === 401){
-                localStorage.clear();
-                navigate("/unauthorized");
-                return;
-            } 
-            alert(err)
-        
-        });
+        getteacher();
     },[token]);
 
     const option=teachers.map((s)=>({
@@ -94,47 +93,31 @@ function AddLecture(){
             .every(([, msg]) => msg === "");
 
         if (hasEmptyField || !isFormValid || !selected) {
-            setmessage("Please Fill All fields or Check Validation ");
-            setshowerror(true);
-            return;
+            return showToast.warning("Please Fill All fields or Check Validation ");   
         }
+        
         else
         {
-            try{
-                setloding(true);
-                const res = await axios.post(
-                "https://sangolacollage.onrender.com/api/admin/store-lecture",
-                {
+            const datas={
                     subject: FormData.Subject,
                     teacherid: selected.value,
                     division: FormData.Division,
                     Class: FormData.Class,
                     department: FormData.Department,
                     course: FormData.course
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`, 
-                        "Content-Type": "application/json"
-                    }
-                }
-            );
+                };
+            try{
+                setloding(true);
+                const res = await axiosInstance.post("/admin/store-lecture",datas);
 
-            const data = res.data;
-
-            stlectureid(data.lectureid);
-            setmessage(data.message);
-            setshowerror(true);
+                stlectureid(res.data.lectureid);
+                setmessage(res.data.message);
+                setshowerror(true);
 
             }
             catch(err)
             {
-                if(err.response?.status === 401){
-                    localStorage.clear();
-                    navigate("/unauthorized");
-                    return;
-                } 
-                console.log(err);
+                console.log(err.message);
             }
             finally
             {

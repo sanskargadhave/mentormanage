@@ -280,43 +280,6 @@ This helps parents stay informed in real time and encourages better attendance a
   }
 
 
-
-const faculty = [
-  {
-    image: "https://sangolacollege.org/uploads/Bagwan.JPG ",
-    name: "Dr. Rahul Jadhav",
-    role: "Mentor",
-    department: "Computer Science",
-    email: "rahul@sangola.edu",
-    phone: "+91 9876543210",
-    quote: "Education is the passport to the future.",
-    students: 152,
-    reports: 98,
-  },
-  {
-    image: "/mentor2.jpg",
-    name: "Prof. Sneha Patil",
-    role: "Teacher",
-    department: "Science",
-    email: "sneha@sangola.edu",
-    phone: "+91 9876543211",
-    quote: "Learning never exhausts the mind.",
-    students: 140,
-    reports: 84,
-  },
-  {
-    image: "/admin.jpg",
-    name: "Mr. Pravin Patil",
-    role: "Administrator",
-    department: "Management",
-    email: "admin@sangola.edu",
-    phone: "+91 9876543212",
-    quote: "Technology makes education smarter.",
-    students: 0,
-    reports: 520,
-  },
-];
-
 function FacultySlider() {
    const {facultySpotlight}=useContext(DashbordContext);
   
@@ -366,7 +329,7 @@ function FacultySlider() {
               <div className="profile-top">
 
                 <img
-                  src={item?.profile}
+                  src={item?.profile || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"}
                   alt={item?.name}
                   className="faculty-image"
                 />
@@ -375,7 +338,7 @@ function FacultySlider() {
 
               </div>
 
-              <h3>{item?.name}</h3>
+              <h3>{item?.role!=="New Student" && ("Prof.")}{item?.name}</h3>
 
               <h5>{item?.role}</h5>
 

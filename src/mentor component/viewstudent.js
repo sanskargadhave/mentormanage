@@ -2,6 +2,8 @@ import {useState} from "react";
 import { GiveError,TypingEffect } from "../WarningOrSucess";
 import "./mentor.css";
 import "../admin component/admin.css";
+import axiosInstance from "../axiosInstance";
+import { showToast } from "../utils/showToast";
 function ViewStudent() {
     const today = new Date().toISOString().split("T")[0];
     const token=localStorage.getItem("token");
@@ -16,15 +18,13 @@ function ViewStudent() {
     const [todate,settodate]=useState(today);
     const [loding,setloding]=useState(false);
     const fetchrecord = async () => {
-            setloding(true);
+            
         
         if(!rollno.trim()) 
         {
-            setmessage("Please Enter Roll No.....");
-            setshowerror(true);
-            return;
+            return showToast.warning("Please Enter Roll No.....");  
         }
-        let url = `https://sangolacollage.onrender.com/api/mentor/get-studentdetails/${rollno}`;
+        let url = `/mentor/get-studentdetails/${rollno}`;
 
         if (event === "bydate" && date) {
             url=url+`?date=${date}`;
@@ -34,29 +34,15 @@ function ViewStudent() {
         }
 
         try {
-            const resp = await fetch(url,{
-             headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        });
-        
-            if(resp.status === 404) {
-                const errorData = await resp.json();
-                setmessage(errorData.message || "Student Not Found");
-                setshowerror(true);
-                setevent("");
-                return;
-            }
-
-            const result = await resp.json();
+            setloding(true);
+            const resp = await axiosInstance.get(url);
+            const result = resp.data;
             setdata(result.student);
             setattendance(result.attendance);
             setevent("showdata");
         }
         catch(err) {
-            setmessage(err.message);
-            setshowerror(true);
+           console.log(err.message)
         }
         finally{
             setloding(false);

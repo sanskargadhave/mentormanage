@@ -1,7 +1,8 @@
 import { useState,useEffect,useContext} from "react";
 import "./student.css";
 import { supabase}  from "../supabase";
-import axios from "axios";
+import axiosInstance from "../axiosInstance";
+
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../Authintication';
 
@@ -28,15 +29,22 @@ function LeaveApplication() {
 };
 
   useEffect(()=>{
-    axios.get(`https://sangolacollage.onrender.com/api/student/get-mentordetails/${id}`,{
-                headers: {
-                  Authorization: `Bearer ${token}`, 
-                  "Content-Type": "application/json"
-                }
-              })
-              .then((resp)=>{setMentorDetails(resp.data.MentorDetails);setStudentDetails(resp.data.StudentDetails)})
-              .catch((err)=>alert(err.message))
-  },[token,id])
+    async function getDetails()
+    {
+      try{
+        const resp=await axiosInstance.get(`/student/get-mentordetails/${id}`);
+        setMentorDetails(resp.data.MentorDetails);
+        setStudentDetails(resp.data.StudentDetails);
+      }
+      catch(err)
+      {
+        console.log(err.message);
+      }
+              
+    }
+    getDetails();
+  },[token,id]);
+
   function handleFileChange(e) {
     const file = e.target.files[0];
 
@@ -93,22 +101,12 @@ function LeaveApplication() {
         
       }
       
-      const resp = await axios.post("https://sangolacollage.onrender.com/api/student/send-application",
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          }
-        }
-      );
-    
-      showtoast(resp.data.message);
+      const resp = await axiosInstance.post("/student/send-application",data);
       
     }
     catch(err)
     {
-      showtoast(err.response?.data?.message||err.message);
+      console.log(err.message);
        
     }
     finally{

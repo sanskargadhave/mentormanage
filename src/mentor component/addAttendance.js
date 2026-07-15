@@ -9,6 +9,9 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Authintication";
 import logo from "../collageassets/logo-college.png";
+import axiosInstance from "../axiosInstance";
+import { showToast } from "../utils/showToast";
+
 export default function ShowAttendance({totalstudent,totalabsent,totalpresent,lectureid})
 {
     const today = new Date().toISOString().split("T")[0];
@@ -21,19 +24,14 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
         try 
         {
             setloding(true);
-            const response = await axios.get(`https://sangolacollage.onrender.com/api/common/get-attendance/${lectureid}`,{
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            });
+            const response = await axiosInstance.get(`/common/get-attendance/${lectureid}`);
 
             setData(response.data.result);
             setcounts(response.data.counts);
         } 
         catch (error) 
         {
-            console.error(error);
+            console.error(error.message);
         }
         finally
         {
@@ -174,16 +172,18 @@ function AddAttendance() {
 
     useEffect(() => {
         if(!token) return;
-        axios.get("https://sangolacollage.onrender.com/api/common/getlecture",{
-             headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        })
-            .then((resp) => {
+        async function getlecture()
+        {
+            try{
+                const resp=await axiosInstance.get("/common/getlecture");
                 setlecture(resp.data);
-            })  
-            .catch((err) => {setmessage(err.message);setshowerror(true)});
+            }
+            catch(err)
+            {
+                console.log(err.message);
+            }
+        }
+        getlecture();
     }, [token]);
 
     const options = lecture.map((s) => ({
@@ -198,7 +198,7 @@ function AddAttendance() {
             [rollno]: isabsent ? "Present" : "Absent"
         }));
     };
-    function storeattendance()
+    async function storeattendance()
     {
         const totalstudent=Object.keys(attendance).length;
         const totalabsent = Object.values(attendance).filter(status => status === "Absent").length;
@@ -209,61 +209,43 @@ function AddAttendance() {
             rollno,
             status
         }))
-        setloding(true);
-        fetch("https://sangolacollage.onrender.com/api/common/store-attendance",{
-             method:"POST", 
-                headers:{
-                    "Content-Type":"application/json",
-                    Authorization: `Bearer ${token}`
-                },
-                body:JSON.stringify({
-                    date:date,
-                    lectureid:selected.value,
-                    attendance:attendanceArray,
-                    submitedby:id
-                })
-        }).then((resp)=>resp.json())
-        .then((data)=>{
-         settotalstudent(totalstudent);
-         setpresent(totalpresent);
-         setabsent(totalabsent);
-         setstep("summery");
-        })
-        .catch((err)=>{setmessage(err.message);setshowerror(true)})
-        .finally(()=>{setloding(false)})
-        
+        try{
+            setloding(true);
+            const resp=await axiosInstance.post("/common/store-attendance",{date:date,lectureid:selected.value,attendance:attendanceArray,submitedby:id});
+            settotalstudent(resp.data.totalstudent);
+            setpresent(resp.data.totalpresent);
+            setabsent(resp.data.totalabsent);
+            setstep("summery");
+        }
+        catch(err)
+        {
+            console.log(err.message);
+        }
+        finally{
+            setloding(false);
+        }
     }
 
-    function searchstudent() 
+    async function searchstudent() 
     {
         if(!selected)
         {
-            setmessage("Please Select Lecture First");
-            setshowerror(true);
+            return showToast.warning("Please Select Lecture First");
         }
         else{
-            setloding(true);
-            axios.get(`https://sangolacollage.onrender.com/api/mentor/serach-student/${selected.value}`,{
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-            })
-            .then((resp) => {
+            try{
+                setloding(true);
+                const resp=await axiosInstance.get(`/mentor/serach-student/${selected.value}`);
                 setstudentdata(resp.data);
-                setstep("attendance")
-            })
-            .catch((err) => {
-                if(err.response?.status === 401){
-                    localStorage.clear();
-                    nevigate("/unauthorized");
-                    return;
-                }
-                setmessage(err.message);
-                setshowerror(true)
-            })
-            
-            .finally(()=>{setloding(false)})  
+                setstep("attendance");
+            }
+            catch(err)
+            {
+                console.log(err.message);
+            }
+            finally{
+                setloding(false);
+            }
         }
     }
     

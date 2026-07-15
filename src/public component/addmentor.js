@@ -3,6 +3,8 @@ import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 import "animate.css";
 import '../admin component/admin.css';
+import axiosInstance from "../axiosInstance";
+import { toast } from "react-toastify";
 function AddMentor()
 {
     const navigate=useNavigate();
@@ -115,7 +117,7 @@ function AddMentor()
             .every(([, msg]) => msg === "");
 
     if (hasEmptyField || !isFormValid) {
-        alert("Please fill all fields or check validation");
+        toast.warning("Please fill all fields or check validation");
         return;
     }
     setshowerror(false);
@@ -129,7 +131,7 @@ function AddMentor()
         const hasEmptyField = Object.values(formdata).some((v) => v === "");
 
          if (hasEmptyField||!isFormValid) {
-            alert("Please fill all fields or check Validaton");
+             toast.warning("Please fill all fields or check Validaton");
             return;
         }
         else{
@@ -163,15 +165,7 @@ function AddMentor()
                     })
                 );
                 datas.append("password", formdata.Password);
-                const res = await axios.post( "https://sangolacollage.onrender.com/api/common/add-mentor",datas,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    }
-                );
-
-
+                const res = await axiosInstance.post("/common/add-mentor",datas);
 
                 const data = res.data;
 
@@ -181,28 +175,15 @@ function AddMentor()
                     setshowpassword(false);
                     setshowconfirm(true);
                 }
-                else {
-                    seterr(data.message || data.error);
-                    setshowerror(true);
-                    setshowform(false);
-                    setshowpassword(false);
-                }
-
             }
             catch (errs) {
-    console.log("Status:", errs.response?.status);
-    console.log("Response Data:", errs.response?.data);
-    console.log("Message:", errs.message);
-
-    seterr(
-        errs.response?.data?.message ||
-        errs.response?.data?.error ||
-        errs.message
-    );
-
-    setshowerror(true);
-}
-            setloding(false);
+                console.log("Status:", errs.response?.status);
+                console.log("Response Data:", errs.response?.data);
+                console.log("Message:", errs.message);
+            }
+            finally{
+                setloding(false);
+            }
         }
     }
     return(

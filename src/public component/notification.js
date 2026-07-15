@@ -5,6 +5,7 @@ import axios from "axios";
 import { AuthContext } from "../Authintication";
 import { useNavigate } from "react-router-dom";
 import { NotificationContext } from "../notificationAuthContext";
+import axiosInstance from "../axiosInstance";
 
 function Notification() {
     const { id,token,role} = useContext(AuthContext);
@@ -23,27 +24,11 @@ function Notification() {
         }
     }, [id]);
 
-   
-
-    
-  
- 
-
-
  const handleNotificationClick = async (notification) => {
     try {
         if (!notification.isRead) {
-            await axios.put(
-                `https://sangolacollage.onrender.com/api/common/notification-isread/${notification._id}`,
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            const resp=await axiosInstance.put(`/common/notification-isread/${notification._id}`);
 
-            
             setNotifications(prev =>
                 prev.map(item =>
                     item._id === notification._id

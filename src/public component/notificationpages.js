@@ -3,7 +3,8 @@ import axios from "axios";
 import { AuthContext } from "../Authintication";
 import { useEffect, useState, useContext } from "react";
 import "./notification.css";
-
+import axiosInstance from "../axiosInstance";
+import { showToast } from "../utils/showToast";
 function StudentDetails(){
      const {token} = useContext(AuthContext);   
      const { id } = useParams();
@@ -14,17 +15,12 @@ function StudentDetails(){
          const getdetails = async () =>{
           try{
             setloading(true);
-            const resp = await axios.get(`https://sangolacollage.onrender.com/api/mentor/student/${id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              }
-            });
+            const resp = await axiosInstance.get(`/mentor/student/${id}`);
             setstudentinfo(resp.data);
           }
           catch(err)
           {
-            alert(err.message);
+            console.log(err.message);
           }
           finally{
             setloading(false);
@@ -37,20 +33,16 @@ function StudentDetails(){
     const Reject = async ()=> {
       try{
         setloading(true);
-        const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-reject/${id}`,{},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          }
-        )
+        const resp=await axiosInstance.put(`/mentor/give-reject/${id}`);
+        showToast.info(resp.data.message);
+
         setstudentinfo((prev)=>({...prev,registrationStatus:"Rejected"}));
 
-        alert(resp.data.message);
+        
       }
       catch(err)
       {
-        alert(err.message);
+        console.log(err.message);
       }
       finally{
         setloading(false);
@@ -59,19 +51,15 @@ function StudentDetails(){
     const Approve = async ()=> {
       try{
         setloading(true);
-        const resp=await axios.put(`https://sangolacollage.onrender.com/api/mentor/give-approve/${studentinfo.studentid}/${id}`,{},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          }
-        )
+        const resp=await axiosInstance.put(`/mentor/give-approve/${studentinfo.studentid}/${id}`);
+        showToast.info(resp.data.message);
+
         setstudentinfo((prev)=>({...prev,registrationStatus:"Approved"}));
        
       }
       catch(err)
       {
-        alert(err.message);
+        console.log(err.message);
       }
       finally{
         setloading(false);
@@ -267,17 +255,12 @@ function MentorDetails(){
          const getdetails = async () =>{
           try{
             setloading(true);
-            const resp = await axios.get(`https://sangolacollage.onrender.com/api/admin/mentor/${id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              }
-            });
+            const resp = await axiosInstance.get(`/admin/mentor/${id}`);
             setmentorinfo(resp.data);
           }
           catch(err)
           {
-            alert(err.message);
+           console.log(err.message);
           }
            finally{
             setloading(false);
@@ -289,20 +272,14 @@ function MentorDetails(){
     const Reject = async ()=> {
       try{
         setloading(true);
-        const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/mentor/give-reject/${id}`,{},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          }
-        )
+        const resp=await axiosInstance.put(`/admin/mentor/give-reject/${id}`)
         setmentorinfo((prev)=>({...prev,registrationStatus:"Rejected"}));
 
-        alert(resp.data.message);
+        showToast.info(resp.data.message);
       }
       catch(err)
       {
-        alert(err.message);
+        console.log(err.message);
       }
       finally{
         setloading(false);
@@ -311,19 +288,14 @@ function MentorDetails(){
     const Approve = async ()=> {
       try{
         setloading(true);
-        const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/mentor/give-approve/${mentorinfo.mentorId}/${id}`,{},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          }
-        )
+        const resp=await axiosInstance.put(`/admin/mentor/give-approve/${mentorinfo.mentorId}/${id}`);
+        showToast.info(resp.data.message);
         setmentorinfo((prev)=>({...prev,registrationStatus:"Approved"}));
        
       }
       catch(err)
       {
-        alert(err.message);
+        console.log(err.message);
       }
       finally{
         setloading(false);
@@ -483,17 +455,14 @@ function TeacherDetails(){
          const getdetails = async () =>{
           try{
             setloading(true);
-            const resp = await axios.get(`https://sangolacollage.onrender.com/api/admin/teacher/${id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              }
-            });
+            const resp = await axiosInstance.get(`/admin/teacher/${id}`);
+            console.log(resp.data.message);
+
             setteacherinfo(resp.data);
           }
           catch(err)
           {
-            alert(err.message);
+            console.log(err.message);
           }
           finally{
             setloading(false);
@@ -505,20 +474,13 @@ function TeacherDetails(){
     const Reject = async ()=> {
       try{
         setloading(true);
-        const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/teacher/give-reject/${id}`,{},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          }
-        )
+        const resp=await axiosInstance.put(`/teacher/give-reject/${id}`);
+        showToast.info(resp.data.message);
         setteacherinfo((prev)=>({...prev,registrationStatus:"Rejected"}));
-
-        alert(resp.data.message);
       }
       catch(err)
       {
-        alert(err.message);
+        console.log(err.message);
       }
       finally{
             setloading(false);
@@ -527,19 +489,14 @@ function TeacherDetails(){
     const Approve = async ()=> {
       try{
         setloading(true);
-        const resp=await axios.put(`https://sangolacollage.onrender.com/api/admin/teacher/give-approve/${teacherinfo._id}/${id}`,{},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          }
-        )
+        const resp=await axiosInstance.put(`/admin/teacher/give-approve/${teacherinfo._id}/${id}`);
+        showToast.info(resp.data.message);
         setteacherinfo((prev)=>({...prev,registrationStatus:"Approved"}));
        
       }
       catch(err)
       {
-        alert(err.message);
+        console.log(err.message);
       }
       finally{
             setloading(false);
@@ -696,27 +653,22 @@ function LeaveDetails()
 {
     const {token} = useContext(AuthContext);   
      const { id } = useParams();
-
      const [leaveinfo,setleaveinfo]=useState([]);
      const [studentinfo,setstudentinfo]=useState([]);
      const navigate=useNavigate();
     const [loading,setloading]=useState(true);
+
     useEffect(() => {
          const getdetails = async () =>{
           try{
             setloading(true);
-            const resp = await axios.get(`https://sangolacollage.onrender.com/api/mentor/get-student-application/${id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              }
-            });
+            const resp = await axiosInstance.get(`/mentor/get-student-application/${id}`);
             setleaveinfo(resp.data.application);
             setstudentinfo(resp.data.student);
           }
           catch(err)
           {
-            alert(err.message);
+            console.log(err.message);
           }
           finally{
             setloading(false);
@@ -981,18 +933,13 @@ function ReportDetails()
     useEffect(() => {
          const getdetails = async () =>{
           try{
-            const resp = await axios.get(`https://sangolacollage.onrender.com/api/admin/get-report-details/${id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              }
-            });
+            const resp = await axiosInstance.get(`/admin/get-report-details/${id}`);
             setreportinfo(resp.data);
             setmentorinfo(resp.data?.uplodeBy);
           }
           catch(err)
           {
-            alert(err.message);
+            console.log(err.message);
           }
             
           }

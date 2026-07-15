@@ -2,6 +2,7 @@ import "../admin component/admin.css";
 import axios from "axios";
 import { useContext,useEffect,useState } from "react";
 import { AuthContext } from '../Authintication';
+import axiosInstance from "../axiosInstance";
 
 function StudentDashbord() {
     const {id,token}=useContext(AuthContext);
@@ -12,14 +13,9 @@ function StudentDashbord() {
         if(!token || !id) return ;
         async function getapplication(){
             try{
-                const resp= await axios.get(`https://sangolacollage.onrender.com/api/student/get-student-applications/${id}`,{
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-
+                const resp= await axiosInstance.get(`/student/get-student-applications/${id}`);
                 setapplications(resp.data.applications);
-                console.log(resp.data.applications);
+                
             }
             catch(err)
             {
