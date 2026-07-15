@@ -27,6 +27,7 @@
     "puppeteer-core": "^24.39.1",
     "socket.io": "^4.8.3",
     "twilio": "^5.12.2",
+    "ua-parser-js": "^2.0.10",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

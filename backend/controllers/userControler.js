@@ -2,8 +2,16 @@ const adduser =require("../model/userSchema");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const UAParser =require("ua-parser-js");  
+const {UserActivity}=require("../model/UserActitivityScema");
 const userlogin = async (req, resp) => {
   try {
+    const parser=new UAParser(req.headers["user-agent"]);
+    const result = parser.getResult();
+    const browser=result.browser.name;
+    const operatingSystem=result.os.name;
+    const deviceType=result.device.type;
+
     const { emailid, password } = req.body;
 
     const user = await adduser.findOne({ emailid });
@@ -23,6 +31,16 @@ const userlogin = async (req, resp) => {
       return resp.status(401).json({ message: "Emailid or Password Incorrect", islogin: false });
     }
 
+    await UserActivity.create({
+      userId: user._id,
+      activityType: "LOGIN",
+      ipAddress: req.ip,
+      userAgent: req.headers["user-agent"],
+      browser,
+      operatingSystem,
+      deviceType,
+      status: "SUCCESS"
+    });
    
     const token = jwt.sign(
       { userid: user.userid, role: user.role },
