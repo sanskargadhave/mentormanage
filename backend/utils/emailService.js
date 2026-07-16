@@ -7,8 +7,8 @@ const sendOTP = async (email, otp) => {
             "https://api.brevo.com/v3/smtp/email",
             {
                 sender: {
-                    name: process.env.BREVO_EMAIL,
-                    email: process.env.BREVO_SENDER_EMAIL,
+                    name: process.env.BREVO_SENDER_NAME,
+                    email: process.env.BREVO_EMAIL,
                 },
                 to: [
                     {
