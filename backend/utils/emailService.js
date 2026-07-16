@@ -1,43 +1,38 @@
-const Brevo = require("@getbrevo/brevo");
+const axios = require("axios");
 const {OtpTemplate}=require("../templates/OtpTemplate");
-
-const apiInstance = new Brevo.TransactionalEmailsApi();
-
-apiInstance.setApiKey(
-    Brevo.TransactionalEmailsApiApiKeys.apiKey,
-    process.env.BREVO_API_KEY
-);
 
 const sendOTP = async (email, otp) => {
     try {
-
-        await apiInstance.sendTransacEmail({
-
-            sender: {
-                email: process.env.BREVO_EMAIL,
-                name: process.env.BREVO_SENDER_NAME
+        const response = await axios.post(
+            "https://api.brevo.com/v3/smtp/email",
+            {
+                sender: {
+                    name: process.env.BREVO_EMAIL,
+                    email: process.env.BREVO_SENDER_EMAIL,
+                },
+                to: [
+                    {
+                        email: email,
+                    },
+                ],
+                subject: "Password Reset OTP",
+                htmlContent: OtpTemplate(otp),
             },
+            {
+                headers: {
+                    "api-key": process.env.BREVO_API_KEY,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+            }
+        );
 
-            to: [
-                {
-                    email: email
-                }
-            ],
-
-            subject: "Password Reset OTP",
-
-            htmlContent: OtpTemplate(otp)
-
-        });
-
-        console.log("OTP Email Sent");
-
+        console.log("Email Sent:", response.data);
     } catch (err) {
-
-        console.log(err.response?.body || err);
-
+        console.error(
+            err.response ? err.response.data : err.message
+        );
         throw err;
-
     }
 };
 
