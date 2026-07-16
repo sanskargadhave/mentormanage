@@ -2,6 +2,8 @@ const bcrypt=require("bcryptjs");
 const {PasswordReset}=require("../model/PasswordResetScema");
 const sendOTP=require("../utils/emailService");
 const adduser=require("../model/userSchema");
+const UAParser =require("ua-parser-js"); 
+const {UserActivity}=require("../model/UserActitivityScema");
 
 const SendResetOtp=async (req,resp)=>{
     try{
@@ -110,6 +112,23 @@ const ResetPassword=async (req,resp)=>{
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         await adduser.findOneAndUpdate({emailid:emailid},{password:hashedPassword});
+        const parser=new UAParser(req.headers["user-agent"]);
+        const result = parser.getResult();
+        const browser=result.browser.name;
+        const operatingSystem=result.os.name;
+        const deviceType=result.device.type;
+        
+        await UserActivity.create({
+            userId: user._id,
+            activityType: "RESET_PASSWORD",
+            ipAddress: req.ip,
+            userAgent: req.headers["user-agent"],
+            browser,
+            operatingSystem,
+            deviceType,
+            status: "SUCCESS"
+        });
+   
         await PasswordReset.deleteMany({ email:emailid });
         return resp.status(200).json({success:true,message:"Your Password updated successfully."});
 
