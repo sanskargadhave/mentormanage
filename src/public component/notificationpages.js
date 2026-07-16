@@ -474,7 +474,7 @@ function TeacherDetails(){
     const Reject = async ()=> {
       try{
         setloading(true);
-        const resp=await axiosInstance.put(`/teacher/give-reject/${id}`);
+        const resp=await axiosInstance.put(`/admin/teacher/give-reject/${id}`);
         showToast.info(resp.data.message);
         setteacherinfo((prev)=>({...prev,registrationStatus:"Rejected"}));
       }
@@ -677,6 +677,37 @@ function LeaveDetails()
           }
           getdetails();
     }, [id]);
+
+    async function giveApplicationApprove()
+    {
+        try{
+            setloading(true);
+            const resp=await axiosInstance.put(`/mentor/give-application-approve/${id}`);
+            showToast.success(resp.data.message);
+        }
+        catch(err)
+        {
+            console.log(err.message);
+        }
+        finally{
+            setloading(false);
+        }
+    }
+    async function giveApplicationReject()
+    {
+        try{
+            setloading(true);
+            const resp=await axiosInstance.put(`/mentor/give-application-reject/${id}`);
+            showToast.success(resp.data.message);
+        }
+        catch(err)
+        {
+            console.log(err.message);
+        }
+        finally{
+            setloading(false);
+        }
+    }
 
   return (
     <div>
@@ -897,22 +928,32 @@ function LeaveDetails()
         }
 </>)}
     </div>
-
-    <div className="leave-action-buttons">
-
-        <button className="approve-leave-btn">
+    {leaveinfo?.status==="Pending" ? (
+        <div className="leave-action-buttons">
+        <button className="approve-leave-btn" onClick={()=>giveApplicationApprove()}>
             <i className="bi bi-check-circle-fill set-icon"></i>
             Approve
         </button>
-
-        <button className="reject-leave-btn">
+        <button className="reject-leave-btn" onClick={()=>giveApplicationReject()}>
             <i className="bi bi-x-circle-fill set-icon"></i>
             Reject
         </button>
+        </div>
+        ):(
+            <div className={`status-badge ${leaveinfo?.status}`}>
+          {
+            leaveinfo?.status === "Approve" ? "Approved"
+              : leaveinfo?.status === "Reject" ? "Rejected"
+              : "Pending Verification"
+            }
+        </div>
 
-    </div>
 
-</div>  
+
+        )}
+    
+
+        </div>  
         </div>
    
 

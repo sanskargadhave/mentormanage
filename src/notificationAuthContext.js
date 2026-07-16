@@ -46,7 +46,7 @@ export function NotificationProvider({ children }) {
             const response = await axiosInstance.get(`/common/get-latestnotification/${id}?after=${lastNotificationTime}`);
 
             
-            const fetchedNotifications = await response.json();
+            const fetchedNotifications = response.data;
 
             setNotifications(prev => {
                 const existingIds = new Set( prev.map(item => item._id) );

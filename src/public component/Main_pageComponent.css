@@ -1671,7 +1671,53 @@ h2{
     }
 
 }
+.forgot-link{
+    color:#ffc107;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    text-align:right;
+    display:block;
+    margin-top:5px;
+    transition:.3s;
+    margin-bottom: 10px;
+}
 
+.forgot-link:hover{
+    color:#4AE37B;
+    text-decoration:underline;
+}
+
+.spinner-otp{
+    width:18px;
+    height:18px;
+
+    border:3px solid rgba(255,255,255,.3);
+    border-top:3px solid white;
+
+    border-radius:50%;
+
+    display:inline-block;
+
+    animation:spin .8s linear infinite;
+
+    margin-right:10px;
+}
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+.send-btn-otp:disabled{
+
+    opacity:.7;
+    cursor:not-allowed;
+
+}
 @keyframes loading{
 
     0%{

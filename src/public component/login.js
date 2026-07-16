@@ -99,7 +99,9 @@ function Login() {
                         </span>
 
                     </div>
-
+                    <span className="forgot-link" onClick={() => nevigate("/forget-password")}>
+                        Forgot Password?
+                    </span>
                     {error && <p className="error">{error}</p>}
 
                     <button className={`login-btn ${loading ? "loading" : ""}`}  disabled={loading} >

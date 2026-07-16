@@ -27,6 +27,7 @@
   import { StudentDetails,LeaveDetails,MentorDetails,TeacherDetails,ReportDetails } from "./public component/notificationpages.js";
   import { ToastContainer } from "react-toastify";
   import "react-toastify/dist/ReactToastify.css";
+  import ForgetPassword from "./public component/forgetPassword.js";
 
 import { use } from "react";
   function App() {
@@ -41,17 +42,19 @@ import { use } from "react";
             
             <a href="/login">Login Again</a>
           </div>} />
-        
+          <Route path="/register-student" element={<AddStudent />} />
+          <Route path="/register-mentor" element={<AddMentor />} />
+          <Route path="/register-teacher" element={<AddTeacher/>}/>
+          <Route path="/forget-password" element={<ForgetPassword/>}/>
+          <Route path="/login" element={<Login />} />
         <Route element={<Layout/>}>
           {/* Public */}
           
           <Route path="/" element={<StudentDashboardContent />} />
-          <Route path="/register-student" element={<AddStudent />} />
-          <Route path="/register-mentor" element={<AddMentor />} />
-          <Route path="/register-teacher" element={<AddTeacher/>}/>
-
+        
+          
           {/* For Only login */}
-          <Route path="/login" element={<Login />} />
+        
           <Route path="/settings" element={<Settings/>}/>
           <Route path="/warning-logout" element={<LogoutWarning/>}/>
 

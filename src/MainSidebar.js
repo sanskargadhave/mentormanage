@@ -54,13 +54,7 @@ function MainSidebar({collapsed}){
               <i className="bi bi-clipboard-data set-icon"></i>View User
           </li>
 
-          <li onClick={() => {navigate("/admin/assign-mentor")}}>
-              <i className="bi bi-clipboard-data set-icon"></i>Assign Mentor
-          </li>
-
-          <li onClick={() => {navigate("/admin/add-admission-details")}}>
-              <i className="bi bi-clipboard-data set-icon"></i>Add Admission Details
-          </li>
+       
           
         </ul>
 
