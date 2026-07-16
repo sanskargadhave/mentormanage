@@ -1,4 +1,4 @@
-const OtpTemplate = (otp)=>{`
+const OtpTemplate = (otp)=>{return `
 <!DOCTYPE html>
 <html>
 <head>

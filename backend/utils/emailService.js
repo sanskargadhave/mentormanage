@@ -1,18 +1,18 @@
 const nodemailer = require("nodemailer");
 const {OtpTemplate}=require("../templates/OtpTemplate");
+
 const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp-relay.brevo.com",
+    port: 587,
+    secure: false,
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
+        user: process.env.BREVO_SMTP_LOGIN,
+        pass: process.env.BREVO_SMTP_KEY,
+    },
 });
 
 const sendOTP = async (email, otp) => {
-    await transporter.verify();
-
-    console.log("SMTP Connected Successfully");
-
+    
     await transporter.sendMail({
 
         from: `"EduMentor" <${process.env.EMAIL_USER}>`,
