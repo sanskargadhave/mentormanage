@@ -1,40 +1,44 @@
-const nodemailer = require("nodemailer");
+const Brevo = require("@getbrevo/brevo");
 const {OtpTemplate}=require("../templates/OtpTemplate");
-console.log(process.env.BREVO_SMTP_LOGIN)
-console.log(process.env.BREVO_SMTP_KEY)
-const transporter = nodemailer.createTransport({
-    host: "smtp-relay.brevo.com",
-    port: 587,
-    secure: false,
-    requireTLS: true,
-    auth: {
-        user: process.env.BREVO_SMTP_LOGIN,
-        pass: process.env.BREVO_SMTP_KEY,
-    },
-    connectionTimeout: 30000,
-    greetingTimeout: 30000,
-    socketTimeout: 30000,
-});
+
+const apiInstance = new Brevo.TransactionalEmailsApi();
+
+apiInstance.setApiKey(
+    Brevo.TransactionalEmailsApiApiKeys.apiKey,
+    process.env.BREVO_API_KEY
+);
 
 const sendOTP = async (email, otp) => {
-    transporter.verify((err, success) => {
-    if (err) {
-        console.error("SMTP Verify Error:", err);
-    } else {
-        console.log("SMTP Ready");
+    try {
+
+        await apiInstance.sendTransacEmail({
+
+            sender: {
+                email: process.env.BREVO_EMAIL,
+                name: process.env.BREVO_SENDER_NAME
+            },
+
+            to: [
+                {
+                    email: email
+                }
+            ],
+
+            subject: "Password Reset OTP",
+
+            htmlContent: OtpTemplate(otp)
+
+        });
+
+        console.log("OTP Email Sent");
+
+    } catch (err) {
+
+        console.log(err.response?.body || err);
+
+        throw err;
+
     }
-});
-    await transporter.sendMail({
-
-        from: `"EduMentor" <${process.env.EMAIL_USER}>`,
-
-        to: email,
-
-        subject: "Password Reset OTP",
-
-        html:OtpTemplate(otp)
-    });
-
 };
 
 module.exports = sendOTP;
