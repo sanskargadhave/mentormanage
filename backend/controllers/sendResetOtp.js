@@ -120,7 +120,7 @@ const ResetPassword=async (req,resp)=>{
         
         await UserActivity.create({
             userId: user._id,
-            activityType: "RESET_PASSWORD",
+            activityType: "PASSWORD_CHANGED",
             ipAddress: req.ip,
             userAgent: req.headers["user-agent"],
             browser,
