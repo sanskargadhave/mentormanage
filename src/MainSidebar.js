@@ -24,6 +24,7 @@ function MainSidebar({collapsed}){
           <i className="bi bi-house-door set-icon"></i>
           Home
         </li>
+        
         </ul>
       </div>
       <div className="sidebar-menu">
@@ -81,6 +82,9 @@ function MainSidebar({collapsed}){
             <i className="bi bi-clipboard-data set-icon"></i>Add Test Result
           </li>
 
+          <li onClick={()=>navigate("/mentor/assignment-controler")}>
+            <i className="bi bi-clipboard-data set-icon"></i>Assignment Record
+          </li>
         </ul>
         )}
         {role ==="Student" && (
@@ -92,6 +96,22 @@ function MainSidebar({collapsed}){
           </ul>
         )}
       </div>
+      {role==="Mentor" && (
+      <button className="sarrthi-ai-btn" onClick={()=>navigate("/mentor-SaarthiAiChat")}>
+            <div className="sarrthi-ai-logo">
+                <i className="bi bi-stars"></i>
+            </div>
+            <div className="sarrthi-ai-content">
+                <span className="sarrthi-ai-title">
+                    Sarrthi AI
+                </span>
+                <span className="sarrthi-ai-subtitle">
+                    Your smart assistant
+                </span>
+            </div>
+          <i className="bi bi-chevron-right sarrthi-ai-arrow"></i>
+
+      </button>)}
         <div className="sidebar-bottom">
           <button className="logouts" onClick={()=>navigate("/warning-logout")}>
               <i className="bi bi-box-arrow-right"></i> Logout

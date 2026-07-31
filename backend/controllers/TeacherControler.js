@@ -5,10 +5,17 @@ const NotificationSchema=require("../model/notificationsScema");
 const bcrypt = require("bcryptjs");
 const adduser=require("../model/userSchema");
 const {getIO}=require("../socket");
+const  {getCurrentSemester}=require("../utils/semesterValidation.js")
 
 //  /api/add-teacher  POST
 const AddTeacher = async(req,res)=>{
   try{
+    const currentSemester=await getCurrentSemester();
+
+    if (!currentSemester) { 
+      return resp.status(400).json({ success: false, message: "No active semester found."});
+    }
+
     const personaldetails = JSON.parse(req.body.personaldetails);
     const professionaldetails = JSON.parse(req.body.professionaldetails);
     const contactdetails = JSON.parse(req.body.contactdetails);
@@ -20,11 +27,11 @@ const AddTeacher = async(req,res)=>{
     const mobilenoexist=await StoreMentor.findOne({"contactdetails.mobileno":mobileno});
     if(emailidexist)
     {
-      return res.status(400).json({message:"Your Emailid  Is  Already Exists"});
+      return res.status(400).json({success: false,message:"Your Emailid  Is  Already Exists"});
     }
     else if(mobilenoexist)
     {
-      return res.status(400).json({message:"Your Mobile No Is Already Exists"})
+      return res.status(400).json({success: false,message:"Your Mobile No Is Already Exists"})
     }
 
 
@@ -32,11 +39,14 @@ const AddTeacher = async(req,res)=>{
     const teacher=new StoreTeacher({personaldetails,
         professionaldetails,
         contactdetails,
-        profileurl:imageurl});
+        profileurl:imageurl,
+        semesterId:currentSemester._id
+      });
 
     await teacher.save();
 
     await adduser.create({
+      userId:teacher._id,
       userid: teacher.TeacherId,
       password: req.body.password,
       emailid: emailid,
@@ -65,17 +75,18 @@ const AddTeacher = async(req,res)=>{
             exprience:teacher.professionaldetails.exprience,
             mobileno:teacher.contactdetails.mobileno,
             profileurl:imageurl,
-          }
+          },
+          semesterId:currentSemester._id
         })
         const io=getIO();
         console.log("Sending notification");
     
         io.to("user_AD-02012006-001").emit("notification",notification);
-    res.status(201).json({message:"Teacher Add Sucessfully",teacherId:teacher.TeacherId});
+    res.status(201).json({success: true,message:"Teacher Add Sucessfully",teacherId:teacher.TeacherId});
   }
   catch(err)
   {
-    res.status(500).json({error:err.message});
+    res.status(500).json({success: false,error:err.message});
     console.log(err.message);
   }
 };
@@ -84,31 +95,37 @@ const AddTeacher = async(req,res)=>{
 const GetTeacher = async (req,resp)=>{
   try{
     const teacher=await StoreTeacher.find({},"TeacherId personaldetails.name");
-    resp.status(200).json(teacher);
+    resp.status(200).json({success: true,teacher});
   }
   catch(err)
   {
-    resp.status(500).json({message:err.message});
+    resp.status(500).json({success: false,message:err.message});
   }
 };
 
 const getTeacherDetails = async(req,res)=>{
-
-    const teacher = await StoreTeacher.findById(req.params.id)
-    res.json(teacher);
+    try{
+      const teacher = await StoreTeacher.findById(req.params.id)
+      res.status(200).json({success:true,teacher});
+    }
+    catch(err)
+    {
+      res.status(500).json({success:false,message:err.message});
+    }
+    
 }
 
 const giveApproveTeacher = async (req,resp)=>{
       try{
           
-          await StoreTeacher.findByIdAndUpdate(req.params.id,{registrationStatus:"Approved"});
+          await StoreTeacher.findByIdAndUpdate(req.params.id,{registrationStatus:"Approved",isactive:true});
           await adduser.updateOne({userid:req.params.TeacherId},{$set:{active:true}});
-          resp.status(200).json({message:"Teacher Approved"});
+          resp.status(200).json({success:true,message:"Teacher Approved"});
       }
       catch(err)
       {
-        resp.status(500).json({message:err.message});
-        console.log(err.message);
+        resp.status(500).json({success:false,message:err.message});
+        
       }
 }
 
@@ -117,12 +134,12 @@ const giveRejectTeacher = async (req,resp)=>{
           
           await StoreMentor.findByIdAndUpdate(req.params.id,{registrationStatus:"Rejected"});
 
-          resp.status(200).json({message:"Teacher Rejected "});
+          resp.status(200).json({success:true,message:"Teacher Rejected "});
       }
       catch(err)
       {
-        resp.status(500).json({message:err.message});
-        console.log(err.message);
+        resp.status(500).json({success:false,message:err.message});
+        
       }
 }
 

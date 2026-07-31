@@ -72,10 +72,10 @@ const getProfiledetails = async (req, resp) => {
             });
         }
 
-        return resp.status(200).json({ profileDetails });
+        return resp.status(200).json({success:true, profileDetails });
 
     } catch (err) {
-        return resp.status(500).json({
+        return resp.status(500).json({success:false,
             message: err.message
         });
     }
@@ -103,7 +103,7 @@ const updateProfiledetails = async (req,resp)=>{
 
       
         if(!user){
-            return resp.status(404).json({ message: "User not found"});
+            return resp.status(404).json({success:false, message: "User not found"});
         }
         
       const updatedAt = new Date(user.updatedAt);
@@ -112,7 +112,7 @@ const updateProfiledetails = async (req,resp)=>{
       const differenceInDays = Math.floor((today - updatedAt) / (1000 * 60 * 60 * 24));
 
       if (differenceInDays < 7) {
-       return resp.status(400).json({ message: `You can update after ${7 - differenceInDays} more days`});
+       return resp.status(400).json({ success:false,message: `You can update after ${7 - differenceInDays} more days`});
       }
       if(role==="Student")
       {
@@ -161,11 +161,11 @@ const updateProfiledetails = async (req,resp)=>{
             )
         }
       
-        resp.status(200).json({message:"Profile info updated ...  After 7 Days You can Updated "})
+        resp.status(200).json({success:true,message:"Profile info updated ...  After 7 Days You can Updated "})
     }
     catch(err)
     {
-      resp.status(500).json({message:err.message});
+      resp.status(500).json({success:false,message:err.message});
     }
 }
 module.exports={getProfiledetails,updateProfiledetails}

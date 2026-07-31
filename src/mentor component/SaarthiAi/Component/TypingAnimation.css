@@ -1,0 +1,185 @@
+/* ===================================
+   TYPING CONTAINER
+=================================== */
+
+.typing-container{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    gap:12px;
+
+    margin:18px 0;
+
+    animation:typingFade .35s ease;
+
+}
+
+/* ===================================
+   AVATAR
+=================================== */
+
+.typing-avatar{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    background:#25D366;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:20px;
+
+    flex-shrink:0;
+
+    box-shadow:0 5px 15px rgba(37,211,102,.25);
+
+}
+
+/* ===================================
+   MESSAGE
+=================================== */
+
+.typing-bubble{
+
+    background:#202C33;
+
+    border:1px solid #2A3942;
+
+    border-radius:18px;
+
+    border-bottom-left-radius:6px;
+
+    padding:14px 18px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    color:white;
+
+}
+
+/* ===================================
+   TEXT
+=================================== */
+
+.typing-text{
+
+    font-size:14px;
+
+    color:#D9E3E7;
+
+    white-space:nowrap;
+
+}
+
+/* ===================================
+   DOTS
+=================================== */
+
+.typing-dots{
+
+    display:flex;
+
+    gap:5px;
+
+}
+
+.typing-dots span{
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:#25D366;
+
+    animation:typingBounce 1.2s infinite ease-in-out;
+
+}
+
+.typing-dots span:nth-child(2){
+
+    animation-delay:.2s;
+
+}
+
+.typing-dots span:nth-child(3){
+
+    animation-delay:.4s;
+
+}
+
+/* ===================================
+   ANIMATION
+=================================== */
+
+@keyframes typingBounce{
+
+    0%,80%,100%{
+
+        transform:translateY(0);
+
+        opacity:.5;
+
+    }
+
+    40%{
+
+        transform:translateY(-7px);
+
+        opacity:1;
+
+    }
+
+}
+
+@keyframes typingFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(15px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===================================
+   MOBILE
+=================================== */
+
+@media(max-width:768px){
+
+    .typing-bubble{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:10px;
+
+    }
+
+}

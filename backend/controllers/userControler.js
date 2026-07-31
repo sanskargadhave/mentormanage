@@ -17,29 +17,29 @@ const userlogin = async (req, resp) => {
     const user = await adduser.findOne({ emailid });
     if (!user) 
     {
-      return resp.status(401).json({ message: "Emailid or Password Incorrect",islogin: false});
+      return resp.status(401).json({ success:false,message: "Emailid or Password Incorrect",islogin: false});
     }
     if (!user.active) 
     {
-      return resp.status(403).json({ message: "Oops! You Are Not Approved"});
+      return resp.status(403).json({ success:false,message: "Oops! You Are Not Approved"});
     }
 
-   
     const match = await bcrypt.compare(password, user.password);
     if (!match)
     {
-      return resp.status(401).json({ message: "Emailid or Password Incorrect", islogin: false });
+      return resp.status(401).json({ success:false,message: "Emailid or Password Incorrect", islogin: false });
     }
 
     await UserActivity.create({
-      userId: user._id,
+      userId: user.userId,
       activityType: "LOGIN",
       ipAddress: req.ip,
       userAgent: req.headers["user-agent"],
       browser,
       operatingSystem,
       deviceType,
-      status: "SUCCESS"
+      status: "SUCCESS",
+      
     });
    
     const token = jwt.sign(
@@ -50,19 +50,20 @@ const userlogin = async (req, resp) => {
 
     
     const safeUser = {
+      _id:user.userId,
       id: user.userid,
       emailid: user.emailid,
       role: user.role,
       profileurl:user.profileurl
     };
     
-    resp.status(200).json({ message: `Login Success Welcome ${user.role}`, token: token, islogin: true, user: safeUser });
+    resp.status(200).json({success:true,message: `Login Success Welcome ${user.role}`, token: token, islogin: true, user: safeUser });
 
   } 
   catch (err) 
   {
     console.log(err.message);
-    resp.status(500).json({ message: err.message });
+    resp.status(500).json({ success:false,message: err.message });
   }
 };
 

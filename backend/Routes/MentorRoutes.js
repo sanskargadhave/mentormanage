@@ -8,7 +8,7 @@ const {getexcelsheet}=require("../controllers/getexceldata");
 const {uplode,iscorrectdata}=require("../middleware/exceldataMiddleware");
 const {giveApprove,giveReject,getapplicationById}=require("../controllers/StudentControler");
 const verifyToken=require("../middleware/authmiddleware");
-const {giveApplicationApprove,giveApplicationReject}=require("../controllers/MentorControler")
+const {giveApplicationApprove,giveApplicationReject,getmentorAnalytics}=require("../controllers/MentorControler")
 const isMentor=require("../middleware/ismentormiddleware");
 
 router.use(verifyToken,isMentor);
@@ -18,6 +18,7 @@ router.get("/get-studentdetails/:rollno",GetStudentDetailsByRoll);
 router.get("/student/:id",getStudentDetails); 
 router.get("/get-today-attendance",GetTodayAttendance);
 router.get("/get-student-application/:id",getapplicationById);
+router.get("/get-mentor-analytics/:id",getmentorAnalytics);
 
 router.post("/give-preview-report",givepreview);
 router.post("/store-excel-data",uplode.single("file"),iscorrectdata,getexcelsheet);

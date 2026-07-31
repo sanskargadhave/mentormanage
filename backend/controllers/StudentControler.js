@@ -7,6 +7,9 @@ const {StoreTestResult}=require("../model/testSchema");
 const {getIO}=require("../socket");
 const adduser=require("../model/userSchema");
 const NotificationSchema=require("../model/notificationsScema");
+const  {getCurrentSemester,isDateWithinRange}=require("../utils/semesterValidation.js");
+const {generateStudentRecommendation}=require("../Services/AiRecommedationStudent.js");
+const {LeaveAnalyticsAggregation,AttendanceAnalyticsAggregation}=require("../Services/StudentAggregationService.js")
 // /add-student  URL
 const StoreStudentDetails=async (req, res) => {
   try {
@@ -16,6 +19,11 @@ const StoreStudentDetails=async (req, res) => {
     const { rollno,mentorId } = collagedetails;
     const {emailid} = req.body;
     const imageurl = req.body.imageurl || "";
+    const currentSemester=await getCurrentSemester();
+
+    if (!currentSemester) { 
+      return resp.status(400).json({ success: false, message: "No active semester found."});
+    }
 
     const [ aadharnoexist, rollnoexist, emailidexist] = await Promise.all([
       StoreStudent.findOne({"personaldetails.aadharno":aadharno}),
@@ -24,20 +32,20 @@ const StoreStudentDetails=async (req, res) => {
     ]);
     
     if (aadharnoexist) {
-      return res.status(400).json({
+      return res.status(400).json({success:false,
         message: "Aadhar No Already exists"
       });
     }
     else if(rollnoexist)
     {
-      return res.status(400).json({
+      return res.status(400).json({success:false,
         message: "RollNo Already exists"
       });
     }
 
     else if (emailidexist)
     {
-      return res.status(400).json({
+      return res.status(400).json({success:false,
         message: "This Email Already Used "
       });
     }
@@ -49,13 +57,15 @@ const StoreStudentDetails=async (req, res) => {
       emailid:emailid,
       profileurl:imageurl,
       studentid:req.body.studentid,
-      isactive:false
+      semesterId:currentSemester._id,
+
     });
     await student.save();
     
 
     await adduser.create({
       userid: student.studentid,
+      userId:student._id,
       password: hashedPassword,
       emailid: req.body.emailid,
       profileurl:imageurl,
@@ -85,6 +95,7 @@ const StoreStudentDetails=async (req, res) => {
         division:student.collagedetails.division,
         profileurl:imageurl,  
       },
+      semesterId:currentSemester._id
     })
   
 
@@ -93,7 +104,7 @@ const StoreStudentDetails=async (req, res) => {
 
     io.to("user_"+mentorId).emit("notification",notification);
 
-    res.status(201).json({
+    res.status(201).json({success:true,
       message: "Student added successfully"
     });
 
@@ -101,11 +112,10 @@ const StoreStudentDetails=async (req, res) => {
     console.error("ERROR OCCURRED:");
     console.error(err);
     res.status(500).json({
-      message: "Failed to add student",
-      error: err.message
-    });
-    console.log(err.message);
-  }
+      message: err.message,
+      error: err.message,
+      success:false
+    });  }
 };
 
 // /api/students/count   URL
@@ -124,18 +134,25 @@ const SearchStudent= async (req,resp)=>{
     const datas=await StoreLecture.findOne({lectureid:req.params.lectureid});
     const students=await StoreStudent.find({$and:[{"collagedetails.year":datas.Class},{"collagedetails.division":datas.division}]}).sort({"collagedetails.rollno":1});
 
-    resp.status(200).json(students);
+    resp.status(200).json({success:true,students});
   }
   catch(err)
   {
-    resp.status(500).json({message:err.message});
+    resp.status(500).json({success:false,message:err.message});
   }
 };
 
 // /api/get-studentdetails/:rollno
 const GetStudentDetailsByRoll= async (req, resp) => {
   try {
-    const rollno = parseInt(req.params.rollno);
+    const rollno = Number(req.params.rollno);
+
+    if (!Number.isInteger(rollno)) {
+        return resp.status(400).json({
+            success: false,
+            message: "Invalid roll number. Only numbers are allowed."
+        });
+    }
     const {date,fromdate,todate}=req.query;
     
     const result = await StoreStudent.findOne({"collagedetails.rollno": rollno});
@@ -286,11 +303,11 @@ const giveApprove = async (req,resp)=>{
           
           await StoreStudent.findByIdAndUpdate(req.params.id,{registrationStatus:"Approved",isactive:true});
           await adduser.updateOne({userid:req.params.studentid},{$set:{active:true}});
-          resp.status(200).json({message:"Student Approved"});
+          resp.status(200).json({success:true,message:"Student Approved"});
       }
       catch(err)
       {
-        resp.status(500).json({message:err.message});
+        resp.status(500).json({success:false,message:err.message});
         console.log(err.message);
       }
 }
@@ -300,11 +317,11 @@ const giveReject = async (req,resp)=>{
           
           await StoreStudent.findByIdAndUpdate(req.params.id,{registrationStatus:"Rejected"});
 
-          resp.status(200).json({message:"Student Rejected "});
+          resp.status(200).json({success:true,message:"Student Rejected "});
       }
       catch(err)
       {
-        resp.status(500).json({message:err.message});
+        resp.status(500).json({success:false,message:err.message});
         console.log(err.message);
       }
 }
@@ -314,11 +331,11 @@ const giveread = async (req,resp)=>{
         isRead:true,
         readAt:new Date()
       });
-      resp.status(200).json({message:"Update Successfuly"})
+      resp.status(200).json({success:true,message:"Update Successfuly"})
   }
   catch(err)
   {
-    return resp.status(500).json({message:err.message});
+    return resp.status(500).json({success:false,message:err.message});
   }
 }
 const getMentordetails = async (req, resp) => {
@@ -331,12 +348,12 @@ const getMentordetails = async (req, resp) => {
       .populate("collagedetails.mentor");
 
     if (!StudentDetails) {
-      return resp.status(404).json({
+      return resp.status(404).json({success:false,
         message: "Record Not Found"
       });
     }
 
-    resp.status(200).json({
+    resp.status(200).json({success:true,
       StudentDetails,
       MentorDetails: StudentDetails.collagedetails.mentor
     });
@@ -344,7 +361,7 @@ const getMentordetails = async (req, resp) => {
   } catch (err) {
 
     resp.status(500).json({
-      message: err.message
+      success:false,message: err.message
     });
 
   }
@@ -355,7 +372,14 @@ const sendApplication = async (req, resp) => {
     const io = getIO();
     const {leaveType,fromDate,toDate,reason,senderId,receiver_Id,
       receiverid,receiverRole,type,certificateUrl,studentName}=req.body;
+      const currentSemester=await getCurrentSemester();
+      if (!currentSemester) { 
+        return resp.status(400).json({ success: false, message: "No active semester found."});
+      }
+      if(!isDateWithinRange(fromDate,currentSemester.attendanceStartDate,currentSemester.attendanceEndDate)){
+        return resp.status(400).json({ success: false, message: "You can Only Apply in this Semester "});
 
+      }
     const existingApplication = await StoreApplication.findOne({
         senderId,
         type:"leave_request",
@@ -365,8 +389,7 @@ const sendApplication = async (req, resp) => {
 
     if(existingApplication)
     {
-    
-      return resp.status(400).json({message:`you have already applied from ${fromDate} To ${toDate}`});
+      return resp.status(400).json({success:false,message:`you have already applied from ${fromDate} To ${toDate}`});
     }
     const totalDays =
       Math.ceil((new Date(toDate) - new Date(fromDate)) / (1000 * 60 * 60 * 24) ) + 1;
@@ -386,6 +409,7 @@ const sendApplication = async (req, resp) => {
           certificateUrl:certificateUrl,
           totalDays:totalDays
         },
+        semesterId:currentSemester._id
       });
 
     const notification=await NotificationSchema.create({
@@ -411,16 +435,17 @@ const sendApplication = async (req, resp) => {
         certificateUrl:certificateUrl,
         totalDays:totalDays
       },
+      semesterId:currentSemester._id
     })
 
     io.to("user_" +receiverid).emit("notification", notification);
 
-    resp.status(200).json({message:"Your Application Has been Send For Your Mentor"});
+    resp.status(200).json({success:true,message:"Your Application Has been Send For Your Mentor"});
 
   } catch (err) {
     console.log(err.message);
 
-    resp.status(500).json({ 
+    resp.status(500).json({ success:false,
       message: err.message
     });
   }
@@ -456,12 +481,12 @@ const givePermission = async (req, resp) => {
 
     if (updatenoti.matchedCount === 0) {
 
-      return resp.status(404).json({
+      return resp.status(404).json({success:false,
         message: "Application Not Found"
       });
     }
 
-    resp.status(200).json({
+    resp.status(200).json({success:true,
       message: `Application ${permission}`
     });
 
@@ -483,14 +508,14 @@ const getapplication = async (req,resp)=>{
       const _id = await StoreStudent.findOne({studentid:id},"_id");
       const applications = await NotificationSchema.find({senderId:_id,type:"Leave_application"}).sort({createdAt:-1});
         if (applications.length === 0) {
-          return resp.status(404).json({ message: "Applications Not Found"});
+          return resp.status(404).json({ success:false,message: "Applications Not Found"});
         }
-      resp.status(200).json({applications});
+      resp.status(200).json({success:true,applications});
   }
   catch(err)
   {
     console.log(err.message);
-    resp.status(500).json({message:err.message});
+    resp.status(500).json({success:false,message:err.message});
   }
 }
 const getapplicationById = async (req,resp)=>{
@@ -499,12 +524,12 @@ const getapplicationById = async (req,resp)=>{
       const application = await StoreApplication.findById(req.params.id);
       const student = await StoreStudent.findById(application.senderId);
 
-      resp.status(200).json({application,student});
+      resp.status(200).json({success:true,application,student});
   }
   catch(err)
   {
     console.log(err.message);
-    resp.status(500).json({message:err.message});
+    resp.status(500).json({success:false,message:err.message});
   }
 }
 
@@ -585,12 +610,65 @@ const getstudentsummery = async (req,resp)=>{
   }
 }
 const getStudentDetails = async(req,res)=>{
+    try{
+      
+      const student = await StoreStudent.findById(req.params.id)
+          .populate("collagedetails.mentor");
 
-    const student = await StoreStudent.findById(req.params.id)
-        .populate("collagedetails.mentor");
+      res.status(200).json({success:true,student});
+    }
+    catch(err)
+    {
+      res.status(500).json({success:false,message:err.message});
+    }
+}
 
-    res.json(student);
+const getstudentAnalytics = async (req,resp)=>{
+  try{
+    const {id}=req.params;
+
+    const studentId = new mongoose.Types.ObjectId(id);
+    const student = await StoreStudent.findById(studentId);
+    
+    if(!id) return resp.status(404).json({success:false,message:"Required Valid Id "})
+     const currentSemester=await getCurrentSemester();
+   
+    if(!currentSemester)  return resp.status(404).json({success:false,message:"Not Found Current Semester"});
+
+    const [result,LeaveStatus]=await Promise.all([
+      AttendanceAnalyticsAggregation(studentId,currentSemester),
+      LeaveAnalyticsAggregation(studentId,currentSemester)
+    ])
+
+    const analyticsData = {
+        SubjectTrends: result[0]?.SubjectTrends || [],
+        AttendanceDistribution:result[0]?.AttendanceDistribution?.[0] || {},
+        AttendanceTrends:result[0]?.AttendanceTrends || [],
+        LeaveStatus:LeaveStatus[0] || {},
+        AttendanceHeatmap:result[0]?.AttendanceHeatmap||[],
+        currentSemester:currentSemester||{},
+      };
+     
+      const Recommendation=await generateStudentRecommendation(analyticsData);
+
+      const FinalanalyticsData = {
+        SubjectTrends: result[0]?.SubjectTrends || [],
+        AttendanceDistribution:result[0]?.AttendanceDistribution?.[0] || {},
+        AttendanceTrends:result[0]?.AttendanceTrends || [],
+        LeaveStatus:LeaveStatus[0] || {},
+        AttendanceHeatmap:result[0]?.AttendanceHeatmap||[],
+        currentSemester:currentSemester||{},
+        Recommendation:Recommendation||{}
+      };
+      
+    console.log(FinalanalyticsData);
+    return resp.status(200).json({ success: true,FinalanalyticsData});
+  }
+  catch(err)
+  {
+    resp.status(200).json({success:false,message:err.message});
+  }
 }
 module.exports={GetStudentDetailsByRoll,SearchStudent,StudentCounts,
   StoreStudentDetails,GetStudent,giveApprove,giveReject,
-  getMentordetails,sendApplication,givePermission,getapplication,getapplicationById,getStudentDetails,giveread };
+  getMentordetails,sendApplication,givePermission,getapplication,getapplicationById,getStudentDetails,giveread,getstudentAnalytics };

@@ -26,7 +26,7 @@ function AdminDashbord()
         async function fetchanalysis() {
             try{
                 const resp= await axiosInstance.get("/admin/dashboard-analysis")
-                setanalysis(resp.data);
+                if(resp.data.success) setanalysis(resp.data.datas);
             }
             catch(err)
             {
@@ -52,8 +52,8 @@ function AdminDashbord()
                     },
                 })
                 
-                setstudents(resp.data.students);
-                setpagininfo(resp.data.pagination)
+                setstudents(resp.data.data.students);
+                setpagininfo(resp.data.data.pagination)
             }
             catch(err)
             {

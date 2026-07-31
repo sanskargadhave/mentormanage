@@ -13,6 +13,7 @@ const addattendance = new mongoose.Schema({
 
   attendance:[
   {
+    studentId:{type:mongoose.Schema.Types.ObjectId,ref:"student",required:true},
     rollno: {type:Number,required:true},
     status: {type:String,enum: ["Present", "Absent", "Leave", "Late"],required: true},
     application:{type:String}
@@ -21,8 +22,13 @@ const addattendance = new mongoose.Schema({
   course:{type:String,required:true},
   class:{type:String,required:true},
   division:{type:String,required:true},
-  submitedby:{type:String,required:true}
-});
+  submitedby:{type:String,required:true},
+  semesterId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Semester",
+    required: true
+}
+},{timestamps:true});
 
 addattendance.index(  
   { lectureid: 1, date: 1 },
@@ -35,8 +41,13 @@ const addlecture=new mongoose.Schema({
     division:{type:String,required:true},
     Class:{type:String,required:true},
     department:{type:String,required:true},
-    course:{type:String,required:true}
-});
+    course:{type:String,required:true},
+    semesterId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Semester",
+    required: true
+}
+},{timestamps:true});
 
 addlecture.pre("save", function () {
   if (this.lectureid) return;

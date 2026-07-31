@@ -1,0 +1,213 @@
+/* =====================================
+SIDEBAR
+===================================== */
+
+.ai-sidebar-container{
+
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+    padding:20px;
+
+    overflow-y:auto;
+
+    background:#111B21;
+
+}
+
+/* =====================================
+CARD
+===================================== */
+
+.sidebar-card{
+
+    background:#202C33;
+
+    border:1px solid #2A3942;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    transition:.3s;
+
+}
+
+.sidebar-card:hover{
+
+    border-color:#25D366;
+
+}
+
+/* =====================================
+TITLE
+===================================== */
+
+.sidebar-card h3{
+
+    margin:0 0 18px;
+
+    color:#25D366;
+
+    font-size:16px;
+
+}
+
+/* =====================================
+SEARCH
+===================================== */
+
+.sidebar-search{
+
+    width:100%;
+
+    padding:12px 15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#111B21;
+
+    color:white;
+
+    outline:none;
+
+    box-sizing:border-box;
+
+}
+
+.sidebar-search::placeholder{
+
+    color:#8696A0;
+
+}
+
+.sidebar-search-btn{
+
+    width:100%;
+
+    margin-top:12px;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#25D366;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.sidebar-search-btn:hover{
+
+    background:#1ebe5d;
+
+}
+
+/* =====================================
+MODULE BUTTONS
+===================================== */
+
+.sidebar-module-btn{
+
+    width:100%;
+
+    margin-bottom:10px;
+
+    padding:13px;
+
+    background:#111B21;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.sidebar-module-btn:hover{
+
+    background:#25D366;
+
+}
+
+/* =====================================
+RECENT
+===================================== */
+
+.recent-item{
+
+    padding:12px;
+
+    border-radius:10px;
+
+    color:#D9E3E7;
+
+    background:#111B21;
+
+    margin-bottom:10px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.recent-item:hover{
+
+    background:#2A3942;
+
+}
+
+/* =====================================
+SCROLLBAR
+===================================== */
+
+.ai-sidebar-container::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.ai-sidebar-container::-webkit-scrollbar-thumb{
+
+    background:#2A3942;
+
+    border-radius:10px;
+
+}
+
+/* =====================================
+MOBILE
+===================================== */
+
+@media(max-width:900px){
+
+    .ai-sidebar-container{
+
+        padding:14px;
+
+    }
+
+}

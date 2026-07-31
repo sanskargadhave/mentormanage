@@ -1,5 +1,305 @@
 /* ===== MAIN LAYOUT ===== */
+.sarrthi-ai-btn{
 
+    width:100%;
+
+    min-height:64px;
+
+    padding:9px 12px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    background:#202C33;
+
+    border:1px solid #2A3942;
+
+    border-radius:14px;
+
+    color:#E9EDEF;
+
+    cursor:pointer;
+
+    position:relative;
+
+    overflow:hidden;
+
+    transition:all .3s ease;
+
+}
+
+
+/* =====================================
+   Animated Glow
+===================================== */
+
+.sarrthi-ai-btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:130px;
+
+    height:130px;
+
+    border-radius:50%;
+
+    background:rgba(37,211,102,.12);
+
+    top:50%;
+
+    left:28px;
+
+    transform:translate(-50%,-50%);
+
+    animation:sarrthiGlow 3s ease-in-out infinite;
+
+    pointer-events:none;
+
+}
+
+
+@keyframes sarrthiGlow{
+
+    0%,
+    100%{
+
+        transform:translate(-50%,-50%) scale(.8);
+
+        opacity:.3;
+
+    }
+
+    50%{
+
+        transform:translate(-50%,-50%) scale(1.25);
+
+        opacity:.8;
+
+    }
+
+}
+
+
+/* =====================================
+   Logo
+===================================== */
+
+.sarrthi-ai-logo{
+
+    width:43px;
+
+    height:43px;
+
+    min-width:43px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#263A33;
+
+    border:1px solid rgba(37,211,102,.35);
+
+    color:#25D366;
+
+    font-size:20px;
+
+    position:relative;
+
+    z-index:2;
+
+    animation:sarrthiLogo 2.5s ease-in-out infinite;
+
+}
+
+
+@keyframes sarrthiLogo{
+
+    0%,
+    100%{
+
+        transform:scale(1) rotate(0deg);
+
+        box-shadow:0 0 0 rgba(37,211,102,0);
+
+    }
+
+    50%{
+
+        transform:scale(1.08) rotate(3deg);
+
+        box-shadow:
+            0 0 12px rgba(37,211,102,.35),
+            0 0 25px rgba(37,211,102,.12);
+
+    }
+
+}
+
+
+/* =====================================
+   Content
+===================================== */
+
+.sarrthi-ai-content{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    flex:1;
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+
+.sarrthi-ai-title{
+
+    color:#E9EDEF;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    line-height:20px;
+
+}
+
+
+.sarrthi-ai-subtitle{
+
+    color:#8696A0;
+
+    font-size:11px;
+
+    margin-top:2px;
+
+}
+
+
+/* =====================================
+   Arrow
+===================================== */
+
+.sarrthi-ai-arrow{
+
+    color:#8696A0;
+
+    font-size:13px;
+
+    position:relative;
+
+    z-index:2;
+
+    transition:.3s;
+
+}
+
+
+.sarrthi-ai-btn:hover{
+
+    background:#263A33;
+
+    border-color:#25D366;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+
+        0 8px 25px rgba(0,0,0,.25),
+
+        0 0 15px rgba(37,211,102,.08);
+
+}
+
+
+.sarrthi-ai-btn:hover .sarrthi-ai-arrow{
+
+    color:#25D366;
+
+    transform:translateX(4px);
+
+}
+
+
+.sarrthi-ai-btn:hover .sarrthi-ai-logo{
+
+    animation-duration:1.2s;
+
+}
+
+
+/* =====================================
+   Active State
+===================================== */
+
+.sarrthi-ai-btn.active{
+
+    background:#263A33;
+
+    border-color:#25D366;
+
+    box-shadow:
+
+        inset 3px 0 0 #25D366,
+
+        0 0 18px rgba(37,211,102,.08);
+
+}
+
+
+.sarrthi-ai-btn.active .sarrthi-ai-logo{
+
+    color:#111B21;
+
+    background:#25D366;
+
+    box-shadow:0 0 18px rgba(37,211,102,.35);
+
+}
+
+
+.sarrthi-ai-btn.active .sarrthi-ai-title{
+
+    color:#25D366;
+
+}
+
+
+/* =====================================
+   Collapsed Sidebar
+===================================== */
+
+.sidebar.collapsed .sarrthi-ai-btn{
+
+    justify-content:center;
+
+    padding:9px;
+
+}
+
+
+.sidebar.collapsed .sarrthi-ai-content,
+
+.sidebar.collapsed .sarrthi-ai-arrow{
+
+    display:none;
+
+}
 .mentor-layout-wrapper{
     display:flex;
     min-height:100vh;

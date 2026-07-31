@@ -8,7 +8,12 @@ const ReportdetailsSchema=new mongoose.Schema({
     department:{type:String,required:true},
     uplodeDate:{type:Date,required:true},
     uplodeBy:{type:mongoose.Schema.Types.ObjectId,ref:"mentor",default:null},
-    reportid:{type:String,unique:true}
+    reportid:{type:String,unique:true},
+    semesterId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Semester",
+    required: true
+}
 })
 
 

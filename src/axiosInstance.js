@@ -18,11 +18,21 @@ axiosInstance.interceptors.request.use(
 
 
 axiosInstance.interceptors.response.use(
-    (response) => response,
+    (response) =>{
+        
+        if (response.data.success === false) {
 
+            showToast.error(response.data.message);
+
+            return Promise.reject({
+                response
+            });
+        }
+
+        return response;
+    },
     (error) => {
-        console.log("✅ Response interceptor fired");
-        console.log(error.response?.data);
+        
 
         const message =
             error.response?.data?.message ||

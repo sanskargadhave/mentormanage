@@ -1,0 +1,205 @@
+/* ===========================
+   CARD
+=========================== */
+
+.alert-card{
+
+    width:100%;
+
+    background:#202C33;
+
+    border:1px solid #2A3942;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+}
+
+/* ===========================
+   HEADER
+=========================== */
+
+.alert-card-header{
+
+    padding:18px 20px;
+
+    border-bottom:1px solid #2A3942;
+
+}
+
+.alert-card-header h3{
+
+    margin:0;
+
+    color:#FFFFFF;
+
+    font-size:18px;
+
+}
+
+.alert-card-header span{
+
+    color:#25D366;
+
+    font-size:13px;
+
+}
+
+/* ===========================
+   LIST
+=========================== */
+
+.alert-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+/* ===========================
+   ITEM
+=========================== */
+
+.alert-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:16px 20px;
+
+    border-bottom:1px solid #2A3942;
+
+    transition:.25s;
+
+}
+
+.alert-item:last-child{
+
+    border-bottom:none;
+
+}
+
+.alert-item:hover{
+
+    background:#24323A;
+
+}
+
+/* ===========================
+   INDICATOR
+=========================== */
+
+.alert-indicator{
+
+    width:12px;
+
+    height:12px;
+
+    border-radius:50%;
+
+    flex-shrink:0;
+
+}
+
+.alert-item.critical .alert-indicator{
+
+    background:#FF4D4F;
+
+}
+
+.alert-item.warning .alert-indicator{
+
+    background:#FFB020;
+
+}
+
+.alert-item.info .alert-indicator{
+
+    background:#4AA3FF;
+
+}
+
+.alert-item.success .alert-indicator{
+
+    background:#25D366;
+
+}
+
+/* ===========================
+   CONTENT
+=========================== */
+
+.alert-content{
+
+    flex:1;
+
+}
+
+.alert-content h4{
+
+    margin:0;
+
+    color:#FFFFFF;
+
+    font-size:15px;
+
+}
+
+.alert-content p{
+
+    margin:5px 0 0;
+
+    color:#AEBAC1;
+
+    font-size:13px;
+
+}
+
+/* ===========================
+   VALUE
+=========================== */
+
+.alert-value{
+
+    color:#FFFFFF;
+
+    font-weight:700;
+
+    font-size:14px;
+
+    white-space:nowrap;
+
+    background:#111B21;
+
+    padding:6px 12px;
+
+    border-radius:10px;
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+    .alert-item{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .alert-value{
+
+        margin-top:8px;
+
+    }
+
+}

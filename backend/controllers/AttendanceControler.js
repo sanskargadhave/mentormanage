@@ -8,21 +8,55 @@ const NotificationSchema=require("../model/notificationsScema");
 const { StoreMentor } = require("../model/studentSchema.js");
 const crypto = require("crypto");
 const reportCache = require("../utils/reportCache");
-const manyAttendanceReport=require("../templates/ManyDaysReportTemplate.js")
+const manyAttendanceReport=require("../templates/ManyDaysReportTemplate.js");
+const semesterSchema=require("../model/SemesterScema.js");
+const  {getCurrentSemester,isDateWithinRange}=require("../utils/semesterValidation.js")
 //   /api/store-attendance URL
 const StoreAttendances=async (req,resp)=>{
   try{    
       const {date,lectureid,attendance,submitedby}=req.body;
+    
+      const totalStudents = attendance.length;
+
+      const presentStudents = attendance.filter(
+          student => student.status === "Present"
+      ).length;
+
+      const absentStudents = attendance.filter(
+          student => student.status === "Absent"
+      ).length;
+
+      const attendancePercentage =
+          totalStudents === 0
+              ? 0 : ((presentStudents / totalStudents) * 100).toFixed(2);
+
+      const total={
+          totalStudents:totalStudents,
+          presentStudents:presentStudents,
+          absentStudents:absentStudents,
+          attendancePercentage:attendancePercentage
+      }
+      const currentSemester=await getCurrentSemester();
+    
+      if(!currentSemester){
+        return resp.status(401).json({success:false,message:"❌Sorry Cuurent Semester Not Found"});
+      }
+      if(!isDateWithinRange(date,currentSemester.attendanceStartDate,currentSemester.attendanceEndDate))
+      {
+        return resp.status(404).json({success:false,message:"❌Sorry.. This Semester Is now Locked You Cant Store On this Day please Contact To admin"})
+      }
       const lecture=await StoreLecture.findOne({lectureid:lectureid});
+
       if(!lecture)
       {
-      return resp.status(404).json({ message: "❌Lecture not found" });
+      return resp.status(404).json({ success:false,message: "❌Lecture not found" });
       }
+
       const exists = await StoreAttendance.findOne({ lectureid, date });
       if (exists) 
       {
         return resp.status(400).json({
-        message: "❌ Attendance already marked for this lecture & date",exist:true
+        success:false,message: "❌ Attendance already marked for this lecture & date",exist:true
         });
       }
       const now = new Date();
@@ -45,15 +79,15 @@ const StoreAttendances=async (req,resp)=>{
         department:lecture.department,
         class:lecture.Class,
         division:lecture.division,
-        course:lecture.course
-
+        course:lecture.course,
+        semesterId:currentSemester._id
       });
       await att.save();
-      resp.status(201).json({message: "✅ Attendance stored successfully",exist:false});
+      resp.status(201).json({success:true,message: "✅ Attendance stored successfully",total});
   }
   catch(err)
   {
-    resp.status(500).json({message:err.message})
+    resp.status(500).json({success:false,message:err.message})
   }
 };
 
@@ -69,7 +103,7 @@ const GetAttendanceByLectureId= async (req,resp)=>{
       const lecture=await StoreAttendance.findOne({lectureid:lectureid}).populate("id");
       if(!lecture)
       {
-      return resp.status(404).json({ message: "❌Lecture not found" });
+      return resp.status(404).json({ success:false,message: "❌Lecture not found" });
       }
       
       const result=await StoreAttendance.aggregate([
@@ -91,17 +125,18 @@ const GetAttendanceByLectureId= async (req,resp)=>{
           $lt: new Date(new Date().setHours(24,0,0,0))
         }}},
         {$unwind:"$attendance"},
-        {$lookup:{
-          from:"LectureDetails",
-          localField:"id",
-          foreignField:"_id",
-          as:"LectureDetails"
-        }},
-        {$unwind:"$LectureDetails"},
+          {$lookup:{
+            from:"LectureDetails",
+            localField:"id",
+            foreignField:"_id",
+            as:"LectureDetails"
+          }},
+          {$unwind:"$LectureDetails"},
         {$group:{
           _id:{
             department:"$LectureDetails.department",
             Class:"$LectureDetails.Class",
+            course:"$LectureDetails.course",
             division:"$LectureDetails.division",
             subject:"$LectureDetails.subject"
           },
@@ -125,17 +160,19 @@ const GetAttendanceByLectureId= async (req,resp)=>{
         Class:"$_id.Class",
         division:"$_id.division",
         subject:"$_id.subject",
+        course:"$_id.course",
         presentcount:1,
         absentcount:1,
         attendanceid:1,
       }}
     ])
-
-    resp.status(200).json({result:result,counts:counts});
+    console.log(counts);
+    console.log(result);
+    resp.status(200).json({success:true,result:result,counts:counts});
   }
   catch(err)
   {
-    resp.status(500).json({message:err.message});
+    resp.status(500).json({success:false,message:err.message});
   }
 }
 
@@ -188,7 +225,7 @@ const MakeAttendanceReport= async (req,resp)=>{
       department:department,
       uplodeDate:today,
       uplodeBy:mentor._id,
-      reportid:reportid
+      reportid:reportid,
     })
 
         const notification=await NotificationSchema.create({
@@ -233,10 +270,6 @@ const givepreview=async (req,resp)=>{
     const {Department,Year,Division,Class,FromDate,ToDate}=req.body;
     const toDate=new Date(ToDate);
     toDate.setHours(23,59,59,999);
-    console.log("department:",Department);
-    console.log("Class",Class);
-    console.log("year",Year);
-    console.log("division",Division);
     if(!Department || !Year || !Division || !Class || !FromDate ||!ToDate)
     {
       return resp.status(404).json({success:false,message:"Please Select All Filetrs"});
@@ -423,10 +456,10 @@ const generateReport=async (req,resp)=>{
       landscape: true,
       printBackground: true,
       margin: {
-        top: "15mm",
-        bottom: "15mm",
-        left: "10mm",
-        right: "10mm"
+        top: "5mm",
+        bottom: "5mm",
+        left: "5mm",
+        right: "5mm"
     }
     });
 
@@ -446,7 +479,7 @@ const generateReport=async (req,resp)=>{
     const pdfurl = `${process.env.SUPABASE_URL}/storage/v1/object/public/Attendance Report/${fileName}`;
     
     
-    
+    const currentSemester=await getCurrentSemester();
     const reports = await ReportdetailsSchema.create({
       ReportType:"Attendance",
       ReportUrl:pdfurl,
@@ -456,7 +489,8 @@ const generateReport=async (req,resp)=>{
       department:cached.filters.Department,
       uplodeDate:new Date(),
       uplodeBy:mentor._id,
-      reportid:reportid
+      reportid:reportid,
+      semesterId:currentSemester._id
     })
 
         const notification=await NotificationSchema.create({
@@ -472,6 +506,7 @@ const generateReport=async (req,resp)=>{
               entityId:reports._id,
               priority:"normal",
               actionUrl:`/admin/report/${reports._id}`,
+              semesterId:currentSemester._id,
               metadata:{
                 id:mentor.mentorId,
                 name:mentor.personaldetails.name,

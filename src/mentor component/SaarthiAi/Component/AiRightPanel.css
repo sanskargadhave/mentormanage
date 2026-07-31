@@ -1,0 +1,259 @@
+/* ===================================
+RIGHT PANEL
+=================================== */
+
+.ai-right-panel{
+
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+    padding:20px;
+
+    overflow-y:auto;
+
+    background:#111B21;
+
+}
+
+/* ===================================
+CARD
+=================================== */
+
+.right-card{
+
+    background:#202C33;
+
+    border:1px solid #2A3942;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    transition:.3s;
+
+}
+
+.right-card:hover{
+
+    border-color:#25D366;
+
+    transform:translateY(-3px);
+
+}
+
+/* ===================================
+TITLE
+=================================== */
+
+.right-card-title{
+
+    color:#25D366;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    margin-bottom:16px;
+
+}
+
+/* ===================================
+STATUS
+=================================== */
+
+.status-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.status-circle{
+
+    width:16px;
+
+    height:16px;
+
+    border-radius:50%;
+
+    background:#25D366;
+
+    animation:pulse 1.5s infinite;
+
+}
+
+.status-box h4{
+
+    color:white;
+
+    margin:0;
+
+}
+
+.status-box span{
+
+    color:#AEBAC1;
+
+    font-size:13px;
+
+}
+
+/* ===================================
+CONFIDENCE
+=================================== */
+
+.confidence-score{
+
+    color:white;
+
+    font-size:34px;
+
+    font-weight:bold;
+
+    margin-bottom:10px;
+
+}
+
+.confidence-progress{
+
+    height:8px;
+
+    background:#2A3942;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    margin-bottom:10px;
+
+}
+
+.confidence-fill{
+
+    width:98%;
+
+    height:100%;
+
+    background:#25D366;
+
+}
+
+.right-card small{
+
+    color:#AEBAC1;
+
+}
+
+/* ===================================
+ALERTS
+=================================== */
+
+.alert-list{
+
+    margin:0;
+
+    padding-left:18px;
+
+}
+
+.alert-list li{
+
+    color:white;
+
+    margin-bottom:10px;
+
+    font-size:14px;
+
+}
+
+/* ===================================
+BUTTONS
+=================================== */
+
+.quick-btn{
+
+    width:100%;
+
+    border:none;
+
+    margin-top:10px;
+
+    padding:12px;
+
+    background:#111B21;
+
+    color:white;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    font-weight:600;
+
+}
+
+.quick-btn:hover{
+
+    background:#25D366;
+
+}
+
+/* ===================================
+SCROLLBAR
+=================================== */
+
+.ai-right-panel::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.ai-right-panel::-webkit-scrollbar-thumb{
+
+    background:#2A3942;
+
+    border-radius:10px;
+
+}
+
+/* ===================================
+ANIMATION
+=================================== */
+
+@keyframes pulse{
+
+    0%{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+    50%{
+
+        transform:scale(1.3);
+
+        opacity:.5;
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}

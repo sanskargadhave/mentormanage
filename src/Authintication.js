@@ -3,6 +3,7 @@ import socket from './socket';
 import { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext({
   id: null,
+  _id:null,
   name: null,
   email: null,
   role: "Guest",
@@ -14,6 +15,8 @@ export const AuthContext = createContext({
 
 export function AuthProvider({ children }) {
   const [id, setid] = useState(() => localStorage.getItem("id"));
+  const [_id, set_id] = useState(() => localStorage.getItem("_id"));
+
   const [name, setname] = useState(() => localStorage.getItem("name"));
   const [email, setemail] = useState(() => localStorage.getItem("email"));
   const [role, setrole] = useState(() => localStorage.getItem("role") || "Guest");
@@ -45,14 +48,16 @@ export function AuthProvider({ children }) {
     setemail(userdata.email);
     setrole(userdata.role);
     settoken(userdata.token);
-    setprofilepic(userdata.profilepic)
+    setprofilepic(userdata.profilepic);
+    set_id(userdata._id);
     localStorage.setItem("id", userdata.id);
+    localStorage.setItem("_id", userdata._id);
     localStorage.setItem("name", userdata.name);
     localStorage.setItem("email", userdata.email);
     localStorage.setItem("role", userdata.role);
     localStorage.setItem("token",userdata.token);
     localStorage.setItem("profilepic",userdata.profilepic);
-    console.log(userdata.profilepic);
+    
     socket.emit("join_room",{
       userid: userdata.id,
       role: userdata.role
@@ -62,6 +67,7 @@ export function AuthProvider({ children }) {
  
   function logout() {
     setid(null);
+    set_id(null)
     setname(null);
     setemail(null);
     setrole("Guest");
@@ -72,7 +78,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ id,name,email,role,token,profilepic,login, logout }}>
+    <AuthContext.Provider value={{_id,id,name,email,role,token,profilepic,login, logout }}>
       {children}
     </AuthContext.Provider>
   );

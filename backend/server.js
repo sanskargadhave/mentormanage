@@ -14,7 +14,7 @@ const MentorRoutes=require("./Routes/MentorRoutes");
 const StudentRoutes=require("./Routes/StudentRoutes");
 const TeacherRoutes=require("./Routes/TeacherRoutes");
 const ProfileRoutes=require("./Routes/ProfileRoutes");
-
+const AssignmentRoutes=require("./Routes/assignmentRoutes");
 
 const app = express();
 const server = http.createServer(app);
@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 3,
+  max: 5,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -51,7 +51,7 @@ app.use("/api/mentor",MentorRoutes);
 app.use("/api/student",StudentRoutes);
 app.use("/api/teacher",TeacherRoutes);
 app.use("/api/profile",ProfileRoutes);
-
+app.use("/api/assignment",AssignmentRoutes);
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {

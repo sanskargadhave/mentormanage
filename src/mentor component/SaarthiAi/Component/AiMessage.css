@@ -1,0 +1,209 @@
+/* ==========================================
+   MESSAGE ROW
+========================================== */
+
+.ai-message-row{
+
+    display:flex;
+
+    margin-bottom:22px;
+
+    align-items:flex-end;
+
+    gap:12px;
+
+}
+
+/* ==========================================
+   USER ALIGNMENT
+========================================== */
+
+.ai-message-row.user{
+
+    justify-content:flex-end;
+
+}
+
+/* ==========================================
+   AVATAR
+========================================== */
+
+.ai-message-avatar{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:black;
+
+    color:white;
+
+    font-size:20px;
+
+    flex-shrink:0;
+
+}
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+.ai-message-bubble{
+
+    max-width:72%;
+
+    padding:16px 20px;
+
+    border-radius:18px;
+
+    word-break:break-word;
+
+    position:relative;
+
+}
+
+/* ==========================================
+   AI MESSAGE
+========================================== */
+
+.ai-message-bubble.ai{
+
+    background:#202C33;
+
+    border:1px solid #2A3942;
+
+    color:white;
+
+    border-top-left-radius:8px;
+
+}
+
+/* ==========================================
+   USER MESSAGE
+========================================== */
+
+.ai-message-bubble.user{
+
+    background:#25D366;
+
+    color:white;
+
+    border-top-right-radius:8px;
+
+}
+
+/* ==========================================
+   TEXT
+========================================== */
+
+.ai-message-bubble p{
+
+    margin:0;
+
+    line-height:1.7;
+
+    font-size:15px;
+
+}
+
+/* ==========================================
+   TIME
+========================================== */
+
+.ai-message-bubble small{
+
+    display:block;
+
+    margin-top:10px;
+
+    text-align:right;
+
+    opacity:.7;
+
+    font-size:11px;
+
+}
+
+/* ==========================================
+   THINKING
+========================================== */
+
+.ai-thinking{
+
+    display:flex;
+
+    gap:8px;
+
+    align-items:center;
+
+    height:24px;
+
+}
+
+.ai-thinking span{
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:#25D366;
+
+    animation:thinking 1.2s infinite;
+
+}
+
+.ai-thinking span:nth-child(2){
+
+    animation-delay:.2s;
+
+}
+
+.ai-thinking span:nth-child(3){
+
+    animation-delay:.4s;
+
+}
+
+@keyframes thinking{
+
+    0%,80%,100%{
+
+        transform:scale(.6);
+
+        opacity:.4;
+
+    }
+
+    40%{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+    .ai-message-bubble{
+
+        max-width:90%;
+
+    }
+
+}

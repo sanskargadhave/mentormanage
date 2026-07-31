@@ -42,7 +42,7 @@ function AddLecture(){
         {
             try{
                 const resp=await axiosInstance.get("/common/getteacher");
-                setteachers(resp.data)
+                setteachers(resp.data.teacher)
                 console.log(resp.data);
             }
             catch(err)

@@ -17,7 +17,12 @@ const StoreTest=new mongoose.Schema({
     department:{type:String,required:true},
     year:{type:String,required:true},
     division:{type:String,required:true},
-    pdfurl:{type:String}
+    pdfurl:{type:String},
+    semesterId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Semester",
+        required: true
+    }
 });
 
 StoreTestResult=mongoose.model("test",StoreTest,"TestDetails");

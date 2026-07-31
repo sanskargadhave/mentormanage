@@ -7,6 +7,8 @@ const StoreApplication = new mongoose.Schema({
         message:{type:String,required:true},
         data: mongoose.Schema.Types.Mixed,
         read:{type:Boolean,default:false},
-        status:{type:String,enum:["Pending","Approve","Reject"],default:"Pending"}
+        status:{type:String,enum:["Pending","Approve","Reject"],default:"Pending"},
+        semesterId: { type: mongoose.Schema.Types.ObjectId, ref: "Semester",required: true
+}
 },{timestamps:true})
 module.exports=mongoose.model("ApplicationDetails",StoreApplication,"ApplicationDetails");

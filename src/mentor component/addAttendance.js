@@ -12,7 +12,7 @@ import logo from "../collageassets/logo-college.png";
 import axiosInstance from "../axiosInstance";
 import { showToast } from "../utils/showToast";
 
-export default function ShowAttendance({totalstudent,totalabsent,totalpresent,lectureid})
+export default function ShowAttendance({total,lectureid})
 {
     const today = new Date().toISOString().split("T")[0];
     const token=localStorage.getItem("token");
@@ -44,7 +44,7 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
     }
 }, [lectureid, token]);
     return (
-        <div className="admin-content animate__animated animate__zoomIn">
+        <div className="animate__animated animate__zoomIn">
             <div className="attendance-header">
 
                 <div className="header-top">
@@ -66,25 +66,23 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
 
                     <div className="info-box">
                         <span className="label">Total Students</span>
-                        <span className="value">{totalstudent}</span>
+                        <span className="value">{total.totalStudents}</span>
                     </div>
 
                     <div className="info-box">
                         <span className="label">Present</span>
-                        <span className="value text-success">{totalpresent}</span>
+                        <span className="value text-success">{total.presentStudents}</span>
                     </div>
 
                     <div className="info-box">
                         <span className="label">Absent</span>
-                        <span className="value text-danger">{totalabsent}</span>
+                        <span className="value text-danger">{total.absentStudents}</span>
                     </div>
 
                     <div className="info-box">
                         <span className="label">Percentage</span>
                         <span className="value">
-                        {totalstudent > 0
-                            ? ((totalpresent / totalstudent) * 100).toFixed(2)
-                            : 0}%
+                        {total.attendancePercentage}%
                         </span>
                     </div>
 
@@ -107,27 +105,142 @@ export default function ShowAttendance({totalstudent,totalabsent,totalpresent,le
                     </div>
                 )
             }<br/>
-            <div className="mobile-summary">
-                <h6>Completed Sessions – Daily Overview</h6>
-                {counts.map((data, index) => {
-                const total = data.presentcount + data.absentcount;
-                const percentage = total > 0 ? ((data.presentcount / total) * 100).toFixed(2) : 0;
+            <div className="completed-section-session">
 
-                return (
-                    <div key={index} className="summary-card">
-                        <p><strong>Class:</strong> {data.Class}</p>
-                        <p><strong>Division:</strong> {data.division}</p>
-                        <p><strong>Subject:</strong> {data.subject}</p>
-                        <p>Present: {data.presentcount}</p>
-                        <p>Absent: {data.absentcount}</p>
-                        <p>Total: {total}</p>
-                        <p>Percentage:{" "}
-                            <span className={percentage >= 80 ? "good" : "bad"}>
-                                {percentage}%
-                            </span>
-                        </p>
+                <div className="completed-header-session">
+
+                    <div>
+                        <h4>📚 Today's Completed Sessions</h4>
+                        <p>  Every completed lecture contributes to students' academic success. </p>
                     </div>
-                );})}
+
+                    <span className="completed-count-session">
+                        {counts.length} Sessions
+                    </span>
+
+                </div>
+
+                <div className="completed-grid-session">
+
+                    {counts.map((item, index) => {
+
+                        const total = item.presentcount + item.absentcount;
+
+                        const percentage =
+                            total === 0
+                                ? 0
+                                : ((item.presentcount / total) * 100).toFixed(1);
+
+                        return (
+
+                            <div className="completed-card-session" key={index}>
+
+                                <div className="completed-title-session">
+
+                                    <div className="subject-info">
+
+                                        <div className="subject-icon">
+                                            📚
+                                        </div>
+
+                                        <div>
+
+                                            <h5>{item.subject}</h5>
+
+                                            <small>Lecture Successfully Completed</small>
+
+                                        </div>
+
+                                    </div>
+
+                                    <span className="completed-status-session">
+                                        <i className="bi bi-check-circle-fill"></i>
+                                        Completed
+                                    </span>
+
+                                </div>
+
+                                <div className="completed-info-session">
+
+                                    <span>
+                                        🏫   {item.department}
+                                    </span>
+                                    <span>
+                                        🏷   Course {item.course}
+                                    </span>
+                                    <span>
+                                        🎓 {item.Class} Year
+                                    </span>
+
+                                    <span>
+                                        🏷   Division {item.division}
+                                    </span>
+
+                                    
+
+                                </div>
+
+                                <div className="attendance-box-session">
+
+                                    <div>
+
+                                        <small>Present</small>
+
+                                        <h4>{item.presentcount}</h4>
+
+                                    </div>
+
+                                    <div>
+
+                                        <small>Absent</small>
+
+                                        <h4>{item.absentcount}</h4>
+
+                                    </div>
+
+                                    <div>
+
+                                        <small>Total</small>
+
+                                        <h4>{total}</h4>
+
+                                    </div>
+
+                                </div>
+
+                                <div className="progress-head-session">
+
+                                    <span>Attendance</span>
+
+                                    <strong>{percentage}%</strong>
+
+                                </div>
+
+                                <div className="progress-session">
+
+                                    <div
+                                        className="progress-fill-session"
+                                        style={{
+                                            width: `${percentage}%`
+                                        }}
+                                    />
+
+                                </div>
+
+                                <div className="lecture-id-session">
+
+                                    🆔 {item.attendanceid}
+
+                                </div>
+
+                            </div>
+
+                        );
+
+                    })}
+
+                </div>
+
             </div>
         </div>
     );
@@ -144,7 +257,7 @@ function AddAttendance() {
     const [message,setmessage]=useState("");
     const [studentdata,setstudentdata]=useState([]);
     const [attendance, setAttendance] = useState({});
-    const [totalstudent, settotalstudent] = useState(0);
+    const [total, settotal] = useState({});
     const [step,setstep]=useState("search");
     const [present,setpresent]=useState("");
     const [absent,setabsent]=useState("");
@@ -157,18 +270,20 @@ function AddAttendance() {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+useEffect(() => {
+    if (studentdata.length === 0) return;
 
-    useEffect(() => 
-    {
-        if (studentdata.length === 0) return;
+    const initial = {};
 
-        const initial = {};
-        studentdata.forEach(student => {
-            initial[student.collagedetails.rollno] = "Present";
-        });
-        setAttendance(initial);
-    }, [studentdata]);
+    studentdata.forEach(student => {
+        initial[student.collagedetails.rollno] = {
+            status: "Present",
+            studentId: student._id,
+        };
+    });
 
+    setAttendance(initial);
+}, [studentdata]);
 
     useEffect(() => {
         if(!token) return;
@@ -191,31 +306,35 @@ function AddAttendance() {
         label: `${s.lectureid} | Subject: ${s.subject}`
     }));
 
-    const setStudentAttendance = (rollno, isabsent) => 
-    {
-        setAttendance(prev => ({
-            ...prev,
-            [rollno]: isabsent ? "Present" : "Absent"
-        }));
-    };
+    const setStudentAttendance = (rollno, status) => {
+    setAttendance(prev => ({
+        ...prev,
+        [rollno]: {
+            ...prev[rollno],
+            status,
+        },
+    }));
+};
     async function storeattendance()
     {
         const totalstudent=Object.keys(attendance).length;
         const totalabsent = Object.values(attendance).filter(status => status === "Absent").length;
 
         const totalpresent = Object.values(attendance).filter(status => status === "Present").length;
-        const attendanceArray = Object.entries(attendance).map(([rollno, status]) => 
-        ({
-            rollno,
-            status
-        }))
+        const attendanceArray = Object.entries(attendance).map(
+    ([rollno, value]) => ({
+        rollno,
+        status: value.status,
+        studentId: value.studentId,
+    })
+);  
         try{
             setloding(true);
             const resp=await axiosInstance.post("/common/store-attendance",{date:date,lectureid:selected.value,attendance:attendanceArray,submitedby:id});
-            settotalstudent(resp.data.totalstudent);
-            setpresent(resp.data.totalpresent);
-            setabsent(resp.data.totalabsent);
+            settotal(resp.data.total);
             setstep("summery");
+            if(resp.data.success) showToast.success(resp.data.message);
+
         }
         catch(err)
         {
@@ -236,7 +355,7 @@ function AddAttendance() {
             try{
                 setloding(true);
                 const resp=await axiosInstance.get(`/mentor/serach-student/${selected.value}`);
-                setstudentdata(resp.data);
+                setstudentdata(resp.data.students);
                 setstep("attendance");
             }
             catch(err)
@@ -329,19 +448,19 @@ function AddAttendance() {
                 
                 <div className="mobile-attendance">
                     {studentdata.map((student) => (
-                        <div key={student._id} className="student-card">
+                        <div key={student._id} className="student-cardss">
 
-                            <div className="student-info">
+                            <div className="student-infoaa">
                                 <strong>Roll: {student.collagedetails.rollno}</strong>
                                 <p>{student.personaldetails.name}</p>
                             </div>
 
-                            <div className="attendance-buttons">
-                                <button className={ attendance[student.collagedetails.rollno] === "Present" ? "active-present" : ""} onClick={() => setStudentAttendance(student.collagedetails.rollno, true)}>
+                            <div className="attendance-buttonsw">
+                                <button className={ attendance[student.collagedetails.rollno]?.status === "Present" ? "active-present" : ""} onClick={() => setStudentAttendance(student.collagedetails.rollno,"Present" )}>
                                     Present
                                 </button>
 
-                                <button className={ attendance[student.collagedetails.rollno] === "Absent" ? "active-absent" : ""} onClick={() => setStudentAttendance(student.collagedetails.rollno, false)}>
+                                <button className={ attendance[student.collagedetails.rollno]?.status === "Absent" ? "active-absent" : ""} onClick={() => setStudentAttendance( student.collagedetails.rollno, "Absent")}>
                                     Absent
                                 </button>
                             </div>
@@ -372,7 +491,7 @@ function AddAttendance() {
   </div>
 )}
             {step==="summery" && (
-                <ShowAttendance totalstudent={totalstudent} totalabsent={absent} totalpresent={present} lectureid={selected.value}/>
+                <ShowAttendance total={total} lectureid={selected.value}/>
             )}
             {showerror && (<GiveError show={showerror} message={message} duration={10000} onClose={()=>setshowerror(false)}/>)}
 

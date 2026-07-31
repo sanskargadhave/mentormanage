@@ -1,0 +1,742 @@
+/* ==========================
+   Header
+========================== */
+
+.assignment-list-header{
+
+    width:100%;
+
+    background:#202C33;
+
+    border:1px solid #2A3942;
+
+    border-radius:16px;
+
+    padding:22px;
+
+    margin-bottom:25px;
+
+    box-sizing:border-box;
+
+}
+
+/* ==========================
+   Top Section
+========================== */
+
+.assignment-list-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    margin-bottom:22px;
+
+}
+
+.assignment-list-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.assignment-list-icon{
+
+    width:52px;
+
+    height:52px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#263A33;
+
+    border-radius:14px;
+
+    color:#25D366;
+
+    font-size:22px;
+
+}
+
+.assignment-list-title h2{
+
+    margin:0;
+
+    color:#E9EDEF;
+
+    font-size:24px;
+
+    font-weight:600;
+
+}
+
+.assignment-list-title p{
+
+    margin-top:5px;
+
+    color:#8696A0;
+
+    font-size:14px;
+
+}
+
+/* ==========================
+   Button
+========================== */
+
+.assignment-new-btn{
+
+    border:none;
+
+    outline:none;
+
+    background:#25D366;
+
+    color:#111B21;
+
+    padding:12px 18px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.assignment-new-btn:hover{
+
+    background:#1ebe5b;
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================
+   Filters
+========================== */
+
+.assignment-filter-area{
+
+    display:grid;
+
+    grid-template-columns:2fr repeat(4,1fr);
+
+    gap:15px;
+
+}
+
+/* Search */
+
+.assignment-search-box{
+
+    display:flex;
+
+    align-items:center;
+
+    background:#2A3942;
+
+    border:1px solid #3B4A54;
+
+    border-radius:10px;
+
+    padding:0 14px;
+
+    transition:.25s;
+
+}
+
+.assignment-search-box:focus-within{
+
+    border-color:#25D366;
+
+    box-shadow:0 0 0 3px rgba(37,211,102,.15);
+
+}
+
+.assignment-search-box i{
+
+    color:#8696A0;
+
+    font-size:16px;
+
+}
+
+.assignment-search-box input{
+
+    width:100%;
+
+    background:transparent;
+
+    border:none;
+
+    outline:none;
+
+    color:#E9EDEF;
+
+    padding:12px;
+
+    font-size:14px;
+
+}
+
+.assignment-search-box input::placeholder{
+
+    color:#8696A0;
+
+}
+
+/* Select */
+
+.assignment-filter{
+
+    width:100%;
+
+    background:#2A3942;
+
+    color:#E9EDEF;
+
+    border:1px solid #3B4A54;
+
+    border-radius:10px;
+
+    padding:12px;
+
+    outline:none;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.assignment-filter:hover{
+
+    border-color:#25D366;
+
+}
+
+.assignment-filter:focus{
+
+    border-color:#25D366;
+
+    box-shadow:0 0 0 3px rgba(37,211,102,.15);
+
+}
+
+/* ==========================
+   Mobile
+========================== */
+
+@media(max-width:992px){
+
+    .assignment-list-top{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .assignment-new-btn{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
+
+    .assignment-filter-area{
+
+        grid-template-columns:1fr 1fr;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .assignment-list-header{
+
+        padding:16px;
+
+    }
+
+    .assignment-filter-area{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .assignment-list-icon{
+
+        width:45px;
+
+        height:45px;
+
+        font-size:19px;
+
+    }
+
+    .assignment-list-title h2{
+
+        font-size:20px;
+
+    }
+
+    .assignment-list-title p{
+
+        font-size:12px;
+
+    }
+
+}
+
+.assignment-filter-area{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:14px;
+
+    margin-top:20px;
+
+}
+
+.assignment-search-box{
+
+    grid-column:1/-1;
+
+}
+
+@media(max-width:992px){
+
+    .assignment-filter-area{
+
+        grid-template-columns:repeat(3,1fr);
+
+    }
+
+}
+
+.assignment-card-ass{
+
+    background:#202C33;
+
+    border:1px solid #2A3942;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    transition:.3s;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.assignment-card-ass:hover{
+
+    transform:translateY(-4px);
+
+    border-color:#25D366;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.35);
+
+}
+
+/* Top */
+
+.assignment-top-ass{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:20px;
+
+}
+
+.assignment-top-ass h3{
+
+    margin:0;
+
+    color:#fff;
+
+    font-size:22px;
+
+}
+
+.assignment-top-ass p{
+
+    margin-top:6px;
+
+    color:#9AA6B2;
+
+}
+
+/* Badge */
+
+.assignment-badge-ass{
+
+    padding:8px 16px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.assignment-badge-ass.published{
+
+    background:#0E4E2F;
+
+    color:#25D366;
+
+}
+
+.assignment-badge-ass.draft{
+
+    background:#5A4500;
+
+    color:#FFC107;
+
+}
+
+.assignment-badge-ass.closed{
+
+    background:#512222;
+
+    color:#FF6B6B;
+
+}
+
+/* Details */
+
+.assignment-details-ass{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+}
+
+.assignment-info-ass,
+
+.assignment-class-ass{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+}
+
+.assignment-info-ass span,
+
+.assignment-class-ass span{
+
+    background:#2A3942;
+
+    color:#D5DADF;
+
+    padding:8px 14px;
+
+    border-radius:10px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+/* Progress */
+
+.progress-title-ass{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#D5DADF;
+
+    margin-bottom:8px;
+
+    font-size:14px;
+
+}
+
+.progress-bar-ass{
+
+    height:8px;
+
+    background:#2A3942;
+
+    border-radius:50px;
+
+    overflow:hidden;
+
+}
+
+.progress-fill-ass{
+
+    height:100%;
+
+    background:#25D366;
+
+    border-radius:50px;
+
+}
+
+/* Stats */
+
+.assignment-stats-ass{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:15px;
+
+}
+
+.assignment-stats-ass div{
+
+    background:#2A3942;
+
+    border-radius:12px;
+
+    padding:15px;
+
+    text-align:center;
+
+}
+
+.assignment-stats-ass h5{
+
+    color:#25D366;
+
+    font-size:22px;
+
+    margin:0;
+
+}
+
+.assignment-stats-ass p{
+
+    color:#AEBAC1;
+
+    margin-top:6px;
+
+    font-size:13px;
+
+}
+
+/* Buttons */
+
+.assignment-actions-ass{
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+.assignment-actions-ass button{
+
+    flex:1;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:12px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    transition:.3s;
+
+}
+
+.view-btn-ass{
+
+    background:#25D366;
+
+    color:#111B21;
+
+}
+
+.view-btn-ass:hover{
+
+    background:#1DB954;
+
+}
+
+.edit-btn-ass{
+
+    background:#2A3942;
+
+    color:white;
+
+}
+
+.edit-btn-ass:hover{
+
+    background:#3B4A54;
+
+}
+
+.delete-btn-ass{
+
+    background:#512222;
+
+    color:#FF6B6B;
+
+}
+
+.delete-btn-ass:hover{
+
+    background:#6B2A2A;
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .assignment-details-ass{
+
+        flex-direction:column;
+
+    }
+
+    .assignment-stats-ass{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .assignment-actions-ass{
+
+        flex-direction:column;
+
+    }
+
+}
+
+
+.assignment-reset-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    width:100%;
+
+    height:46px;
+
+    background:#2A3942;
+
+    color:#E9EDEF;
+
+    border:1px solid #3B4A54;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:all .25s ease;
+
+}
+
+.assignment-reset-btn i{
+
+    font-size:16px;
+
+}
+
+.assignment-reset-btn:hover{
+
+    background:#36454F;
+
+    border-color:#25D366;
+
+    color:#25D366;
+
+    transform:translateY(-2px);
+
+    box-shadow:0 6px 15px rgba(37,211,102,.15);
+
+}
+
+.assignment-reset-btn:active{
+
+    transform:scale(.97);
+
+}
+
+.assignment-reset-btn:focus{
+
+    outline:none;
+
+    border-color:#25D366;
+
+    box-shadow:0 0 0 3px rgba(37,211,102,.18);
+
+}

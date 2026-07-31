@@ -28,8 +28,11 @@
   import { ToastContainer } from "react-toastify";
   import "react-toastify/dist/ReactToastify.css";
   import ForgetPassword from "./public component/forgetPassword.js";
-
-import { use } from "react";
+  import StudentChart from "./student comonent/student Annalytics/StudentAnnalytics.js";
+  import MentorChart from "./mentor component/mentor analytics/mentorAnalytics.js";
+  import SaarthiAI from "./mentor component/SaarthiAi/SaarthiAi.js";
+  import AssignmentAction from "./mentor component/AssignmentControle/assignmentAction.js";
+  import { use } from "react";
   function App() {
     
     const navigate=useNavigate();
@@ -47,11 +50,15 @@ import { use } from "react";
           <Route path="/register-teacher" element={<AddTeacher/>}/>
           <Route path="/forget-password" element={<ForgetPassword/>}/>
           <Route path="/login" element={<Login />} />
+          <Route element={<ProtectedRoute allowedRoles={["Mentor"]} />}>
+            <Route path="/mentor-SaarthiAiChat" element={<SaarthiAI/>}/>
+          </Route>
         <Route element={<Layout/>}>
           {/* Public */}
           
           <Route path="/" element={<StudentDashboardContent />} />
-        
+
+          
           
           {/* For Only login */}
         
@@ -93,6 +100,8 @@ import { use } from "react";
               <Route path="add-test-result" element={<AddTestResult/>}/>
               <Route path="student/:id" element={<StudentDetails />} />
               <Route path="leave/:id" element={<LeaveDetails />} />
+              <Route path="chart" element={<MentorChart/>}/>
+              <Route path="assignment-controler" element={<AssignmentAction/>}/>
             </Route>
           </Route>
 
@@ -109,7 +118,7 @@ import { use } from "react";
             <Route path="/student" element={<SidebarLayout/>}>
               <Route index element={<StudentDashbord/>}/>
               <Route path="leave-application-to-mentor" element={<LeaveApplication/>}/>
-              
+              <Route path="chart" element={<StudentChart/>}/>
 
             
             </Route>

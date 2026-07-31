@@ -1,0 +1,305 @@
+/* =====================================================
+   CHART CARD
+===================================================== */
+
+.chart-card {
+
+    width: 100%;
+
+    min-width: 0;
+
+    background: #202C33;
+
+    border: 1px solid #2A3942;
+
+    border-radius: 18px;
+
+    transition:
+        transform .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, .18);
+
+    overflow: hidden;
+
+}
+
+
+/* =====================================================
+   HOVER
+===================================================== */
+
+.chart-card:hover {
+
+    border-color: #25D366;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 15px 40px rgba(37, 211, 102, .18);
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.chart-card-header {
+
+    width: 100%;
+
+    padding: 20px 24px 14px;
+
+    border-bottom: 1px solid #2A3942;
+
+    box-sizing: border-box;
+
+}
+
+
+.chart-card-title-wrapper {
+
+    min-width: 0;
+
+}
+
+
+.chart-card-header h3 {
+
+    margin: 0;
+
+    color: #FFFFFF;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    word-break: break-word;
+
+}
+
+
+.chart-card-header span {
+
+    display: block;
+
+    margin-top: 6px;
+
+    color: #25D366;
+
+    font-size: 13px;
+
+    line-height: 1.4;
+
+}
+
+
+/* =====================================================
+   BODY
+===================================================== */
+
+.chart-card-body {
+
+    width: 100%;
+
+    min-width: 0;
+
+    min-height: 340px;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+
+/* =====================================================
+   IMPORTANT FOR CHART LIBRARIES
+===================================================== */
+
+.chart-card-body > * {
+
+    width: 100%;
+
+    max-width: 100%;
+
+    min-width: 0;
+
+}
+
+
+/* =====================================================
+   RECHARTS RESPONSIVE CONTAINER FIX
+===================================================== */
+
+.chart-card-body
+.recharts-responsive-container {
+
+    width: 100% !important;
+
+    max-width: 100%;
+
+}
+
+
+/* =====================================================
+   HEATMAP
+===================================================== */
+
+.chart-card:has(.attendance-heatmap) {
+
+    overflow-x: auto;
+
+}
+
+
+.chart-card:has(.attendance-heatmap)
+.chart-card-body {
+
+    min-height: 390px;
+
+    align-items: flex-start;
+
+    overflow-x: auto;
+
+}
+
+
+/* =====================================================
+   AI RECOMMENDATION CARD
+===================================================== */
+
+.chart-card:has(.ai-recommendation) {
+
+    min-height: 400px;
+
+}
+
+
+.chart-card:has(.ai-recommendation)
+.chart-card-body {
+
+    min-height: 400px;
+
+    align-items: flex-start;
+
+}
+
+
+/* =====================================================
+   SUBJECT CHART
+===================================================== */
+
+.chart-card:has(.subject-attendance-chart)
+.chart-card-body {
+
+    min-height: 360px;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+
+    .chart-card {
+
+        border-radius: 15px;
+
+    }
+
+
+    .chart-card-header {
+
+        padding: 16px 18px 12px;
+
+    }
+
+
+    .chart-card-header h3 {
+
+        font-size: 16px;
+
+    }
+
+
+    .chart-card-header span {
+
+        font-size: 12px;
+
+    }
+
+
+    .chart-card-body {
+
+        min-height: 300px;
+
+        padding: 14px;
+
+    }
+
+
+    .chart-card:has(.attendance-heatmap)
+    .chart-card-body {
+
+        min-height: 360px;
+
+    }
+
+
+    .chart-card:has(.ai-recommendation)
+    .chart-card-body {
+
+        min-height: 450px;
+
+    }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+
+    .chart-card-header {
+
+        padding: 14px 15px 10px;
+
+    }
+
+
+    .chart-card-body {
+
+        min-height: 270px;
+
+        padding: 10px;
+
+    }
+
+
+    .chart-card:has(.attendance-heatmap)
+    .chart-card-body {
+
+        min-height: 340px;
+
+    }
+
+
+}

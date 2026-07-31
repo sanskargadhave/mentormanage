@@ -8,6 +8,7 @@ import "animate.css";
 import axios from "axios";
 import axiosInstance from "../axiosInstance";
 import { toast } from "react-toastify";
+
 function AddStudent()
 {
     const [profile,setProfile]=useState(null);
@@ -34,7 +35,7 @@ function AddStudent()
             try{
                 async function getMentorDetails(){
                     const resp= await axiosInstance.get("common/getmentor");
-                    setmentor(resp.data);
+                    setmentor(resp.data.Mentors);
                 }
                 getMentorDetails();
             }
@@ -424,10 +425,10 @@ function AddStudent()
                         </select>
                         {errors.Department && (<label className="showError">{errors.Department}</label>)}
 
-                    </div>
+                    </div>{formdata.Department && 
                     <div className="col-12 col-md-4 ">
                         <label className="form-label"><i className="bi bi-exclude"></i> In {formdata.Department} Department which Course </label>
-                        {formdata.Department && 
+                        
                         (
                             <select value={formdata.Department}className={`form-select form-select-sm ${errors.Course ? "is-invalid" : ""}`} aria-label="Small select example" name="Course" value={formdata.Course} onChange={handleChange}>
                                 <option value="">select Course</option>
@@ -438,10 +439,10 @@ function AddStudent()
                                     )
                                 )}
                             </select>
-                        )}
+                        )
                         {errors.Course && (<label className="showError">{errors.Course}</label>)}
 
-                    </div>
+                    </div>}
                     <div className="col-12 col-md-4 mb-3">
                         <label className="form-label"><i className="bi bi-circle-square"></i>  In {formdata.Course} Course which Year</label>
                         <select value={formdata.Year} className={`form-select form-select-sm ${errors.Year ? "is-invalid" : ""}`} aria-label="Small select example" name="Year" onChange={handleChange}>

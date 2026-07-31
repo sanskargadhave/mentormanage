@@ -1951,23 +1951,298 @@ margin-bottom:15px;
   gap: 10px;
 }
 
-.student-card {
+.student-cardss {
   background: #fff;
   padding: 12px;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.student-info {
+.student-infoaa {
   margin-bottom: 8px;
 }
 
-.attendance-buttons {
+.attendance-buttonsw {
   display: flex;
   gap: 10px;
 }
+.completed-section-session{
 
-.attendance-buttons button {
+    margin-top:35px;
+
+}
+.completed-title-session{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:20px;
+}
+
+.subject-info{
+
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.subject-icon{
+
+    width:55px;
+    height:55px;
+
+    background:rgba(37,211,102,.12);
+
+    border-radius:15px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:28px;
+}
+
+.subject-info h5{
+
+    color:#fff;
+    margin:0;
+    font-size:20px;
+}
+
+.subject-info small{
+
+    color:#9FB3C8;
+}
+
+.completed-status-session{
+
+    background:rgba(37,211,102,.12);
+
+    color:#25D366;
+
+    padding:8px 16px;
+
+    border-radius:30px;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    font-size:14px;
+
+    font-weight:600;
+}
+.completed-header-session{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+    flex-wrap:wrap;
+
+    gap:20px;
+
+}
+
+.completed-header-session h4{
+
+    color:white;
+
+    margin:0;
+
+}
+
+.completed-header-session p{
+
+    color:#9fb3c8;
+
+    margin-top:8px;
+
+}
+
+.completed-count-session{
+
+    background:#25D366;
+
+    color:white;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    font-weight:600;
+
+}
+
+.completed-grid-session{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+
+    gap:22px;
+
+}
+
+.completed-card-session{
+
+    background:#202C33;
+
+    border:1px solid #2A3942;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    transition:.35s;
+
+}
+
+.completed-card-session:hover{
+
+    transform:translateY(-6px);
+
+    border-color:#25D366;
+
+    box-shadow:0 15px 35px rgba(37,211,102,.18);
+
+}
+
+.completed-title-session{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+}
+
+.completed-title-session h5{
+
+    color:white;
+
+    margin:0;
+
+}
+
+.completed-status-session{
+
+    color:#25D366;
+
+    font-size:13px;
+
+    background:rgba(37,211,102,.12);
+
+    padding:5px 12px;
+
+    border-radius:30px;
+
+}
+
+.completed-info-session{
+
+    display:grid;
+
+    gap:10px;
+
+    color:#d9e2ea;
+
+    margin-bottom:20px;
+
+}
+
+.attendance-box-session{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+}
+
+.attendance-box-session div{
+
+    background:#111B21;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    text-align:center;
+
+}
+
+.attendance-box-session small{
+
+    color:#9fb3c8;
+
+}
+
+.attendance-box-session h4{
+
+    color:white;
+
+    margin-top:8px;
+
+}
+
+.progress-head-session{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:white;
+
+    margin-bottom:10px;
+
+}
+
+.progress-session{
+
+    height:10px;
+
+    background:#2A3942;
+
+    border-radius:50px;
+
+    overflow:hidden;
+
+}
+
+.progress-fill-session{
+
+    height:100%;
+
+    background:linear-gradient(90deg,#25D366,#128C7E);
+
+}
+
+.lecture-id-session{
+
+    margin-top:18px;
+
+    color:#9fb3c8;
+
+    font-size:14px;
+
+    border-top:1px solid #2A3942;
+
+    padding-top:15px;
+
+}
+.attendance-buttonsw button {
   flex: 1;
   padding: 10px;
   border: none;

@@ -32,6 +32,7 @@ function Login() {
             if(data.islogin)
             {
                 login({
+                    _id:data.user._id,
                     id: data.user.id,
                     role: data.user.role,
                     email: data.user.emailid,

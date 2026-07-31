@@ -33,7 +33,12 @@ const StoreStudentScema=new mongoose.Schema({
       type: String,enum: ["Pending", "Approved", "Rejected"],
       default: "Pending"
     },
-    profileurl:{type:String}
+    profileurl:{type:String},
+    semesterId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Semester",
+    required: true
+}
     },
     
     {timestamps:true}
@@ -63,7 +68,12 @@ const addMentor=new mongoose.Schema({
       type: String,enum: ["Pending", "Approved", "Rejected"],
       default: "Pending"
     },
-    profileurl:{type:String}
+    profileurl:{type:String},
+    semesterId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Semester",
+    required: true
+}
 }, {timestamps:true});
 
 const addTeacher=new mongoose.Schema({
@@ -89,7 +99,12 @@ const addTeacher=new mongoose.Schema({
       type: String,enum: ["Pending", "Approved", "Rejected"],
       default: "Pending"
     },
-    profileurl:{type:String}
+    profileurl:{type:String},
+    semesterId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Semester",
+    required: true
+}
 },{timestamps:true});
 
 addMentor.pre("save", async function () {

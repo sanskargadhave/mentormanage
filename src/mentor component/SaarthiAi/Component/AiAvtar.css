@@ -1,0 +1,134 @@
+/* ===========================================
+   AVATAR CONTAINER
+=========================================== */
+
+.ai-avatar{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    padding:18px;
+
+}
+
+/* ===========================================
+   OUTER RING
+=========================================== */
+
+.ai-avatar-ring{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    background:linear-gradient(100deg,#25D366,#128C7E,#4AA3FF);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    animation:avatarPulse 2.5s infinite;
+
+    box-shadow:
+        0 0 20px rgba(37,211,102,.35);
+
+}
+
+/* ===========================================
+   INNER CORE
+=========================================== */
+
+.ai-avatar-core{
+
+    width:58px;
+
+    height:58px;
+
+    border-radius:50%;
+
+    background:#111B21;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:26px;
+
+}
+
+/* ===========================================
+   DETAILS
+=========================================== */
+
+.ai-avatar-details{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.ai-avatar-details h3{
+
+    margin:0;
+
+    color:white;
+
+    font-size:20px;
+
+    font-weight:700;
+
+}
+
+.ai-avatar-details p{
+
+    margin-top:5px;
+
+    color:#25D366;
+
+    font-size:13px;
+
+}
+
+/* ===========================================
+   PULSE
+=========================================== */
+
+@keyframes avatarPulse{
+
+    0%{
+
+        transform:scale(1);
+
+        box-shadow:0 0 0 rgba(37,211,102,.4);
+
+    }
+
+    50%{
+
+        transform:scale(1.06);
+
+        box-shadow:0 0 25px rgba(196, 211, 37, 0.6);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        box-shadow:0 0 0 rgba(37,211,102,.4);
+
+    }
+
+}

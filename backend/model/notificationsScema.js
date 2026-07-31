@@ -18,7 +18,11 @@ const NotificationSchema = new mongoose.Schema({
   metadata: mongoose.Schema.Types.Mixed,
   readAt:{type:Date},
   status:{type:String,enum:["sent","delivered","read"],default:"sent"},
-  isRead:{type:Boolean,default:false,index:true}
+  isRead:{type:Boolean,default:false,index:true},
+  semesterId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "SemesterDetails",
+}
 },{timestamps:true});
 
 NotificationSchema.index({receiverId:1});

@@ -16,7 +16,7 @@ function StudentDetails(){
           try{
             setloading(true);
             const resp = await axiosInstance.get(`/mentor/student/${id}`);
-            setstudentinfo(resp.data);
+            setstudentinfo(resp.data.student);
           }
           catch(err)
           {
@@ -256,7 +256,7 @@ function MentorDetails(){
           try{
             setloading(true);
             const resp = await axiosInstance.get(`/admin/mentor/${id}`);
-            setmentorinfo(resp.data);
+            setmentorinfo(resp.data.mentor);
           }
           catch(err)
           {
@@ -458,7 +458,7 @@ function TeacherDetails(){
             const resp = await axiosInstance.get(`/admin/teacher/${id}`);
             console.log(resp.data.message);
 
-            setteacherinfo(resp.data);
+            setteacherinfo(resp.data.teacher);
           }
           catch(err)
           {

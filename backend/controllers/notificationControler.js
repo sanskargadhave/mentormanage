@@ -6,7 +6,7 @@ const getNotification = async (req, resp) => {
     const notifications = await NotificationSchema.find({receiverid: id}).sort({ createdAt: -1 }); 
     resp.status(200).json(notifications);
   } catch (err) {
-    resp.status(500).json({ message: err.message || "Error fetching notifications" });
+    resp.status(500).json({ success:false,message: err.message || "Error fetching notifications" });
   }
 };
 
@@ -21,7 +21,7 @@ const getLetestNotification = async (req, resp) => {
     }).sort({ createdAt: -1 }); 
     resp.status(200).json(notifications);
   } catch (err) {
-    resp.status(500).json({ message: err.message || "Error fetching notifications" });
+    resp.status(500).json({ success:false,message: err.message || "Error fetching notifications" });
   }
 };
 

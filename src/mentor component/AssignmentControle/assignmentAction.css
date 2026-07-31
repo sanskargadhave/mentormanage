@@ -1,0 +1,209 @@
+/* ==========================
+   Page
+========================== */
+
+.assignment-page{
+
+    width:100%;
+
+    min-height:100vh;
+
+    background:#111B21;
+
+    padding:20px;
+
+}
+
+/* ==========================
+   Header
+========================== */
+
+.assignment-header{
+
+    background:#202C33;
+
+    border-radius:14px;
+
+    overflow:hidden;
+
+    margin-bottom:20px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+
+}
+
+/* ==========================
+   Top
+========================== */
+
+.assignment-top{
+
+    padding:18px 22px;
+
+    border-bottom:1px solid #2A3942;
+
+}
+
+.assignment-title{
+
+    margin:0;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    color:#E9EDEF;
+
+    font-size:22px;
+
+    font-weight:600;
+
+}
+
+.assignment-title i{
+
+    color:#25D366;
+
+    font-size:22px;
+
+}
+
+/* ==========================
+   Tabs
+========================== */
+
+.assignment-tabs{
+
+    display:flex;
+
+    overflow-x:auto;
+
+    scrollbar-width:none;
+
+}
+
+.assignment-tabs::-webkit-scrollbar{
+
+    display:none;
+
+}
+
+.assignment-tab{
+
+    flex-shrink:0;
+
+    border:none;
+
+    background:transparent;
+
+    color:#B6C2C9;
+
+    padding:15px 25px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    border-bottom:3px solid transparent;
+
+}
+
+.assignment-tab:hover{
+
+    background:#2A3942;
+
+    color:#fff;
+
+}
+
+.assignment-tab.active{
+
+    color:#25D366;
+
+    border-bottom:3px solid #25D366;
+
+}
+
+/* ==========================
+   Content
+========================== */
+
+.assignment-content{
+
+    width:100%;
+
+}
+
+/* ==========================
+   Coming Soon
+========================== */
+
+.coming-soon{
+
+    background:#202C33;
+
+    border-radius:15px;
+
+    min-height:350px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#E9EDEF;
+
+}
+
+.coming-soon i{
+
+    font-size:55px;
+
+    color:#25D366;
+
+    margin-bottom:15px;
+
+}
+
+.coming-soon h3{
+
+    margin:0;
+
+}
+
+/* ==========================
+   Mobile
+========================== */
+
+@media(max-width:768px){
+
+    .assignment-page{
+
+        padding:12px;
+
+    }
+
+    .assignment-title{
+
+        font-size:18px;
+
+    }
+
+    .assignment-tab{
+
+        padding:14px 18px;
+
+        font-size:14px;
+
+    }
+
+}

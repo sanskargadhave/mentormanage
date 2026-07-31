@@ -5,6 +5,7 @@ import axiosInstance from "../axiosInstance";
 
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../Authintication';
+import { showToast } from "../utils/showToast";
 
 function LeaveApplication() {
   const navigate=useNavigate();
@@ -18,15 +19,7 @@ function LeaveApplication() {
   const [toDate,setToDate]=useState("");
   const [reason,setReason]=useState("");
   const [loding,setloding]=useState(false);
-  const [showToast,setShowToast]=useState(false);
-  const showtoast = (msg) => {
-  setmessage(msg);
-  setShowToast(true);
-
-  setTimeout(() => {
-    setShowToast(false);
-  }, 8000);
-};
+  
 
   useEffect(()=>{
     async function getDetails()
@@ -52,34 +45,14 @@ function LeaveApplication() {
       setSelectedFile(file);
     }
   }
-  const uploadImage = async () => {
-  
-         
-          if(!selectedFile){ return ""}
-          const filename = `${Date.now()}-${studentDetails?.collagedetails?.rollno}-${studentDetails?.personaldetails?.name}`;
-  
-          const { error } = await supabase.storage
-              .from("medical_certificate")
-              .upload(filename, selectedFile);
-  
-          if(error){
-              console.log(error);
-              console.log(error.message);
-              return "";
-          }
-  
-          const { data } = supabase.storage
-              .from("medical_certificate")
-              .getPublicUrl(filename);
-              return data.publicUrl;
-      }
+ 
   async function sendApplication()
   {
     try{
       
       if(!leaveType || !fromDate || !toDate || !reason)
       {
-        return alert("Please Fill All Required fields");
+        return showToast.warning("Please Fill All Required fields");
       }
       setloding(true);
       const data = {
@@ -93,15 +66,9 @@ function LeaveApplication() {
         studentName:studentDetails?.personaldetails?.name,
         certificateUrl: ""
       };
-
-      if(selectedFile){
-        
-        const imageUrl = await uploadImage();
-        data.certificateUrl = imageUrl;
-        
-      }
       
       const resp = await axiosInstance.post("/student/send-application",data);
+      if(resp.data.success)  showToast.success(resp.data.message);
       
     }
     catch(err)
@@ -216,30 +183,7 @@ function LeaveApplication() {
           
         </form>
       </div>
-              {showToast && (
-  <div className="toast-overlay">
-    <div
-      id="liveToast"
-      className="toast show custom-toast"
-      role="alert"
-      aria-live="assertive"
-      aria-atomic="true"
-    >
-      <div className="toast-header">
-        <strong className="me-auto">Leave Application</strong>
-        <button
-          type="button"
-          className="btn-close"
-          onClick={() => setShowToast(false)}
-        ></button>
-      </div>
 
-      <div className="toast-body">
-        {message}
-      </div>
-    </div>
-  </div>
-)}
     </div>
   );
 }
